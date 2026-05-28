@@ -1,0 +1,4654 @@
+From 8b80d7ee4f430639ac9c7d74fac358f75dd8a568 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Thu, 28 May 2026 17:36:06 +0000
+Subject: [PATCH] Add layered investment-ecosystem dashboard (React + Vite +
+ Leaflet)
+
+Multi-view dashboard over a relational Organizations/Capital Flows/Capital
+Instruments model: overview stats, segment-grouped organizations with a
+relational drill-down drawer, capital flows, instruments, and a Leaflet/OSM
+map that plots organizations with coordinates and skips those without.
+
+Reads a baked JSON snapshot (public/data/ecosystem.json) so it deploys as a
+static site with no browser-side tokens. Includes scripts/export-airtable.mjs
+to regenerate the snapshot from Airtable once base access is available.
+
+https://claude.ai/code/session_01RckUKg17n8C7BEJDRvPmyq
+---
+ .gitignore                          |    7 +
+ README.md                           |   89 +-
+ index.html                          |   14 +
+ package-lock.json                   | 2705 +++++++++++++++++++++++++++
+ package.json                        |   30 +
+ postcss.config.js                   |    6 +
+ public/data/ecosystem.json          |  478 +++++
+ scripts/export-airtable.mjs         |  228 +++
+ src/App.tsx                         |  355 ++++
+ src/components/CapitalFlowCard.tsx  |   32 +
+ src/components/InstrumentCard.tsx   |   43 +
+ src/components/MapView.tsx          |  105 ++
+ src/components/OrganizationCard.tsx |   46 +
+ src/components/SegmentSection.tsx   |   55 +
+ src/components/StatCards.tsx        |   36 +
+ src/data/loadData.ts                |   14 +
+ src/index.css                       |   24 +
+ src/lib/format.ts                   |   15 +
+ src/main.tsx                        |   10 +
+ src/types.ts                        |  107 ++
+ src/vite-env.d.ts                   |    1 +
+ tailwind.config.js                  |   12 +
+ tsconfig.json                       |   20 +
+ vite.config.ts                      |    9 +
+ 24 files changed, 4440 insertions(+), 1 deletion(-)
+ create mode 100644 .gitignore
+ create mode 100644 index.html
+ create mode 100644 package-lock.json
+ create mode 100644 package.json
+ create mode 100644 postcss.config.js
+ create mode 100644 public/data/ecosystem.json
+ create mode 100644 scripts/export-airtable.mjs
+ create mode 100644 src/App.tsx
+ create mode 100644 src/components/CapitalFlowCard.tsx
+ create mode 100644 src/components/InstrumentCard.tsx
+ create mode 100644 src/components/MapView.tsx
+ create mode 100644 src/components/OrganizationCard.tsx
+ create mode 100644 src/components/SegmentSection.tsx
+ create mode 100644 src/components/StatCards.tsx
+ create mode 100644 src/data/loadData.ts
+ create mode 100644 src/index.css
+ create mode 100644 src/lib/format.ts
+ create mode 100644 src/main.tsx
+ create mode 100644 src/types.ts
+ create mode 100644 src/vite-env.d.ts
+ create mode 100644 tailwind.config.js
+ create mode 100644 tsconfig.json
+ create mode 100644 vite.config.ts
+
+diff --git a/.gitignore b/.gitignore
+new file mode 100644
+index 0000000..0723fd3
+--- /dev/null
++++ b/.gitignore
+@@ -0,0 +1,7 @@
++node_modules
++dist
++*.tsbuildinfo
++*.local
++.env
++.env.*
++.DS_Store
+diff --git a/README.md b/README.md
+index 0fc5e08..ee95098 100644
+--- a/README.md
++++ b/README.md
+@@ -1 +1,88 @@
+-# mapping-investment-ecosystems
+\ No newline at end of file
++# Mapping Investment Ecosystems
++
++A layered **Ecosystem Dashboard** for the Georgia impact-investing capital ecosystem,
++modeled on a relational Airtable base (Organizations → Capital Flows → Capital Instruments).
++
++Built with **React + Vite + TypeScript + Tailwind**, with a **Leaflet / OpenStreetMap**
++map view. It reads a baked JSON **snapshot** of the Airtable data, so it deploys as a
++static site with no backend or API keys in the browser.
++
++## Views
++
++- **Overview** — headline counts, capital deployed by source segment, and the largest flows.
++- **Organizations** — grouped by ecosystem segment (Capital Aggregator / Allocator / Enabler / Seeker),
++  collapsible, with search + segment filters. Click any org for a relational drill-down drawer
++  showing its inbound/outbound capital flows.
++- **Capital Flows** — every source → recipient transaction with amount, year, and instrument type.
++- **Capital Instruments** — the financial instruments (PRIs, recoverable grants, blended finance, …).
++- **Map** — Leaflet/OSM plot of every organization with coordinates, colored by segment.
++  Records without `lat`/`lng` are skipped (and the count of skipped records is shown).
++
++## Run locally
++
++```bash
++npm install
++npm run dev      # dev server at http://localhost:5173
++npm run build    # type-check + production build to dist/
++npm run preview  # serve the production build
++```
++
++Deploy `dist/` to any static host (GitHub Pages, Netlify, S3, …). `vite.config.ts` uses a
++relative `base`, so it works from a domain root or a subpath.
++
++## Data: how it flows
++
++The dashboard reads `public/data/ecosystem.json`. The current file is **representative sample
++data** for the Georgia ecosystem — enough to exercise every view. The shape is defined in
++`src/types.ts` (`EcosystemData`).
++
++### Refreshing from Airtable
++
++The deployed page can't call Airtable (or the Airtable MCP) directly — the MCP is an
++authoring-time tool, and a browser can't hold a token safely. Instead, regenerate the snapshot
++with the export script, then redeploy:
++
++```bash
++AIRTABLE_TOKEN=pat...                 \
++AIRTABLE_BASE_ID=appAi19SJ3WzFEIvj    \
++npm run export-data
++```
++
++This writes a fresh `public/data/ecosystem.json`. The script (`scripts/export-airtable.mjs`):
++
++- discovers the Organizations / Capital Flows / Capital Instruments tables by name,
++- maps fields using the candidate names from the uploaded `index.tsx` fodder
++  (`Segment`, `Org. Name`, `city_name`, `state_id`, `lat`, `lng`, `Amount`, `Year`, …),
++- prints exactly which tables/fields it matched so you can tweak the `CONFIG` block if your
++  field names differ,
++- resolves capital-flow source/recipient names to organization records for the drill-down.
++
++> Run it from your own machine — this project's cloud sandbox blocks `api.airtable.com`.
++
++### Connecting the real base (`appAi19SJ3WzFEIvj`)
++
++At build time the Airtable MCP token in this workspace returns **403** for that base. To pull
++it via the MCP, add base `appAi19SJ3WzFEIvj` to the connector's Personal Access Token at
++<https://airtable.com/create/tokens> (scopes: `schema.bases:read`, `data.records:read`), or
++reconnect the connector with a token that already has access. Until then, use the local
++`export-data` route above.
++
++## Security notes
++
++- **No secrets are committed.** Tokens are read from the environment by the export script only;
++  `.env*` files are git-ignored.
++- A Google Maps API key was provided during setup but is **not used** — the map runs on free
++  Leaflet/OpenStreetMap tiles. If you don't plan to use that key elsewhere, restrict or delete it.
++- Any Airtable token shared in chat should be **rotated**, since chat history persists it.
++
++## Project layout
++
++```
++public/data/ecosystem.json     # the snapshot the app reads
++scripts/export-airtable.mjs    # regenerate the snapshot from Airtable
++src/
++  types.ts                     # EcosystemData model + segment styling
++  data/loadData.ts             # fetches the snapshot at runtime
++  components/                  # StatCards, SegmentSection, *Card, MapView
++  App.tsx                      # tabs, filters, relational drill-down drawer
++```
+diff --git a/index.html b/index.html
+new file mode 100644
+index 0000000..f55e3d9
+--- /dev/null
++++ b/index.html
+@@ -0,0 +1,14 @@
++<!DOCTYPE html>
++<html lang="en">
++  <head>
++    <meta charset="UTF-8" />
++    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
++    <title>Investment Ecosystem Dashboard</title>
++    <link rel="preconnect" href="https://rsms.me/" />
++    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
++  </head>
++  <body>
++    <div id="root"></div>
++    <script type="module" src="/src/main.tsx"></script>
++  </body>
++</html>
+diff --git a/package-lock.json b/package-lock.json
+new file mode 100644
+index 0000000..793b8b9
+--- /dev/null
++++ b/package-lock.json
+@@ -0,0 +1,2705 @@
++{
++  "name": "mapping-investment-ecosystems",
++  "version": "0.1.0",
++  "lockfileVersion": 3,
++  "requires": true,
++  "packages": {
++    "": {
++      "name": "mapping-investment-ecosystems",
++      "version": "0.1.0",
++      "dependencies": {
++        "leaflet": "^1.9.4",
++        "react": "^18.3.1",
++        "react-dom": "^18.3.1"
++      },
++      "devDependencies": {
++        "@types/leaflet": "^1.9.12",
++        "@types/react": "^18.3.12",
++        "@types/react-dom": "^18.3.1",
++        "@vitejs/plugin-react": "^4.3.4",
++        "autoprefixer": "^10.4.20",
++        "postcss": "^8.4.49",
++        "tailwindcss": "^3.4.17",
++        "typescript": "^5.6.3",
++        "vite": "^5.4.11"
++      }
++    },
++    "node_modules/@alloc/quick-lru": {
++      "version": "5.2.0",
++      "resolved": "https://registry.npmjs.org/@alloc/quick-lru/-/quick-lru-5.2.0.tgz",
++      "integrity": "sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=10"
++      },
++      "funding": {
++        "url": "https://github.com/sponsors/sindresorhus"
++      }
++    },
++    "node_modules/@babel/code-frame": {
++      "version": "7.29.7",
++      "resolved": "https://registry.npmjs.org/@babel/code-frame/-/code-frame-7.29.7.tgz",
++      "integrity": "sha512-Aup7aUOfpbAUg2ROOJN6Iw5f9DMBlzu0mIkm/malLQFN/YQgO48wCj0Kxa3sEHJvPVFg7siR+qRInwXd2qhQKw==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@babel/helper-validator-identifier": "^7.29.7",
++        "js-tokens": "^4.0.0",
++        "picocolors": "^1.1.1"
++      },
++      "engines": {
++        "node": ">=6.9.0"
++      }
++    },
++    "node_modules/@babel/compat-data": {
++      "version": "7.29.7",
++      "resolved": "https://registry.npmjs.org/@babel/compat-data/-/compat-data-7.29.7.tgz",
++      "integrity": "sha512-locTkQyKvwIEgBzVrn8693ebc97F2U8ZHjbXwDXJ5Fn2TCpNwTlKcaKLkdHop5c/icOFE7qt7Q9JC5hnKNa6Gg==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=6.9.0"
++      }
++    },
++    "node_modules/@babel/core": {
++      "version": "7.29.7",
++      "resolved": "https://registry.npmjs.org/@babel/core/-/core-7.29.7.tgz",
++      "integrity": "sha512-RgHBCvtjbOK2gXSNBNIkNoEc9qoVEtau3hj8gEqKQuL3HZAibKarWFEI3Lfm6EYKkLalOh8eSrj9b+ch9H/VBA==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@babel/code-frame": "^7.29.7",
++        "@babel/generator": "^7.29.7",
++        "@babel/helper-compilation-targets": "^7.29.7",
++        "@babel/helper-module-transforms": "^7.29.7",
++        "@babel/helpers": "^7.29.7",
++        "@babel/parser": "^7.29.7",
++        "@babel/template": "^7.29.7",
++        "@babel/traverse": "^7.29.7",
++        "@babel/types": "^7.29.7",
++        "@jridgewell/remapping": "^2.3.5",
++        "convert-source-map": "^2.0.0",
++        "debug": "^4.1.0",
++        "gensync": "^1.0.0-beta.2",
++        "json5": "^2.2.3",
++        "semver": "^6.3.1"
++      },
++      "engines": {
++        "node": ">=6.9.0"
++      },
++      "funding": {
++        "type": "opencollective",
++        "url": "https://opencollective.com/babel"
++      }
++    },
++    "node_modules/@babel/generator": {
++      "version": "7.29.7",
++      "resolved": "https://registry.npmjs.org/@babel/generator/-/generator-7.29.7.tgz",
++      "integrity": "sha512-DkXD5OJQaAQIdZ1bt3UZdEnHAn9Imd3IVBdX03UFe+ony9Ojw5pzr9YVKGDY1jt+Gcn/FnGkNf8r+Vj5NOJWtQ==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@babel/parser": "^7.29.7",
++        "@babel/types": "^7.29.7",
++        "@jridgewell/gen-mapping": "^0.3.12",
++        "@jridgewell/trace-mapping": "^0.3.28",
++        "jsesc": "^3.0.2"
++      },
++      "engines": {
++        "node": ">=6.9.0"
++      }
++    },
++    "node_modules/@babel/helper-compilation-targets": {
++      "version": "7.29.7",
++      "resolved": "https://registry.npmjs.org/@babel/helper-compilation-targets/-/helper-compilation-targets-7.29.7.tgz",
++      "integrity": "sha512-wem6WaBj4NaVYVdNhLPPVacES6ZJ+KBBfSkTMD3YZxbP3rm3Di85tJU5ljaUNhaOynt+Aj0xruhYuzQBt8n71g==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@babel/compat-data": "^7.29.7",
++        "@babel/helper-validator-option": "^7.29.7",
++        "browserslist": "^4.24.0",
++        "lru-cache": "^5.1.1",
++        "semver": "^6.3.1"
++      },
++      "engines": {
++        "node": ">=6.9.0"
++      }
++    },
++    "node_modules/@babel/helper-globals": {
++      "version": "7.29.7",
++      "resolved": "https://registry.npmjs.org/@babel/helper-globals/-/helper-globals-7.29.7.tgz",
++      "integrity": "sha512-3nQVUAtvkKH9zahfWgw96Jc/uFOmjACE1kQz82E2lqWmHBgjzbNlsC22nuQTfahmWeQtTq5nQ/4Nnd2A1wj4zA==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=6.9.0"
++      }
++    },
++    "node_modules/@babel/helper-module-imports": {
++      "version": "7.29.7",
++      "resolved": "https://registry.npmjs.org/@babel/helper-module-imports/-/helper-module-imports-7.29.7.tgz",
++      "integrity": "sha512-ejHwrQQYcm9xnTivShn2IDOlIzInN34AXskvq9QicvCtEzq1Vzclu/tKF8Jq1Cg8JG2GL6/EmjgsCT7lXepE3g==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@babel/traverse": "^7.29.7",
++        "@babel/types": "^7.29.7"
++      },
++      "engines": {
++        "node": ">=6.9.0"
++      }
++    },
++    "node_modules/@babel/helper-module-transforms": {
++      "version": "7.29.7",
++      "resolved": "https://registry.npmjs.org/@babel/helper-module-transforms/-/helper-module-transforms-7.29.7.tgz",
++      "integrity": "sha512-UPUVSyXbOh627KiCIGQSgwWzGeBKLkaJ9PJEdrngIwMSzxLR4jS4+f1f1jb7VzBbg8nFLaYotvVPFCTqdrmTAg==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@babel/helper-module-imports": "^7.29.7",
++        "@babel/helper-validator-identifier": "^7.29.7",
++        "@babel/traverse": "^7.29.7"
++      },
++      "engines": {
++        "node": ">=6.9.0"
++      },
++      "peerDependencies": {
++        "@babel/core": "^7.0.0"
++      }
++    },
++    "node_modules/@babel/helper-plugin-utils": {
++      "version": "7.29.7",
++      "resolved": "https://registry.npmjs.org/@babel/helper-plugin-utils/-/helper-plugin-utils-7.29.7.tgz",
++      "integrity": "sha512-G7sHYigPY17oO5SYWnfD/0MTBwVR781S/JI643e/JhUYgVgWE/61SoW3NH9KWUKyKq5LVh3npif99Wkt6j86Jw==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=6.9.0"
++      }
++    },
++    "node_modules/@babel/helper-string-parser": {
++      "version": "7.29.7",
++      "resolved": "https://registry.npmjs.org/@babel/helper-string-parser/-/helper-string-parser-7.29.7.tgz",
++      "integrity": "sha512-Pb5ijPrZ89GDH8223L4UP8i6QApWxs04RbPQJTeWDV0/keR2E36MeKnyr6LYmUUvqRRI+Iv87SuF1W6ErINzYw==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=6.9.0"
++      }
++    },
++    "node_modules/@babel/helper-validator-identifier": {
++      "version": "7.29.7",
++      "resolved": "https://registry.npmjs.org/@babel/helper-validator-identifier/-/helper-validator-identifier-7.29.7.tgz",
++      "integrity": "sha512-qehxGkRj55h/ff8EMaJ+cYhyaKlHIxqYDn682wQD7RNp9UujOQsHog2uS0r2vzr4pW+sXf90NeeayjcNaX3fFg==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=6.9.0"
++      }
++    },
++    "node_modules/@babel/helper-validator-option": {
++      "version": "7.29.7",
++      "resolved": "https://registry.npmjs.org/@babel/helper-validator-option/-/helper-validator-option-7.29.7.tgz",
++      "integrity": "sha512-N9ZErrD+yW5geCDtBqnOoxmR8+tNKiGuxKlDpuJxfsqpa2dFcexaziGAE/qoHLiDDreVNMupxGmSoNlyvsA3gw==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=6.9.0"
++      }
++    },
++    "node_modules/@babel/helpers": {
++      "version": "7.29.7",
++      "resolved": "https://registry.npmjs.org/@babel/helpers/-/helpers-7.29.7.tgz",
++      "integrity": "sha512-1k2lAGRMfHTcwuNYcCNUmaUffmQv8KWMfh2iJUUeRlwlwH4FdNG7mfPI10NPfLHJFThE4Tyr4mv7kTNZOiPuBg==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@babel/template": "^7.29.7",
++        "@babel/types": "^7.29.7"
++      },
++      "engines": {
++        "node": ">=6.9.0"
++      }
++    },
++    "node_modules/@babel/parser": {
++      "version": "7.29.7",
++      "resolved": "https://registry.npmjs.org/@babel/parser/-/parser-7.29.7.tgz",
++      "integrity": "sha512-hnORnjP/1P/zFEndoeX+n+t1RwWRJiJpM/jO7FW32Kn9r5+sJB2JWOdYo4L6k78j15eCwY3Gm/7364B1EMwtNg==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@babel/types": "^7.29.7"
++      },
++      "bin": {
++        "parser": "bin/babel-parser.js"
++      },
++      "engines": {
++        "node": ">=6.0.0"
++      }
++    },
++    "node_modules/@babel/plugin-transform-react-jsx-self": {
++      "version": "7.29.7",
++      "resolved": "https://registry.npmjs.org/@babel/plugin-transform-react-jsx-self/-/plugin-transform-react-jsx-self-7.29.7.tgz",
++      "integrity": "sha512-TL0hMc9xzy86VD31nUiwzd5otRAcyEPcsegCxolO0PvcXuH1v0kECe/UIznYFihpkvU5wg/jk4v0TTEFfm53fw==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@babel/helper-plugin-utils": "^7.29.7"
++      },
++      "engines": {
++        "node": ">=6.9.0"
++      },
++      "peerDependencies": {
++        "@babel/core": "^7.0.0-0"
++      }
++    },
++    "node_modules/@babel/plugin-transform-react-jsx-source": {
++      "version": "7.29.7",
++      "resolved": "https://registry.npmjs.org/@babel/plugin-transform-react-jsx-source/-/plugin-transform-react-jsx-source-7.29.7.tgz",
++      "integrity": "sha512-06IyK09H3wi4cGbhDBwp5gUGo0IKtnYa8tyTiephirPCK6fbobVGiXMMI5zLQ4aKEYP3wZ3ArU44o+8KMrSG/Q==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@babel/helper-plugin-utils": "^7.29.7"
++      },
++      "engines": {
++        "node": ">=6.9.0"
++      },
++      "peerDependencies": {
++        "@babel/core": "^7.0.0-0"
++      }
++    },
++    "node_modules/@babel/template": {
++      "version": "7.29.7",
++      "resolved": "https://registry.npmjs.org/@babel/template/-/template-7.29.7.tgz",
++      "integrity": "sha512-puq+Gf35oI24FeN11LkoUQFqv9uwNeWpxXZi/Ji3rRIoKAzKnxRaZ+Gkj0vKS9ZCiTESfng1N9LyOyXvo+m+Gg==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@babel/code-frame": "^7.29.7",
++        "@babel/parser": "^7.29.7",
++        "@babel/types": "^7.29.7"
++      },
++      "engines": {
++        "node": ">=6.9.0"
++      }
++    },
++    "node_modules/@babel/traverse": {
++      "version": "7.29.7",
++      "resolved": "https://registry.npmjs.org/@babel/traverse/-/traverse-7.29.7.tgz",
++      "integrity": "sha512-EhlfNQtZ+NK22w5BM61ciuiq1m58ed33Wr1Xan//ZRTy6hgjnwyCffRYwzsGXdASJSUJ1guZILsErh1eQcl+zw==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@babel/code-frame": "^7.29.7",
++        "@babel/generator": "^7.29.7",
++        "@babel/helper-globals": "^7.29.7",
++        "@babel/parser": "^7.29.7",
++        "@babel/template": "^7.29.7",
++        "@babel/types": "^7.29.7",
++        "debug": "^4.3.1"
++      },
++      "engines": {
++        "node": ">=6.9.0"
++      }
++    },
++    "node_modules/@babel/types": {
++      "version": "7.29.7",
++      "resolved": "https://registry.npmjs.org/@babel/types/-/types-7.29.7.tgz",
++      "integrity": "sha512-4zBIxpPzowiZpusoFkyGVwakdRJUyuH5PxQ/PrqghfdFWWasvnCdPfQXHrenDai+gyLARulZjZowCOj6fjT4pA==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@babel/helper-string-parser": "^7.29.7",
++        "@babel/helper-validator-identifier": "^7.29.7"
++      },
++      "engines": {
++        "node": ">=6.9.0"
++      }
++    },
++    "node_modules/@esbuild/aix-ppc64": {
++      "version": "0.21.5",
++      "resolved": "https://registry.npmjs.org/@esbuild/aix-ppc64/-/aix-ppc64-0.21.5.tgz",
++      "integrity": "sha512-1SDgH6ZSPTlggy1yI6+Dbkiz8xzpHJEVAlF/AM1tHPLsf5STom9rwtjE4hKAF20FfXXNTFqEYXyJNWh1GiZedQ==",
++      "cpu": [
++        "ppc64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "aix"
++      ],
++      "engines": {
++        "node": ">=12"
++      }
++    },
++    "node_modules/@esbuild/android-arm": {
++      "version": "0.21.5",
++      "resolved": "https://registry.npmjs.org/@esbuild/android-arm/-/android-arm-0.21.5.tgz",
++      "integrity": "sha512-vCPvzSjpPHEi1siZdlvAlsPxXl7WbOVUBBAowWug4rJHb68Ox8KualB+1ocNvT5fjv6wpkX6o/iEpbDrf68zcg==",
++      "cpu": [
++        "arm"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "android"
++      ],
++      "engines": {
++        "node": ">=12"
++      }
++    },
++    "node_modules/@esbuild/android-arm64": {
++      "version": "0.21.5",
++      "resolved": "https://registry.npmjs.org/@esbuild/android-arm64/-/android-arm64-0.21.5.tgz",
++      "integrity": "sha512-c0uX9VAUBQ7dTDCjq+wdyGLowMdtR/GoC2U5IYk/7D1H1JYC0qseD7+11iMP2mRLN9RcCMRcjC4YMclCzGwS/A==",
++      "cpu": [
++        "arm64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "android"
++      ],
++      "engines": {
++        "node": ">=12"
++      }
++    },
++    "node_modules/@esbuild/android-x64": {
++      "version": "0.21.5",
++      "resolved": "https://registry.npmjs.org/@esbuild/android-x64/-/android-x64-0.21.5.tgz",
++      "integrity": "sha512-D7aPRUUNHRBwHxzxRvp856rjUHRFW1SdQATKXH2hqA0kAZb1hKmi02OpYRacl0TxIGz/ZmXWlbZgjwWYaCakTA==",
++      "cpu": [
++        "x64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "android"
++      ],
++      "engines": {
++        "node": ">=12"
++      }
++    },
++    "node_modules/@esbuild/darwin-arm64": {
++      "version": "0.21.5",
++      "resolved": "https://registry.npmjs.org/@esbuild/darwin-arm64/-/darwin-arm64-0.21.5.tgz",
++      "integrity": "sha512-DwqXqZyuk5AiWWf3UfLiRDJ5EDd49zg6O9wclZ7kUMv2WRFr4HKjXp/5t8JZ11QbQfUS6/cRCKGwYhtNAY88kQ==",
++      "cpu": [
++        "arm64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "darwin"
++      ],
++      "engines": {
++        "node": ">=12"
++      }
++    },
++    "node_modules/@esbuild/darwin-x64": {
++      "version": "0.21.5",
++      "resolved": "https://registry.npmjs.org/@esbuild/darwin-x64/-/darwin-x64-0.21.5.tgz",
++      "integrity": "sha512-se/JjF8NlmKVG4kNIuyWMV/22ZaerB+qaSi5MdrXtd6R08kvs2qCN4C09miupktDitvh8jRFflwGFBQcxZRjbw==",
++      "cpu": [
++        "x64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "darwin"
++      ],
++      "engines": {
++        "node": ">=12"
++      }
++    },
++    "node_modules/@esbuild/freebsd-arm64": {
++      "version": "0.21.5",
++      "resolved": "https://registry.npmjs.org/@esbuild/freebsd-arm64/-/freebsd-arm64-0.21.5.tgz",
++      "integrity": "sha512-5JcRxxRDUJLX8JXp/wcBCy3pENnCgBR9bN6JsY4OmhfUtIHe3ZW0mawA7+RDAcMLrMIZaf03NlQiX9DGyB8h4g==",
++      "cpu": [
++        "arm64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "freebsd"
++      ],
++      "engines": {
++        "node": ">=12"
++      }
++    },
++    "node_modules/@esbuild/freebsd-x64": {
++      "version": "0.21.5",
++      "resolved": "https://registry.npmjs.org/@esbuild/freebsd-x64/-/freebsd-x64-0.21.5.tgz",
++      "integrity": "sha512-J95kNBj1zkbMXtHVH29bBriQygMXqoVQOQYA+ISs0/2l3T9/kj42ow2mpqerRBxDJnmkUDCaQT/dfNXWX/ZZCQ==",
++      "cpu": [
++        "x64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "freebsd"
++      ],
++      "engines": {
++        "node": ">=12"
++      }
++    },
++    "node_modules/@esbuild/linux-arm": {
++      "version": "0.21.5",
++      "resolved": "https://registry.npmjs.org/@esbuild/linux-arm/-/linux-arm-0.21.5.tgz",
++      "integrity": "sha512-bPb5AHZtbeNGjCKVZ9UGqGwo8EUu4cLq68E95A53KlxAPRmUyYv2D6F0uUI65XisGOL1hBP5mTronbgo+0bFcA==",
++      "cpu": [
++        "arm"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "linux"
++      ],
++      "engines": {
++        "node": ">=12"
++      }
++    },
++    "node_modules/@esbuild/linux-arm64": {
++      "version": "0.21.5",
++      "resolved": "https://registry.npmjs.org/@esbuild/linux-arm64/-/linux-arm64-0.21.5.tgz",
++      "integrity": "sha512-ibKvmyYzKsBeX8d8I7MH/TMfWDXBF3db4qM6sy+7re0YXya+K1cem3on9XgdT2EQGMu4hQyZhan7TeQ8XkGp4Q==",
++      "cpu": [
++        "arm64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "linux"
++      ],
++      "engines": {
++        "node": ">=12"
++      }
++    },
++    "node_modules/@esbuild/linux-ia32": {
++      "version": "0.21.5",
++      "resolved": "https://registry.npmjs.org/@esbuild/linux-ia32/-/linux-ia32-0.21.5.tgz",
++      "integrity": "sha512-YvjXDqLRqPDl2dvRODYmmhz4rPeVKYvppfGYKSNGdyZkA01046pLWyRKKI3ax8fbJoK5QbxblURkwK/MWY18Tg==",
++      "cpu": [
++        "ia32"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "linux"
++      ],
++      "engines": {
++        "node": ">=12"
++      }
++    },
++    "node_modules/@esbuild/linux-loong64": {
++      "version": "0.21.5",
++      "resolved": "https://registry.npmjs.org/@esbuild/linux-loong64/-/linux-loong64-0.21.5.tgz",
++      "integrity": "sha512-uHf1BmMG8qEvzdrzAqg2SIG/02+4/DHB6a9Kbya0XDvwDEKCoC8ZRWI5JJvNdUjtciBGFQ5PuBlpEOXQj+JQSg==",
++      "cpu": [
++        "loong64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "linux"
++      ],
++      "engines": {
++        "node": ">=12"
++      }
++    },
++    "node_modules/@esbuild/linux-mips64el": {
++      "version": "0.21.5",
++      "resolved": "https://registry.npmjs.org/@esbuild/linux-mips64el/-/linux-mips64el-0.21.5.tgz",
++      "integrity": "sha512-IajOmO+KJK23bj52dFSNCMsz1QP1DqM6cwLUv3W1QwyxkyIWecfafnI555fvSGqEKwjMXVLokcV5ygHW5b3Jbg==",
++      "cpu": [
++        "mips64el"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "linux"
++      ],
++      "engines": {
++        "node": ">=12"
++      }
++    },
++    "node_modules/@esbuild/linux-ppc64": {
++      "version": "0.21.5",
++      "resolved": "https://registry.npmjs.org/@esbuild/linux-ppc64/-/linux-ppc64-0.21.5.tgz",
++      "integrity": "sha512-1hHV/Z4OEfMwpLO8rp7CvlhBDnjsC3CttJXIhBi+5Aj5r+MBvy4egg7wCbe//hSsT+RvDAG7s81tAvpL2XAE4w==",
++      "cpu": [
++        "ppc64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "linux"
++      ],
++      "engines": {
++        "node": ">=12"
++      }
++    },
++    "node_modules/@esbuild/linux-riscv64": {
++      "version": "0.21.5",
++      "resolved": "https://registry.npmjs.org/@esbuild/linux-riscv64/-/linux-riscv64-0.21.5.tgz",
++      "integrity": "sha512-2HdXDMd9GMgTGrPWnJzP2ALSokE/0O5HhTUvWIbD3YdjME8JwvSCnNGBnTThKGEB91OZhzrJ4qIIxk/SBmyDDA==",
++      "cpu": [
++        "riscv64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "linux"
++      ],
++      "engines": {
++        "node": ">=12"
++      }
++    },
++    "node_modules/@esbuild/linux-s390x": {
++      "version": "0.21.5",
++      "resolved": "https://registry.npmjs.org/@esbuild/linux-s390x/-/linux-s390x-0.21.5.tgz",
++      "integrity": "sha512-zus5sxzqBJD3eXxwvjN1yQkRepANgxE9lgOW2qLnmr8ikMTphkjgXu1HR01K4FJg8h1kEEDAqDcZQtbrRnB41A==",
++      "cpu": [
++        "s390x"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "linux"
++      ],
++      "engines": {
++        "node": ">=12"
++      }
++    },
++    "node_modules/@esbuild/linux-x64": {
++      "version": "0.21.5",
++      "resolved": "https://registry.npmjs.org/@esbuild/linux-x64/-/linux-x64-0.21.5.tgz",
++      "integrity": "sha512-1rYdTpyv03iycF1+BhzrzQJCdOuAOtaqHTWJZCWvijKD2N5Xu0TtVC8/+1faWqcP9iBCWOmjmhoH94dH82BxPQ==",
++      "cpu": [
++        "x64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "linux"
++      ],
++      "engines": {
++        "node": ">=12"
++      }
++    },
++    "node_modules/@esbuild/netbsd-x64": {
++      "version": "0.21.5",
++      "resolved": "https://registry.npmjs.org/@esbuild/netbsd-x64/-/netbsd-x64-0.21.5.tgz",
++      "integrity": "sha512-Woi2MXzXjMULccIwMnLciyZH4nCIMpWQAs049KEeMvOcNADVxo0UBIQPfSmxB3CWKedngg7sWZdLvLczpe0tLg==",
++      "cpu": [
++        "x64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "netbsd"
++      ],
++      "engines": {
++        "node": ">=12"
++      }
++    },
++    "node_modules/@esbuild/openbsd-x64": {
++      "version": "0.21.5",
++      "resolved": "https://registry.npmjs.org/@esbuild/openbsd-x64/-/openbsd-x64-0.21.5.tgz",
++      "integrity": "sha512-HLNNw99xsvx12lFBUwoT8EVCsSvRNDVxNpjZ7bPn947b8gJPzeHWyNVhFsaerc0n3TsbOINvRP2byTZ5LKezow==",
++      "cpu": [
++        "x64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "openbsd"
++      ],
++      "engines": {
++        "node": ">=12"
++      }
++    },
++    "node_modules/@esbuild/sunos-x64": {
++      "version": "0.21.5",
++      "resolved": "https://registry.npmjs.org/@esbuild/sunos-x64/-/sunos-x64-0.21.5.tgz",
++      "integrity": "sha512-6+gjmFpfy0BHU5Tpptkuh8+uw3mnrvgs+dSPQXQOv3ekbordwnzTVEb4qnIvQcYXq6gzkyTnoZ9dZG+D4garKg==",
++      "cpu": [
++        "x64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "sunos"
++      ],
++      "engines": {
++        "node": ">=12"
++      }
++    },
++    "node_modules/@esbuild/win32-arm64": {
++      "version": "0.21.5",
++      "resolved": "https://registry.npmjs.org/@esbuild/win32-arm64/-/win32-arm64-0.21.5.tgz",
++      "integrity": "sha512-Z0gOTd75VvXqyq7nsl93zwahcTROgqvuAcYDUr+vOv8uHhNSKROyU961kgtCD1e95IqPKSQKH7tBTslnS3tA8A==",
++      "cpu": [
++        "arm64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "win32"
++      ],
++      "engines": {
++        "node": ">=12"
++      }
++    },
++    "node_modules/@esbuild/win32-ia32": {
++      "version": "0.21.5",
++      "resolved": "https://registry.npmjs.org/@esbuild/win32-ia32/-/win32-ia32-0.21.5.tgz",
++      "integrity": "sha512-SWXFF1CL2RVNMaVs+BBClwtfZSvDgtL//G/smwAc5oVK/UPu2Gu9tIaRgFmYFFKrmg3SyAjSrElf0TiJ1v8fYA==",
++      "cpu": [
++        "ia32"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "win32"
++      ],
++      "engines": {
++        "node": ">=12"
++      }
++    },
++    "node_modules/@esbuild/win32-x64": {
++      "version": "0.21.5",
++      "resolved": "https://registry.npmjs.org/@esbuild/win32-x64/-/win32-x64-0.21.5.tgz",
++      "integrity": "sha512-tQd/1efJuzPC6rCFwEvLtci/xNFcTZknmXs98FYDfGE4wP9ClFV98nyKrzJKVPMhdDnjzLhdUyMX4PsQAPjwIw==",
++      "cpu": [
++        "x64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "win32"
++      ],
++      "engines": {
++        "node": ">=12"
++      }
++    },
++    "node_modules/@jridgewell/gen-mapping": {
++      "version": "0.3.13",
++      "resolved": "https://registry.npmjs.org/@jridgewell/gen-mapping/-/gen-mapping-0.3.13.tgz",
++      "integrity": "sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@jridgewell/sourcemap-codec": "^1.5.0",
++        "@jridgewell/trace-mapping": "^0.3.24"
++      }
++    },
++    "node_modules/@jridgewell/remapping": {
++      "version": "2.3.5",
++      "resolved": "https://registry.npmjs.org/@jridgewell/remapping/-/remapping-2.3.5.tgz",
++      "integrity": "sha512-LI9u/+laYG4Ds1TDKSJW2YPrIlcVYOwi2fUC6xB43lueCjgxV4lffOCZCtYFiH6TNOX+tQKXx97T4IKHbhyHEQ==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@jridgewell/gen-mapping": "^0.3.5",
++        "@jridgewell/trace-mapping": "^0.3.24"
++      }
++    },
++    "node_modules/@jridgewell/resolve-uri": {
++      "version": "3.1.2",
++      "resolved": "https://registry.npmjs.org/@jridgewell/resolve-uri/-/resolve-uri-3.1.2.tgz",
++      "integrity": "sha512-bRISgCIjP20/tbWSPWMEi54QVPRZExkuD9lJL+UIxUKtwVJA8wW1Trb1jMs1RFXo1CBTNZ/5hpC9QvmKWdopKw==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=6.0.0"
++      }
++    },
++    "node_modules/@jridgewell/sourcemap-codec": {
++      "version": "1.5.5",
++      "resolved": "https://registry.npmjs.org/@jridgewell/sourcemap-codec/-/sourcemap-codec-1.5.5.tgz",
++      "integrity": "sha512-cYQ9310grqxueWbl+WuIUIaiUaDcj7WOq5fVhEljNVgRfOUhY9fy2zTvfoqWsnebh8Sl70VScFbICvJnLKB0Og==",
++      "dev": true,
++      "license": "MIT"
++    },
++    "node_modules/@jridgewell/trace-mapping": {
++      "version": "0.3.31",
++      "resolved": "https://registry.npmjs.org/@jridgewell/trace-mapping/-/trace-mapping-0.3.31.tgz",
++      "integrity": "sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@jridgewell/resolve-uri": "^3.1.0",
++        "@jridgewell/sourcemap-codec": "^1.4.14"
++      }
++    },
++    "node_modules/@nodelib/fs.scandir": {
++      "version": "2.1.5",
++      "resolved": "https://registry.npmjs.org/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz",
++      "integrity": "sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@nodelib/fs.stat": "2.0.5",
++        "run-parallel": "^1.1.9"
++      },
++      "engines": {
++        "node": ">= 8"
++      }
++    },
++    "node_modules/@nodelib/fs.stat": {
++      "version": "2.0.5",
++      "resolved": "https://registry.npmjs.org/@nodelib/fs.stat/-/fs.stat-2.0.5.tgz",
++      "integrity": "sha512-RkhPPp2zrqDAQA/2jNhnztcPAlv64XdhIp7a7454A5ovI7Bukxgt7MX7udwAu3zg1DcpPU0rz3VV1SeaqvY4+A==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">= 8"
++      }
++    },
++    "node_modules/@nodelib/fs.walk": {
++      "version": "1.2.8",
++      "resolved": "https://registry.npmjs.org/@nodelib/fs.walk/-/fs.walk-1.2.8.tgz",
++      "integrity": "sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@nodelib/fs.scandir": "2.1.5",
++        "fastq": "^1.6.0"
++      },
++      "engines": {
++        "node": ">= 8"
++      }
++    },
++    "node_modules/@rolldown/pluginutils": {
++      "version": "1.0.0-beta.27",
++      "resolved": "https://registry.npmjs.org/@rolldown/pluginutils/-/pluginutils-1.0.0-beta.27.tgz",
++      "integrity": "sha512-+d0F4MKMCbeVUJwG96uQ4SgAznZNSq93I3V+9NHA4OpvqG8mRCpGdKmK8l/dl02h2CCDHwW2FqilnTyDcAnqjA==",
++      "dev": true,
++      "license": "MIT"
++    },
++    "node_modules/@rollup/rollup-android-arm-eabi": {
++      "version": "4.60.4",
++      "resolved": "https://registry.npmjs.org/@rollup/rollup-android-arm-eabi/-/rollup-android-arm-eabi-4.60.4.tgz",
++      "integrity": "sha512-F5QXMSiFebS9hKZj02XhWLLnRpJ3B3AROP0tWbFBSj+6kCbg5m9j5JoHKd4mmSVy5mS/IMQloYgYxCuJC0fxEQ==",
++      "cpu": [
++        "arm"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "android"
++      ]
++    },
++    "node_modules/@rollup/rollup-android-arm64": {
++      "version": "4.60.4",
++      "resolved": "https://registry.npmjs.org/@rollup/rollup-android-arm64/-/rollup-android-arm64-4.60.4.tgz",
++      "integrity": "sha512-GxxTKApUpzRhof7poWvCJHRF51C67u1R7D6DiluBE8wKU1u5GWE8t+v81JvJYtbawoBFX1hLv5Ei4eVjkWokaw==",
++      "cpu": [
++        "arm64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "android"
++      ]
++    },
++    "node_modules/@rollup/rollup-darwin-arm64": {
++      "version": "4.60.4",
++      "resolved": "https://registry.npmjs.org/@rollup/rollup-darwin-arm64/-/rollup-darwin-arm64-4.60.4.tgz",
++      "integrity": "sha512-tua0TaJxMOB1R0V0RS1jFZ/RpURFDJIOR2A6jWwQeawuFyS4gBW+rntLRaQd0EQ4bd6Vp44Z2rXW+YYDBsj6IA==",
++      "cpu": [
++        "arm64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "darwin"
++      ]
++    },
++    "node_modules/@rollup/rollup-darwin-x64": {
++      "version": "4.60.4",
++      "resolved": "https://registry.npmjs.org/@rollup/rollup-darwin-x64/-/rollup-darwin-x64-4.60.4.tgz",
++      "integrity": "sha512-CSKq7MsP+5PFIcydhAiR1K0UhEI1A2jWXVKHPCBZ151yOutENwvnPocgVHkivu2kviURtCEB6zUQw0vs8RrhMg==",
++      "cpu": [
++        "x64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "darwin"
++      ]
++    },
++    "node_modules/@rollup/rollup-freebsd-arm64": {
++      "version": "4.60.4",
++      "resolved": "https://registry.npmjs.org/@rollup/rollup-freebsd-arm64/-/rollup-freebsd-arm64-4.60.4.tgz",
++      "integrity": "sha512-+O8OkVdyvXMtJEciu2wS/pzm1IxntEEQx3z5TAVy4l32G0etZn+RsA48ARRrFm6Ri8fvqPQfgrvNxSjKAbnd3g==",
++      "cpu": [
++        "arm64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "freebsd"
++      ]
++    },
++    "node_modules/@rollup/rollup-freebsd-x64": {
++      "version": "4.60.4",
++      "resolved": "https://registry.npmjs.org/@rollup/rollup-freebsd-x64/-/rollup-freebsd-x64-4.60.4.tgz",
++      "integrity": "sha512-Iw3oMskH3AfNuhU0MSN7vNbdi4me/NiYo2azqPz/Le16zHSa+3RRmliCMWWQmh4lcndccU40xcJuTYJZxNo/lw==",
++      "cpu": [
++        "x64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "freebsd"
++      ]
++    },
++    "node_modules/@rollup/rollup-linux-arm-gnueabihf": {
++      "version": "4.60.4",
++      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-arm-gnueabihf/-/rollup-linux-arm-gnueabihf-4.60.4.tgz",
++      "integrity": "sha512-EIPRXTVQpHyF8WOo219AD2yEltPehLTcTMz2fn6JsatLYSzQf00hj3rulF+yauOlF9/FtM2WpkT/hJh/KJFGhA==",
++      "cpu": [
++        "arm"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "linux"
++      ]
++    },
++    "node_modules/@rollup/rollup-linux-arm-musleabihf": {
++      "version": "4.60.4",
++      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-arm-musleabihf/-/rollup-linux-arm-musleabihf-4.60.4.tgz",
++      "integrity": "sha512-J3Yh9PzzF1Ovah2At+lHiGQdsYgArxBbXv/zHfSyaiFQEqvNv7DcW98pCrmdjCZBrqBiKrKKe2V+aaSGWuBe/w==",
++      "cpu": [
++        "arm"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "linux"
++      ]
++    },
++    "node_modules/@rollup/rollup-linux-arm64-gnu": {
++      "version": "4.60.4",
++      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-arm64-gnu/-/rollup-linux-arm64-gnu-4.60.4.tgz",
++      "integrity": "sha512-BFDEZMYfUvLn37ONE1yMBojPxnMlTFsdyNoqncT0qFq1mAfllL+ATMMJd8TeuVMiX84s1KbcxcZbXInmcO2mRg==",
++      "cpu": [
++        "arm64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "linux"
++      ]
++    },
++    "node_modules/@rollup/rollup-linux-arm64-musl": {
++      "version": "4.60.4",
++      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-arm64-musl/-/rollup-linux-arm64-musl-4.60.4.tgz",
++      "integrity": "sha512-pc9EYOSlOgdQ2uPl1o9PF6/kLSgaUosia7gOuS8mB69IxJvlclko1MECXysjs5ryez1/5zjYqx3+xYU0TU6R1A==",
++      "cpu": [
++        "arm64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "linux"
++      ]
++    },
++    "node_modules/@rollup/rollup-linux-loong64-gnu": {
++      "version": "4.60.4",
++      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-loong64-gnu/-/rollup-linux-loong64-gnu-4.60.4.tgz",
++      "integrity": "sha512-NxnomyxYerDh5n4iLrNa+sH+Z+U4BMEE46V2PgQ/hoB909i8gV1M5wPojWg9fk1jWpO3IQnOs20K4wyZuFLEFQ==",
++      "cpu": [
++        "loong64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "linux"
++      ]
++    },
++    "node_modules/@rollup/rollup-linux-loong64-musl": {
++      "version": "4.60.4",
++      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-loong64-musl/-/rollup-linux-loong64-musl-4.60.4.tgz",
++      "integrity": "sha512-nbJnQ8a3z1mtmrwImCYhc6BGpThAyYVRQxw9uKSKG4wR6aAYno9sVjJ0zaZcW9BPJX1GbrDPf+SvdWjgTuDmnw==",
++      "cpu": [
++        "loong64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "linux"
++      ]
++    },
++    "node_modules/@rollup/rollup-linux-ppc64-gnu": {
++      "version": "4.60.4",
++      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-ppc64-gnu/-/rollup-linux-ppc64-gnu-4.60.4.tgz",
++      "integrity": "sha512-2EU6acNrQLd8tYvo/LXW535wupT3m6fo7HKo6lr7ktQoItxTyOL1ZCR/GfGCuXl2vR+zmfI6eRXkSemafv+iVg==",
++      "cpu": [
++        "ppc64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "linux"
++      ]
++    },
++    "node_modules/@rollup/rollup-linux-ppc64-musl": {
++      "version": "4.60.4",
++      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-ppc64-musl/-/rollup-linux-ppc64-musl-4.60.4.tgz",
++      "integrity": "sha512-WeBtoMuaMxiiIrO2IYP3xs6GMWkJP2C0EoT8beTLkUPmzV1i/UcOSVw1d5r9KBODtHKilG5yFxsGRnBbK3wJ4A==",
++      "cpu": [
++        "ppc64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "linux"
++      ]
++    },
++    "node_modules/@rollup/rollup-linux-riscv64-gnu": {
++      "version": "4.60.4",
++      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-riscv64-gnu/-/rollup-linux-riscv64-gnu-4.60.4.tgz",
++      "integrity": "sha512-FJHFfqpKUI3A10WrWKiFbBZ7yVbGT4q4B5o1qKFFojqpaYoh9LrQgqWCmmcxQzVSXYtyB5bzkXrYzlHTs21MYA==",
++      "cpu": [
++        "riscv64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "linux"
++      ]
++    },
++    "node_modules/@rollup/rollup-linux-riscv64-musl": {
++      "version": "4.60.4",
++      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-riscv64-musl/-/rollup-linux-riscv64-musl-4.60.4.tgz",
++      "integrity": "sha512-mcEl6CUT5IAUmQf1m9FYSmVqCJlpQ8r8eyftFUHG8i9OhY7BkBXSUdnLH5DOf0wCOjcP9v/QO93zpmF1SptCCw==",
++      "cpu": [
++        "riscv64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "linux"
++      ]
++    },
++    "node_modules/@rollup/rollup-linux-s390x-gnu": {
++      "version": "4.60.4",
++      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-s390x-gnu/-/rollup-linux-s390x-gnu-4.60.4.tgz",
++      "integrity": "sha512-ynt3JxVd2w2buzoKDWIyiV1pJW93xlQic1THVLXilz429oijRpSHivZAgp65KBu+cMcgf1eVVjdnTLvPxgCuoQ==",
++      "cpu": [
++        "s390x"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "linux"
++      ]
++    },
++    "node_modules/@rollup/rollup-linux-x64-gnu": {
++      "version": "4.60.4",
++      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-x64-gnu/-/rollup-linux-x64-gnu-4.60.4.tgz",
++      "integrity": "sha512-Boiz5+MsaROEWDf+GGEwF8VMHGhlUoQMtIPjOgA5fv4osupqTVnJteQNKJwUcnUog2G55jYXH7KZFFiJe0TEzQ==",
++      "cpu": [
++        "x64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "linux"
++      ]
++    },
++    "node_modules/@rollup/rollup-linux-x64-musl": {
++      "version": "4.60.4",
++      "resolved": "https://registry.npmjs.org/@rollup/rollup-linux-x64-musl/-/rollup-linux-x64-musl-4.60.4.tgz",
++      "integrity": "sha512-+qfSY27qIrFfI/Hom04KYFw3GKZSGU4lXus51wsb5EuySfFlWRwjkKWoE9emgRw/ukoT4Udsj4W/+xxG8VbPKg==",
++      "cpu": [
++        "x64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "linux"
++      ]
++    },
++    "node_modules/@rollup/rollup-openbsd-x64": {
++      "version": "4.60.4",
++      "resolved": "https://registry.npmjs.org/@rollup/rollup-openbsd-x64/-/rollup-openbsd-x64-4.60.4.tgz",
++      "integrity": "sha512-VpTfOPHgVXEBeeR8hZ2O0F3aSso+JDWqTWmTmzcQKted54IAdUVbxE+j/MVxUsKa8L20HJhv3vUezVPoquqWjA==",
++      "cpu": [
++        "x64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "openbsd"
++      ]
++    },
++    "node_modules/@rollup/rollup-openharmony-arm64": {
++      "version": "4.60.4",
++      "resolved": "https://registry.npmjs.org/@rollup/rollup-openharmony-arm64/-/rollup-openharmony-arm64-4.60.4.tgz",
++      "integrity": "sha512-IPOsh5aRYuLv/nkU51X10Bf75Bsf6+gZdx1X+QP5QM6lIJFHHqbHLG0uJn/hWthzo13UAc2umiUorqZy3axoZg==",
++      "cpu": [
++        "arm64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "openharmony"
++      ]
++    },
++    "node_modules/@rollup/rollup-win32-arm64-msvc": {
++      "version": "4.60.4",
++      "resolved": "https://registry.npmjs.org/@rollup/rollup-win32-arm64-msvc/-/rollup-win32-arm64-msvc-4.60.4.tgz",
++      "integrity": "sha512-4QzE9E81OohJ/HKzHhsqU+zcYYojVOXlFMs1DdyMT6qXl/niOH7AVElmmEdUNHHS/oRkc++d5k6Vy85zFs0DEw==",
++      "cpu": [
++        "arm64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "win32"
++      ]
++    },
++    "node_modules/@rollup/rollup-win32-ia32-msvc": {
++      "version": "4.60.4",
++      "resolved": "https://registry.npmjs.org/@rollup/rollup-win32-ia32-msvc/-/rollup-win32-ia32-msvc-4.60.4.tgz",
++      "integrity": "sha512-zTPgT1YuHHcd+Tmx7h8aml0FWFVelV5N54oHow9SLj+GfoDy/huQ+UV396N/C7KpMDMiPspRktzM1/0r1usYEA==",
++      "cpu": [
++        "ia32"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "win32"
++      ]
++    },
++    "node_modules/@rollup/rollup-win32-x64-gnu": {
++      "version": "4.60.4",
++      "resolved": "https://registry.npmjs.org/@rollup/rollup-win32-x64-gnu/-/rollup-win32-x64-gnu-4.60.4.tgz",
++      "integrity": "sha512-DRS4G7mi9lJxqEDezIkKCaUIKCrLUUDCUaCsTPCi/rtqaC6D/jjwslMQyiDU50Ka0JKpeXeRBFBAXwArY52vBw==",
++      "cpu": [
++        "x64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "win32"
++      ]
++    },
++    "node_modules/@rollup/rollup-win32-x64-msvc": {
++      "version": "4.60.4",
++      "resolved": "https://registry.npmjs.org/@rollup/rollup-win32-x64-msvc/-/rollup-win32-x64-msvc-4.60.4.tgz",
++      "integrity": "sha512-QVTUovf40zgTqlFVrKA1uXMVvU2QWEFWfAH8Wdc48IxLvrJMQVMBRjuQyUpzZCDkakImib9eVazbWlC6ksWtJw==",
++      "cpu": [
++        "x64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "win32"
++      ]
++    },
++    "node_modules/@types/babel__core": {
++      "version": "7.20.5",
++      "resolved": "https://registry.npmjs.org/@types/babel__core/-/babel__core-7.20.5.tgz",
++      "integrity": "sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@babel/parser": "^7.20.7",
++        "@babel/types": "^7.20.7",
++        "@types/babel__generator": "*",
++        "@types/babel__template": "*",
++        "@types/babel__traverse": "*"
++      }
++    },
++    "node_modules/@types/babel__generator": {
++      "version": "7.27.0",
++      "resolved": "https://registry.npmjs.org/@types/babel__generator/-/babel__generator-7.27.0.tgz",
++      "integrity": "sha512-ufFd2Xi92OAVPYsy+P4n7/U7e68fex0+Ee8gSG9KX7eo084CWiQ4sdxktvdl0bOPupXtVJPY19zk6EwWqUQ8lg==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@babel/types": "^7.0.0"
++      }
++    },
++    "node_modules/@types/babel__template": {
++      "version": "7.4.4",
++      "resolved": "https://registry.npmjs.org/@types/babel__template/-/babel__template-7.4.4.tgz",
++      "integrity": "sha512-h/NUaSyG5EyxBIp8YRxo4RMe2/qQgvyowRwVMzhYhBCONbW8PUsg4lkFMrhgZhUe5z3L3MiLDuvyJ/CaPa2A8A==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@babel/parser": "^7.1.0",
++        "@babel/types": "^7.0.0"
++      }
++    },
++    "node_modules/@types/babel__traverse": {
++      "version": "7.28.0",
++      "resolved": "https://registry.npmjs.org/@types/babel__traverse/-/babel__traverse-7.28.0.tgz",
++      "integrity": "sha512-8PvcXf70gTDZBgt9ptxJ8elBeBjcLOAcOtoO/mPJjtji1+CdGbHgm77om1GrsPxsiE+uXIpNSK64UYaIwQXd4Q==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@babel/types": "^7.28.2"
++      }
++    },
++    "node_modules/@types/estree": {
++      "version": "1.0.8",
++      "resolved": "https://registry.npmjs.org/@types/estree/-/estree-1.0.8.tgz",
++      "integrity": "sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==",
++      "dev": true,
++      "license": "MIT"
++    },
++    "node_modules/@types/geojson": {
++      "version": "7946.0.16",
++      "resolved": "https://registry.npmjs.org/@types/geojson/-/geojson-7946.0.16.tgz",
++      "integrity": "sha512-6C8nqWur3j98U6+lXDfTUWIfgvZU+EumvpHKcYjujKH7woYyLj2sUmff0tRhrqM7BohUw7Pz3ZB1jj2gW9Fvmg==",
++      "dev": true,
++      "license": "MIT"
++    },
++    "node_modules/@types/leaflet": {
++      "version": "1.9.21",
++      "resolved": "https://registry.npmjs.org/@types/leaflet/-/leaflet-1.9.21.tgz",
++      "integrity": "sha512-TbAd9DaPGSnzp6QvtYngntMZgcRk+igFELwR2N99XZn7RXUdKgsXMR+28bUO0rPsWp8MIu/f47luLIQuSLYv/w==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@types/geojson": "*"
++      }
++    },
++    "node_modules/@types/prop-types": {
++      "version": "15.7.15",
++      "resolved": "https://registry.npmjs.org/@types/prop-types/-/prop-types-15.7.15.tgz",
++      "integrity": "sha512-F6bEyamV9jKGAFBEmlQnesRPGOQqS2+Uwi0Em15xenOxHaf2hv6L8YCVn3rPdPJOiJfPiCnLIRyvwVaqMY3MIw==",
++      "dev": true,
++      "license": "MIT"
++    },
++    "node_modules/@types/react": {
++      "version": "18.3.29",
++      "resolved": "https://registry.npmjs.org/@types/react/-/react-18.3.29.tgz",
++      "integrity": "sha512-ch0qJdr2JY0r04NXSprbK6TXOgnaJ1Tz23fm5W+z0/CBah6BSBc3n96h7K9GOtwh0HrilNWHIBzE1Ko4Dcw/Wg==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@types/prop-types": "*",
++        "csstype": "^3.2.2"
++      }
++    },
++    "node_modules/@types/react-dom": {
++      "version": "18.3.7",
++      "resolved": "https://registry.npmjs.org/@types/react-dom/-/react-dom-18.3.7.tgz",
++      "integrity": "sha512-MEe3UeoENYVFXzoXEWsvcpg6ZvlrFNlOQ7EOsvhI3CfAXwzPfO8Qwuxd40nepsYKqyyVQnTdEfv68q91yLcKrQ==",
++      "dev": true,
++      "license": "MIT",
++      "peerDependencies": {
++        "@types/react": "^18.0.0"
++      }
++    },
++    "node_modules/@vitejs/plugin-react": {
++      "version": "4.7.0",
++      "resolved": "https://registry.npmjs.org/@vitejs/plugin-react/-/plugin-react-4.7.0.tgz",
++      "integrity": "sha512-gUu9hwfWvvEDBBmgtAowQCojwZmJ5mcLn3aufeCsitijs3+f2NsrPtlAWIR6OPiqljl96GVCUbLe0HyqIpVaoA==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@babel/core": "^7.28.0",
++        "@babel/plugin-transform-react-jsx-self": "^7.27.1",
++        "@babel/plugin-transform-react-jsx-source": "^7.27.1",
++        "@rolldown/pluginutils": "1.0.0-beta.27",
++        "@types/babel__core": "^7.20.5",
++        "react-refresh": "^0.17.0"
++      },
++      "engines": {
++        "node": "^14.18.0 || >=16.0.0"
++      },
++      "peerDependencies": {
++        "vite": "^4.2.0 || ^5.0.0 || ^6.0.0 || ^7.0.0"
++      }
++    },
++    "node_modules/any-promise": {
++      "version": "1.3.0",
++      "resolved": "https://registry.npmjs.org/any-promise/-/any-promise-1.3.0.tgz",
++      "integrity": "sha512-7UvmKalWRt1wgjL1RrGxoSJW/0QZFIegpeGvZG9kjp8vrRu55XTHbwnqq2GpXm9uLbcuhxm3IqX9OB4MZR1b2A==",
++      "dev": true,
++      "license": "MIT"
++    },
++    "node_modules/anymatch": {
++      "version": "3.1.3",
++      "resolved": "https://registry.npmjs.org/anymatch/-/anymatch-3.1.3.tgz",
++      "integrity": "sha512-KMReFUr0B4t+D+OBkjR3KYqvocp2XaSzO55UcB6mgQMd3KbcE+mWTyvVV7D/zsdEbNnV6acZUutkiHQXvTr1Rw==",
++      "dev": true,
++      "license": "ISC",
++      "dependencies": {
++        "normalize-path": "^3.0.0",
++        "picomatch": "^2.0.4"
++      },
++      "engines": {
++        "node": ">= 8"
++      }
++    },
++    "node_modules/arg": {
++      "version": "5.0.2",
++      "resolved": "https://registry.npmjs.org/arg/-/arg-5.0.2.tgz",
++      "integrity": "sha512-PYjyFOLKQ9y57JvQ6QLo8dAgNqswh8M1RMJYdQduT6xbWSgK36P/Z/v+p888pM69jMMfS8Xd8F6I1kQ/I9HUGg==",
++      "dev": true,
++      "license": "MIT"
++    },
++    "node_modules/autoprefixer": {
++      "version": "10.5.0",
++      "resolved": "https://registry.npmjs.org/autoprefixer/-/autoprefixer-10.5.0.tgz",
++      "integrity": "sha512-FMhOoZV4+qR6aTUALKX2rEqGG+oyATvwBt9IIzVR5rMa2HRWPkxf+P+PAJLD1I/H5/II+HuZcBJYEFBpq39ong==",
++      "dev": true,
++      "funding": [
++        {
++          "type": "opencollective",
++          "url": "https://opencollective.com/postcss/"
++        },
++        {
++          "type": "tidelift",
++          "url": "https://tidelift.com/funding/github/npm/autoprefixer"
++        },
++        {
++          "type": "github",
++          "url": "https://github.com/sponsors/ai"
++        }
++      ],
++      "license": "MIT",
++      "dependencies": {
++        "browserslist": "^4.28.2",
++        "caniuse-lite": "^1.0.30001787",
++        "fraction.js": "^5.3.4",
++        "picocolors": "^1.1.1",
++        "postcss-value-parser": "^4.2.0"
++      },
++      "bin": {
++        "autoprefixer": "bin/autoprefixer"
++      },
++      "engines": {
++        "node": "^10 || ^12 || >=14"
++      },
++      "peerDependencies": {
++        "postcss": "^8.1.0"
++      }
++    },
++    "node_modules/baseline-browser-mapping": {
++      "version": "2.10.32",
++      "resolved": "https://registry.npmjs.org/baseline-browser-mapping/-/baseline-browser-mapping-2.10.32.tgz",
++      "integrity": "sha512-wbPvpyjJPC0zdfdKXxqEL3Ea+bOMD/87X4lftiJkkaBiuG6ALQy1SLmEd7BSmVCuwCQsBrCamgBoLyfFDD1EPg==",
++      "dev": true,
++      "license": "Apache-2.0",
++      "bin": {
++        "baseline-browser-mapping": "dist/cli.cjs"
++      },
++      "engines": {
++        "node": ">=6.0.0"
++      }
++    },
++    "node_modules/binary-extensions": {
++      "version": "2.3.0",
++      "resolved": "https://registry.npmjs.org/binary-extensions/-/binary-extensions-2.3.0.tgz",
++      "integrity": "sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=8"
++      },
++      "funding": {
++        "url": "https://github.com/sponsors/sindresorhus"
++      }
++    },
++    "node_modules/braces": {
++      "version": "3.0.3",
++      "resolved": "https://registry.npmjs.org/braces/-/braces-3.0.3.tgz",
++      "integrity": "sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "fill-range": "^7.1.1"
++      },
++      "engines": {
++        "node": ">=8"
++      }
++    },
++    "node_modules/browserslist": {
++      "version": "4.28.2",
++      "resolved": "https://registry.npmjs.org/browserslist/-/browserslist-4.28.2.tgz",
++      "integrity": "sha512-48xSriZYYg+8qXna9kwqjIVzuQxi+KYWp2+5nCYnYKPTr0LvD89Jqk2Or5ogxz0NUMfIjhh2lIUX/LyX9B4oIg==",
++      "dev": true,
++      "funding": [
++        {
++          "type": "opencollective",
++          "url": "https://opencollective.com/browserslist"
++        },
++        {
++          "type": "tidelift",
++          "url": "https://tidelift.com/funding/github/npm/browserslist"
++        },
++        {
++          "type": "github",
++          "url": "https://github.com/sponsors/ai"
++        }
++      ],
++      "license": "MIT",
++      "dependencies": {
++        "baseline-browser-mapping": "^2.10.12",
++        "caniuse-lite": "^1.0.30001782",
++        "electron-to-chromium": "^1.5.328",
++        "node-releases": "^2.0.36",
++        "update-browserslist-db": "^1.2.3"
++      },
++      "bin": {
++        "browserslist": "cli.js"
++      },
++      "engines": {
++        "node": "^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7"
++      }
++    },
++    "node_modules/camelcase-css": {
++      "version": "2.0.1",
++      "resolved": "https://registry.npmjs.org/camelcase-css/-/camelcase-css-2.0.1.tgz",
++      "integrity": "sha512-QOSvevhslijgYwRx6Rv7zKdMF8lbRmx+uQGx2+vDc+KI/eBnsy9kit5aj23AgGu3pa4t9AgwbnXWqS+iOY+2aA==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">= 6"
++      }
++    },
++    "node_modules/caniuse-lite": {
++      "version": "1.0.30001793",
++      "resolved": "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001793.tgz",
++      "integrity": "sha512-iwSsYWaCOoh26cV8NwNRViHlrfUvYsHDfRVcbtmw0Kg6PJIZZXwMkj1442FYLBGkeUf1juAsU3DTfxW579mrPA==",
++      "dev": true,
++      "funding": [
++        {
++          "type": "opencollective",
++          "url": "https://opencollective.com/browserslist"
++        },
++        {
++          "type": "tidelift",
++          "url": "https://tidelift.com/funding/github/npm/caniuse-lite"
++        },
++        {
++          "type": "github",
++          "url": "https://github.com/sponsors/ai"
++        }
++      ],
++      "license": "CC-BY-4.0"
++    },
++    "node_modules/chokidar": {
++      "version": "3.6.0",
++      "resolved": "https://registry.npmjs.org/chokidar/-/chokidar-3.6.0.tgz",
++      "integrity": "sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "anymatch": "~3.1.2",
++        "braces": "~3.0.2",
++        "glob-parent": "~5.1.2",
++        "is-binary-path": "~2.1.0",
++        "is-glob": "~4.0.1",
++        "normalize-path": "~3.0.0",
++        "readdirp": "~3.6.0"
++      },
++      "engines": {
++        "node": ">= 8.10.0"
++      },
++      "funding": {
++        "url": "https://paulmillr.com/funding/"
++      },
++      "optionalDependencies": {
++        "fsevents": "~2.3.2"
++      }
++    },
++    "node_modules/chokidar/node_modules/glob-parent": {
++      "version": "5.1.2",
++      "resolved": "https://registry.npmjs.org/glob-parent/-/glob-parent-5.1.2.tgz",
++      "integrity": "sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==",
++      "dev": true,
++      "license": "ISC",
++      "dependencies": {
++        "is-glob": "^4.0.1"
++      },
++      "engines": {
++        "node": ">= 6"
++      }
++    },
++    "node_modules/commander": {
++      "version": "4.1.1",
++      "resolved": "https://registry.npmjs.org/commander/-/commander-4.1.1.tgz",
++      "integrity": "sha512-NOKm8xhkzAjzFx8B2v5OAHT+u5pRQc2UCa2Vq9jYL/31o2wi9mxBA7LIFs3sV5VSC49z6pEhfbMULvShKj26WA==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">= 6"
++      }
++    },
++    "node_modules/convert-source-map": {
++      "version": "2.0.0",
++      "resolved": "https://registry.npmjs.org/convert-source-map/-/convert-source-map-2.0.0.tgz",
++      "integrity": "sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==",
++      "dev": true,
++      "license": "MIT"
++    },
++    "node_modules/cssesc": {
++      "version": "3.0.0",
++      "resolved": "https://registry.npmjs.org/cssesc/-/cssesc-3.0.0.tgz",
++      "integrity": "sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==",
++      "dev": true,
++      "license": "MIT",
++      "bin": {
++        "cssesc": "bin/cssesc"
++      },
++      "engines": {
++        "node": ">=4"
++      }
++    },
++    "node_modules/csstype": {
++      "version": "3.2.3",
++      "resolved": "https://registry.npmjs.org/csstype/-/csstype-3.2.3.tgz",
++      "integrity": "sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==",
++      "dev": true,
++      "license": "MIT"
++    },
++    "node_modules/debug": {
++      "version": "4.4.3",
++      "resolved": "https://registry.npmjs.org/debug/-/debug-4.4.3.tgz",
++      "integrity": "sha512-RGwwWnwQvkVfavKVt22FGLw+xYSdzARwm0ru6DhTVA3umU5hZc28V3kO4stgYryrTlLpuvgI9GiijltAjNbcqA==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "ms": "^2.1.3"
++      },
++      "engines": {
++        "node": ">=6.0"
++      },
++      "peerDependenciesMeta": {
++        "supports-color": {
++          "optional": true
++        }
++      }
++    },
++    "node_modules/didyoumean": {
++      "version": "1.2.2",
++      "resolved": "https://registry.npmjs.org/didyoumean/-/didyoumean-1.2.2.tgz",
++      "integrity": "sha512-gxtyfqMg7GKyhQmb056K7M3xszy/myH8w+B4RT+QXBQsvAOdc3XymqDDPHx1BgPgsdAA5SIifona89YtRATDzw==",
++      "dev": true,
++      "license": "Apache-2.0"
++    },
++    "node_modules/dlv": {
++      "version": "1.1.3",
++      "resolved": "https://registry.npmjs.org/dlv/-/dlv-1.1.3.tgz",
++      "integrity": "sha512-+HlytyjlPKnIG8XuRG8WvmBP8xs8P71y+SKKS6ZXWoEgLuePxtDoUEiH7WkdePWrQ5JBpE6aoVqfZfJUQkjXwA==",
++      "dev": true,
++      "license": "MIT"
++    },
++    "node_modules/electron-to-chromium": {
++      "version": "1.5.363",
++      "resolved": "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.363.tgz",
++      "integrity": "sha512-VjUKPyWzGnT1fujlkEGC/BvN70Hh70KXtAqcmniXviYlJC/ivcT+BWGPyxWVbJZLfvtKR6dqg1L7T7pgAMBtWA==",
++      "dev": true,
++      "license": "ISC"
++    },
++    "node_modules/es-errors": {
++      "version": "1.3.0",
++      "resolved": "https://registry.npmjs.org/es-errors/-/es-errors-1.3.0.tgz",
++      "integrity": "sha512-Zf5H2Kxt2xjTvbJvP2ZWLEICxA6j+hAmMzIlypy4xcBg1vKVnx89Wy0GbS+kf5cwCVFFzdCFh2XSCFNULS6csw==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">= 0.4"
++      }
++    },
++    "node_modules/esbuild": {
++      "version": "0.21.5",
++      "resolved": "https://registry.npmjs.org/esbuild/-/esbuild-0.21.5.tgz",
++      "integrity": "sha512-mg3OPMV4hXywwpoDxu3Qda5xCKQi+vCTZq8S9J/EpkhB2HzKXq4SNFZE3+NK93JYxc8VMSep+lOUSC/RVKaBqw==",
++      "dev": true,
++      "hasInstallScript": true,
++      "license": "MIT",
++      "bin": {
++        "esbuild": "bin/esbuild"
++      },
++      "engines": {
++        "node": ">=12"
++      },
++      "optionalDependencies": {
++        "@esbuild/aix-ppc64": "0.21.5",
++        "@esbuild/android-arm": "0.21.5",
++        "@esbuild/android-arm64": "0.21.5",
++        "@esbuild/android-x64": "0.21.5",
++        "@esbuild/darwin-arm64": "0.21.5",
++        "@esbuild/darwin-x64": "0.21.5",
++        "@esbuild/freebsd-arm64": "0.21.5",
++        "@esbuild/freebsd-x64": "0.21.5",
++        "@esbuild/linux-arm": "0.21.5",
++        "@esbuild/linux-arm64": "0.21.5",
++        "@esbuild/linux-ia32": "0.21.5",
++        "@esbuild/linux-loong64": "0.21.5",
++        "@esbuild/linux-mips64el": "0.21.5",
++        "@esbuild/linux-ppc64": "0.21.5",
++        "@esbuild/linux-riscv64": "0.21.5",
++        "@esbuild/linux-s390x": "0.21.5",
++        "@esbuild/linux-x64": "0.21.5",
++        "@esbuild/netbsd-x64": "0.21.5",
++        "@esbuild/openbsd-x64": "0.21.5",
++        "@esbuild/sunos-x64": "0.21.5",
++        "@esbuild/win32-arm64": "0.21.5",
++        "@esbuild/win32-ia32": "0.21.5",
++        "@esbuild/win32-x64": "0.21.5"
++      }
++    },
++    "node_modules/escalade": {
++      "version": "3.2.0",
++      "resolved": "https://registry.npmjs.org/escalade/-/escalade-3.2.0.tgz",
++      "integrity": "sha512-WUj2qlxaQtO4g6Pq5c29GTcWGDyd8itL8zTlipgECz3JesAiiOKotd8JU6otB3PACgG6xkJUyVhboMS+bje/jA==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=6"
++      }
++    },
++    "node_modules/fast-glob": {
++      "version": "3.3.3",
++      "resolved": "https://registry.npmjs.org/fast-glob/-/fast-glob-3.3.3.tgz",
++      "integrity": "sha512-7MptL8U0cqcFdzIzwOTHoilX9x5BrNqye7Z/LuC7kCMRio1EMSyqRK3BEAUD7sXRq4iT4AzTVuZdhgQ2TCvYLg==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@nodelib/fs.stat": "^2.0.2",
++        "@nodelib/fs.walk": "^1.2.3",
++        "glob-parent": "^5.1.2",
++        "merge2": "^1.3.0",
++        "micromatch": "^4.0.8"
++      },
++      "engines": {
++        "node": ">=8.6.0"
++      }
++    },
++    "node_modules/fast-glob/node_modules/glob-parent": {
++      "version": "5.1.2",
++      "resolved": "https://registry.npmjs.org/glob-parent/-/glob-parent-5.1.2.tgz",
++      "integrity": "sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==",
++      "dev": true,
++      "license": "ISC",
++      "dependencies": {
++        "is-glob": "^4.0.1"
++      },
++      "engines": {
++        "node": ">= 6"
++      }
++    },
++    "node_modules/fastq": {
++      "version": "1.20.1",
++      "resolved": "https://registry.npmjs.org/fastq/-/fastq-1.20.1.tgz",
++      "integrity": "sha512-GGToxJ/w1x32s/D2EKND7kTil4n8OVk/9mycTc4VDza13lOvpUZTGX3mFSCtV9ksdGBVzvsyAVLM6mHFThxXxw==",
++      "dev": true,
++      "license": "ISC",
++      "dependencies": {
++        "reusify": "^1.0.4"
++      }
++    },
++    "node_modules/fill-range": {
++      "version": "7.1.1",
++      "resolved": "https://registry.npmjs.org/fill-range/-/fill-range-7.1.1.tgz",
++      "integrity": "sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "to-regex-range": "^5.0.1"
++      },
++      "engines": {
++        "node": ">=8"
++      }
++    },
++    "node_modules/fraction.js": {
++      "version": "5.3.4",
++      "resolved": "https://registry.npmjs.org/fraction.js/-/fraction.js-5.3.4.tgz",
++      "integrity": "sha512-1X1NTtiJphryn/uLQz3whtY6jK3fTqoE3ohKs0tT+Ujr1W59oopxmoEh7Lu5p6vBaPbgoM0bzveAW4Qi5RyWDQ==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": "*"
++      },
++      "funding": {
++        "type": "github",
++        "url": "https://github.com/sponsors/rawify"
++      }
++    },
++    "node_modules/fsevents": {
++      "version": "2.3.3",
++      "resolved": "https://registry.npmjs.org/fsevents/-/fsevents-2.3.3.tgz",
++      "integrity": "sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==",
++      "dev": true,
++      "hasInstallScript": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "darwin"
++      ],
++      "engines": {
++        "node": "^8.16.0 || ^10.6.0 || >=11.0.0"
++      }
++    },
++    "node_modules/function-bind": {
++      "version": "1.1.2",
++      "resolved": "https://registry.npmjs.org/function-bind/-/function-bind-1.1.2.tgz",
++      "integrity": "sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA==",
++      "dev": true,
++      "license": "MIT",
++      "funding": {
++        "url": "https://github.com/sponsors/ljharb"
++      }
++    },
++    "node_modules/gensync": {
++      "version": "1.0.0-beta.2",
++      "resolved": "https://registry.npmjs.org/gensync/-/gensync-1.0.0-beta.2.tgz",
++      "integrity": "sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=6.9.0"
++      }
++    },
++    "node_modules/glob-parent": {
++      "version": "6.0.2",
++      "resolved": "https://registry.npmjs.org/glob-parent/-/glob-parent-6.0.2.tgz",
++      "integrity": "sha512-XxwI8EOhVQgWp6iDL+3b0r86f4d6AX6zSU55HfB4ydCEuXLXc5FcYeOu+nnGftS4TEju/11rt4KJPTMgbfmv4A==",
++      "dev": true,
++      "license": "ISC",
++      "dependencies": {
++        "is-glob": "^4.0.3"
++      },
++      "engines": {
++        "node": ">=10.13.0"
++      }
++    },
++    "node_modules/hasown": {
++      "version": "2.0.3",
++      "resolved": "https://registry.npmjs.org/hasown/-/hasown-2.0.3.tgz",
++      "integrity": "sha512-ej4AhfhfL2Q2zpMmLo7U1Uv9+PyhIZpgQLGT1F9miIGmiCJIoCgSmczFdrc97mWT4kVY72KA+WnnhJ5pghSvSg==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "function-bind": "^1.1.2"
++      },
++      "engines": {
++        "node": ">= 0.4"
++      }
++    },
++    "node_modules/is-binary-path": {
++      "version": "2.1.0",
++      "resolved": "https://registry.npmjs.org/is-binary-path/-/is-binary-path-2.1.0.tgz",
++      "integrity": "sha512-ZMERYes6pDydyuGidse7OsHxtbI7WVeUEozgR/g7rd0xUimYNlvZRE/K2MgZTjWy725IfelLeVcEM97mmtRGXw==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "binary-extensions": "^2.0.0"
++      },
++      "engines": {
++        "node": ">=8"
++      }
++    },
++    "node_modules/is-core-module": {
++      "version": "2.16.2",
++      "resolved": "https://registry.npmjs.org/is-core-module/-/is-core-module-2.16.2.tgz",
++      "integrity": "sha512-evOr8xfXKxE6qSR0hSXL2r3sd7ALj8+7jQEUvPYcm5sgZFdJ+AYzT6yNmJenvIYQBgIGwfwz08sL8zoL7yq2BA==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "hasown": "^2.0.3"
++      },
++      "engines": {
++        "node": ">= 0.4"
++      },
++      "funding": {
++        "url": "https://github.com/sponsors/ljharb"
++      }
++    },
++    "node_modules/is-extglob": {
++      "version": "2.1.1",
++      "resolved": "https://registry.npmjs.org/is-extglob/-/is-extglob-2.1.1.tgz",
++      "integrity": "sha512-SbKbANkN603Vi4jEZv49LeVJMn4yGwsbzZworEoyEiutsN3nJYdbO36zfhGJ6QEDpOZIFkDtnq5JRxmvl3jsoQ==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=0.10.0"
++      }
++    },
++    "node_modules/is-glob": {
++      "version": "4.0.3",
++      "resolved": "https://registry.npmjs.org/is-glob/-/is-glob-4.0.3.tgz",
++      "integrity": "sha512-xelSayHH36ZgE7ZWhli7pW34hNbNl8Ojv5KVmkJD4hBdD3th8Tfk9vYasLM+mXWOZhFkgZfxhLSnrwRr4elSSg==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "is-extglob": "^2.1.1"
++      },
++      "engines": {
++        "node": ">=0.10.0"
++      }
++    },
++    "node_modules/is-number": {
++      "version": "7.0.0",
++      "resolved": "https://registry.npmjs.org/is-number/-/is-number-7.0.0.tgz",
++      "integrity": "sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=0.12.0"
++      }
++    },
++    "node_modules/jiti": {
++      "version": "1.21.7",
++      "resolved": "https://registry.npmjs.org/jiti/-/jiti-1.21.7.tgz",
++      "integrity": "sha512-/imKNG4EbWNrVjoNC/1H5/9GFy+tqjGBHCaSsN+P2RnPqjsLmv6UD3Ej+Kj8nBWaRAwyk7kK5ZUc+OEatnTR3A==",
++      "dev": true,
++      "license": "MIT",
++      "bin": {
++        "jiti": "bin/jiti.js"
++      }
++    },
++    "node_modules/js-tokens": {
++      "version": "4.0.0",
++      "resolved": "https://registry.npmjs.org/js-tokens/-/js-tokens-4.0.0.tgz",
++      "integrity": "sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==",
++      "license": "MIT"
++    },
++    "node_modules/jsesc": {
++      "version": "3.1.0",
++      "resolved": "https://registry.npmjs.org/jsesc/-/jsesc-3.1.0.tgz",
++      "integrity": "sha512-/sM3dO2FOzXjKQhJuo0Q173wf2KOo8t4I8vHy6lF9poUp7bKT0/NHE8fPX23PwfhnykfqnC2xRxOnVw5XuGIaA==",
++      "dev": true,
++      "license": "MIT",
++      "bin": {
++        "jsesc": "bin/jsesc"
++      },
++      "engines": {
++        "node": ">=6"
++      }
++    },
++    "node_modules/json5": {
++      "version": "2.2.3",
++      "resolved": "https://registry.npmjs.org/json5/-/json5-2.2.3.tgz",
++      "integrity": "sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==",
++      "dev": true,
++      "license": "MIT",
++      "bin": {
++        "json5": "lib/cli.js"
++      },
++      "engines": {
++        "node": ">=6"
++      }
++    },
++    "node_modules/leaflet": {
++      "version": "1.9.4",
++      "resolved": "https://registry.npmjs.org/leaflet/-/leaflet-1.9.4.tgz",
++      "integrity": "sha512-nxS1ynzJOmOlHp+iL3FyWqK89GtNL8U8rvlMOsQdTTssxZwCXh8N2NB3GDQOL+YR3XnWyZAxwQixURb+FA74PA==",
++      "license": "BSD-2-Clause"
++    },
++    "node_modules/lilconfig": {
++      "version": "3.1.3",
++      "resolved": "https://registry.npmjs.org/lilconfig/-/lilconfig-3.1.3.tgz",
++      "integrity": "sha512-/vlFKAoH5Cgt3Ie+JLhRbwOsCQePABiU3tJ1egGvyQ+33R/vcwM2Zl2QR/LzjsBeItPt3oSVXapn+m4nQDvpzw==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=14"
++      },
++      "funding": {
++        "url": "https://github.com/sponsors/antonk52"
++      }
++    },
++    "node_modules/lines-and-columns": {
++      "version": "1.2.4",
++      "resolved": "https://registry.npmjs.org/lines-and-columns/-/lines-and-columns-1.2.4.tgz",
++      "integrity": "sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==",
++      "dev": true,
++      "license": "MIT"
++    },
++    "node_modules/loose-envify": {
++      "version": "1.4.0",
++      "resolved": "https://registry.npmjs.org/loose-envify/-/loose-envify-1.4.0.tgz",
++      "integrity": "sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==",
++      "license": "MIT",
++      "dependencies": {
++        "js-tokens": "^3.0.0 || ^4.0.0"
++      },
++      "bin": {
++        "loose-envify": "cli.js"
++      }
++    },
++    "node_modules/lru-cache": {
++      "version": "5.1.1",
++      "resolved": "https://registry.npmjs.org/lru-cache/-/lru-cache-5.1.1.tgz",
++      "integrity": "sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==",
++      "dev": true,
++      "license": "ISC",
++      "dependencies": {
++        "yallist": "^3.0.2"
++      }
++    },
++    "node_modules/merge2": {
++      "version": "1.4.1",
++      "resolved": "https://registry.npmjs.org/merge2/-/merge2-1.4.1.tgz",
++      "integrity": "sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">= 8"
++      }
++    },
++    "node_modules/micromatch": {
++      "version": "4.0.8",
++      "resolved": "https://registry.npmjs.org/micromatch/-/micromatch-4.0.8.tgz",
++      "integrity": "sha512-PXwfBhYu0hBCPw8Dn0E+WDYb7af3dSLVWKi3HGv84IdF4TyFoC0ysxFd0Goxw7nSv4T/PzEJQxsYsEiFCKo2BA==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "braces": "^3.0.3",
++        "picomatch": "^2.3.1"
++      },
++      "engines": {
++        "node": ">=8.6"
++      }
++    },
++    "node_modules/ms": {
++      "version": "2.1.3",
++      "resolved": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz",
++      "integrity": "sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==",
++      "dev": true,
++      "license": "MIT"
++    },
++    "node_modules/mz": {
++      "version": "2.7.0",
++      "resolved": "https://registry.npmjs.org/mz/-/mz-2.7.0.tgz",
++      "integrity": "sha512-z81GNO7nnYMEhrGh9LeymoE4+Yr0Wn5McHIZMK5cfQCl+NDX08sCZgUc9/6MHni9IWuFLm1Z3HTCXu2z9fN62Q==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "any-promise": "^1.0.0",
++        "object-assign": "^4.0.1",
++        "thenify-all": "^1.0.0"
++      }
++    },
++    "node_modules/nanoid": {
++      "version": "3.3.12",
++      "resolved": "https://registry.npmjs.org/nanoid/-/nanoid-3.3.12.tgz",
++      "integrity": "sha512-ZB9RH/39qpq5Vu6Y+NmUaFhQR6pp+M2Xt76XBnEwDaGcVAqhlvxrl3B2bKS5D3NH3QR76v3aSrKaF/Kiy7lEtQ==",
++      "dev": true,
++      "funding": [
++        {
++          "type": "github",
++          "url": "https://github.com/sponsors/ai"
++        }
++      ],
++      "license": "MIT",
++      "bin": {
++        "nanoid": "bin/nanoid.cjs"
++      },
++      "engines": {
++        "node": "^10 || ^12 || ^13.7 || ^14 || >=15.0.1"
++      }
++    },
++    "node_modules/node-releases": {
++      "version": "2.0.46",
++      "resolved": "https://registry.npmjs.org/node-releases/-/node-releases-2.0.46.tgz",
++      "integrity": "sha512-GYVXHE2KnrzAfsAjl4uP++evGFCrAU1jta4ubEjIG7YWt/64Gqv66a30yKwWczVjA6j3bM4nBwH7Pk1JmDHaxQ==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=18"
++      }
++    },
++    "node_modules/normalize-path": {
++      "version": "3.0.0",
++      "resolved": "https://registry.npmjs.org/normalize-path/-/normalize-path-3.0.0.tgz",
++      "integrity": "sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=0.10.0"
++      }
++    },
++    "node_modules/object-assign": {
++      "version": "4.1.1",
++      "resolved": "https://registry.npmjs.org/object-assign/-/object-assign-4.1.1.tgz",
++      "integrity": "sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=0.10.0"
++      }
++    },
++    "node_modules/object-hash": {
++      "version": "3.0.0",
++      "resolved": "https://registry.npmjs.org/object-hash/-/object-hash-3.0.0.tgz",
++      "integrity": "sha512-RSn9F68PjH9HqtltsSnqYC1XXoWe9Bju5+213R98cNGttag9q9yAOTzdbsqvIa7aNm5WffBZFpWYr2aWrklWAw==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">= 6"
++      }
++    },
++    "node_modules/path-parse": {
++      "version": "1.0.7",
++      "resolved": "https://registry.npmjs.org/path-parse/-/path-parse-1.0.7.tgz",
++      "integrity": "sha512-LDJzPVEEEPR+y48z93A0Ed0yXb8pAByGWo/k5YYdYgpY2/2EsOsksJrq7lOHxryrVOn1ejG6oAp8ahvOIQD8sw==",
++      "dev": true,
++      "license": "MIT"
++    },
++    "node_modules/picocolors": {
++      "version": "1.1.1",
++      "resolved": "https://registry.npmjs.org/picocolors/-/picocolors-1.1.1.tgz",
++      "integrity": "sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==",
++      "dev": true,
++      "license": "ISC"
++    },
++    "node_modules/picomatch": {
++      "version": "2.3.2",
++      "resolved": "https://registry.npmjs.org/picomatch/-/picomatch-2.3.2.tgz",
++      "integrity": "sha512-V7+vQEJ06Z+c5tSye8S+nHUfI51xoXIXjHQ99cQtKUkQqqO1kO/KCJUfZXuB47h/YBlDhah2H3hdUGXn8ie0oA==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=8.6"
++      },
++      "funding": {
++        "url": "https://github.com/sponsors/jonschlinkert"
++      }
++    },
++    "node_modules/pify": {
++      "version": "2.3.0",
++      "resolved": "https://registry.npmjs.org/pify/-/pify-2.3.0.tgz",
++      "integrity": "sha512-udgsAY+fTnvv7kI7aaxbqwWNb0AHiB0qBO89PZKPkoTmGOgdbrHDKD+0B2X4uTfJ/FT1R09r9gTsjUjNJotuog==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=0.10.0"
++      }
++    },
++    "node_modules/pirates": {
++      "version": "4.0.7",
++      "resolved": "https://registry.npmjs.org/pirates/-/pirates-4.0.7.tgz",
++      "integrity": "sha512-TfySrs/5nm8fQJDcBDuUng3VOUKsd7S+zqvbOTiGXHfxX4wK31ard+hoNuvkicM/2YFzlpDgABOevKSsB4G/FA==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">= 6"
++      }
++    },
++    "node_modules/postcss": {
++      "version": "8.5.15",
++      "resolved": "https://registry.npmjs.org/postcss/-/postcss-8.5.15.tgz",
++      "integrity": "sha512-FfR8sjd4em2T6fb3I2MwAJU7HWVMr9zba+enmQeeWFfCbm+UOC/0X4DS8XtpUTMwWMGbjKYP7xjfNekzyGmB3A==",
++      "dev": true,
++      "funding": [
++        {
++          "type": "opencollective",
++          "url": "https://opencollective.com/postcss/"
++        },
++        {
++          "type": "tidelift",
++          "url": "https://tidelift.com/funding/github/npm/postcss"
++        },
++        {
++          "type": "github",
++          "url": "https://github.com/sponsors/ai"
++        }
++      ],
++      "license": "MIT",
++      "dependencies": {
++        "nanoid": "^3.3.12",
++        "picocolors": "^1.1.1",
++        "source-map-js": "^1.2.1"
++      },
++      "engines": {
++        "node": "^10 || ^12 || >=14"
++      }
++    },
++    "node_modules/postcss-import": {
++      "version": "15.1.0",
++      "resolved": "https://registry.npmjs.org/postcss-import/-/postcss-import-15.1.0.tgz",
++      "integrity": "sha512-hpr+J05B2FVYUAXHeK1YyI267J/dDDhMU6B6civm8hSY1jYJnBXxzKDKDswzJmtLHryrjhnDjqqp/49t8FALew==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "postcss-value-parser": "^4.0.0",
++        "read-cache": "^1.0.0",
++        "resolve": "^1.1.7"
++      },
++      "engines": {
++        "node": ">=14.0.0"
++      },
++      "peerDependencies": {
++        "postcss": "^8.0.0"
++      }
++    },
++    "node_modules/postcss-js": {
++      "version": "4.1.0",
++      "resolved": "https://registry.npmjs.org/postcss-js/-/postcss-js-4.1.0.tgz",
++      "integrity": "sha512-oIAOTqgIo7q2EOwbhb8UalYePMvYoIeRY2YKntdpFQXNosSu3vLrniGgmH9OKs/qAkfoj5oB3le/7mINW1LCfw==",
++      "dev": true,
++      "funding": [
++        {
++          "type": "opencollective",
++          "url": "https://opencollective.com/postcss/"
++        },
++        {
++          "type": "github",
++          "url": "https://github.com/sponsors/ai"
++        }
++      ],
++      "license": "MIT",
++      "dependencies": {
++        "camelcase-css": "^2.0.1"
++      },
++      "engines": {
++        "node": "^12 || ^14 || >= 16"
++      },
++      "peerDependencies": {
++        "postcss": "^8.4.21"
++      }
++    },
++    "node_modules/postcss-load-config": {
++      "version": "6.0.1",
++      "resolved": "https://registry.npmjs.org/postcss-load-config/-/postcss-load-config-6.0.1.tgz",
++      "integrity": "sha512-oPtTM4oerL+UXmx+93ytZVN82RrlY/wPUV8IeDxFrzIjXOLF1pN+EmKPLbubvKHT2HC20xXsCAH2Z+CKV6Oz/g==",
++      "dev": true,
++      "funding": [
++        {
++          "type": "opencollective",
++          "url": "https://opencollective.com/postcss/"
++        },
++        {
++          "type": "github",
++          "url": "https://github.com/sponsors/ai"
++        }
++      ],
++      "license": "MIT",
++      "dependencies": {
++        "lilconfig": "^3.1.1"
++      },
++      "engines": {
++        "node": ">= 18"
++      },
++      "peerDependencies": {
++        "jiti": ">=1.21.0",
++        "postcss": ">=8.0.9",
++        "tsx": "^4.8.1",
++        "yaml": "^2.4.2"
++      },
++      "peerDependenciesMeta": {
++        "jiti": {
++          "optional": true
++        },
++        "postcss": {
++          "optional": true
++        },
++        "tsx": {
++          "optional": true
++        },
++        "yaml": {
++          "optional": true
++        }
++      }
++    },
++    "node_modules/postcss-nested": {
++      "version": "6.2.0",
++      "resolved": "https://registry.npmjs.org/postcss-nested/-/postcss-nested-6.2.0.tgz",
++      "integrity": "sha512-HQbt28KulC5AJzG+cZtj9kvKB93CFCdLvog1WFLf1D+xmMvPGlBstkpTEZfK5+AN9hfJocyBFCNiqyS48bpgzQ==",
++      "dev": true,
++      "funding": [
++        {
++          "type": "opencollective",
++          "url": "https://opencollective.com/postcss/"
++        },
++        {
++          "type": "github",
++          "url": "https://github.com/sponsors/ai"
++        }
++      ],
++      "license": "MIT",
++      "dependencies": {
++        "postcss-selector-parser": "^6.1.1"
++      },
++      "engines": {
++        "node": ">=12.0"
++      },
++      "peerDependencies": {
++        "postcss": "^8.2.14"
++      }
++    },
++    "node_modules/postcss-selector-parser": {
++      "version": "6.1.2",
++      "resolved": "https://registry.npmjs.org/postcss-selector-parser/-/postcss-selector-parser-6.1.2.tgz",
++      "integrity": "sha512-Q8qQfPiZ+THO/3ZrOrO0cJJKfpYCagtMUkXbnEfmgUjwXg6z/WBeOyS9APBBPCTSiDV+s4SwQGu8yFsiMRIudg==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "cssesc": "^3.0.0",
++        "util-deprecate": "^1.0.2"
++      },
++      "engines": {
++        "node": ">=4"
++      }
++    },
++    "node_modules/postcss-value-parser": {
++      "version": "4.2.0",
++      "resolved": "https://registry.npmjs.org/postcss-value-parser/-/postcss-value-parser-4.2.0.tgz",
++      "integrity": "sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==",
++      "dev": true,
++      "license": "MIT"
++    },
++    "node_modules/queue-microtask": {
++      "version": "1.2.3",
++      "resolved": "https://registry.npmjs.org/queue-microtask/-/queue-microtask-1.2.3.tgz",
++      "integrity": "sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==",
++      "dev": true,
++      "funding": [
++        {
++          "type": "github",
++          "url": "https://github.com/sponsors/feross"
++        },
++        {
++          "type": "patreon",
++          "url": "https://www.patreon.com/feross"
++        },
++        {
++          "type": "consulting",
++          "url": "https://feross.org/support"
++        }
++      ],
++      "license": "MIT"
++    },
++    "node_modules/react": {
++      "version": "18.3.1",
++      "resolved": "https://registry.npmjs.org/react/-/react-18.3.1.tgz",
++      "integrity": "sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==",
++      "license": "MIT",
++      "dependencies": {
++        "loose-envify": "^1.1.0"
++      },
++      "engines": {
++        "node": ">=0.10.0"
++      }
++    },
++    "node_modules/react-dom": {
++      "version": "18.3.1",
++      "resolved": "https://registry.npmjs.org/react-dom/-/react-dom-18.3.1.tgz",
++      "integrity": "sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==",
++      "license": "MIT",
++      "dependencies": {
++        "loose-envify": "^1.1.0",
++        "scheduler": "^0.23.2"
++      },
++      "peerDependencies": {
++        "react": "^18.3.1"
++      }
++    },
++    "node_modules/react-refresh": {
++      "version": "0.17.0",
++      "resolved": "https://registry.npmjs.org/react-refresh/-/react-refresh-0.17.0.tgz",
++      "integrity": "sha512-z6F7K9bV85EfseRCp2bzrpyQ0Gkw1uLoCel9XBVWPg/TjRj94SkJzUTGfOa4bs7iJvBWtQG0Wq7wnI0syw3EBQ==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=0.10.0"
++      }
++    },
++    "node_modules/read-cache": {
++      "version": "1.0.0",
++      "resolved": "https://registry.npmjs.org/read-cache/-/read-cache-1.0.0.tgz",
++      "integrity": "sha512-Owdv/Ft7IjOgm/i0xvNDZ1LrRANRfew4b2prF3OWMQLxLfu3bS8FVhCsrSCMK4lR56Y9ya+AThoTpDCTxCmpRA==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "pify": "^2.3.0"
++      }
++    },
++    "node_modules/readdirp": {
++      "version": "3.6.0",
++      "resolved": "https://registry.npmjs.org/readdirp/-/readdirp-3.6.0.tgz",
++      "integrity": "sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "picomatch": "^2.2.1"
++      },
++      "engines": {
++        "node": ">=8.10.0"
++      }
++    },
++    "node_modules/resolve": {
++      "version": "1.22.12",
++      "resolved": "https://registry.npmjs.org/resolve/-/resolve-1.22.12.tgz",
++      "integrity": "sha512-TyeJ1zif53BPfHootBGwPRYT1RUt6oGWsaQr8UyZW/eAm9bKoijtvruSDEmZHm92CwS9nj7/fWttqPCgzep8CA==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "es-errors": "^1.3.0",
++        "is-core-module": "^2.16.1",
++        "path-parse": "^1.0.7",
++        "supports-preserve-symlinks-flag": "^1.0.0"
++      },
++      "bin": {
++        "resolve": "bin/resolve"
++      },
++      "engines": {
++        "node": ">= 0.4"
++      },
++      "funding": {
++        "url": "https://github.com/sponsors/ljharb"
++      }
++    },
++    "node_modules/reusify": {
++      "version": "1.1.0",
++      "resolved": "https://registry.npmjs.org/reusify/-/reusify-1.1.0.tgz",
++      "integrity": "sha512-g6QUff04oZpHs0eG5p83rFLhHeV00ug/Yf9nZM6fLeUrPguBTkTQOdpAWWspMh55TZfVQDPaN3NQJfbVRAxdIw==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "iojs": ">=1.0.0",
++        "node": ">=0.10.0"
++      }
++    },
++    "node_modules/rollup": {
++      "version": "4.60.4",
++      "resolved": "https://registry.npmjs.org/rollup/-/rollup-4.60.4.tgz",
++      "integrity": "sha512-WHeFSbZYsPu3+bLoNRUuAO+wavNlocOPf3wSHTP7hcFKVnJeWsYlCDbr3mTS14FCizf9ccIxXA8sGL8zKeQN3g==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@types/estree": "1.0.8"
++      },
++      "bin": {
++        "rollup": "dist/bin/rollup"
++      },
++      "engines": {
++        "node": ">=18.0.0",
++        "npm": ">=8.0.0"
++      },
++      "optionalDependencies": {
++        "@rollup/rollup-android-arm-eabi": "4.60.4",
++        "@rollup/rollup-android-arm64": "4.60.4",
++        "@rollup/rollup-darwin-arm64": "4.60.4",
++        "@rollup/rollup-darwin-x64": "4.60.4",
++        "@rollup/rollup-freebsd-arm64": "4.60.4",
++        "@rollup/rollup-freebsd-x64": "4.60.4",
++        "@rollup/rollup-linux-arm-gnueabihf": "4.60.4",
++        "@rollup/rollup-linux-arm-musleabihf": "4.60.4",
++        "@rollup/rollup-linux-arm64-gnu": "4.60.4",
++        "@rollup/rollup-linux-arm64-musl": "4.60.4",
++        "@rollup/rollup-linux-loong64-gnu": "4.60.4",
++        "@rollup/rollup-linux-loong64-musl": "4.60.4",
++        "@rollup/rollup-linux-ppc64-gnu": "4.60.4",
++        "@rollup/rollup-linux-ppc64-musl": "4.60.4",
++        "@rollup/rollup-linux-riscv64-gnu": "4.60.4",
++        "@rollup/rollup-linux-riscv64-musl": "4.60.4",
++        "@rollup/rollup-linux-s390x-gnu": "4.60.4",
++        "@rollup/rollup-linux-x64-gnu": "4.60.4",
++        "@rollup/rollup-linux-x64-musl": "4.60.4",
++        "@rollup/rollup-openbsd-x64": "4.60.4",
++        "@rollup/rollup-openharmony-arm64": "4.60.4",
++        "@rollup/rollup-win32-arm64-msvc": "4.60.4",
++        "@rollup/rollup-win32-ia32-msvc": "4.60.4",
++        "@rollup/rollup-win32-x64-gnu": "4.60.4",
++        "@rollup/rollup-win32-x64-msvc": "4.60.4",
++        "fsevents": "~2.3.2"
++      }
++    },
++    "node_modules/run-parallel": {
++      "version": "1.2.0",
++      "resolved": "https://registry.npmjs.org/run-parallel/-/run-parallel-1.2.0.tgz",
++      "integrity": "sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==",
++      "dev": true,
++      "funding": [
++        {
++          "type": "github",
++          "url": "https://github.com/sponsors/feross"
++        },
++        {
++          "type": "patreon",
++          "url": "https://www.patreon.com/feross"
++        },
++        {
++          "type": "consulting",
++          "url": "https://feross.org/support"
++        }
++      ],
++      "license": "MIT",
++      "dependencies": {
++        "queue-microtask": "^1.2.2"
++      }
++    },
++    "node_modules/scheduler": {
++      "version": "0.23.2",
++      "resolved": "https://registry.npmjs.org/scheduler/-/scheduler-0.23.2.tgz",
++      "integrity": "sha512-UOShsPwz7NrMUqhR6t0hWjFduvOzbtv7toDH1/hIrfRNIDBnnBWd0CwJTGvTpngVlmwGCdP9/Zl/tVrDqcuYzQ==",
++      "license": "MIT",
++      "dependencies": {
++        "loose-envify": "^1.1.0"
++      }
++    },
++    "node_modules/semver": {
++      "version": "6.3.1",
++      "resolved": "https://registry.npmjs.org/semver/-/semver-6.3.1.tgz",
++      "integrity": "sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==",
++      "dev": true,
++      "license": "ISC",
++      "bin": {
++        "semver": "bin/semver.js"
++      }
++    },
++    "node_modules/source-map-js": {
++      "version": "1.2.1",
++      "resolved": "https://registry.npmjs.org/source-map-js/-/source-map-js-1.2.1.tgz",
++      "integrity": "sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==",
++      "dev": true,
++      "license": "BSD-3-Clause",
++      "engines": {
++        "node": ">=0.10.0"
++      }
++    },
++    "node_modules/sucrase": {
++      "version": "3.35.1",
++      "resolved": "https://registry.npmjs.org/sucrase/-/sucrase-3.35.1.tgz",
++      "integrity": "sha512-DhuTmvZWux4H1UOnWMB3sk0sbaCVOoQZjv8u1rDoTV0HTdGem9hkAZtl4JZy8P2z4Bg0nT+YMeOFyVr4zcG5Tw==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@jridgewell/gen-mapping": "^0.3.2",
++        "commander": "^4.0.0",
++        "lines-and-columns": "^1.1.6",
++        "mz": "^2.7.0",
++        "pirates": "^4.0.1",
++        "tinyglobby": "^0.2.11",
++        "ts-interface-checker": "^0.1.9"
++      },
++      "bin": {
++        "sucrase": "bin/sucrase",
++        "sucrase-node": "bin/sucrase-node"
++      },
++      "engines": {
++        "node": ">=16 || 14 >=14.17"
++      }
++    },
++    "node_modules/supports-preserve-symlinks-flag": {
++      "version": "1.0.0",
++      "resolved": "https://registry.npmjs.org/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz",
++      "integrity": "sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">= 0.4"
++      },
++      "funding": {
++        "url": "https://github.com/sponsors/ljharb"
++      }
++    },
++    "node_modules/tailwindcss": {
++      "version": "3.4.19",
++      "resolved": "https://registry.npmjs.org/tailwindcss/-/tailwindcss-3.4.19.tgz",
++      "integrity": "sha512-3ofp+LL8E+pK/JuPLPggVAIaEuhvIz4qNcf3nA1Xn2o/7fb7s/TYpHhwGDv1ZU3PkBluUVaF8PyCHcm48cKLWQ==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@alloc/quick-lru": "^5.2.0",
++        "arg": "^5.0.2",
++        "chokidar": "^3.6.0",
++        "didyoumean": "^1.2.2",
++        "dlv": "^1.1.3",
++        "fast-glob": "^3.3.2",
++        "glob-parent": "^6.0.2",
++        "is-glob": "^4.0.3",
++        "jiti": "^1.21.7",
++        "lilconfig": "^3.1.3",
++        "micromatch": "^4.0.8",
++        "normalize-path": "^3.0.0",
++        "object-hash": "^3.0.0",
++        "picocolors": "^1.1.1",
++        "postcss": "^8.4.47",
++        "postcss-import": "^15.1.0",
++        "postcss-js": "^4.0.1",
++        "postcss-load-config": "^4.0.2 || ^5.0 || ^6.0",
++        "postcss-nested": "^6.2.0",
++        "postcss-selector-parser": "^6.1.2",
++        "resolve": "^1.22.8",
++        "sucrase": "^3.35.0"
++      },
++      "bin": {
++        "tailwind": "lib/cli.js",
++        "tailwindcss": "lib/cli.js"
++      },
++      "engines": {
++        "node": ">=14.0.0"
++      }
++    },
++    "node_modules/thenify": {
++      "version": "3.3.1",
++      "resolved": "https://registry.npmjs.org/thenify/-/thenify-3.3.1.tgz",
++      "integrity": "sha512-RVZSIV5IG10Hk3enotrhvz0T9em6cyHBLkH/YAZuKqd8hRkKhSfCGIcP2KUY0EPxndzANBmNllzWPwak+bheSw==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "any-promise": "^1.0.0"
++      }
++    },
++    "node_modules/thenify-all": {
++      "version": "1.6.0",
++      "resolved": "https://registry.npmjs.org/thenify-all/-/thenify-all-1.6.0.tgz",
++      "integrity": "sha512-RNxQH/qI8/t3thXJDwcstUO4zeqo64+Uy/+sNVRBx4Xn2OX+OZ9oP+iJnNFqplFra2ZUVeKCSa2oVWi3T4uVmA==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "thenify": ">= 3.1.0 < 4"
++      },
++      "engines": {
++        "node": ">=0.8"
++      }
++    },
++    "node_modules/tinyglobby": {
++      "version": "0.2.16",
++      "resolved": "https://registry.npmjs.org/tinyglobby/-/tinyglobby-0.2.16.tgz",
++      "integrity": "sha512-pn99VhoACYR8nFHhxqix+uvsbXineAasWm5ojXoN8xEwK5Kd3/TrhNn1wByuD52UxWRLy8pu+kRMniEi6Eq9Zg==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "fdir": "^6.5.0",
++        "picomatch": "^4.0.4"
++      },
++      "engines": {
++        "node": ">=12.0.0"
++      },
++      "funding": {
++        "url": "https://github.com/sponsors/SuperchupuDev"
++      }
++    },
++    "node_modules/tinyglobby/node_modules/fdir": {
++      "version": "6.5.0",
++      "resolved": "https://registry.npmjs.org/fdir/-/fdir-6.5.0.tgz",
++      "integrity": "sha512-tIbYtZbucOs0BRGqPJkshJUYdL+SDH7dVM8gjy+ERp3WAUjLEFJE+02kanyHtwjWOnwrKYBiwAmM0p4kLJAnXg==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=12.0.0"
++      },
++      "peerDependencies": {
++        "picomatch": "^3 || ^4"
++      },
++      "peerDependenciesMeta": {
++        "picomatch": {
++          "optional": true
++        }
++      }
++    },
++    "node_modules/tinyglobby/node_modules/picomatch": {
++      "version": "4.0.4",
++      "resolved": "https://registry.npmjs.org/picomatch/-/picomatch-4.0.4.tgz",
++      "integrity": "sha512-QP88BAKvMam/3NxH6vj2o21R6MjxZUAd6nlwAS/pnGvN9IVLocLHxGYIzFhg6fUQ+5th6P4dv4eW9jX3DSIj7A==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=12"
++      },
++      "funding": {
++        "url": "https://github.com/sponsors/jonschlinkert"
++      }
++    },
++    "node_modules/to-regex-range": {
++      "version": "5.0.1",
++      "resolved": "https://registry.npmjs.org/to-regex-range/-/to-regex-range-5.0.1.tgz",
++      "integrity": "sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "is-number": "^7.0.0"
++      },
++      "engines": {
++        "node": ">=8.0"
++      }
++    },
++    "node_modules/ts-interface-checker": {
++      "version": "0.1.13",
++      "resolved": "https://registry.npmjs.org/ts-interface-checker/-/ts-interface-checker-0.1.13.tgz",
++      "integrity": "sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==",
++      "dev": true,
++      "license": "Apache-2.0"
++    },
++    "node_modules/typescript": {
++      "version": "5.9.3",
++      "resolved": "https://registry.npmjs.org/typescript/-/typescript-5.9.3.tgz",
++      "integrity": "sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==",
++      "dev": true,
++      "license": "Apache-2.0",
++      "bin": {
++        "tsc": "bin/tsc",
++        "tsserver": "bin/tsserver"
++      },
++      "engines": {
++        "node": ">=14.17"
++      }
++    },
++    "node_modules/update-browserslist-db": {
++      "version": "1.2.3",
++      "resolved": "https://registry.npmjs.org/update-browserslist-db/-/update-browserslist-db-1.2.3.tgz",
++      "integrity": "sha512-Js0m9cx+qOgDxo0eMiFGEueWztz+d4+M3rGlmKPT+T4IS/jP4ylw3Nwpu6cpTTP8R1MAC1kF4VbdLt3ARf209w==",
++      "dev": true,
++      "funding": [
++        {
++          "type": "opencollective",
++          "url": "https://opencollective.com/browserslist"
++        },
++        {
++          "type": "tidelift",
++          "url": "https://tidelift.com/funding/github/npm/browserslist"
++        },
++        {
++          "type": "github",
++          "url": "https://github.com/sponsors/ai"
++        }
++      ],
++      "license": "MIT",
++      "dependencies": {
++        "escalade": "^3.2.0",
++        "picocolors": "^1.1.1"
++      },
++      "bin": {
++        "update-browserslist-db": "cli.js"
++      },
++      "peerDependencies": {
++        "browserslist": ">= 4.21.0"
++      }
++    },
++    "node_modules/util-deprecate": {
++      "version": "1.0.2",
++      "resolved": "https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz",
++      "integrity": "sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==",
++      "dev": true,
++      "license": "MIT"
++    },
++    "node_modules/vite": {
++      "version": "5.4.21",
++      "resolved": "https://registry.npmjs.org/vite/-/vite-5.4.21.tgz",
++      "integrity": "sha512-o5a9xKjbtuhY6Bi5S3+HvbRERmouabWbyUcpXXUA1u+GNUKoROi9byOJ8M0nHbHYHkYICiMlqxkg1KkYmm25Sw==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "esbuild": "^0.21.3",
++        "postcss": "^8.4.43",
++        "rollup": "^4.20.0"
++      },
++      "bin": {
++        "vite": "bin/vite.js"
++      },
++      "engines": {
++        "node": "^18.0.0 || >=20.0.0"
++      },
++      "funding": {
++        "url": "https://github.com/vitejs/vite?sponsor=1"
++      },
++      "optionalDependencies": {
++        "fsevents": "~2.3.3"
++      },
++      "peerDependencies": {
++        "@types/node": "^18.0.0 || >=20.0.0",
++        "less": "*",
++        "lightningcss": "^1.21.0",
++        "sass": "*",
++        "sass-embedded": "*",
++        "stylus": "*",
++        "sugarss": "*",
++        "terser": "^5.4.0"
++      },
++      "peerDependenciesMeta": {
++        "@types/node": {
++          "optional": true
++        },
++        "less": {
++          "optional": true
++        },
++        "lightningcss": {
++          "optional": true
++        },
++        "sass": {
++          "optional": true
++        },
++        "sass-embedded": {
++          "optional": true
++        },
++        "stylus": {
++          "optional": true
++        },
++        "sugarss": {
++          "optional": true
++        },
++        "terser": {
++          "optional": true
++        }
++      }
++    },
++    "node_modules/yallist": {
++      "version": "3.1.1",
++      "resolved": "https://registry.npmjs.org/yallist/-/yallist-3.1.1.tgz",
++      "integrity": "sha512-a4UGQaWPH59mOXUYnAG2ewncQS4i4F43Tv3JoAM+s2VDAmS9NsK8GpDMLrCHPksFT7h3K6TOoUNn2pb7RoXx4g==",
++      "dev": true,
++      "license": "ISC"
++    }
++  }
++}
+diff --git a/package.json b/package.json
+new file mode 100644
+index 0000000..5c9b890
+--- /dev/null
++++ b/package.json
+@@ -0,0 +1,30 @@
++{
++  "name": "mapping-investment-ecosystems",
++  "version": "0.1.0",
++  "private": true,
++  "type": "module",
++  "description": "Layered ecosystem dashboard for the Georgia impact-investing capital ecosystem, backed by an Airtable snapshot.",
++  "scripts": {
++    "dev": "vite",
++    "build": "tsc -b && vite build",
++    "preview": "vite preview",
++    "typecheck": "tsc --noEmit",
++    "export-data": "node scripts/export-airtable.mjs"
++  },
++  "dependencies": {
++    "leaflet": "^1.9.4",
++    "react": "^18.3.1",
++    "react-dom": "^18.3.1"
++  },
++  "devDependencies": {
++    "@types/leaflet": "^1.9.12",
++    "@types/react": "^18.3.12",
++    "@types/react-dom": "^18.3.1",
++    "@vitejs/plugin-react": "^4.3.4",
++    "autoprefixer": "^10.4.20",
++    "postcss": "^8.4.49",
++    "tailwindcss": "^3.4.17",
++    "typescript": "^5.6.3",
++    "vite": "^5.4.11"
++  }
++}
+diff --git a/postcss.config.js b/postcss.config.js
+new file mode 100644
+index 0000000..2aa7205
+--- /dev/null
++++ b/postcss.config.js
+@@ -0,0 +1,6 @@
++export default {
++  plugins: {
++    tailwindcss: {},
++    autoprefixer: {},
++  },
++};
+diff --git a/public/data/ecosystem.json b/public/data/ecosystem.json
+new file mode 100644
+index 0000000..0c6b0f1
+--- /dev/null
++++ b/public/data/ecosystem.json
+@@ -0,0 +1,478 @@
++{
++  "generatedAt": "2026-05-28T00:00:00.000Z",
++  "source": "sample (Georgia impact-investing ecosystem — representative data)",
++  "organizations": [
++    {
++      "id": "org_cfga",
++      "name": "Community Foundation for Greater Atlanta",
++      "segment": "Capital Aggregator",
++      "city": "Atlanta",
++      "state": "GA",
++      "lat": 33.7838,
++      "lng": -84.3792,
++      "website": "https://www.cfgreateratlanta.org",
++      "description": "Pools philanthropic and donor-advised capital across metro Atlanta to redeploy into community priorities."
++    },
++    {
++      "id": "org_gsic",
++      "name": "Georgia Social Impact Collaborative",
++      "segment": "Capital Aggregator",
++      "city": "Atlanta",
++      "state": "GA",
++      "lat": 33.7726,
++      "lng": -84.3854,
++      "website": "https://gasocialimpact.com",
++      "description": "Convenes and aggregates impact capital and knowledge across Georgia's impact-investing ecosystem."
++    },
++    {
++      "id": "org_awbi",
++      "name": "Atlanta Wealth Building Initiative",
++      "segment": "Capital Aggregator",
++      "city": "Atlanta",
++      "state": "GA",
++      "lat": 33.7553,
++      "lng": -84.3900,
++      "website": "https://atlantawealthbuilding.org",
++      "description": "Aggregates catalytic capital to build a more equitable economy for Black Atlantans."
++    },
++    {
++      "id": "org_ace",
++      "name": "Access to Capital for Entrepreneurs (ACE)",
++      "segment": "Capital Aggregator",
++      "city": "Cleveland",
++      "state": "GA",
++      "lat": 34.5970,
++      "lng": -83.7624,
++      "website": "https://aceloans.org",
++      "description": "CDFI that raises and pools capital to lend to small businesses across Georgia."
++    },
++    {
++      "id": "org_kendeda",
++      "name": "The Kendeda Fund",
++      "segment": "Capital Allocator",
++      "city": "Atlanta",
++      "state": "GA",
++      "lat": 33.7901,
++      "lng": -84.3837,
++      "website": "https://kendedafund.org",
++      "description": "Private foundation deploying grants and program-related investments toward sustainability and equity."
++    },
++    {
++      "id": "org_woodruff",
++      "name": "Robert W. Woodruff Foundation",
++      "segment": "Capital Allocator",
++      "city": "Atlanta",
++      "state": "GA",
++      "lat": 33.7595,
++      "lng": -84.3870,
++      "website": "https://woodruff.org",
++      "description": "One of the largest funders in the Southeast, allocating capital to education, health, and community projects."
++    },
++    {
++      "id": "org_truist",
++      "name": "Truist Foundation",
++      "segment": "Capital Allocator",
++      "city": "Atlanta",
++      "state": "GA",
++      "lat": 33.7869,
++      "lng": -84.3855,
++      "website": "https://www.truist.com/foundation",
++      "description": "Corporate foundation allocating grants and impact capital to economic mobility initiatives."
++    },
++    {
++      "id": "org_investatl",
++      "name": "Invest Atlanta",
++      "segment": "Capital Allocator",
++      "city": "Atlanta",
++      "state": "GA",
++      "lat": 33.7490,
++      "lng": -84.3880,
++      "website": "https://www.investatlanta.com",
++      "description": "Atlanta's economic development authority, deploying public and blended capital into local projects."
++    },
++    {
++      "id": "org_zeist",
++      "name": "Zeist Foundation",
++      "segment": "Capital Allocator",
++      "city": "Atlanta",
++      "state": "GA",
++      "lat": 33.7702,
++      "lng": -84.3420,
++      "website": "https://zeistfoundation.org",
++      "description": "Family foundation funding integrated health, education, and community programs."
++    },
++    {
++      "id": "org_mie",
++      "name": "Mission Investors Exchange",
++      "segment": "Capital Enabler",
++      "city": "Seattle",
++      "state": "WA",
++      "lat": null,
++      "lng": null,
++      "website": "https://missioninvestors.org",
++      "description": "National network enabling foundations to make impact investments (no Georgia coordinates — omitted from map)."
++    },
++    {
++      "id": "org_transform",
++      "name": "Transform Finance",
++      "segment": "Capital Enabler",
++      "city": null,
++      "state": null,
++      "lat": null,
++      "lng": null,
++      "website": "https://transformfinance.org",
++      "description": "Field-building intermediary providing training and standards for community-centered investing."
++    },
++    {
++      "id": "org_scheller",
++      "name": "Georgia Tech Scheller College of Business",
++      "segment": "Capital Enabler",
++      "city": "Atlanta",
++      "state": "GA",
++      "lat": 33.7766,
++      "lng": -84.3876,
++      "website": "https://www.scheller.gatech.edu",
++      "description": "Provides research, technical assistance, and talent pipelines for the impact-investing ecosystem."
++    },
++    {
++      "id": "org_careerrise",
++      "name": "Atlanta CareerRise",
++      "segment": "Capital Enabler",
++      "city": "Atlanta",
++      "state": "GA",
++      "lat": 33.7616,
++      "lng": -84.3733,
++      "website": "https://atlantacareerrise.org",
++      "description": "Workforce intermediary aligning employers, funders, and training providers."
++    },
++    {
++      "id": "org_cci",
++      "name": "Center for Civic Innovation",
++      "segment": "Capital Enabler",
++      "city": "Atlanta",
++      "state": "GA",
++      "lat": 33.7525,
++      "lng": -84.3895,
++      "website": "https://civicatlanta.org",
++      "description": "Accelerator and intermediary that prepares social entrepreneurs to raise and absorb capital."
++    },
++    {
++      "id": "org_acfb",
++      "name": "Atlanta Community Food Bank",
++      "segment": "Capital Seeker",
++      "city": "Atlanta",
++      "state": "GA",
++      "lat": 33.7180,
++      "lng": -84.5046,
++      "website": "https://www.acfb.org",
++      "description": "Large nonprofit seeking philanthropic and program capital to fight food insecurity."
++    },
++    {
++      "id": "org_fcs",
++      "name": "Focused Community Strategies (FCS)",
++      "segment": "Capital Seeker",
++      "city": "Atlanta",
++      "state": "GA",
++      "lat": 33.7384,
++      "lng": -84.3614,
++      "website": "https://fcsministries.org",
++      "description": "Community development nonprofit raising capital for mixed-income neighborhood revitalization."
++    },
++    {
++      "id": "org_goodr",
++      "name": "Goodr",
++      "segment": "Capital Seeker",
++      "city": "Atlanta",
++      "state": "GA",
++      "lat": 33.7064,
++      "lng": -84.4277,
++      "website": "https://goodr.co",
++      "description": "Social enterprise raising growth capital to reduce food waste and hunger."
++    },
++    {
++      "id": "org_partnershome",
++      "name": "Partners for HOME",
++      "segment": "Capital Seeker",
++      "city": "Atlanta",
++      "state": "GA",
++      "lat": 33.7556,
++      "lng": -84.3901,
++      "website": "https://partnersforhome.org",
++      "description": "Coordinates and raises capital for housing and homelessness solutions in Atlanta."
++    },
++    {
++      "id": "org_russell",
++      "name": "Russell Center for Innovation and Entrepreneurship",
++      "segment": "Capital Seeker",
++      "city": "Atlanta",
++      "state": "GA",
++      "lat": 33.7556,
++      "lng": -84.4011,
++      "website": "https://russellcenter.org",
++      "description": "Supports and raises capital alongside Black entrepreneurs in the Atlanta region."
++    },
++    {
++      "id": "org_microfund",
++      "name": "Southern Reconstruction Fund",
++      "segment": "Capital Seeker",
++      "city": "Savannah",
++      "state": "GA",
++      "lat": 32.0809,
++      "lng": -81.0912,
++      "website": null,
++      "description": "Place-based fund seeking catalytic capital for the Georgia coast."
++    }
++  ],
++  "capitalFlows": [
++    {
++      "id": "flow_1",
++      "label": "Flow #1",
++      "sourceId": "org_cfga",
++      "sourceName": "Community Foundation for Greater Atlanta",
++      "recipientId": "org_fcs",
++      "recipientName": "Focused Community Strategies (FCS)",
++      "amount": 1500000,
++      "year": 2024,
++      "type": "Program-Related Investment",
++      "description": "PRI to support mixed-income housing development."
++    },
++    {
++      "id": "flow_2",
++      "label": "Flow #2",
++      "sourceId": "org_kendeda",
++      "sourceName": "The Kendeda Fund",
++      "recipientId": "org_goodr",
++      "recipientName": "Goodr",
++      "amount": 750000,
++      "year": 2023,
++      "type": "Recoverable Grant",
++      "description": "Catalytic capital to scale food-recovery logistics."
++    },
++    {
++      "id": "flow_3",
++      "label": "Flow #3",
++      "sourceId": "org_woodruff",
++      "sourceName": "Robert W. Woodruff Foundation",
++      "recipientId": "org_acfb",
++      "recipientName": "Atlanta Community Food Bank",
++      "amount": 5000000,
++      "year": 2024,
++      "type": "Grant",
++      "description": "Capital campaign grant for distribution capacity."
++    },
++    {
++      "id": "flow_4",
++      "label": "Flow #4",
++      "sourceId": "org_ace",
++      "sourceName": "Access to Capital for Entrepreneurs (ACE)",
++      "recipientId": "org_russell",
++      "recipientName": "Russell Center for Innovation and Entrepreneurship",
++      "amount": 250000,
++      "year": 2023,
++      "type": "Small Business Loan",
++      "description": "Working-capital loan facility for member entrepreneurs."
++    },
++    {
++      "id": "flow_5",
++      "label": "Flow #5",
++      "sourceId": "org_truist",
++      "sourceName": "Truist Foundation",
++      "recipientId": "org_cci",
++      "recipientName": "Center for Civic Innovation",
++      "amount": 400000,
++      "year": 2024,
++      "type": "Grant",
++      "description": "Operating support for an entrepreneur-in-residence cohort."
++    },
++    {
++      "id": "flow_6",
++      "label": "Flow #6",
++      "sourceId": "org_investatl",
++      "sourceName": "Invest Atlanta",
++      "recipientId": "org_partnershome",
++      "recipientName": "Partners for HOME",
++      "amount": 2200000,
++      "year": 2025,
++      "type": "Blended Finance",
++      "description": "Public-private blended capital for supportive housing."
++    },
++    {
++      "id": "flow_7",
++      "label": "Flow #7",
++      "sourceId": "org_awbi",
++      "sourceName": "Atlanta Wealth Building Initiative",
++      "recipientId": "org_russell",
++      "recipientName": "Russell Center for Innovation and Entrepreneurship",
++      "amount": 600000,
++      "year": 2024,
++      "type": "Equity",
++      "description": "Catalytic equity into a Black-led business accelerator fund."
++    },
++    {
++      "id": "flow_8",
++      "label": "Flow #8",
++      "sourceId": "org_zeist",
++      "sourceName": "Zeist Foundation",
++      "recipientId": "org_fcs",
++      "recipientName": "Focused Community Strategies (FCS)",
++      "amount": 350000,
++      "year": 2023,
++      "type": "Grant",
++      "description": "Integrated health and housing pilot."
++    },
++    {
++      "id": "flow_9",
++      "label": "Flow #9",
++      "sourceId": "org_cfga",
++      "sourceName": "Community Foundation for Greater Atlanta",
++      "recipientId": "org_goodr",
++      "recipientName": "Goodr",
++      "amount": 200000,
++      "year": 2025,
++      "type": "Donor-Advised Grant",
++      "description": "DAF-recommended grant for hunger-relief expansion."
++    },
++    {
++      "id": "flow_10",
++      "label": "Flow #10",
++      "sourceId": "org_kendeda",
++      "sourceName": "The Kendeda Fund",
++      "recipientId": "org_acfb",
++      "recipientName": "Atlanta Community Food Bank",
++      "amount": 1000000,
++      "year": 2022,
++      "type": "Program-Related Investment",
++      "description": "PRI supporting cold-storage infrastructure."
++    },
++    {
++      "id": "flow_11",
++      "label": "Flow #11",
++      "sourceId": "org_ace",
++      "sourceName": "Access to Capital for Entrepreneurs (ACE)",
++      "recipientId": "org_microfund",
++      "recipientName": "Southern Reconstruction Fund",
++      "amount": 500000,
++      "year": 2025,
++      "type": "Loan Participation",
++      "description": "Co-lending facility for coastal Georgia small businesses."
++    },
++    {
++      "id": "flow_12",
++      "label": "Flow #12",
++      "sourceId": "org_woodruff",
++      "sourceName": "Robert W. Woodruff Foundation",
++      "recipientId": "org_partnershome",
++      "recipientName": "Partners for HOME",
++      "amount": 3000000,
++      "year": 2023,
++      "type": "Grant",
++      "description": "Multi-year grant for homelessness reduction."
++    },
++    {
++      "id": "flow_13",
++      "label": "Flow #13",
++      "sourceId": "org_truist",
++      "sourceName": "Truist Foundation",
++      "recipientId": "org_acfb",
++      "recipientName": "Atlanta Community Food Bank",
++      "amount": 850000,
++      "year": 2025,
++      "type": "Grant",
++      "description": "Economic-mobility grant tied to workforce meals program."
++    },
++    {
++      "id": "flow_14",
++      "label": "Flow #14",
++      "sourceId": "org_investatl",
++      "sourceName": "Invest Atlanta",
++      "recipientId": "org_fcs",
++      "recipientName": "Focused Community Strategies (FCS)",
++      "amount": 1750000,
++      "year": 2025,
++      "type": "Tax-Increment Financing",
++      "description": "TIF-backed financing for neighborhood revitalization."
++    }
++  ],
++  "capitalInstruments": [
++    {
++      "id": "inst_pri",
++      "name": "Program-Related Investment (PRI)",
++      "capitalFlowType": "Debt / Below-market",
++      "investmentStrategy": "Catalytic",
++      "segment": "Capital Allocator",
++      "description": "Below-market loans or investments that count toward a foundation's payout."
++    },
++    {
++      "id": "inst_recoverable",
++      "name": "Recoverable Grant",
++      "capitalFlowType": "Grant / Repayable",
++      "investmentStrategy": "Catalytic",
++      "segment": "Capital Allocator",
++      "description": "Grant that may be repaid if milestones are met, recycling capital."
++    },
++    {
++      "id": "inst_blended",
++      "name": "Blended Finance Facility",
++      "capitalFlowType": "Blended",
++      "investmentStrategy": "Risk-tolerant",
++      "segment": "Capital Aggregator",
++      "description": "Combines concessionary and market-rate capital to de-risk projects."
++    },
++    {
++      "id": "inst_sbloan",
++      "name": "Small Business Loan Fund",
++      "capitalFlowType": "Debt",
++      "investmentStrategy": "Market-rate",
++      "segment": "Capital Aggregator",
++      "description": "Pooled lending vehicle for under-banked small businesses."
++    },
++    {
++      "id": "inst_equity",
++      "name": "Catalytic Equity",
++      "capitalFlowType": "Equity",
++      "investmentStrategy": "Growth",
++      "segment": "Capital Allocator",
++      "description": "Early equity into mission-aligned enterprises and funds."
++    },
++    {
++      "id": "inst_daf",
++      "name": "Donor-Advised Fund Grant",
++      "capitalFlowType": "Grant",
++      "investmentStrategy": "Responsive",
++      "segment": "Capital Aggregator",
++      "description": "Grants recommended by donors from pooled charitable accounts."
++    },
++    {
++      "id": "inst_tif",
++      "name": "Tax-Increment Financing",
++      "capitalFlowType": "Public / Debt",
++      "investmentStrategy": "Place-based",
++      "segment": "Capital Allocator",
++      "description": "Public financing that funds development against future tax revenue."
++    },
++    {
++      "id": "inst_loanpart",
++      "name": "Loan Participation",
++      "capitalFlowType": "Debt / Syndicated",
++      "investmentStrategy": "Risk-sharing",
++      "segment": "Capital Aggregator",
++      "description": "Multiple lenders share a single loan to spread risk."
++    },
++    {
++      "id": "inst_ta",
++      "name": "Technical Assistance Grant",
++      "capitalFlowType": "Grant / In-kind",
++      "investmentStrategy": "Capacity-building",
++      "segment": "Capital Enabler",
++      "description": "Funds advisory support that makes organizations investment-ready."
++    },
++    {
++      "id": "inst_guarantee",
++      "name": "Loan Guarantee",
++      "capitalFlowType": "Credit Enhancement",
++      "investmentStrategy": "Risk-tolerant",
++      "segment": "Capital Enabler",
++      "description": "A guarantee that unlocks third-party lending at better terms."
++    }
++  ]
++}
+diff --git a/scripts/export-airtable.mjs b/scripts/export-airtable.mjs
+new file mode 100644
+index 0000000..197784f
+--- /dev/null
++++ b/scripts/export-airtable.mjs
+@@ -0,0 +1,228 @@
++#!/usr/bin/env node
++/**
++ * Exports the layered investment-ecosystem base from Airtable into the snapshot
++ * the dashboard reads (public/data/ecosystem.json).
++ *
++ * Run it from a machine that can reach api.airtable.com (the cloud sandbox cannot):
++ *
++ *   AIRTABLE_TOKEN=pat...   \
++ *   AIRTABLE_BASE_ID=appAi19SJ3WzFEIvj  \
++ *   npm run export-data
++ *
++ * The field names below mirror the uploaded `index.tsx` fodder. If your base uses
++ * different names, edit the CONFIG block — each entry is a list of candidate field
++ * names and the first one that exists on the table wins. The script prints which
++ * tables/fields it matched so you can adjust.
++ *
++ * NEVER commit your token. Pass it via the environment only.
++ */
++import { writeFile, mkdir } from 'node:fs/promises';
++import { dirname, resolve } from 'node:path';
++import { fileURLToPath } from 'node:url';
++
++const TOKEN = process.env.AIRTABLE_TOKEN;
++const BASE_ID = process.env.AIRTABLE_BASE_ID || 'appAi19SJ3WzFEIvj';
++
++if (!TOKEN) {
++  console.error('Missing AIRTABLE_TOKEN environment variable.');
++  process.exit(1);
++}
++
++// Candidate names per concept. Matching is case-insensitive and substring-based.
++const CONFIG = {
++  tables: {
++    organizations: ['organizations', 'organization'],
++    capitalFlows: ['capital flows', 'capital flow'],
++    capitalInstruments: ['capital instruments', 'capital instrument'],
++  },
++  org: {
++    name: ['org. name', 'org name', 'organization name', 'name'],
++    segment: ['segment'],
++    city: ['city_name', 'city'],
++    state: ['state_id', 'state'],
++    lat: ['lat', 'latitude'],
++    lng: ['lng', 'long', 'longitude'],
++    website: ['website', 'url'],
++    description: ['description', 'overview', 'notes'],
++  },
++  flow: {
++    sourceName: ['allocation source', 'source', 'name (from source)'],
++    recipientName: ['name (from recipient)', 'recipient'],
++    amount: ['amount'],
++    year: ['year'],
++    type: ['definitions', 'capital flow type', 'type'],
++    description: ['description', 'notes'],
++  },
++  instrument: {
++    name: ['lookup field', 'name', 'instrument'],
++    capitalFlowType: ['capital flow type', 'flow type'],
++    investmentStrategy: ['investment strategy', 'strategy'],
++    segment: ['segment'],
++    description: ['description', 'notes'],
++  },
++};
++
++const API = 'https://api.airtable.com/v0';
++const headers = { Authorization: `Bearer ${TOKEN}` };
++
++async function getSchema() {
++  const res = await fetch(`${API}/meta/bases/${BASE_ID}/tables`, { headers });
++  if (!res.ok) throw new Error(`Schema fetch failed: ${res.status} ${await res.text()}`);
++  return (await res.json()).tables;
++}
++
++async function getRecords(tableId) {
++  const out = [];
++  let offset;
++  do {
++    const url = new URL(`${API}/${BASE_ID}/${tableId}`);
++    url.searchParams.set('pageSize', '100');
++    if (offset) url.searchParams.set('offset', offset);
++    const res = await fetch(url, { headers });
++    if (!res.ok) throw new Error(`Records fetch failed for ${tableId}: ${res.status}`);
++    const json = await res.json();
++    out.push(...json.records);
++    offset = json.offset;
++  } while (offset);
++  return out;
++}
++
++function findTable(tables, candidates) {
++  return tables.find((t) => candidates.some((c) => t.name.toLowerCase().includes(c)));
++}
++
++// Build a name->fieldName resolver for a table given the CONFIG candidate map.
++function resolveFields(table, candidateMap) {
++  const resolved = {};
++  const fieldNames = table.fields.map((f) => f.name);
++  for (const [key, candidates] of Object.entries(candidateMap)) {
++    const match = fieldNames.find((n) => candidates.some((c) => n.toLowerCase() === c)) ||
++      fieldNames.find((n) => candidates.some((c) => n.toLowerCase().includes(c)));
++    if (match) resolved[key] = match;
++  }
++  return resolved;
++}
++
++// Airtable returns linked records / lookups as arrays; normalize to a scalar.
++function scalar(value) {
++  if (Array.isArray(value)) {
++    const first = value[0];
++    if (first && typeof first === 'object') return first.name ?? first.text ?? null;
++    return first ?? null;
++  }
++  if (value && typeof value === 'object') return value.name ?? null;
++  return value ?? null;
++}
++
++function num(value) {
++  const s = scalar(value);
++  if (s === null || s === '') return null;
++  const n = Number(s);
++  return Number.isFinite(n) ? n : null;
++}
++
++function slug(s, i) {
++  return (s || `rec_${i}`).toString().toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
++}
++
++async function main() {
++  const tables = await getSchema();
++  console.log('Tables in base:', tables.map((t) => t.name).join(', '));
++
++  const orgTable = findTable(tables, CONFIG.tables.organizations);
++  const flowTable = findTable(tables, CONFIG.tables.capitalFlows);
++  const instrTable = findTable(tables, CONFIG.tables.capitalInstruments);
++
++  if (!orgTable) throw new Error('Could not find an Organizations table. Edit CONFIG.tables.organizations.');
++
++  const orgFields = resolveFields(orgTable, CONFIG.org);
++  console.log('Organization field mapping:', orgFields);
++
++  const orgRecords = await getRecords(orgTable.id);
++  const nameToId = new Map();
++  const organizations = orgRecords.map((r, i) => {
++    const f = r.fields;
++    const name = scalar(f[orgFields.name]) ?? `Organization ${i + 1}`;
++    const id = `org_${slug(name, i)}`;
++    nameToId.set(name.toLowerCase(), id);
++    return {
++      id,
++      name,
++      segment: scalar(f[orgFields.segment]) ?? 'Uncategorized',
++      city: scalar(f[orgFields.city]),
++      state: scalar(f[orgFields.state]),
++      lat: num(f[orgFields.lat]),
++      lng: num(f[orgFields.lng]),
++      website: scalar(f[orgFields.website]),
++      description: scalar(f[orgFields.description]),
++    };
++  });
++
++  let capitalFlows = [];
++  if (flowTable) {
++    const flowFields = resolveFields(flowTable, CONFIG.flow);
++    console.log('Capital flow field mapping:', flowFields);
++    const flowRecords = await getRecords(flowTable.id);
++    capitalFlows = flowRecords.map((r, i) => {
++      const f = r.fields;
++      const sourceName = scalar(f[flowFields.sourceName]);
++      const recipientName = scalar(f[flowFields.recipientName]);
++      return {
++        id: `flow_${i + 1}`,
++        label: `Flow #${i + 1}`,
++        sourceId: sourceName ? nameToId.get(sourceName.toLowerCase()) ?? null : null,
++        sourceName,
++        recipientId: recipientName ? nameToId.get(recipientName.toLowerCase()) ?? null : null,
++        recipientName,
++        amount: num(f[flowFields.amount]),
++        year: num(f[flowFields.year]),
++        type: scalar(f[flowFields.type]),
++        description: scalar(f[flowFields.description]),
++      };
++    });
++  } else {
++    console.warn('No Capital Flows table found — exporting empty list.');
++  }
++
++  let capitalInstruments = [];
++  if (instrTable) {
++    const instrFields = resolveFields(instrTable, CONFIG.instrument);
++    console.log('Capital instrument field mapping:', instrFields);
++    const instrRecords = await getRecords(instrTable.id);
++    capitalInstruments = instrRecords.map((r, i) => {
++      const f = r.fields;
++      return {
++        id: `inst_${i + 1}`,
++        name: scalar(f[instrFields.name]) ?? `Instrument ${i + 1}`,
++        capitalFlowType: scalar(f[instrFields.capitalFlowType]),
++        investmentStrategy: scalar(f[instrFields.investmentStrategy]),
++        segment: scalar(f[instrFields.segment]),
++        description: scalar(f[instrFields.description]),
++      };
++    });
++  } else {
++    console.warn('No Capital Instruments table found — exporting empty list.');
++  }
++
++  const snapshot = {
++    generatedAt: new Date().toISOString(),
++    source: `Airtable base ${BASE_ID}`,
++    organizations,
++    capitalFlows,
++    capitalInstruments,
++  };
++
++  const outPath = resolve(dirname(fileURLToPath(import.meta.url)), '../public/data/ecosystem.json');
++  await mkdir(dirname(outPath), { recursive: true });
++  await writeFile(outPath, JSON.stringify(snapshot, null, 2));
++  const mapped = organizations.filter((o) => o.lat != null && o.lng != null).length;
++  console.log(
++    `\nWrote ${outPath}\n  ${organizations.length} organizations (${mapped} with coordinates)\n` +
++      `  ${capitalFlows.length} capital flows\n  ${capitalInstruments.length} capital instruments`,
++  );
++}
++
++main().catch((e) => {
++  console.error(e.message);
++  process.exit(1);
++});
+diff --git a/src/App.tsx b/src/App.tsx
+new file mode 100644
+index 0000000..ad2c35f
+--- /dev/null
++++ b/src/App.tsx
+@@ -0,0 +1,355 @@
++import { useEffect, useMemo, useState } from 'react';
++import type { EcosystemData, Organization, Segment } from './types';
++import { SEGMENT_ORDER, SEGMENT_STYLES } from './types';
++import { loadEcosystemData } from './data/loadData';
++import { formatCurrency, formatCurrencyFull } from './lib/format';
++import { StatCards } from './components/StatCards';
++import { SegmentSection } from './components/SegmentSection';
++import { CapitalFlowCard } from './components/CapitalFlowCard';
++import { InstrumentCard } from './components/InstrumentCard';
++import { MapView } from './components/MapView';
++
++type Tab = 'overview' | 'organizations' | 'flows' | 'instruments' | 'map';
++
++const TABS: { id: Tab; label: string }[] = [
++  { id: 'overview', label: 'Overview' },
++  { id: 'organizations', label: 'Organizations' },
++  { id: 'flows', label: 'Capital Flows' },
++  { id: 'instruments', label: 'Capital Instruments' },
++  { id: 'map', label: 'Map' },
++];
++
++export default function App() {
++  const [data, setData] = useState<EcosystemData | null>(null);
++  const [error, setError] = useState<string | null>(null);
++  const [activeTab, setActiveTab] = useState<Tab>('overview');
++  const [search, setSearch] = useState('');
++  const [segmentFilter, setSegmentFilter] = useState<Segment | 'all'>('all');
++  const [expanded, setExpanded] = useState<Set<Segment>>(new Set(SEGMENT_ORDER));
++  const [selectedOrg, setSelectedOrg] = useState<Organization | null>(null);
++
++  useEffect(() => {
++    loadEcosystemData().then(setData).catch((e) => setError(e.message));
++  }, []);
++
++  const orgById = useMemo(() => {
++    const m = new Map<string, Organization>();
++    data?.organizations.forEach((o) => m.set(o.id, o));
++    return m;
++  }, [data]);
++
++  const flowCountByOrg = useMemo(() => {
++    const counts: Record<string, number> = {};
++    data?.capitalFlows.forEach((f) => {
++      if (f.sourceId) counts[f.sourceId] = (counts[f.sourceId] ?? 0) + 1;
++      if (f.recipientId) counts[f.recipientId] = (counts[f.recipientId] ?? 0) + 1;
++    });
++    return counts;
++  }, [data]);
++
++  const filteredOrgs = useMemo(() => {
++    if (!data) return [];
++    const q = search.toLowerCase().trim();
++    return data.organizations.filter((o) => {
++      const matchesQuery =
++        !q ||
++        o.name.toLowerCase().includes(q) ||
++        (o.city ?? '').toLowerCase().includes(q) ||
++        (o.description ?? '').toLowerCase().includes(q);
++      const matchesSegment = segmentFilter === 'all' || o.segment === segmentFilter;
++      return matchesQuery && matchesSegment;
++    });
++  }, [data, search, segmentFilter]);
++
++  const orgsBySegment = useMemo(() => {
++    const grouped: Record<string, Organization[]> = {};
++    filteredOrgs.forEach((o) => {
++      (grouped[o.segment] ??= []).push(o);
++    });
++    return grouped;
++  }, [filteredOrgs]);
++
++  const totalCapital = useMemo(
++    () => data?.capitalFlows.reduce((sum, f) => sum + (f.amount ?? 0), 0) ?? 0,
++    [data],
++  );
++
++  const capitalBySegment = useMemo(() => {
++    const totals: Record<string, number> = {};
++    data?.capitalFlows.forEach((f) => {
++      const src = f.sourceId ? orgById.get(f.sourceId) : undefined;
++      if (src) totals[src.segment] = (totals[src.segment] ?? 0) + (f.amount ?? 0);
++    });
++    return totals;
++  }, [data, orgById]);
++
++  const mappedCount = useMemo(
++    () => data?.organizations.filter((o) => o.lat != null && o.lng != null).length ?? 0,
++    [data],
++  );
++
++  if (error) {
++    return (
++      <div className="min-h-screen flex items-center justify-center p-6">
++        <div className="bg-white rounded-lg border border-red-200 p-6 max-w-md text-center shadow-sm">
++          <p className="text-red-600 font-semibold">Could not load data</p>
++          <p className="text-sm text-slate-500 mt-2">{error}</p>
++        </div>
++      </div>
++    );
++  }
++
++  if (!data) {
++    return (
++      <div className="min-h-screen flex items-center justify-center text-slate-400 text-sm">
++        Loading ecosystem data…
++      </div>
++    );
++  }
++
++  const segmentFilterActive = segmentFilter !== 'all' || search.trim() !== '';
++  const selectedOrgFlows = selectedOrg
++    ? data.capitalFlows.filter(
++        (f) => f.sourceId === selectedOrg.id || f.recipientId === selectedOrg.id,
++      )
++    : [];
++
++  return (
++    <div className="min-h-screen">
++      <header className="bg-white border-b border-slate-200 sticky top-0 z-20">
++        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4 flex-wrap">
++          <div>
++            <h1 className="text-lg font-bold text-slate-800">Investment Ecosystem Dashboard</h1>
++            <p className="text-xs text-slate-500">
++              Organizations · Capital Flows · Instruments — {data.source}
++            </p>
++          </div>
++          <div className="flex items-center gap-2 flex-wrap">
++            <input
++              type="text"
++              value={search}
++              onChange={(e) => setSearch(e.target.value)}
++              placeholder="Search organizations…"
++              className="text-sm border border-slate-300 rounded-md px-3 py-1.5 w-48 focus:outline-none focus:ring-2 focus:ring-blue-200"
++            />
++            <select
++              value={segmentFilter}
++              onChange={(e) => setSegmentFilter(e.target.value as Segment | 'all')}
++              className="text-sm border border-slate-300 rounded-md px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-200"
++            >
++              <option value="all">All segments</option>
++              {SEGMENT_ORDER.map((s) => (
++                <option key={s} value={s}>
++                  {s}
++                </option>
++              ))}
++            </select>
++          </div>
++        </div>
++        <nav className="max-w-7xl mx-auto px-4 sm:px-6 flex gap-1 overflow-x-auto">
++          {TABS.map((t) => (
++            <button
++              key={t.id}
++              onClick={() => setActiveTab(t.id)}
++              className={`px-3 py-2 text-sm font-medium border-b-2 whitespace-nowrap transition-colors ${
++                activeTab === t.id
++                  ? 'border-blue-600 text-blue-700'
++                  : 'border-transparent text-slate-500 hover:text-slate-700'
++              }`}
++            >
++              {t.label}
++            </button>
++          ))}
++        </nav>
++      </header>
++
++      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
++        {activeTab === 'overview' && (
++          <div className="space-y-6">
++            <StatCards
++              orgCount={data.organizations.length}
++              flowCount={data.capitalFlows.length}
++              totalCapital={totalCapital}
++              instrumentCount={data.capitalInstruments.length}
++              mappedCount={mappedCount}
++            />
++            <div className="bg-white rounded-lg border border-slate-200 p-4 shadow-sm">
++              <h2 className="text-sm font-semibold text-slate-700 mb-3">Capital deployed by source segment</h2>
++              <div className="space-y-2">
++                {SEGMENT_ORDER.filter((s) => capitalBySegment[s]).map((s) => {
++                  const value = capitalBySegment[s];
++                  const pct = totalCapital ? (value / totalCapital) * 100 : 0;
++                  return (
++                    <div key={s}>
++                      <div className="flex justify-between text-xs text-slate-600 mb-0.5">
++                        <span>{s}</span>
++                        <span>{formatCurrency(value)}</span>
++                      </div>
++                      <div className="h-2 rounded-full bg-slate-100 overflow-hidden">
++                        <div
++                          className="h-full rounded-full"
++                          style={{ width: `${pct}%`, background: SEGMENT_STYLES[s].color }}
++                        />
++                      </div>
++                    </div>
++                  );
++                })}
++              </div>
++            </div>
++            <div>
++              <h2 className="text-sm font-semibold text-slate-700 mb-3">Largest capital flows</h2>
++              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
++                {[...data.capitalFlows]
++                  .sort((a, b) => (b.amount ?? 0) - (a.amount ?? 0))
++                  .slice(0, 6)
++                  .map((f) => (
++                    <CapitalFlowCard key={f.id} flow={f} />
++                  ))}
++              </div>
++            </div>
++          </div>
++        )}
++
++        {activeTab === 'organizations' && (
++          <div>
++            <p className="text-sm text-slate-500 mb-4">
++              {filteredOrgs.length} organization{filteredOrgs.length === 1 ? '' : 's'}
++              {segmentFilterActive ? ' matching filters' : ''} · grouped by ecosystem segment
++            </p>
++            {SEGMENT_ORDER.filter((s) => orgsBySegment[s]?.length).map((segment) => (
++              <SegmentSection
++                key={segment}
++                segment={segment}
++                organizations={orgsBySegment[segment] ?? []}
++                flowCountByOrg={flowCountByOrg}
++                isExpanded={expanded.has(segment)}
++                onToggle={() =>
++                  setExpanded((prev) => {
++                    const next = new Set(prev);
++                    next.has(segment) ? next.delete(segment) : next.add(segment);
++                    return next;
++                  })
++                }
++                onSelectOrg={setSelectedOrg}
++              />
++            ))}
++          </div>
++        )}
++
++        {activeTab === 'flows' && (
++          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
++            {data.capitalFlows.map((f) => (
++              <CapitalFlowCard key={f.id} flow={f} />
++            ))}
++          </div>
++        )}
++
++        {activeTab === 'instruments' && (
++          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
++            {data.capitalInstruments.map((i) => (
++              <InstrumentCard key={i.id} instrument={i} />
++            ))}
++          </div>
++        )}
++
++        {activeTab === 'map' && <MapView organizations={filteredOrgs} />}
++      </main>
++
++      {selectedOrg && (
++        <OrgDetailDrawer
++          org={selectedOrg}
++          flows={selectedOrgFlows}
++          orgById={orgById}
++          onClose={() => setSelectedOrg(null)}
++        />
++      )}
++    </div>
++  );
++}
++
++interface DrawerProps {
++  org: Organization;
++  flows: EcosystemData['capitalFlows'];
++  orgById: Map<string, Organization>;
++  onClose: () => void;
++}
++
++function OrgDetailDrawer({ org, flows, orgById, onClose }: DrawerProps) {
++  const style = SEGMENT_STYLES[org.segment];
++  const location = [org.city, org.state].filter(Boolean).join(', ') || 'Location not set';
++  const outbound = flows.filter((f) => f.sourceId === org.id);
++  const inbound = flows.filter((f) => f.recipientId === org.id);
++
++  return (
++    <div className="fixed inset-0 z-30 flex justify-end" onClick={onClose}>
++      <div className="absolute inset-0 bg-black/30" />
++      <aside
++        className="relative w-full max-w-md bg-white h-full shadow-xl overflow-y-auto p-5"
++        onClick={(e) => e.stopPropagation()}
++      >
++        <button
++          onClick={onClose}
++          className="absolute top-3 right-3 text-slate-400 hover:text-slate-600 text-sm"
++        >
++          ✕ Close
++        </button>
++        <span className={`inline-block text-[10px] font-medium px-2 py-0.5 rounded-full border ${style.chip}`}>
++          {org.segment}
++        </span>
++        <h2 className="text-lg font-bold text-slate-800 mt-2">{org.name}</h2>
++        <p className="text-xs text-slate-500">{location}</p>
++        {org.description && <p className="text-sm text-slate-600 mt-3">{org.description}</p>}
++        {org.website && (
++          <a
++            href={org.website}
++            target="_blank"
++            rel="noopener"
++            className="inline-block text-xs text-blue-600 mt-2"
++          >
++            {org.website} →
++          </a>
++        )}
++
++        <FlowList title="Capital deployed (outbound)" flows={outbound} counterpartKey="recipientId" orgById={orgById} />
++        <FlowList title="Capital received (inbound)" flows={inbound} counterpartKey="sourceId" orgById={orgById} />
++
++        {outbound.length === 0 && inbound.length === 0 && (
++          <p className="text-xs text-slate-400 mt-4">No capital flows recorded for this organization.</p>
++        )}
++      </aside>
++    </div>
++  );
++}
++
++function FlowList({
++  title,
++  flows,
++  counterpartKey,
++  orgById,
++}: {
++  title: string;
++  flows: EcosystemData['capitalFlows'];
++  counterpartKey: 'sourceId' | 'recipientId';
++  orgById: Map<string, Organization>;
++}) {
++  if (flows.length === 0) return null;
++  return (
++    <div className="mt-5">
++      <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">{title}</h3>
++      <ul className="space-y-2">
++        {flows.map((f) => {
++          const counterpartId = f[counterpartKey];
++          const counterpart = counterpartId ? orgById.get(counterpartId) : undefined;
++          const counterpartName =
++            counterpart?.name ?? (counterpartKey === 'sourceId' ? f.sourceName : f.recipientName) ?? 'Unknown';
++          return (
++            <li key={f.id} className="flex items-center justify-between text-sm border border-slate-100 rounded-md px-3 py-2">
++              <span className="text-slate-600 truncate">{counterpartName}</span>
++              <span className="font-semibold text-green-700 ml-2 shrink-0">{formatCurrencyFull(f.amount)}</span>
++            </li>
++          );
++        })}
++      </ul>
++    </div>
++  );
++}
+diff --git a/src/components/CapitalFlowCard.tsx b/src/components/CapitalFlowCard.tsx
+new file mode 100644
+index 0000000..8d16d2c
+--- /dev/null
++++ b/src/components/CapitalFlowCard.tsx
+@@ -0,0 +1,32 @@
++import type { CapitalFlow } from '../types';
++import { formatCurrencyFull } from '../lib/format';
++
++export function CapitalFlowCard({ flow }: { flow: CapitalFlow }) {
++  return (
++    <div className="bg-white rounded-lg border border-slate-200 p-4 shadow-sm">
++      <div className="flex items-center justify-between mb-2">
++        <span className="text-xs font-semibold text-slate-500">{flow.label}</span>
++        {flow.year != null && (
++          <span className="text-[10px] text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full">{flow.year}</span>
++        )}
++      </div>
++
++      <div className="flex items-center gap-2 text-sm">
++        <span className="font-medium text-slate-700 truncate">{flow.sourceName ?? 'Unknown source'}</span>
++        <span className="text-slate-400">→</span>
++        <span className="font-medium text-slate-700 truncate">{flow.recipientName ?? 'Unknown recipient'}</span>
++      </div>
++
++      <div className="mt-3 flex items-center justify-between">
++        <span className="text-base font-bold text-green-700">{formatCurrencyFull(flow.amount)}</span>
++        {flow.type && (
++          <span className="text-[10px] font-medium text-slate-600 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-full">
++            {flow.type}
++          </span>
++        )}
++      </div>
++
++      {flow.description && <p className="text-xs text-slate-500 mt-2 line-clamp-2">{flow.description}</p>}
++    </div>
++  );
++}
+diff --git a/src/components/InstrumentCard.tsx b/src/components/InstrumentCard.tsx
+new file mode 100644
+index 0000000..bf1c218
+--- /dev/null
++++ b/src/components/InstrumentCard.tsx
+@@ -0,0 +1,43 @@
++import type { CapitalInstrument } from '../types';
++import { SEGMENT_STYLES } from '../types';
++
++export function InstrumentCard({ instrument }: { instrument: CapitalInstrument }) {
++  const style = instrument.segment ? SEGMENT_STYLES[instrument.segment] : null;
++
++  return (
++    <div className="bg-white rounded-lg border border-slate-200 p-4 shadow-sm">
++      <div className="flex items-start gap-2">
++        <span
++          className="mt-1 h-2.5 w-2.5 shrink-0 rounded-full"
++          style={{ background: style?.color ?? '#64748b' }}
++        />
++        <h3 className="text-sm font-semibold text-slate-800">{instrument.name}</h3>
++      </div>
++
++      <dl className="mt-3 space-y-1.5 text-xs">
++        {instrument.capitalFlowType && (
++          <div className="flex gap-2">
++            <dt className="text-slate-400 w-20 shrink-0">Flow type</dt>
++            <dd className="text-slate-700">{instrument.capitalFlowType}</dd>
++          </div>
++        )}
++        {instrument.investmentStrategy && (
++          <div className="flex gap-2">
++            <dt className="text-slate-400 w-20 shrink-0">Strategy</dt>
++            <dd className="text-slate-700">{instrument.investmentStrategy}</dd>
++          </div>
++        )}
++        {instrument.segment && (
++          <div className="flex gap-2">
++            <dt className="text-slate-400 w-20 shrink-0">Segment</dt>
++            <dd className="text-slate-700">{instrument.segment}</dd>
++          </div>
++        )}
++      </dl>
++
++      {instrument.description && (
++        <p className="text-xs text-slate-500 mt-3 line-clamp-3">{instrument.description}</p>
++      )}
++    </div>
++  );
++}
+diff --git a/src/components/MapView.tsx b/src/components/MapView.tsx
+new file mode 100644
+index 0000000..d1d742f
+--- /dev/null
++++ b/src/components/MapView.tsx
+@@ -0,0 +1,105 @@
++import { useEffect, useRef } from 'react';
++import L from 'leaflet';
++import type { Organization } from '../types';
++import { SEGMENT_STYLES } from '../types';
++
++// Default view: Georgia, USA. Markers fit-bounds override this when present.
++const GEORGIA_CENTER: L.LatLngExpression = [33.0, -83.5];
++
++function markerIcon(color: string): L.DivIcon {
++  return L.divIcon({
++    className: 'ecosystem-marker',
++    iconSize: [22, 22],
++    iconAnchor: [11, 11],
++    popupAnchor: [0, -12],
++    html: `<div style="width:22px;height:22px;border-radius:50%;background:${color};border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4)"></div>`,
++  });
++}
++
++function popupHtml(org: Organization): string {
++  const location = [org.city, org.state].filter(Boolean).join(', ');
++  const esc = (s: string) => {
++    const d = document.createElement('div');
++    d.textContent = s;
++    return d.innerHTML;
++  };
++  return (
++    `<div style="min-width:180px">` +
++    `<div style="font-weight:600;font-size:13px;color:#0f172a">${esc(org.name)}</div>` +
++    `<div style="font-size:11px;color:#64748b;margin-top:2px">${esc(org.segment)}${location ? ' · ' + esc(location) : ''}</div>` +
++    (org.description ? `<div style="font-size:11px;color:#475569;margin-top:6px">${esc(org.description)}</div>` : '') +
++    (org.website
++      ? `<a href="${esc(org.website)}" target="_blank" rel="noopener" style="display:inline-block;margin-top:6px;font-size:11px;color:#2563eb">Visit website →</a>`
++      : '') +
++    `</div>`
++  );
++}
++
++export function MapView({ organizations }: { organizations: Organization[] }) {
++  const containerRef = useRef<HTMLDivElement>(null);
++  const mapRef = useRef<L.Map | null>(null);
++  const layerRef = useRef<L.LayerGroup | null>(null);
++
++  // Initialize the map once.
++  useEffect(() => {
++    if (!containerRef.current || mapRef.current) return;
++    const map = L.map(containerRef.current).setView(GEORGIA_CENTER, 7);
++    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
++      attribution: '© OpenStreetMap contributors',
++      maxZoom: 19,
++    }).addTo(map);
++    layerRef.current = L.layerGroup().addTo(map);
++    mapRef.current = map;
++    return () => {
++      map.remove();
++      mapRef.current = null;
++      layerRef.current = null;
++    };
++  }, []);
++
++  // Re-render markers whenever the (filtered) organizations change.
++  useEffect(() => {
++    const map = mapRef.current;
++    const layer = layerRef.current;
++    if (!map || !layer) return;
++    layer.clearLayers();
++
++    const mapped = organizations.filter(
++      (o) => typeof o.lat === 'number' && typeof o.lng === 'number',
++    );
++    const latlngs: L.LatLngExpression[] = [];
++
++    for (const org of mapped) {
++      const color = SEGMENT_STYLES[org.segment].color;
++      const marker = L.marker([org.lat as number, org.lng as number], { icon: markerIcon(color) });
++      marker.bindPopup(popupHtml(org), { maxWidth: 260 });
++      marker.addTo(layer);
++      latlngs.push([org.lat as number, org.lng as number]);
++    }
++
++    if (latlngs.length === 1) {
++      map.setView(latlngs[0], 12);
++    } else if (latlngs.length > 1) {
++      map.fitBounds(L.latLngBounds(latlngs).pad(0.15));
++    } else {
++      map.setView(GEORGIA_CENTER, 7);
++    }
++    // Leaflet needs a nudge after layout/tab changes.
++    setTimeout(() => map.invalidateSize(), 0);
++  }, [organizations]);
++
++  const mappedCount = organizations.filter(
++    (o) => typeof o.lat === 'number' && typeof o.lng === 'number',
++  ).length;
++  const skipped = organizations.length - mappedCount;
++
++  return (
++    <div className="space-y-2">
++      <div ref={containerRef} className="h-[60vh] w-full rounded-lg border border-slate-200 shadow-sm z-0" />
++      <p className="text-xs text-slate-500">
++        Showing {mappedCount} mapped organization{mappedCount === 1 ? '' : 's'}.
++        {skipped > 0 && ` ${skipped} without coordinates ${skipped === 1 ? 'is' : 'are'} hidden.`}
++      </p>
++    </div>
++  );
++}
+diff --git a/src/components/OrganizationCard.tsx b/src/components/OrganizationCard.tsx
+new file mode 100644
+index 0000000..e2684c0
+--- /dev/null
++++ b/src/components/OrganizationCard.tsx
+@@ -0,0 +1,46 @@
++import type { Organization } from '../types';
++import { SEGMENT_STYLES } from '../types';
++
++interface Props {
++  org: Organization;
++  /** Number of capital flows this org participates in. */
++  flowCount: number;
++  onSelect?: (org: Organization) => void;
++}
++
++export function OrganizationCard({ org, flowCount, onSelect }: Props) {
++  const style = SEGMENT_STYLES[org.segment];
++  const location = [org.city, org.state].filter(Boolean).join(', ') || 'Location not set';
++
++  return (
++    <button
++      type="button"
++      onClick={() => onSelect?.(org)}
++      className="text-left bg-white rounded-lg border border-slate-200 p-4 shadow-sm hover:shadow-md hover:border-slate-300 transition-all w-full"
++    >
++      <div className="flex items-start gap-2">
++        <span className="mt-1 h-2.5 w-2.5 shrink-0 rounded-full" style={{ background: style.color }} />
++        <div className="min-w-0">
++          <h3 className="text-sm font-semibold text-slate-800 truncate">{org.name}</h3>
++          <p className="text-xs text-slate-500 mt-0.5">{location}</p>
++        </div>
++      </div>
++      {org.description && (
++        <p className="text-xs text-slate-600 mt-2 line-clamp-2">{org.description}</p>
++      )}
++      <div className="flex items-center justify-between mt-3">
++        <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full border ${style.chip}`}>
++          {org.segment}
++        </span>
++        <div className="flex items-center gap-2 text-[10px] text-slate-400">
++          {flowCount > 0 && <span>{flowCount} flow{flowCount === 1 ? '' : 's'}</span>}
++          {org.lat != null && org.lng != null ? (
++            <span title="Mapped">📍</span>
++          ) : (
++            <span title="No coordinates — hidden on map">⚪</span>
++          )}
++        </div>
++      </div>
++    </button>
++  );
++}
+diff --git a/src/components/SegmentSection.tsx b/src/components/SegmentSection.tsx
+new file mode 100644
+index 0000000..036c75d
+--- /dev/null
++++ b/src/components/SegmentSection.tsx
+@@ -0,0 +1,55 @@
++import type { Organization, Segment } from '../types';
++import { SEGMENT_STYLES } from '../types';
++import { OrganizationCard } from './OrganizationCard';
++
++interface Props {
++  segment: Segment;
++  organizations: Organization[];
++  flowCountByOrg: Record<string, number>;
++  isExpanded: boolean;
++  onToggle: () => void;
++  onSelectOrg: (org: Organization) => void;
++}
++
++export function SegmentSection({
++  segment,
++  organizations,
++  flowCountByOrg,
++  isExpanded,
++  onToggle,
++  onSelectOrg,
++}: Props) {
++  const style = SEGMENT_STYLES[segment];
++
++  return (
++    <section className="mb-4">
++      <button
++        type="button"
++        onClick={onToggle}
++        className={`w-full flex items-center justify-between p-3 rounded-lg border ${style.chip} hover:opacity-90 transition-opacity`}
++      >
++        <div className="flex items-center gap-2">
++          <span className="text-xs">{isExpanded ? '▾' : '▸'}</span>
++          <span className="font-semibold text-sm">{segment}</span>
++        </div>
++        <span className="text-xs px-2 py-0.5 rounded-full bg-white/70">{organizations.length}</span>
++      </button>
++      {isExpanded && (
++        <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 pl-1">
++          {organizations.length === 0 ? (
++            <p className="text-xs text-slate-400 p-3">No organizations match the current filters.</p>
++          ) : (
++            organizations.map((org) => (
++              <OrganizationCard
++                key={org.id}
++                org={org}
++                flowCount={flowCountByOrg[org.id] ?? 0}
++                onSelect={onSelectOrg}
++              />
++            ))
++          )}
++        </div>
++      )}
++    </section>
++  );
++}
+diff --git a/src/components/StatCards.tsx b/src/components/StatCards.tsx
+new file mode 100644
+index 0000000..8b55558
+--- /dev/null
++++ b/src/components/StatCards.tsx
+@@ -0,0 +1,36 @@
++import { formatCurrency } from '../lib/format';
++
++interface Props {
++  orgCount: number;
++  flowCount: number;
++  totalCapital: number;
++  instrumentCount: number;
++  mappedCount: number;
++}
++
++interface Stat {
++  label: string;
++  value: string;
++  accent: string;
++}
++
++export function StatCards({ orgCount, flowCount, totalCapital, instrumentCount, mappedCount }: Props) {
++  const stats: Stat[] = [
++    { label: 'Organizations', value: String(orgCount), accent: 'text-purple-700' },
++    { label: 'Capital Flows', value: String(flowCount), accent: 'text-green-700' },
++    { label: 'Total Capital Flow', value: formatCurrency(totalCapital), accent: 'text-blue-700' },
++    { label: 'Capital Instruments', value: String(instrumentCount), accent: 'text-teal-700' },
++    { label: 'Mapped Locations', value: String(mappedCount), accent: 'text-orange-700' },
++  ];
++
++  return (
++    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
++      {stats.map((s) => (
++        <div key={s.label} className="bg-white rounded-lg border border-slate-200 p-4 shadow-sm">
++          <p className={`text-2xl font-bold ${s.accent}`}>{s.value}</p>
++          <p className="text-xs text-slate-500 mt-1">{s.label}</p>
++        </div>
++      ))}
++    </div>
++  );
++}
+diff --git a/src/data/loadData.ts b/src/data/loadData.ts
+new file mode 100644
+index 0000000..5938587
+--- /dev/null
++++ b/src/data/loadData.ts
+@@ -0,0 +1,14 @@
++import type { EcosystemData } from '../types';
++
++// The dashboard reads a baked snapshot rather than calling Airtable directly,
++// because the Airtable MCP / API token cannot run in the browser. Regenerate
++// the snapshot with `npm run export-data` once a base token is available.
++const SNAPSHOT_URL = `${import.meta.env.BASE_URL}data/ecosystem.json`;
++
++export async function loadEcosystemData(): Promise<EcosystemData> {
++  const res = await fetch(SNAPSHOT_URL, { cache: 'no-cache' });
++  if (!res.ok) {
++    throw new Error(`Failed to load ecosystem snapshot (${res.status}). Expected at ${SNAPSHOT_URL}.`);
++  }
++  return (await res.json()) as EcosystemData;
++}
+diff --git a/src/index.css b/src/index.css
+new file mode 100644
+index 0000000..8b4e8ad
+--- /dev/null
++++ b/src/index.css
+@@ -0,0 +1,24 @@
++/* Leaflet core styles, imported from the npm package so the bundle is self-contained. */
++@import 'leaflet/dist/leaflet.css';
++
++@tailwind base;
++@tailwind components;
++@tailwind utilities;
++
++html,
++body,
++#root {
++  height: 100%;
++}
++
++body {
++  margin: 0;
++  background: #f1f5f9;
++  color: #0f172a;
++}
++
++/* Custom segment markers use a div icon; clear Leaflet's default background. */
++.ecosystem-marker {
++  background: transparent;
++  border: none;
++}
+diff --git a/src/lib/format.ts b/src/lib/format.ts
+new file mode 100644
+index 0000000..d84709d
+--- /dev/null
++++ b/src/lib/format.ts
+@@ -0,0 +1,15 @@
++export function formatCurrency(amount: number | null): string {
++  if (amount === null || Number.isNaN(amount)) return '—';
++  if (Math.abs(amount) >= 1_000_000) {
++    return `$${(amount / 1_000_000).toFixed(1)}M`;
++  }
++  if (Math.abs(amount) >= 1_000) {
++    return `$${(amount / 1_000).toFixed(0)}K`;
++  }
++  return `$${amount.toLocaleString()}`;
++}
++
++export function formatCurrencyFull(amount: number | null): string {
++  if (amount === null || Number.isNaN(amount)) return '—';
++  return amount.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
++}
+diff --git a/src/main.tsx b/src/main.tsx
+new file mode 100644
+index 0000000..9aa52ff
+--- /dev/null
++++ b/src/main.tsx
+@@ -0,0 +1,10 @@
++import React from 'react';
++import ReactDOM from 'react-dom/client';
++import App from './App';
++import './index.css';
++
++ReactDOM.createRoot(document.getElementById('root')!).render(
++  <React.StrictMode>
++    <App />
++  </React.StrictMode>,
++);
+diff --git a/src/types.ts b/src/types.ts
+new file mode 100644
+index 0000000..d5927cf
+--- /dev/null
++++ b/src/types.ts
+@@ -0,0 +1,107 @@
++// Data model for the layered investment-ecosystem base.
++// Mirrors the Airtable structure in the uploaded `index.tsx` fodder:
++// Organizations grouped by Segment, the Capital Flows between them, and the
++// Capital Instruments those flows use. The export script (scripts/export-airtable.mjs)
++// produces this exact shape from Airtable so the UI is source-agnostic.
++
++export type Segment =
++  | 'Capital Aggregator'
++  | 'Capital Allocator'
++  | 'Capital Enabler'
++  | 'Capital Seeker'
++  | 'Uncategorized';
++
++export interface Organization {
++  id: string;
++  name: string;
++  segment: Segment;
++  city: string | null;
++  state: string | null;
++  /** Latitude in decimal degrees. Records without coordinates are skipped on the map. */
++  lat: number | null;
++  /** Longitude in decimal degrees. */
++  lng: number | null;
++  website: string | null;
++  description: string | null;
++}
++
++export interface CapitalFlow {
++  id: string;
++  /** Display label for the flow (e.g. "Flow #1"). */
++  label: string;
++  /** Organization id of the capital source, when resolvable. */
++  sourceId: string | null;
++  sourceName: string | null;
++  /** Organization id of the recipient, when resolvable. */
++  recipientId: string | null;
++  recipientName: string | null;
++  amount: number | null;
++  year: number | null;
++  /** Free-text capital flow type / instrument definition. */
++  type: string | null;
++  description: string | null;
++}
++
++export interface CapitalInstrument {
++  id: string;
++  name: string;
++  capitalFlowType: string | null;
++  investmentStrategy: string | null;
++  segment: Segment | null;
++  description: string | null;
++}
++
++export interface EcosystemData {
++  /** ISO timestamp of when this snapshot was generated. */
++  generatedAt: string;
++  /** Human label for the data source (base name, or "sample"). */
++  source: string;
++  organizations: Organization[];
++  capitalFlows: CapitalFlow[];
++  capitalInstruments: CapitalInstrument[];
++}
++
++export const SEGMENT_ORDER: Segment[] = [
++  'Capital Aggregator',
++  'Capital Allocator',
++  'Capital Enabler',
++  'Capital Seeker',
++  'Uncategorized',
++];
++
++export interface SegmentStyle {
++  /** Hex color used for map markers and accents. */
++  color: string;
++  /** Tailwind classes for the segment chip/header. */
++  chip: string;
++  /** Tailwind classes for a soft accent background. */
++  soft: string;
++}
++
++export const SEGMENT_STYLES: Record<Segment, SegmentStyle> = {
++  'Capital Aggregator': {
++    color: '#2563eb',
++    chip: 'bg-blue-100 text-blue-800 border-blue-200',
++    soft: 'bg-blue-50',
++  },
++  'Capital Allocator': {
++    color: '#16a34a',
++    chip: 'bg-green-100 text-green-800 border-green-200',
++    soft: 'bg-green-50',
++  },
++  'Capital Enabler': {
++    color: '#9333ea',
++    chip: 'bg-purple-100 text-purple-800 border-purple-200',
++    soft: 'bg-purple-50',
++  },
++  'Capital Seeker': {
++    color: '#ea580c',
++    chip: 'bg-orange-100 text-orange-800 border-orange-200',
++    soft: 'bg-orange-50',
++  },
++  Uncategorized: {
++    color: '#64748b',
++    chip: 'bg-slate-100 text-slate-700 border-slate-200',
++    soft: 'bg-slate-50',
++  },
++};
+diff --git a/src/vite-env.d.ts b/src/vite-env.d.ts
+new file mode 100644
+index 0000000..11f02fe
+--- /dev/null
++++ b/src/vite-env.d.ts
+@@ -0,0 +1 @@
++/// <reference types="vite/client" />
+diff --git a/tailwind.config.js b/tailwind.config.js
+new file mode 100644
+index 0000000..9281a8b
+--- /dev/null
++++ b/tailwind.config.js
+@@ -0,0 +1,12 @@
++/** @type {import('tailwindcss').Config} */
++export default {
++  content: ['./index.html', './src/**/*.{ts,tsx}'],
++  theme: {
++    extend: {
++      fontFamily: {
++        sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
++      },
++    },
++  },
++  plugins: [],
++};
+diff --git a/tsconfig.json b/tsconfig.json
+new file mode 100644
+index 0000000..ead86d8
+--- /dev/null
++++ b/tsconfig.json
+@@ -0,0 +1,20 @@
++{
++  "compilerOptions": {
++    "target": "ES2021",
++    "useDefineForClassFields": true,
++    "lib": ["ES2021", "DOM", "DOM.Iterable"],
++    "module": "ESNext",
++    "skipLibCheck": true,
++    "moduleResolution": "bundler",
++    "allowImportingTsExtensions": true,
++    "resolveJsonModule": true,
++    "isolatedModules": true,
++    "noEmit": true,
++    "jsx": "react-jsx",
++    "strict": true,
++    "noUnusedLocals": true,
++    "noUnusedParameters": true,
++    "noFallthroughCasesInSwitch": true
++  },
++  "include": ["src"]
++}
+diff --git a/vite.config.ts b/vite.config.ts
+new file mode 100644
+index 0000000..23f7fc4
+--- /dev/null
++++ b/vite.config.ts
+@@ -0,0 +1,9 @@
++import { defineConfig } from 'vite';
++import react from '@vitejs/plugin-react';
++
++// `base` is set to a relative path so the built site works whether it is
++// served from a domain root or a project subpath (e.g. GitHub Pages).
++export default defineConfig({
++  plugins: [react()],
++  base: './',
++});
+-- 
+2.43.0
+
