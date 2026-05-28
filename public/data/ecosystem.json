@@ -1,0 +1,478 @@
+{
+  "generatedAt": "2026-05-28T00:00:00.000Z",
+  "source": "sample (Georgia impact-investing ecosystem — representative data)",
+  "organizations": [
+    {
+      "id": "org_cfga",
+      "name": "Community Foundation for Greater Atlanta",
+      "segment": "Capital Aggregator",
+      "city": "Atlanta",
+      "state": "GA",
+      "lat": 33.7838,
+      "lng": -84.3792,
+      "website": "https://www.cfgreateratlanta.org",
+      "description": "Pools philanthropic and donor-advised capital across metro Atlanta to redeploy into community priorities."
+    },
+    {
+      "id": "org_gsic",
+      "name": "Georgia Social Impact Collaborative",
+      "segment": "Capital Aggregator",
+      "city": "Atlanta",
+      "state": "GA",
+      "lat": 33.7726,
+      "lng": -84.3854,
+      "website": "https://gasocialimpact.com",
+      "description": "Convenes and aggregates impact capital and knowledge across Georgia's impact-investing ecosystem."
+    },
+    {
+      "id": "org_awbi",
+      "name": "Atlanta Wealth Building Initiative",
+      "segment": "Capital Aggregator",
+      "city": "Atlanta",
+      "state": "GA",
+      "lat": 33.7553,
+      "lng": -84.3900,
+      "website": "https://atlantawealthbuilding.org",
+      "description": "Aggregates catalytic capital to build a more equitable economy for Black Atlantans."
+    },
+    {
+      "id": "org_ace",
+      "name": "Access to Capital for Entrepreneurs (ACE)",
+      "segment": "Capital Aggregator",
+      "city": "Cleveland",
+      "state": "GA",
+      "lat": 34.5970,
+      "lng": -83.7624,
+      "website": "https://aceloans.org",
+      "description": "CDFI that raises and pools capital to lend to small businesses across Georgia."
+    },
+    {
+      "id": "org_kendeda",
+      "name": "The Kendeda Fund",
+      "segment": "Capital Allocator",
+      "city": "Atlanta",
+      "state": "GA",
+      "lat": 33.7901,
+      "lng": -84.3837,
+      "website": "https://kendedafund.org",
+      "description": "Private foundation deploying grants and program-related investments toward sustainability and equity."
+    },
+    {
+      "id": "org_woodruff",
+      "name": "Robert W. Woodruff Foundation",
+      "segment": "Capital Allocator",
+      "city": "Atlanta",
+      "state": "GA",
+      "lat": 33.7595,
+      "lng": -84.3870,
+      "website": "https://woodruff.org",
+      "description": "One of the largest funders in the Southeast, allocating capital to education, health, and community projects."
+    },
+    {
+      "id": "org_truist",
+      "name": "Truist Foundation",
+      "segment": "Capital Allocator",
+      "city": "Atlanta",
+      "state": "GA",
+      "lat": 33.7869,
+      "lng": -84.3855,
+      "website": "https://www.truist.com/foundation",
+      "description": "Corporate foundation allocating grants and impact capital to economic mobility initiatives."
+    },
+    {
+      "id": "org_investatl",
+      "name": "Invest Atlanta",
+      "segment": "Capital Allocator",
+      "city": "Atlanta",
+      "state": "GA",
+      "lat": 33.7490,
+      "lng": -84.3880,
+      "website": "https://www.investatlanta.com",
+      "description": "Atlanta's economic development authority, deploying public and blended capital into local projects."
+    },
+    {
+      "id": "org_zeist",
+      "name": "Zeist Foundation",
+      "segment": "Capital Allocator",
+      "city": "Atlanta",
+      "state": "GA",
+      "lat": 33.7702,
+      "lng": -84.3420,
+      "website": "https://zeistfoundation.org",
+      "description": "Family foundation funding integrated health, education, and community programs."
+    },
+    {
+      "id": "org_mie",
+      "name": "Mission Investors Exchange",
+      "segment": "Capital Enabler",
+      "city": "Seattle",
+      "state": "WA",
+      "lat": null,
+      "lng": null,
+      "website": "https://missioninvestors.org",
+      "description": "National network enabling foundations to make impact investments (no Georgia coordinates — omitted from map)."
+    },
+    {
+      "id": "org_transform",
+      "name": "Transform Finance",
+      "segment": "Capital Enabler",
+      "city": null,
+      "state": null,
+      "lat": null,
+      "lng": null,
+      "website": "https://transformfinance.org",
+      "description": "Field-building intermediary providing training and standards for community-centered investing."
+    },
+    {
+      "id": "org_scheller",
+      "name": "Georgia Tech Scheller College of Business",
+      "segment": "Capital Enabler",
+      "city": "Atlanta",
+      "state": "GA",
+      "lat": 33.7766,
+      "lng": -84.3876,
+      "website": "https://www.scheller.gatech.edu",
+      "description": "Provides research, technical assistance, and talent pipelines for the impact-investing ecosystem."
+    },
+    {
+      "id": "org_careerrise",
+      "name": "Atlanta CareerRise",
+      "segment": "Capital Enabler",
+      "city": "Atlanta",
+      "state": "GA",
+      "lat": 33.7616,
+      "lng": -84.3733,
+      "website": "https://atlantacareerrise.org",
+      "description": "Workforce intermediary aligning employers, funders, and training providers."
+    },
+    {
+      "id": "org_cci",
+      "name": "Center for Civic Innovation",
+      "segment": "Capital Enabler",
+      "city": "Atlanta",
+      "state": "GA",
+      "lat": 33.7525,
+      "lng": -84.3895,
+      "website": "https://civicatlanta.org",
+      "description": "Accelerator and intermediary that prepares social entrepreneurs to raise and absorb capital."
+    },
+    {
+      "id": "org_acfb",
+      "name": "Atlanta Community Food Bank",
+      "segment": "Capital Seeker",
+      "city": "Atlanta",
+      "state": "GA",
+      "lat": 33.7180,
+      "lng": -84.5046,
+      "website": "https://www.acfb.org",
+      "description": "Large nonprofit seeking philanthropic and program capital to fight food insecurity."
+    },
+    {
+      "id": "org_fcs",
+      "name": "Focused Community Strategies (FCS)",
+      "segment": "Capital Seeker",
+      "city": "Atlanta",
+      "state": "GA",
+      "lat": 33.7384,
+      "lng": -84.3614,
+      "website": "https://fcsministries.org",
+      "description": "Community development nonprofit raising capital for mixed-income neighborhood revitalization."
+    },
+    {
+      "id": "org_goodr",
+      "name": "Goodr",
+      "segment": "Capital Seeker",
+      "city": "Atlanta",
+      "state": "GA",
+      "lat": 33.7064,
+      "lng": -84.4277,
+      "website": "https://goodr.co",
+      "description": "Social enterprise raising growth capital to reduce food waste and hunger."
+    },
+    {
+      "id": "org_partnershome",
+      "name": "Partners for HOME",
+      "segment": "Capital Seeker",
+      "city": "Atlanta",
+      "state": "GA",
+      "lat": 33.7556,
+      "lng": -84.3901,
+      "website": "https://partnersforhome.org",
+      "description": "Coordinates and raises capital for housing and homelessness solutions in Atlanta."
+    },
+    {
+      "id": "org_russell",
+      "name": "Russell Center for Innovation and Entrepreneurship",
+      "segment": "Capital Seeker",
+      "city": "Atlanta",
+      "state": "GA",
+      "lat": 33.7556,
+      "lng": -84.4011,
+      "website": "https://russellcenter.org",
+      "description": "Supports and raises capital alongside Black entrepreneurs in the Atlanta region."
+    },
+    {
+      "id": "org_microfund",
+      "name": "Southern Reconstruction Fund",
+      "segment": "Capital Seeker",
+      "city": "Savannah",
+      "state": "GA",
+      "lat": 32.0809,
+      "lng": -81.0912,
+      "website": null,
+      "description": "Place-based fund seeking catalytic capital for the Georgia coast."
+    }
+  ],
+  "capitalFlows": [
+    {
+      "id": "flow_1",
+      "label": "Flow #1",
+      "sourceId": "org_cfga",
+      "sourceName": "Community Foundation for Greater Atlanta",
+      "recipientId": "org_fcs",
+      "recipientName": "Focused Community Strategies (FCS)",
+      "amount": 1500000,
+      "year": 2024,
+      "type": "Program-Related Investment",
+      "description": "PRI to support mixed-income housing development."
+    },
+    {
+      "id": "flow_2",
+      "label": "Flow #2",
+      "sourceId": "org_kendeda",
+      "sourceName": "The Kendeda Fund",
+      "recipientId": "org_goodr",
+      "recipientName": "Goodr",
+      "amount": 750000,
+      "year": 2023,
+      "type": "Recoverable Grant",
+      "description": "Catalytic capital to scale food-recovery logistics."
+    },
+    {
+      "id": "flow_3",
+      "label": "Flow #3",
+      "sourceId": "org_woodruff",
+      "sourceName": "Robert W. Woodruff Foundation",
+      "recipientId": "org_acfb",
+      "recipientName": "Atlanta Community Food Bank",
+      "amount": 5000000,
+      "year": 2024,
+      "type": "Grant",
+      "description": "Capital campaign grant for distribution capacity."
+    },
+    {
+      "id": "flow_4",
+      "label": "Flow #4",
+      "sourceId": "org_ace",
+      "sourceName": "Access to Capital for Entrepreneurs (ACE)",
+      "recipientId": "org_russell",
+      "recipientName": "Russell Center for Innovation and Entrepreneurship",
+      "amount": 250000,
+      "year": 2023,
+      "type": "Small Business Loan",
+      "description": "Working-capital loan facility for member entrepreneurs."
+    },
+    {
+      "id": "flow_5",
+      "label": "Flow #5",
+      "sourceId": "org_truist",
+      "sourceName": "Truist Foundation",
+      "recipientId": "org_cci",
+      "recipientName": "Center for Civic Innovation",
+      "amount": 400000,
+      "year": 2024,
+      "type": "Grant",
+      "description": "Operating support for an entrepreneur-in-residence cohort."
+    },
+    {
+      "id": "flow_6",
+      "label": "Flow #6",
+      "sourceId": "org_investatl",
+      "sourceName": "Invest Atlanta",
+      "recipientId": "org_partnershome",
+      "recipientName": "Partners for HOME",
+      "amount": 2200000,
+      "year": 2025,
+      "type": "Blended Finance",
+      "description": "Public-private blended capital for supportive housing."
+    },
+    {
+      "id": "flow_7",
+      "label": "Flow #7",
+      "sourceId": "org_awbi",
+      "sourceName": "Atlanta Wealth Building Initiative",
+      "recipientId": "org_russell",
+      "recipientName": "Russell Center for Innovation and Entrepreneurship",
+      "amount": 600000,
+      "year": 2024,
+      "type": "Equity",
+      "description": "Catalytic equity into a Black-led business accelerator fund."
+    },
+    {
+      "id": "flow_8",
+      "label": "Flow #8",
+      "sourceId": "org_zeist",
+      "sourceName": "Zeist Foundation",
+      "recipientId": "org_fcs",
+      "recipientName": "Focused Community Strategies (FCS)",
+      "amount": 350000,
+      "year": 2023,
+      "type": "Grant",
+      "description": "Integrated health and housing pilot."
+    },
+    {
+      "id": "flow_9",
+      "label": "Flow #9",
+      "sourceId": "org_cfga",
+      "sourceName": "Community Foundation for Greater Atlanta",
+      "recipientId": "org_goodr",
+      "recipientName": "Goodr",
+      "amount": 200000,
+      "year": 2025,
+      "type": "Donor-Advised Grant",
+      "description": "DAF-recommended grant for hunger-relief expansion."
+    },
+    {
+      "id": "flow_10",
+      "label": "Flow #10",
+      "sourceId": "org_kendeda",
+      "sourceName": "The Kendeda Fund",
+      "recipientId": "org_acfb",
+      "recipientName": "Atlanta Community Food Bank",
+      "amount": 1000000,
+      "year": 2022,
+      "type": "Program-Related Investment",
+      "description": "PRI supporting cold-storage infrastructure."
+    },
+    {
+      "id": "flow_11",
+      "label": "Flow #11",
+      "sourceId": "org_ace",
+      "sourceName": "Access to Capital for Entrepreneurs (ACE)",
+      "recipientId": "org_microfund",
+      "recipientName": "Southern Reconstruction Fund",
+      "amount": 500000,
+      "year": 2025,
+      "type": "Loan Participation",
+      "description": "Co-lending facility for coastal Georgia small businesses."
+    },
+    {
+      "id": "flow_12",
+      "label": "Flow #12",
+      "sourceId": "org_woodruff",
+      "sourceName": "Robert W. Woodruff Foundation",
+      "recipientId": "org_partnershome",
+      "recipientName": "Partners for HOME",
+      "amount": 3000000,
+      "year": 2023,
+      "type": "Grant",
+      "description": "Multi-year grant for homelessness reduction."
+    },
+    {
+      "id": "flow_13",
+      "label": "Flow #13",
+      "sourceId": "org_truist",
+      "sourceName": "Truist Foundation",
+      "recipientId": "org_acfb",
+      "recipientName": "Atlanta Community Food Bank",
+      "amount": 850000,
+      "year": 2025,
+      "type": "Grant",
+      "description": "Economic-mobility grant tied to workforce meals program."
+    },
+    {
+      "id": "flow_14",
+      "label": "Flow #14",
+      "sourceId": "org_investatl",
+      "sourceName": "Invest Atlanta",
+      "recipientId": "org_fcs",
+      "recipientName": "Focused Community Strategies (FCS)",
+      "amount": 1750000,
+      "year": 2025,
+      "type": "Tax-Increment Financing",
+      "description": "TIF-backed financing for neighborhood revitalization."
+    }
+  ],
+  "capitalInstruments": [
+    {
+      "id": "inst_pri",
+      "name": "Program-Related Investment (PRI)",
+      "capitalFlowType": "Debt / Below-market",
+      "investmentStrategy": "Catalytic",
+      "segment": "Capital Allocator",
+      "description": "Below-market loans or investments that count toward a foundation's payout."
+    },
+    {
+      "id": "inst_recoverable",
+      "name": "Recoverable Grant",
+      "capitalFlowType": "Grant / Repayable",
+      "investmentStrategy": "Catalytic",
+      "segment": "Capital Allocator",
+      "description": "Grant that may be repaid if milestones are met, recycling capital."
+    },
+    {
+      "id": "inst_blended",
+      "name": "Blended Finance Facility",
+      "capitalFlowType": "Blended",
+      "investmentStrategy": "Risk-tolerant",
+      "segment": "Capital Aggregator",
+      "description": "Combines concessionary and market-rate capital to de-risk projects."
+    },
+    {
+      "id": "inst_sbloan",
+      "name": "Small Business Loan Fund",
+      "capitalFlowType": "Debt",
+      "investmentStrategy": "Market-rate",
+      "segment": "Capital Aggregator",
+      "description": "Pooled lending vehicle for under-banked small businesses."
+    },
+    {
+      "id": "inst_equity",
+      "name": "Catalytic Equity",
+      "capitalFlowType": "Equity",
+      "investmentStrategy": "Growth",
+      "segment": "Capital Allocator",
+      "description": "Early equity into mission-aligned enterprises and funds."
+    },
+    {
+      "id": "inst_daf",
+      "name": "Donor-Advised Fund Grant",
+      "capitalFlowType": "Grant",
+      "investmentStrategy": "Responsive",
+      "segment": "Capital Aggregator",
+      "description": "Grants recommended by donors from pooled charitable accounts."
+    },
+    {
+      "id": "inst_tif",
+      "name": "Tax-Increment Financing",
+      "capitalFlowType": "Public / Debt",
+      "investmentStrategy": "Place-based",
+      "segment": "Capital Allocator",
+      "description": "Public financing that funds development against future tax revenue."
+    },
+    {
+      "id": "inst_loanpart",
+      "name": "Loan Participation",
+      "capitalFlowType": "Debt / Syndicated",
+      "investmentStrategy": "Risk-sharing",
+      "segment": "Capital Aggregator",
+      "description": "Multiple lenders share a single loan to spread risk."
+    },
+    {
+      "id": "inst_ta",
+      "name": "Technical Assistance Grant",
+      "capitalFlowType": "Grant / In-kind",
+      "investmentStrategy": "Capacity-building",
+      "segment": "Capital Enabler",
+      "description": "Funds advisory support that makes organizations investment-ready."
+    },
+    {
+      "id": "inst_guarantee",
+      "name": "Loan Guarantee",
+      "capitalFlowType": "Credit Enhancement",
+      "investmentStrategy": "Risk-tolerant",
+      "segment": "Capital Enabler",
+      "description": "A guarantee that unlocks third-party lending at better terms."
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+/* Leaflet core styles, imported from the npm package so the bundle is self-contained. */
+@import 'leaflet/dist/leaflet.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+/* Custom segment markers use a div icon; clear Leaflet's default background. */
+.ecosystem-marker {
+  background: transparent;
+  border: none;
+}
