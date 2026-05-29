@@ -13,8 +13,8 @@ body,
 
 body {
   margin: 0;
-  background: #f1f5f9;
-  color: #0f172a;
+  background: #f7f8fa;
+  color: #1e293b;
 }
 
 /* Custom segment markers use a div icon; clear Leaflet's default background. */

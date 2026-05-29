@@ -1,65 +1,9 @@
-// Data model for the layered investment-ecosystem base.
-// Mirrors the Airtable structure in the uploaded `index.tsx` fodder:
-// Organizations grouped by Segment, the Capital Flows between them, and the
-// Capital Instruments those flows use. The export script (scripts/export-airtable.mjs)
-// produces this exact shape from Airtable so the UI is source-agnostic.
-
 export type Segment =
   | 'Capital Aggregator'
   | 'Capital Allocator'
   | 'Capital Enabler'
   | 'Capital Seeker'
   | 'Uncategorized';
-
-export interface Organization {
-  id: string;
-  name: string;
-  segment: Segment;
-  city: string | null;
-  state: string | null;
-  /** Latitude in decimal degrees. Records without coordinates are skipped on the map. */
-  lat: number | null;
-  /** Longitude in decimal degrees. */
-  lng: number | null;
-  website: string | null;
-  description: string | null;
-}
-
-export interface CapitalFlow {
-  id: string;
-  /** Display label for the flow (e.g. "Flow #1"). */
-  label: string;
-  /** Organization id of the capital source, when resolvable. */
-  sourceId: string | null;
-  sourceName: string | null;
-  /** Organization id of the recipient, when resolvable. */
-  recipientId: string | null;
-  recipientName: string | null;
-  amount: number | null;
-  year: number | null;
-  /** Free-text capital flow type / instrument definition. */
-  type: string | null;
-  description: string | null;
-}
-
-export interface CapitalInstrument {
-  id: string;
-  name: string;
-  capitalFlowType: string | null;
-  investmentStrategy: string | null;
-  segment: Segment | null;
-  description: string | null;
-}
-
-export interface EcosystemData {
-  /** ISO timestamp of when this snapshot was generated. */
-  generatedAt: string;
-  /** Human label for the data source (base name, or "sample"). */
-  source: string;
-  organizations: Organization[];
-  capitalFlows: CapitalFlow[];
-  capitalInstruments: CapitalInstrument[];
-}
 
 export const SEGMENT_ORDER: Segment[] = [
   'Capital Aggregator',
@@ -70,38 +14,118 @@ export const SEGMENT_ORDER: Segment[] = [
 ];
 
 export interface SegmentStyle {
-  /** Hex color used for map markers and accents. */
   color: string;
-  /** Tailwind classes for the segment chip/header. */
-  chip: string;
-  /** Tailwind classes for a soft accent background. */
+  light: string;
   soft: string;
 }
 
 export const SEGMENT_STYLES: Record<Segment, SegmentStyle> = {
-  'Capital Aggregator': {
-    color: '#2563eb',
-    chip: 'bg-blue-100 text-blue-800 border-blue-200',
-    soft: 'bg-blue-50',
-  },
-  'Capital Allocator': {
-    color: '#16a34a',
-    chip: 'bg-green-100 text-green-800 border-green-200',
-    soft: 'bg-green-50',
-  },
-  'Capital Enabler': {
-    color: '#9333ea',
-    chip: 'bg-purple-100 text-purple-800 border-purple-200',
-    soft: 'bg-purple-50',
-  },
-  'Capital Seeker': {
-    color: '#ea580c',
-    chip: 'bg-orange-100 text-orange-800 border-orange-200',
-    soft: 'bg-orange-50',
-  },
-  Uncategorized: {
-    color: '#64748b',
-    chip: 'bg-slate-100 text-slate-700 border-slate-200',
-    soft: 'bg-slate-50',
-  },
+  'Capital Aggregator': { color: '#4750a2', light: '#929adf', soft: '#bdc7ec' },
+  'Capital Allocator':  { color: '#279a49', light: '#66b445', soft: '#e0f1d9' },
+  'Capital Enabler':    { color: '#53c3c2', light: '#369b99', soft: '#d4f1f0' },
+  'Capital Seeker':     { color: '#f15921', light: '#f15921', soft: '#f8dcd3' },
+  'Uncategorized':      { color: '#939699', light: '#939699', soft: '#eeeeee' },
 };
+
+export interface Organization {
+  id: string;
+  name: string;
+  segment: Segment;
+  orgType: string | null;
+  city: string | null;
+  state: string | null;
+  lat: number | null;
+  lng: number | null;
+  website: string | null;
+  description: string | null;
+  locationId: string | null;
+  contactIds: string[];
+  capitalFlowIds: string[];
+  capitalAllocationIds: string[];
+  sdgIds: string[];
+  sectorIds: string[];
+  populationIds: string[];
+  ownershipIds: string[];
+}
+
+export interface CapitalFlow {
+  id: string;
+  label: string;
+  sourceId: string | null;
+  sourceName: string | null;
+  recipientId: string | null;
+  recipientName: string | null;
+  amount: number | null;
+  year: number | null;
+  type: string | null;
+  description: string | null;
+  capitalInstrumentIds: string[];
+  impactDimensionIds: string[];
+}
+
+export interface CapitalInstrument {
+  id: string;
+  name: string;
+  capitalFlowType: string | null;
+  investmentStrategy: string | null;
+  description: string | null;
+  capitalFlowIds: string[];
+}
+
+export interface Location {
+  id: string;
+  cityName: string;
+  stateName: string | null;
+  stateId: string | null;
+  countyName: string | null;
+  countryName: string | null;
+  lat: number | null;
+  lng: number | null;
+  fipsCode: string | null;
+  cviToxPi: number | null;
+  cviBaselineHealth: number | null;
+  cviBaselineSocialEconomic: number | null;
+  cviBaselineInfrastructure: number | null;
+  cviBaselineEnvironment: number | null;
+  cviCCHealth: number | null;
+  cviCCSocialEconomic: number | null;
+  cviCCExtremeEvents: number | null;
+  cviNationalPercentile: number | null;
+  organizationIds: string[];
+}
+
+export interface Contact {
+  id: string;
+  name: string;
+  email: string | null;
+  organizationIds: string[];
+  isKeyContact: boolean;
+}
+
+export type ImpactDimensionType =
+  | 'SDG Alignment'
+  | 'Population Focus'
+  | 'Sector Focus'
+  | 'Alternative Ownership Component'
+  | 'IMM Classification';
+
+export interface ImpactDimension {
+  id: string;
+  type: ImpactDimensionType;
+  label: string;
+  notes: string | null;
+  iconUrl: string | null;
+}
+
+export type Tab = 'overview' | 'organizations' | 'flows' | 'instruments' | 'locations' | 'framework';
+
+export interface EcosystemData {
+  generatedAt: string;
+  source: string;
+  organizations: Organization[];
+  capitalFlows: CapitalFlow[];
+  capitalInstruments: CapitalInstrument[];
+  locations: Location[];
+  contacts: Contact[];
+  impactDimensions: ImpactDimension[];
+}
