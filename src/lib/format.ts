@@ -1,5 +1,8 @@
 export function formatCurrency(amount: number | null): string {
   if (amount === null || Number.isNaN(amount)) return '—';
+  if (Math.abs(amount) >= 1_000_000_000) {
+    return `$${(amount / 1_000_000_000).toFixed(2)}B`;
+  }
   if (Math.abs(amount) >= 1_000_000) {
     return `$${(amount / 1_000_000).toFixed(1)}M`;
   }

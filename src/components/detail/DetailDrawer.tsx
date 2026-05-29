@@ -48,7 +48,7 @@ export function DetailDrawer() {
     <div className="fixed inset-0 z-30 flex justify-end" onClick={close}>
       <div className="absolute inset-0 bg-black/30" />
       <aside
-        className="relative w-full max-w-md bg-white h-full shadow-xl overflow-y-auto"
+        className="relative w-full max-w-2xl bg-white h-full shadow-xl overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="sticky top-0 bg-white z-10 flex items-center justify-between px-5 py-3 border-b border-slate-100">
