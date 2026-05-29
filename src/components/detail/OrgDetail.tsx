@@ -4,6 +4,8 @@ import { useDetail } from '../../context/DetailContext';
 import { SEGMENT_STYLES } from '../../types';
 import { formatCurrencyFull } from '../../lib/format';
 
+const MAX_VISIBLE = 6;
+
 export function OrgDetail({ id }: { id: string }) {
   const { data, maps } = useData();
   const { open } = useDetail();
@@ -126,10 +128,13 @@ function FlowSection({
   const { open } = useDetail();
   if (flows.length === 0) return null;
 
+  const visible = flows.slice(0, MAX_VISIBLE);
+  const remaining = flows.length - visible.length;
+
   return (
-    <Section title={title}>
+    <Section title={`${title} (${flows.length})`}>
       <ul className="space-y-1.5">
-        {flows.map((f) => {
+        {visible.map((f) => {
           const cpId = f[counterpartKey];
           const cp = cpId ? maps.orgById.get(cpId) : undefined;
           const cpName = cp?.name ?? (counterpartKey === 'sourceId' ? f.sourceName : f.recipientName) ?? 'Unknown';
@@ -146,6 +151,11 @@ function FlowSection({
           );
         })}
       </ul>
+      {remaining > 0 && (
+        <p className="text-xs text-slate-400 mt-2">
+          +{remaining} more — see Capital Flows tab for full list
+        </p>
+      )}
     </Section>
   );
 }

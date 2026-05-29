@@ -2,6 +2,8 @@ import { useData } from '../../context/DataContext';
 import { useDetail } from '../../context/DetailContext';
 import { SEGMENT_STYLES } from '../../types';
 
+const MAX_VISIBLE = 8;
+
 export function ImpactDimensionDetail({ id }: { id: string }) {
   const { data, maps } = useData();
   const { open } = useDetail();
@@ -33,44 +35,59 @@ export function ImpactDimensionDetail({ id }: { id: string }) {
       {dim.notes && <p className="text-sm text-slate-600 mt-3">{dim.notes}</p>}
 
       {relatedOrgs.length > 0 && (
-        <div className="mt-5">
-          <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">
-            Organizations ({relatedOrgs.length})
-          </h3>
-          <ul className="space-y-1.5">
-            {relatedOrgs.slice(0, 30).map((o) => (
-              <li key={o.id}>
-                <button
-                  onClick={() => open('organization', o.id)}
-                  className="w-full flex items-center gap-2 text-sm text-left border border-slate-100 rounded-md px-3 py-2 hover:border-slate-300"
-                >
-                  <span className="h-2 w-2 rounded-full shrink-0" style={{ background: SEGMENT_STYLES[o.segment].color }} />
-                  <span className="text-slate-700 truncate">{o.name}</span>
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <CappedList
+          title="Organizations"
+          items={relatedOrgs}
+          hint="see Organizations tab to browse all"
+          renderItem={(o) => (
+            <button
+              onClick={() => open('organization', o.id)}
+              className="w-full flex items-center gap-2 text-sm text-left border border-slate-100 rounded-md px-3 py-2 hover:border-slate-300"
+            >
+              <span className="h-2 w-2 rounded-full shrink-0" style={{ background: SEGMENT_STYLES[o.segment].color }} />
+              <span className="text-slate-700 truncate">{o.name}</span>
+            </button>
+          )}
+        />
       )}
 
       {relatedFlows.length > 0 && (
-        <div className="mt-5">
-          <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">
-            Capital Flows ({relatedFlows.length})
-          </h3>
-          <ul className="space-y-1.5">
-            {relatedFlows.slice(0, 20).map((f) => (
-              <li key={f.id}>
-                <button
-                  onClick={() => open('flow', f.id)}
-                  className="w-full text-left text-sm border border-slate-100 rounded-md px-3 py-2 hover:border-slate-300"
-                >
-                  {f.sourceName ?? 'Unknown'} → {f.recipientName ?? 'Unknown'}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <CappedList
+          title="Capital Flows"
+          items={relatedFlows}
+          hint="see Capital Flows tab for full list"
+          renderItem={(f) => (
+            <button
+              onClick={() => open('flow', f.id)}
+              className="w-full text-left text-sm border border-slate-100 rounded-md px-3 py-2 hover:border-slate-300"
+            >
+              {f.sourceName ?? 'Unknown'} → {f.recipientName ?? 'Unknown'}
+            </button>
+          )}
+        />
+      )}
+    </div>
+  );
+}
+
+function CappedList<T extends { id: string }>({ title, items, hint, renderItem }: { title: string; items: T[]; hint: string; renderItem: (item: T) => React.ReactNode }) {
+  const visible = items.slice(0, MAX_VISIBLE);
+  const remaining = items.length - visible.length;
+
+  return (
+    <div className="mt-5">
+      <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">
+        {title} ({items.length})
+      </h3>
+      <ul className="space-y-1.5">
+        {visible.map((item) => (
+          <li key={item.id}>{renderItem(item)}</li>
+        ))}
+      </ul>
+      {remaining > 0 && (
+        <p className="text-xs text-slate-400 mt-2">
+          +{remaining} more — {hint}
+        </p>
       )}
     </div>
   );

@@ -1,8 +1,10 @@
 import { Building2, TrendingUp } from 'lucide-react';
 import { useData } from '../../context/DataContext';
-import { useDetail } from '../../context/DetailContext';
-import { SEGMENT_STYLES } from '../../types';
+import { useDetail, type DetailType } from '../../context/DetailContext';
+import { SEGMENT_STYLES, type Organization } from '../../types';
 import { formatCurrency } from '../../lib/format';
+
+const MAX_VISIBLE = 8;
 
 const CVI_BASELINE: { key: string; label: string; color: string }[] = [
   { key: 'cviBaselineHealth', label: 'Health', color: '#53c3c2' },
@@ -23,7 +25,7 @@ export function LocationDetail({ id }: { id: string }) {
   const loc = maps.locationById.get(id);
   if (!loc) return <p className="text-sm text-slate-400">Location not found.</p>;
 
-  const orgs = loc.organizationIds.map((oid) => maps.orgById.get(oid)).filter(Boolean);
+  const orgs = loc.organizationIds.map((oid) => maps.orgById.get(oid)).filter((o): o is Organization => !!o);
   const totalCapital = data!.capitalFlows
     .filter((f) => {
       const src = f.sourceId ? maps.orgById.get(f.sourceId) : null;
@@ -130,26 +132,40 @@ export function LocationDetail({ id }: { id: string }) {
       )}
 
       {orgs.length > 0 && (
-        <div className="mt-5">
-          <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">Organizations</h3>
-          <ul className="space-y-1.5">
-            {orgs.map((o) => o && (
-              <li key={o.id}>
-                <button
-                  onClick={() => open('organization', o.id)}
-                  className="w-full flex items-center gap-2 text-sm text-left border border-slate-100 rounded-md px-3 py-2 hover:border-slate-300"
-                >
-                  <span
-                    className="h-2 w-2 rounded-full shrink-0"
-                    style={{ background: SEGMENT_STYLES[o.segment].color }}
-                  />
-                  <span className="text-slate-700 truncate">{o.name}</span>
-                  <span className="text-[10px] text-slate-400 ml-auto shrink-0">{o.segment}</span>
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <OrgList orgs={orgs} open={open} />
+      )}
+    </div>
+  );
+}
+
+function OrgList({ orgs, open }: { orgs: Organization[]; open: (type: DetailType, id: string) => void }) {
+  const visible = orgs.slice(0, MAX_VISIBLE);
+  const remaining = orgs.length - visible.length;
+
+  return (
+    <div className="mt-5">
+      <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">Organizations ({orgs.length})</h3>
+      <ul className="space-y-1.5">
+        {visible.map((o) => (
+          <li key={o.id}>
+            <button
+              onClick={() => open('organization', o.id)}
+              className="w-full flex items-center gap-2 text-sm text-left border border-slate-100 rounded-md px-3 py-2 hover:border-slate-300"
+            >
+              <span
+                className="h-2 w-2 rounded-full shrink-0"
+                style={{ background: SEGMENT_STYLES[o.segment].color }}
+              />
+              <span className="text-slate-700 truncate">{o.name}</span>
+              <span className="text-[10px] text-slate-400 ml-auto shrink-0">{o.segment}</span>
+            </button>
+          </li>
+        ))}
+      </ul>
+      {remaining > 0 && (
+        <p className="text-xs text-slate-400 mt-2">
+          +{remaining} more — see Organizations tab to browse all
+        </p>
       )}
     </div>
   );

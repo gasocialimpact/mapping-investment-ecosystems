@@ -2,6 +2,8 @@ import { useData } from '../../context/DataContext';
 import { useDetail } from '../../context/DetailContext';
 import { formatCurrencyFull } from '../../lib/format';
 
+const MAX_VISIBLE = 8;
+
 export function InstrumentDetail({ id }: { id: string }) {
   const { data, maps } = useData();
   const { open } = useDetail();
@@ -35,28 +37,42 @@ export function InstrumentDetail({ id }: { id: string }) {
       {inst.description && <p className="text-sm text-slate-600 mt-3">{inst.description}</p>}
 
       {relatedFlows.length > 0 && (
-        <div className="mt-5">
-          <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">
-            Related Flows ({relatedFlows.length})
-          </h3>
-          <ul className="space-y-1.5">
-            {relatedFlows.slice(0, 20).map((f) => (
-              <li key={f.id}>
-                <button
-                  onClick={() => open('flow', f.id)}
-                  className="w-full flex items-center justify-between text-sm border border-slate-100 rounded-md px-3 py-2 hover:border-slate-300"
-                >
-                  <span className="text-slate-600 truncate">
-                    {f.sourceName ?? 'Unknown'} → {f.recipientName ?? 'Unknown'}
-                  </span>
-                  <span className="font-semibold text-brand-green ml-2 shrink-0">
-                    {formatCurrencyFull(f.amount)}
-                  </span>
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <FlowList flows={relatedFlows} open={open} />
+      )}
+    </div>
+  );
+}
+
+function FlowList({ flows, open }: { flows: any[]; open: (type: 'flow', id: string) => void }) {
+  const visible = flows.slice(0, MAX_VISIBLE);
+  const remaining = flows.length - visible.length;
+
+  return (
+    <div className="mt-5">
+      <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">
+        Related Flows ({flows.length})
+      </h3>
+      <ul className="space-y-1.5">
+        {visible.map((f) => (
+          <li key={f.id}>
+            <button
+              onClick={() => open('flow', f.id)}
+              className="w-full flex items-center justify-between text-sm border border-slate-100 rounded-md px-3 py-2 hover:border-slate-300"
+            >
+              <span className="text-slate-600 truncate">
+                {f.sourceName ?? 'Unknown'} → {f.recipientName ?? 'Unknown'}
+              </span>
+              <span className="font-semibold text-brand-green ml-2 shrink-0">
+                {formatCurrencyFull(f.amount)}
+              </span>
+            </button>
+          </li>
+        ))}
+      </ul>
+      {remaining > 0 && (
+        <p className="text-xs text-slate-400 mt-2">
+          +{remaining} more — see Capital Flows tab for full list
+        </p>
       )}
     </div>
   );

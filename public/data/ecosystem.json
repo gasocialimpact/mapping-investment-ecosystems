@@ -17400,14 +17400,14 @@
       "type": "IMM Classification",
       "label": "Contributing to Solutions",
       "notes": null,
-      "iconUrl": "/icons/impact/contribute_to_solutions.png"
+      "iconUrl": "icons/impact/contribute_to_solutions.png"
     },
     {
       "id": "dim_food_systems_agriculture",
       "type": "Sector Focus",
       "label": "Food Systems & Agriculture",
       "notes": null,
-      "iconUrl": "/icons/impact/food_and_ag.png"
+      "iconUrl": "icons/impact/food_and_ag.png"
     },
     {
       "id": "dim_women",
@@ -17421,21 +17421,21 @@
       "type": "Alternative Ownership Component",
       "label": "Cooperative",
       "notes": null,
-      "iconUrl": "/icons/impact/cooperative.png"
+      "iconUrl": "icons/impact/cooperative.png"
     },
     {
       "id": "dim_benefitting_stakeholders",
       "type": "IMM Classification",
       "label": "Benefitting Stakeholders",
       "notes": null,
-      "iconUrl": "/icons/impact/benefit_stakeholders.png"
+      "iconUrl": "icons/impact/benefit_stakeholders.png"
     },
     {
       "id": "dim_bridging_the_fields_of_renewables_grid_infrastructure_and_transition_finance",
       "type": "SDG Alignment",
       "label": "Bridging the fields of renewables, grid infrastructure, and transition finance",
       "notes": null,
-      "iconUrl": "/icons/impact/e_sdg_print_07.jpg"
+      "iconUrl": "icons/impact/e_sdg_print_07.jpg"
     },
     {
       "id": "dim_children_or_families",
@@ -17456,28 +17456,28 @@
       "type": "SDG Alignment",
       "label": "Institutional stability, governance quality and corruption risks have a direct influence on investment viability",
       "notes": null,
-      "iconUrl": "/icons/impact/e_sdg_print_16.jpg"
+      "iconUrl": "icons/impact/e_sdg_print_16.jpg"
     },
     {
       "id": "dim_scalable_solutions_can_be_achieved_in_all_sdg_sustainable_development_priorities_through_public_private_collaboration",
       "type": "SDG Alignment",
       "label": "Scalable solutions can be achieved in all SDG sustainable development priorities through public-private collaboration",
       "notes": null,
-      "iconUrl": "/icons/impact/e_sdg_print_17.jpg"
+      "iconUrl": "icons/impact/e_sdg_print_17.jpg"
     },
     {
       "id": "dim_infrastructure_affordable_housing_and_transportation_are_the_key_areas_of_investment",
       "type": "SDG Alignment",
       "label": "Infrastructure, affordable housing, and transportation are the key areas of investment",
       "notes": null,
-      "iconUrl": "/icons/impact/e_sdg_print_11.jpg"
+      "iconUrl": "icons/impact/e_sdg_print_11.jpg"
     },
     {
       "id": "dim_the_supply_chain_models_of_the_circular_economy_and_sustainability_minimize_the_risk_of_resources_and_regulation",
       "type": "SDG Alignment",
       "label": "The supply chain models of the circular economy and sustainability minimize the risk of resources and regulation",
       "notes": null,
-      "iconUrl": "/icons/impact/e_sdg_print_12.jpg"
+      "iconUrl": "icons/impact/e_sdg_print_12.jpg"
     },
     {
       "id": "dim_income_constrained_or_asset_limited_individuals",
@@ -17491,91 +17491,91 @@
       "type": "Sector Focus",
       "label": "Capital Access & Fair Financial Products",
       "notes": null,
-      "iconUrl": "/icons/impact/fair_financials.png"
+      "iconUrl": "icons/impact/fair_financials.png"
     },
     {
       "id": "dim_neighborhood_revitalization",
       "type": "Sector Focus",
       "label": "Neighborhood Revitalization",
       "notes": null,
-      "iconUrl": "/icons/impact/neighborhoods.png"
+      "iconUrl": "icons/impact/neighborhoods.png"
     },
     {
       "id": "dim_biodiversity_protection_land_use_and_deforestation_are_becoming_issues_associated_with_financial_risk",
       "type": "SDG Alignment",
       "label": "Biodiversity protection, land use, and deforestation are becoming issues associated with financial risk",
       "notes": null,
-      "iconUrl": "/icons/impact/e_sdg_print_15.jpg"
+      "iconUrl": "icons/impact/e_sdg_print_15.jpg"
     },
     {
       "id": "dim_land_natural_resource_conservation",
       "type": "Sector Focus",
       "label": "Land & Natural Resource Conservation",
       "notes": null,
-      "iconUrl": "/icons/impact/land_preservation.png"
+      "iconUrl": "icons/impact/land_preservation.png"
     },
     {
       "id": "dim_perpetual_purpose_trust_ppt",
       "type": "Alternative Ownership Component",
       "label": "Perpetual Purpose Trust (PPT)",
       "notes": null,
-      "iconUrl": "/icons/impact/perpetual_purpose_trust.png"
+      "iconUrl": "icons/impact/perpetual_purpose_trust.png"
     },
     {
       "id": "dim_gender_lens_investing_and_fair_access_to_finance_are_both_better_social_outcomes_and_better_economic_performance",
       "type": "SDG Alignment",
       "label": "Gender-lens investing and fair access to finance are both better social outcomes and better economic performance",
       "notes": null,
-      "iconUrl": "/icons/impact/e_sdg_print_05.jpg"
+      "iconUrl": "icons/impact/e_sdg_print_05.jpg"
     },
     {
       "id": "dim_social_stability_and_long_term_returns_are_influenced_by_labor_standards_productivity_and_supply_chain_practices",
       "type": "SDG Alignment",
       "label": "Social stability and long-term returns are influenced by labor standards, productivity, and supply chain practices",
       "notes": null,
-      "iconUrl": "/icons/impact/e_sdg_print_08.jpg"
+      "iconUrl": "icons/impact/e_sdg_print_08.jpg"
     },
     {
       "id": "dim_quality_jobs_resilient_workforce",
       "type": "Sector Focus",
       "label": "Quality Jobs & Resilient Workforce",
       "notes": null,
-      "iconUrl": "/icons/impact/quality_jobs.png"
+      "iconUrl": "icons/impact/quality_jobs.png"
     },
     {
       "id": "dim_long_term_economic_growth_is_built_on_human_capital_development_and_the_education_linked_financing_and_digital_inclusion_programs_are_gaining_momentum",
       "type": "SDG Alignment",
       "label": "Long-term economic growth is built on human capital development, and the education-linked financing and digital inclusion programs are gaining momentum",
       "notes": null,
-      "iconUrl": "/icons/impact/e_sdg_print_04.jpg"
+      "iconUrl": "icons/impact/e_sdg_print_04.jpg"
     },
     {
       "id": "dim_insurance_systems_health_care_infrastructure_and_pharmaceuticals_are_determinant_factors_in_population_resilience_and_productivity",
       "type": "SDG Alignment",
       "label": "Insurance systems, health care infrastructure, and pharmaceuticals are determinant factors in population resilience and productivity",
       "notes": null,
-      "iconUrl": "/icons/impact/e_sdg_print_03.jpg"
+      "iconUrl": "icons/impact/e_sdg_print_03.jpg"
     },
     {
       "id": "dim_acting_to_reduce_harm",
       "type": "IMM Classification",
       "label": "Acting to Reduce Harm",
       "notes": null,
-      "iconUrl": "/icons/impact/act_to_reduce_harm.png"
+      "iconUrl": "icons/impact/act_to_reduce_harm.png"
     },
     {
       "id": "dim_business_enterprise_support",
       "type": "Sector Focus",
       "label": "Business & Enterprise Support",
       "notes": null,
-      "iconUrl": "/icons/impact/entrepreneurship.png"
+      "iconUrl": "icons/impact/entrepreneurship.png"
     },
     {
       "id": "dim_housing",
       "type": "Sector Focus",
       "label": "Housing",
       "notes": null,
-      "iconUrl": "/icons/impact/housing.png"
+      "iconUrl": "icons/impact/housing.png"
     },
     {
       "id": "dim_veterans",
@@ -17589,35 +17589,35 @@
       "type": "SDG Alignment",
       "label": "The key points in climate risk management, mitigation, adaptation, and transition finance.",
       "notes": null,
-      "iconUrl": "/icons/impact/e_sdg_print_13.jpg"
+      "iconUrl": "icons/impact/e_sdg_print_13.jpg"
     },
     {
       "id": "dim_climate_solutions_green_infrastructure",
       "type": "Sector Focus",
       "label": "Climate Solutions & Green Infrastructure",
       "notes": null,
-      "iconUrl": "/icons/impact/climate_solutions.png"
+      "iconUrl": "icons/impact/climate_solutions.png"
     },
     {
       "id": "dim_resolves_financial_inclusion_credit_access_and_financial_resilience",
       "type": "SDG Alignment",
       "label": "Resolves financial inclusion, credit access, and financial resilience",
       "notes": null,
-      "iconUrl": "/icons/impact/e_sdg_print_01.jpg"
+      "iconUrl": "icons/impact/e_sdg_print_01.jpg"
     },
     {
       "id": "dim_promotes_sustainable_industrialization_robust_infrastructure_and_innovation_led_growth",
       "type": "SDG Alignment",
       "label": "Promotes sustainable industrialization, robust infrastructure, and innovation-led growth",
       "notes": null,
-      "iconUrl": "/icons/impact/e_sdg_print_09.jpg"
+      "iconUrl": "icons/impact/e_sdg_print_09.jpg"
     },
     {
       "id": "dim_employee_stock_ownership_plan_esop",
       "type": "Alternative Ownership Component",
       "label": "Employee Stock Ownership Plan (ESOP)",
       "notes": null,
-      "iconUrl": "/icons/impact/esop.png"
+      "iconUrl": "icons/impact/esop.png"
     },
     {
       "id": "dim_financially_excluded_populations",
@@ -17631,49 +17631,49 @@
       "type": "SDG Alignment",
       "label": "Marine biodiversity and sustainable fisheries are taken care of through blue economy investments",
       "notes": null,
-      "iconUrl": "/icons/impact/e_sdg_print_14.jpg"
+      "iconUrl": "icons/impact/e_sdg_print_14.jpg"
     },
     {
       "id": "dim_water_infrastructure_wastewater_treatment_and_water_utilities_have_a_direct_impact_on_water_security_and_human_health",
       "type": "SDG Alignment",
       "label": "Water infrastructure, wastewater treatment, and water utilities have a direct impact on water security and human health",
       "notes": null,
-      "iconUrl": "/icons/impact/e_sdg_print_06.jpg"
+      "iconUrl": "icons/impact/e_sdg_print_06.jpg"
     },
     {
       "id": "dim_education_childcare",
       "type": "Sector Focus",
       "label": "Education & Childcare",
       "notes": null,
-      "iconUrl": "/icons/impact/childcare.png"
+      "iconUrl": "icons/impact/childcare.png"
     },
     {
       "id": "dim_employee_ownership_trusts_eots",
       "type": "Alternative Ownership Component",
       "label": "Employee Ownership Trusts (EOTs)",
       "notes": null,
-      "iconUrl": "/icons/impact/employee_ownership_trust.png"
+      "iconUrl": "icons/impact/employee_ownership_trust.png"
     },
     {
       "id": "dim_capital_allocation_has_an_impact_on_food_security_and_sustainable_farming_practices_worldwide",
       "type": "SDG Alignment",
       "label": "Capital allocation has an impact on food security and sustainable farming practices worldwide",
       "notes": null,
-      "iconUrl": "/icons/impact/e_sdg_print_02.jpg"
+      "iconUrl": "icons/impact/e_sdg_print_02.jpg"
     },
     {
       "id": "dim_systemic_social_risk_is_mitigated_by_financial_inclusion_equal_access_to_services_and_equal_economic_participation",
       "type": "SDG Alignment",
       "label": "Systemic social risk is mitigated by financial inclusion, equal access to services, and equal economic participation",
       "notes": null,
-      "iconUrl": "/icons/impact/e_sdg_print_10.jpg"
+      "iconUrl": "icons/impact/e_sdg_print_10.jpg"
     },
     {
       "id": "dim_health_wellness",
       "type": "Sector Focus",
       "label": "Health & Wellness",
       "notes": null,
-      "iconUrl": "/icons/impact/health_and_wellness.png"
+      "iconUrl": "icons/impact/health_and_wellness.png"
     }
   ]
 }

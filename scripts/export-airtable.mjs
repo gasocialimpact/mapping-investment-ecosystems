@@ -172,7 +172,7 @@ async function main() {
       const localName = filename.toLowerCase().replace(/[^a-z0-9.]+/g, '_').replace(/^_/, '');
       const destPath = join(iconDir, localName);
       const ok = await downloadIfMissing(icon.url, destPath);
-      if (ok) iconUrl = `/icons/impact/${localName}`;
+      if (ok) iconUrl = `icons/impact/${localName}`;
     }
 
     return {
