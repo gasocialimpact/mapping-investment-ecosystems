@@ -202,11 +202,13 @@ async function main() {
   });
 
   // --- Capital Instruments ---
+  const recIdToInstrName = new Map();
   instrRecs.forEach((r, i) => {
     const f = r.fields;
     const name = f['Lookup Field'] || `Instrument ${i + 1}`;
     const id = slug(name, 'inst');
     recIdToInstrId.set(r.id, id);
+    recIdToInstrName.set(r.id, name);
   });
 
   // --- Capital Flows ---
@@ -294,7 +296,7 @@ async function main() {
       recipientName: recipientName || null,
       amount: num(f['Amount']),
       year: num(f['Year']),
-      type: scalar(f['Definitions']) || null,
+      type: (() => { const rid = scalar(f['Definitions']); return rid ? (recIdToInstrName.get(rid) ?? rid) : null; })(),
       description: scalar(f['Notes']) || null,
       capitalInstrumentIds,
       impactDimensionIds,

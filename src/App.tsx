@@ -152,13 +152,16 @@ function OverviewTab() {
   const flowTypeData = useMemo(() => {
     const totals: Record<string, number> = {};
     filteredFlows.forEach((f) => {
-      const t = f.type ?? 'Unknown';
+      const inst = f.capitalInstrumentIds.length
+        ? maps.instrumentById.get(f.capitalInstrumentIds[0])
+        : undefined;
+      const t = inst?.name ?? f.type ?? 'Unknown';
       totals[t] = (totals[t] ?? 0) + (f.amount ?? 0);
     });
     return Object.entries(totals)
       .map(([label, value]) => ({ label, value }))
       .sort((a, b) => b.value - a.value);
-  }, [filteredFlows]);
+  }, [filteredFlows, maps]);
 
   const impactData = useMemo(() => {
     const counts: Record<string, { count: number; type: string; iconUrl?: string | null }> = {};
