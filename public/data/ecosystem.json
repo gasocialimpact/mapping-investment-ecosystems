@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-05-29T07:30:13.752Z",
+  "generatedAt": "2026-05-30T03:11:27.706Z",
   "source": "Airtable base appAi19SJ3WzFEIvj",
   "organizations": [
     {
       "id": "org_fayette_community_hospital_inc",
       "name": "Fayette Community Hospital Inc",
       "segment": "Capital Allocator",
-      "orgType": null,
+      "orgType": "Healthcare System",
       "city": "recUG8stHkf1wfb8k",
       "state": "GA",
       "lat": 33.4501,
@@ -299,7 +299,7 @@
       "id": "org_hill_top_cybersecurity",
       "name": "Hill Top CyberSecurity",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recftVD4IEE8rCQnF",
       "state": "GA",
       "lat": 32.0286,
@@ -319,7 +319,7 @@
       "id": "org_emrgy",
       "name": "Emrgy",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -345,7 +345,7 @@
       "id": "org_vizz_technologies",
       "name": "ViZZ Technologies",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recTtxV45VvsclUnN",
       "state": "GA",
       "lat": 33.9379,
@@ -481,7 +481,7 @@
       "id": "org_bny_mellon_wealth_management",
       "name": "BNY Mellon Wealth Management",
       "segment": "Capital Aggregator",
-      "orgType": null,
+      "orgType": "Financial Services Firm",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -523,7 +523,7 @@
       "id": "org_r_howard_dobbs_jr_foundation",
       "name": "R. Howard Dobbs Jr. Foundation",
       "segment": "Capital Allocator",
-      "orgType": null,
+      "orgType": "Foundation (Private)",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -569,7 +569,7 @@
       "id": "org_dpi_printing_services",
       "name": "DPI Printing Services",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "rec1SRZIBm1xuuq3u",
       "state": "GA",
       "lat": 34.026,
@@ -598,6 +598,28 @@
       "description": null,
       "locationId": null,
       "contactIds": [],
+      "capitalFlowIds": [],
+      "capitalAllocationIds": [],
+      "sdgIds": [],
+      "sectorIds": [],
+      "populationIds": [],
+      "ownershipIds": []
+    },
+    {
+      "id": "org_renew_vc",
+      "name": "Renew VC",
+      "segment": "Uncategorized",
+      "orgType": null,
+      "city": null,
+      "state": null,
+      "lat": null,
+      "lng": null,
+      "website": null,
+      "description": null,
+      "locationId": null,
+      "contactIds": [
+        "contact_kt_mcbratney"
+      ],
       "capitalFlowIds": [],
       "capitalAllocationIds": [],
       "sdgIds": [],
@@ -690,8 +712,8 @@
     {
       "id": "org_northern_trust",
       "name": "Northern Trust",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Aggregator",
+      "orgType": "Financial Services Firm",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -781,7 +803,7 @@
       "id": "org_solar_inventions",
       "name": "Solar Inventions",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -801,7 +823,7 @@
       "id": "org_padsplit",
       "name": "PadSplit",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -939,8 +961,8 @@
     {
       "id": "org_montag_wealth_management",
       "name": "Montag Wealth Management",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Aggregator",
+      "orgType": "Financial Services Firm",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -1004,7 +1026,7 @@
       "id": "org_rimidi",
       "name": "Rimidi",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -1023,8 +1045,8 @@
     {
       "id": "org_city_of_colquitt",
       "name": "City of Colquitt",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Enabler",
+      "orgType": "Government Agency",
       "city": "rectDUVQvM4XIDBxh",
       "state": "GA",
       "lat": 31.1741,
@@ -1087,7 +1109,7 @@
       "id": "org_tohl",
       "name": "TOHL",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recywut3bOGTkJfV3",
       "state": "GA",
       "lat": 33.9815,
@@ -1148,8 +1170,8 @@
     {
       "id": "org_atlanta_housing_authority",
       "name": "Atlanta Housing Authority",
-      "segment": "Capital Aggregator",
-      "orgType": null,
+      "segment": "Capital Enabler",
+      "orgType": "Government Agency",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -1173,8 +1195,8 @@
     {
       "id": "org_synovus",
       "name": "Synovus",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Aggregator",
+      "orgType": "Bank (Commercial)",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -1283,7 +1305,7 @@
       "id": "org_onsyte_performance",
       "name": "OnSyte Performance",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recCqmeCxUxYiMAhA",
       "state": "GA",
       "lat": 34.1192,
@@ -1335,7 +1357,8 @@
       "locationId": null,
       "contactIds": [
         "contact_emilie_linick",
-        "contact_ninh_kieu_lee"
+        "contact_ninh_kieu_lee",
+        "contact_karina_vadillo"
       ],
       "capitalFlowIds": [],
       "capitalAllocationIds": [],
@@ -1517,7 +1540,7 @@
       "id": "org_georgia_state_university_foundation_inc",
       "name": "Georgia State University Foundation Inc",
       "segment": "Capital Allocator",
-      "orgType": null,
+      "orgType": "Foundation (Public DAF Sponsor)",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -1537,7 +1560,7 @@
       "id": "org_omnilink_systems",
       "name": "Omnilink Systems",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recy2CHvGyXRSdzaZ",
       "state": "GA",
       "lat": 34.0704,
@@ -1620,30 +1643,10 @@
       "ownershipIds": []
     },
     {
-      "id": "org_access_to_capital_for_entrepreneurs_ace",
-      "name": "Access to Capital for Entrepreneurs (ACE)",
-      "segment": "Uncategorized",
-      "orgType": null,
-      "city": null,
-      "state": null,
-      "lat": null,
-      "lng": null,
-      "website": null,
-      "description": null,
-      "locationId": null,
-      "contactIds": [],
-      "capitalFlowIds": [],
-      "capitalAllocationIds": [],
-      "sdgIds": [],
-      "sectorIds": [],
-      "populationIds": [],
-      "ownershipIds": []
-    },
-    {
       "id": "org_atlanta_tech_village",
       "name": "Atlanta Tech Village",
       "segment": "Capital Aggregator",
-      "orgType": null,
+      "orgType": "PE or Venture Capital Firm",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -1665,7 +1668,7 @@
       "id": "org_atlanta_technology_angels",
       "name": "Atlanta Technology Angels",
       "segment": "Capital Allocator",
-      "orgType": null,
+      "orgType": "PE or Venture Capital Firm",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -1813,7 +1816,7 @@
       "id": "org_servescape",
       "name": "ServeScape",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -1835,7 +1838,7 @@
       "id": "org_ashworth_college",
       "name": "Ashworth College",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recTtxV45VvsclUnN",
       "state": "GA",
       "lat": 33.9379,
@@ -1855,7 +1858,7 @@
       "id": "org_city_of_atlanta",
       "name": "City of Atlanta",
       "segment": "Capital Enabler",
-      "orgType": null,
+      "orgType": "Government Agency",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -1866,6 +1869,28 @@
       "contactIds": [
         "contact_carolyn_kovar",
         "contact_mariama_n_diaye"
+      ],
+      "capitalFlowIds": [],
+      "capitalAllocationIds": [],
+      "sdgIds": [],
+      "sectorIds": [],
+      "populationIds": [],
+      "ownershipIds": []
+    },
+    {
+      "id": "org_georgia_barefoot",
+      "name": "Georgia Barefoot",
+      "segment": "Uncategorized",
+      "orgType": null,
+      "city": null,
+      "state": null,
+      "lat": null,
+      "lng": null,
+      "website": null,
+      "description": null,
+      "locationId": null,
+      "contactIds": [
+        "contact_georgia_barefoot"
       ],
       "capitalFlowIds": [],
       "capitalAllocationIds": [],
@@ -1900,7 +1925,7 @@
       "id": "org_stackfolio",
       "name": "Stackfolio",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -2031,7 +2056,7 @@
       "id": "org_overline_seed_fund_ii",
       "name": "Overline Seed Fund II",
       "segment": "Capital Aggregator",
-      "orgType": null,
+      "orgType": "PE or Venture Capital Firm",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -2053,7 +2078,7 @@
       "id": "org_affordable_equity_fund_llc",
       "name": "Affordable Equity Fund LLC",
       "segment": "Capital Aggregator",
-      "orgType": null,
+      "orgType": "CDFI or Credit Union",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -2115,6 +2140,28 @@
       "ownershipIds": []
     },
     {
+      "id": "org_angel_city_advisors",
+      "name": "Angel City Advisors",
+      "segment": "Uncategorized",
+      "orgType": null,
+      "city": null,
+      "state": null,
+      "lat": null,
+      "lng": null,
+      "website": null,
+      "description": null,
+      "locationId": null,
+      "contactIds": [
+        "contact_jt_trujillo"
+      ],
+      "capitalFlowIds": [],
+      "capitalAllocationIds": [],
+      "sdgIds": [],
+      "sectorIds": [],
+      "populationIds": [],
+      "ownershipIds": []
+    },
+    {
       "id": "org_shift_capital",
       "name": "Shift Capital",
       "segment": "Capital Aggregator",
@@ -2138,7 +2185,7 @@
       "id": "org_tech_square_ventures",
       "name": "Tech Square Ventures",
       "segment": "Capital Aggregator",
-      "orgType": null,
+      "orgType": "PE or Venture Capital Firm",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -2211,8 +2258,7 @@
       "description": null,
       "locationId": null,
       "contactIds": [
-        "contact_michael_haynes",
-        "contact_unknown"
+        "contact_michael_haynes"
       ],
       "capitalFlowIds": [],
       "capitalAllocationIds": [],
@@ -2309,7 +2355,7 @@
       "id": "org_local_three",
       "name": "Local Three",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -2370,8 +2416,8 @@
     {
       "id": "org_the_sapelo_foundation",
       "name": "The Sapelo Foundation",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Allocator",
+      "orgType": "Foundation (Private)",
       "city": "recftVD4IEE8rCQnF",
       "state": "GA",
       "lat": 32.0286,
@@ -2408,7 +2454,8 @@
       "description": null,
       "locationId": null,
       "contactIds": [
-        "contact_brittany_morgan"
+        "contact_brittany_morgan",
+        "contact_jonathan_rosado"
       ],
       "capitalFlowIds": [],
       "capitalAllocationIds": [],
@@ -2421,7 +2468,7 @@
       "id": "org_lendable",
       "name": "Lendable",
       "segment": "Capital Aggregator",
-      "orgType": null,
+      "orgType": "Loan or Private Investment Fund",
       "city": "recUKpQLbb8dcIqUG",
       "state": "-",
       "lat": 51.509865,
@@ -2485,7 +2532,7 @@
       "id": "org_alder_point_capital_management",
       "name": "Alder Point Capital Management",
       "segment": "Capital Aggregator",
-      "orgType": null,
+      "orgType": "Financial Services Firm",
       "city": "recwvQT6McsQ27qZf",
       "state": "GA",
       "lat": 34.7089,
@@ -2505,7 +2552,7 @@
       "id": "org_acivilate",
       "name": "Acivilate",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -2611,7 +2658,7 @@
       "id": "org_astound_digital",
       "name": "Astound Digital",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -2741,8 +2788,8 @@
     {
       "id": "org_grady_health_foundation",
       "name": "Grady Health Foundation",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Allocator",
+      "orgType": "Foundation (Corporate)",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -2764,7 +2811,7 @@
       "id": "org_arxceo",
       "name": "Arxceo",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -3004,7 +3051,7 @@
       "id": "org_american_family_institute",
       "name": "American Family Institute",
       "segment": "Capital Aggregator",
-      "orgType": null,
+      "orgType": "PE or Venture Capital Firm",
       "city": "rec5mNBtSbSgStx29",
       "state": "GA",
       "lat": 33.5793,
@@ -3066,7 +3113,7 @@
       "id": "org_tull_charitable_foundation",
       "name": "Tull Charitable Foundation",
       "segment": "Capital Allocator",
-      "orgType": null,
+      "orgType": "Foundation (Private)",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -3185,8 +3232,8 @@
     {
       "id": "org_valentine_family_office",
       "name": "Valentine Family Office",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Allocator",
+      "orgType": "HNWI or Family Office",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -3287,7 +3334,7 @@
       "id": "org_performive",
       "name": "Performive",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recdubMRCw9RdJCl5",
       "state": "GA",
       "lat": 33.9533,
@@ -3307,7 +3354,7 @@
       "id": "org_access_to_capital_for_entrepreneurs",
       "name": "Access to Capital for Entrepreneurs ",
       "segment": "Capital Aggregator",
-      "orgType": null,
+      "orgType": "CDFI or Credit Union",
       "city": "recM9ZNUzRVIvv2vz",
       "state": "GA",
       "lat": 34.597,
@@ -3321,7 +3368,8 @@
         "contact_tonya_rapley",
         "contact_wassia_kamon",
         "contact_grace_fricks",
-        "contact_jasmine_aimes"
+        "contact_jasmine_aimes",
+        "contact_shanon_stewart"
       ],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
@@ -3422,7 +3470,7 @@
       "id": "org_williams_family_foundation",
       "name": "Williams Family Foundation",
       "segment": "Capital Allocator",
-      "orgType": null,
+      "orgType": "Foundation (Private)",
       "city": "rec7fGrw7zg7AnFcn",
       "state": "GA",
       "lat": 30.8394,
@@ -3448,7 +3496,7 @@
       "id": "org_engineered_recycling_systems",
       "name": "Engineered Recycling Systems",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -3533,7 +3581,7 @@
       "id": "org_11ten_innovation_partners",
       "name": "11TEN Innovation Partners",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -3693,7 +3741,7 @@
       "id": "org_atlanta_neighborhood_development_partners",
       "name": "Atlanta Neighborhood Development Partners",
       "segment": "Capital Aggregator",
-      "orgType": null,
+      "orgType": "CDFI or Credit Union",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -3745,7 +3793,8 @@
       "description": null,
       "locationId": null,
       "contactIds": [
-        "contact_margaret_bugbee"
+        "contact_margaret_bugbee",
+        "contact_karyl_miller"
       ],
       "capitalFlowIds": [],
       "capitalAllocationIds": [],
@@ -3819,8 +3868,8 @@
     {
       "id": "org_william_josef_foundation",
       "name": "William Josef Foundation",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Allocator",
+      "orgType": "Foundation (Private)",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -3896,7 +3945,8 @@
       "description": null,
       "locationId": null,
       "contactIds": [
-        "contact_edith_love"
+        "contact_edith_love",
+        "contact_judith_winfrey"
       ],
       "capitalFlowIds": [],
       "capitalAllocationIds": [],
@@ -3991,7 +4041,7 @@
       "id": "org_i_genie_ai",
       "name": "i-Genie.ai",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recUpgeHSDyj0FN4P",
       "state": "GA",
       "lat": 34.0391,
@@ -4011,7 +4061,7 @@
       "id": "org_bip_wealth",
       "name": "BIP Wealth",
       "segment": "Capital Aggregator",
-      "orgType": null,
+      "orgType": "Financial Services Firm",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -4020,7 +4070,8 @@
       "description": null,
       "locationId": "loc_atlanta_ga",
       "contactIds": [
-        "contact_bithika_misha_schmidt"
+        "contact_bithika_misha_schmidt",
+        "contact_marcia_mayoue"
       ],
       "capitalFlowIds": [],
       "capitalAllocationIds": [],
@@ -4077,7 +4128,7 @@
       "id": "org_sparq_software_company",
       "name": "Sparq (Software Company)",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -4187,8 +4238,8 @@
     {
       "id": "org_mid_state_banks_inc",
       "name": "Mid State Banks Inc.",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Aggregator",
+      "orgType": "Bank (Community)",
       "city": "recOyEjW40Zzs3HD0",
       "state": "GA",
       "lat": 32.2965,
@@ -4293,7 +4344,7 @@
       "id": "org_up_to_good",
       "name": "UP TO GOOD",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -4312,8 +4363,8 @@
     {
       "id": "org_morning_star_foundation",
       "name": "Morning Star Foundation",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Allocator",
+      "orgType": "Foundation (Corporate)",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -4399,7 +4450,7 @@
       "id": "org_featurespace",
       "name": "Featurespace",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -4441,7 +4492,7 @@
       "id": "org_thought_logic_consulting",
       "name": "Thought Logic Consulting",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -4483,7 +4534,7 @@
       "id": "org_betty_and_davis_fitzgerald_foundation",
       "name": "Betty and Davis Fitzgerald Foundation",
       "segment": "Capital Allocator",
-      "orgType": null,
+      "orgType": "Foundation (Private)",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -4505,8 +4556,8 @@
     {
       "id": "org_city_of_mableton",
       "name": "City of Mableton",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Enabler",
+      "orgType": "Government Agency",
       "city": "recB9w2y9DYXM8PKh",
       "state": "GA",
       "lat": 33.8133,
@@ -4627,7 +4678,7 @@
       "locationId": null,
       "contactIds": [
         "contact_khaliff_davis",
-        "contact_christina_zepanaski"
+        "contact_evan_maag"
       ],
       "capitalFlowIds": [],
       "capitalAllocationIds": [],
@@ -4725,8 +4776,8 @@
     {
       "id": "org_carter_s_inc",
       "name": "Carter's Inc",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Allocator",
+      "orgType": "Publicly Traded Company",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -4810,7 +4861,7 @@
       "id": "org_integrating_green_technologies",
       "name": "Integrating Green Technologies",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -4842,6 +4893,28 @@
         "contact_avery_fontaine",
         "contact_deva_hirsch",
         "contact_crystal_williams"
+      ],
+      "capitalFlowIds": [],
+      "capitalAllocationIds": [],
+      "sdgIds": [],
+      "sectorIds": [],
+      "populationIds": [],
+      "ownershipIds": []
+    },
+    {
+      "id": "org_the_office_of_the_comptroller_of_the_currency_occ",
+      "name": "The Office of the Comptroller of the Currency (OCC)",
+      "segment": "Uncategorized",
+      "orgType": null,
+      "city": null,
+      "state": null,
+      "lat": null,
+      "lng": null,
+      "website": null,
+      "description": null,
+      "locationId": null,
+      "contactIds": [
+        "contact_april_atkins"
       ],
       "capitalFlowIds": [],
       "capitalAllocationIds": [],
@@ -4898,7 +4971,7 @@
       "id": "org_gabriel_money",
       "name": "Gabriel Money",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -4926,7 +4999,9 @@
       "website": null,
       "description": null,
       "locationId": null,
-      "contactIds": [],
+      "contactIds": [
+        "contact_kemberly_english"
+      ],
       "capitalFlowIds": [],
       "capitalAllocationIds": [],
       "sdgIds": [],
@@ -4998,7 +5073,7 @@
       "id": "org_truist_foundation",
       "name": "Truist Foundation",
       "segment": "Capital Allocator",
-      "orgType": null,
+      "orgType": "Foundation (Corporate)",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -5250,8 +5325,8 @@
     {
       "id": "org_padsplit",
       "name": "Padsplit",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Seeker",
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -5281,6 +5356,26 @@
       "website": "http://www.arborviewcapital.com/",
       "description": "Sustainability is becoming central to consumer and business decision-making. For fifteen years, we have partnered with high-quality management teams building a more environmentally sound, resource efficient future. These visionary leaders and their disruptive businesses are proving that sustainability is a compelling, rapidly expanding opportunity. One that will drive returns to all stakeholders — investors, employees, customers, suppliers — and the environment.",
       "locationId": "loc_washington_dc_dc",
+      "contactIds": [],
+      "capitalFlowIds": [],
+      "capitalAllocationIds": [],
+      "sdgIds": [],
+      "sectorIds": [],
+      "populationIds": [],
+      "ownershipIds": []
+    },
+    {
+      "id": "org_organization_245",
+      "name": "Unknown",
+      "segment": "Capital Seeker",
+      "orgType": null,
+      "city": null,
+      "state": null,
+      "lat": null,
+      "lng": null,
+      "website": null,
+      "description": null,
+      "locationId": null,
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [],
@@ -5438,8 +5533,8 @@
     {
       "id": "org_hometrust_bank",
       "name": "HomeTrust Bank",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Aggregator",
+      "orgType": "Bank (Community)",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -5560,8 +5655,8 @@
     {
       "id": "org_the_ups_foundation",
       "name": "The UPS Foundation",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Allocator",
+      "orgType": "Foundation (Corporate)",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -5580,8 +5675,8 @@
     {
       "id": "org_ncr_foundation",
       "name": "NCR Foundation",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Allocator",
+      "orgType": "Foundation (Corporate)",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -5610,7 +5705,8 @@
       "description": null,
       "locationId": "loc_atlanta_ga",
       "contactIds": [
-        "contact_tiana_tukes"
+        "contact_tiana_tukes",
+        "contact_khadija_t"
       ],
       "capitalFlowIds": [],
       "capitalAllocationIds": [],
@@ -5665,7 +5761,7 @@
       "id": "org_valor_venture_iii",
       "name": "Valor Venture III",
       "segment": "Capital Aggregator",
-      "orgType": null,
+      "orgType": "PE or Venture Capital Firm",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -5778,17 +5874,15 @@
       "id": "org_atlanta_jewish_foundation",
       "name": "Atlanta Jewish Foundation",
       "segment": "Capital Allocator",
-      "orgType": null,
+      "orgType": "Foundation (Public DAF Sponsor)",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
       "lng": -84.422,
       "website": null,
-      "description": "Empowers individuals with great ideas to tackle society's intractable issues.",
+      "description": null,
       "locationId": "loc_atlanta_ga",
-      "contactIds": [
-        "contact_ky_lindbergh"
-      ],
+      "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [],
       "sdgIds": [],
@@ -5852,7 +5946,8 @@
       "locationId": "loc_atlanta_ga",
       "contactIds": [
         "contact_debra_lam",
-        "contact_clarence_anthony_jr"
+        "contact_clarence_anthony_jr",
+        "contact_jamal_lewis"
       ],
       "capitalFlowIds": [],
       "capitalAllocationIds": [],
@@ -5956,7 +6051,7 @@
       "id": "org_litlab_ai",
       "name": "LitLab.ai",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -5976,7 +6071,7 @@
       "id": "org_capital_good_fund",
       "name": "Capital Good Fund",
       "segment": "Capital Aggregator",
-      "orgType": null,
+      "orgType": "CDFI or Credit Union",
       "city": "recftVD4IEE8rCQnF",
       "state": "GA",
       "lat": 32.0286,
@@ -6006,7 +6101,7 @@
       "id": "org_envirospark",
       "name": "EnviroSpark",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -6075,8 +6170,8 @@
     {
       "id": "org_delta_air_lines",
       "name": "Delta Air Lines",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Allocator",
+      "orgType": "Publicly Traded Company",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -6115,26 +6210,6 @@
       "ownershipIds": []
     },
     {
-      "id": "org_federal_reserve_bank_of_atlanta",
-      "name": "Federal Reserve Bank of Atlanta",
-      "segment": "Uncategorized",
-      "orgType": null,
-      "city": null,
-      "state": null,
-      "lat": null,
-      "lng": null,
-      "website": null,
-      "description": null,
-      "locationId": "loc_atlanta_ga",
-      "contactIds": [],
-      "capitalFlowIds": [],
-      "capitalAllocationIds": [],
-      "sdgIds": [],
-      "sectorIds": [],
-      "populationIds": [],
-      "ownershipIds": []
-    },
-    {
       "id": "org_southern_appalachian_highland_conservancy",
       "name": "Southern Appalachian Highland Conservancy",
       "segment": "Uncategorized",
@@ -6163,8 +6238,8 @@
     {
       "id": "org_unified_singers_federal_credit_union",
       "name": "Unified Singers Federal Credit Union",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Aggregator",
+      "orgType": "CDFI or Credit Union",
       "city": "rec7fGrw7zg7AnFcn",
       "state": "GA",
       "lat": 30.8394,
@@ -6207,8 +6282,8 @@
     {
       "id": "org_the_pittulloch_foundation_inc",
       "name": "The Pittulloch Foundation Inc",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Allocator",
+      "orgType": "Foundation (Private)",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -6249,8 +6324,8 @@
     {
       "id": "org_the_sage_foundation",
       "name": "The Sage Foundation",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Allocator",
+      "orgType": "Foundation (Corporate)",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -6272,7 +6347,7 @@
       "id": "org_wells_fargo_bank",
       "name": "Wells Fargo Bank",
       "segment": "Capital Aggregator",
-      "orgType": null,
+      "orgType": "Bank (Commercial)",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -6705,7 +6780,7 @@
       "id": "org_emory_university",
       "name": "Emory University",
       "segment": "Capital Allocator",
-      "orgType": null,
+      "orgType": "Higher Education Institution",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -6814,7 +6889,7 @@
       "id": "org_myavana",
       "name": "Myavana",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -6854,7 +6929,7 @@
       "id": "org_ecloud_managed_solutions",
       "name": "eCloud Managed Solutions",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recc3P9xLr664hhT5",
       "state": "GA",
       "lat": 34.1353,
@@ -6885,7 +6960,8 @@
       "contactIds": [
         "contact_katrina_mitchell",
         "contact_chantell_glenn",
-        "contact_tracy_kartye"
+        "contact_tracy_kartye",
+        "contact_ade_oguntoye"
       ],
       "capitalFlowIds": [],
       "capitalAllocationIds": [],
@@ -6897,8 +6973,8 @@
     {
       "id": "org_university_of_georgia_foundation",
       "name": "University of Georgia Foundation",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Allocator",
+      "orgType": "Foundation (Public DAF Sponsor)",
       "city": "recHK2S0Pa6kb8OJR",
       "state": "GA",
       "lat": 33.9508,
@@ -6940,7 +7016,7 @@
       "id": "org_fetchgoat",
       "name": "FetchGoat",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recy2CHvGyXRSdzaZ",
       "state": "GA",
       "lat": 34.0704,
@@ -7020,7 +7096,7 @@
       "id": "org_accion_opportunity_fund",
       "name": "Accion Opportunity Fund",
       "segment": "Capital Aggregator",
-      "orgType": null,
+      "orgType": "CDFI or Credit Union",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -7149,7 +7225,7 @@
       "id": "org_central_atlanta_progress",
       "name": "Central Atlanta Progress",
       "segment": "Capital Enabler",
-      "orgType": null,
+      "orgType": "Government Agency",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -7510,8 +7586,8 @@
     {
       "id": "org_ncr",
       "name": "NCR",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Allocator",
+      "orgType": "Publicly Traded Company",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -7531,7 +7607,7 @@
       "id": "org_blue_husky_group_llc",
       "name": "Blue Husky Group LLC",
       "segment": "Capital Aggregator",
-      "orgType": null,
+      "orgType": "Financial Services Firm",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -7574,8 +7650,8 @@
     {
       "id": "org_morgan_stanley",
       "name": "Morgan Stanley",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Aggregator",
+      "orgType": "Bank (Commercial)",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -7615,7 +7691,7 @@
       "id": "org_greenwood",
       "name": "Greenwood",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -7635,7 +7711,7 @@
       "id": "org_callaway_foundation",
       "name": "Callaway Foundation",
       "segment": "Capital Allocator",
-      "orgType": null,
+      "orgType": "Foundation (Private)",
       "city": "recQqVQD1yrQkNdWU",
       "state": "GA",
       "lat": 33.0274,
@@ -7722,7 +7798,7 @@
       "id": "org_knac",
       "name": "Knac",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -7765,7 +7841,7 @@
       "id": "org_rainforest_pay",
       "name": "Rainforest Pay",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -7778,6 +7854,28 @@
       "capitalAllocationIds": [
         "flow_224"
       ],
+      "sdgIds": [],
+      "sectorIds": [],
+      "populationIds": [],
+      "ownershipIds": []
+    },
+    {
+      "id": "org_bf_fund",
+      "name": "BF Fund",
+      "segment": "Uncategorized",
+      "orgType": null,
+      "city": null,
+      "state": null,
+      "lat": null,
+      "lng": null,
+      "website": null,
+      "description": null,
+      "locationId": null,
+      "contactIds": [
+        "contact_maurice_raeford"
+      ],
+      "capitalFlowIds": [],
+      "capitalAllocationIds": [],
       "sdgIds": [],
       "sectorIds": [],
       "populationIds": [],
@@ -7826,10 +7924,32 @@
       "ownershipIds": []
     },
     {
-      "id": "org_donald_and_marilyn_keough_foundation",
-      "name": "Donald and Marilyn Keough Foundation",
+      "id": "org_chrysalis_lab",
+      "name": "Chrysalis Lab",
       "segment": "Uncategorized",
       "orgType": null,
+      "city": "recxXXcnQqSoDt3Xq",
+      "state": "GA",
+      "lat": 33.7628,
+      "lng": -84.422,
+      "website": null,
+      "description": null,
+      "locationId": "loc_atlanta_ga",
+      "contactIds": [
+        "contact_lauren_jeong"
+      ],
+      "capitalFlowIds": [],
+      "capitalAllocationIds": [],
+      "sdgIds": [],
+      "sectorIds": [],
+      "populationIds": [],
+      "ownershipIds": []
+    },
+    {
+      "id": "org_donald_and_marilyn_keough_foundation",
+      "name": "Donald and Marilyn Keough Foundation",
+      "segment": "Capital Allocator",
+      "orgType": "Foundation (Private)",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -7849,7 +7969,7 @@
       "id": "org_saasmob",
       "name": "Saasmob",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -7869,7 +7989,7 @@
       "id": "org_cloverly",
       "name": "Cloverly",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -7933,7 +8053,7 @@
       "id": "org_cove_tool",
       "name": "Cove.Tool",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -7978,7 +8098,7 @@
       "id": "org_techstars_atlanta",
       "name": "Techstars Atlanta",
       "segment": "Capital Aggregator",
-      "orgType": null,
+      "orgType": "PE or Venture Capital Firm",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -8000,7 +8120,7 @@
       "id": "org_georgia_state_university",
       "name": "Georgia State University",
       "segment": "Capital Enabler",
-      "orgType": null,
+      "orgType": "Higher Education Institution",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -8022,7 +8142,7 @@
       "id": "org_steele_consulting",
       "name": "Steele Consulting",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -8042,7 +8162,7 @@
       "id": "org_bank_of_camilla",
       "name": "Bank of Camilla",
       "segment": "Capital Aggregator",
-      "orgType": null,
+      "orgType": "CDFI or Credit Union",
       "city": "recXGjOeIHBRYVlFl",
       "state": "GA",
       "lat": 31.2337,
@@ -8096,7 +8216,7 @@
       "id": "org_clean_energy_ventures",
       "name": "Clean Energy Ventures",
       "segment": "Capital Aggregator",
-      "orgType": null,
+      "orgType": "PE or Venture Capital Firm",
       "city": "rectHCOq8Yjji0b54",
       "state": "GA",
       "lat": 30.792,
@@ -8182,8 +8302,8 @@
     {
       "id": "org_cadence_bank",
       "name": "Cadence Bank",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Aggregator",
+      "orgType": "Bank (Commercial)",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -8354,7 +8474,7 @@
       "id": "org_o15_capital_partners",
       "name": "o15 Capital Partners",
       "segment": "Capital Aggregator",
-      "orgType": null,
+      "orgType": "PE or Venture Capital Firm",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -8393,8 +8513,8 @@
     {
       "id": "org_nourish_bloom",
       "name": "Nourish + Bloom",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Seeker",
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -8599,8 +8719,8 @@
     {
       "id": "org_cobank",
       "name": "CoBank",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Aggregator",
+      "orgType": "Bank (Commercial)",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -8620,7 +8740,7 @@
       "id": "org_albany_green_energy",
       "name": "Albany Green Energy",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "receLdSidX99TIytr",
       "state": "GA",
       "lat": 31.5776,
@@ -8660,7 +8780,7 @@
       "id": "org_bank_of_america",
       "name": "Bank of America",
       "segment": "Capital Aggregator",
-      "orgType": null,
+      "orgType": "Bank (Commercial)",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -8683,7 +8803,7 @@
       "id": "org_bpo_partners",
       "name": "BPO Partners",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recy2CHvGyXRSdzaZ",
       "state": "GA",
       "lat": 34.0704,
@@ -8759,7 +8879,7 @@
       "id": "org_medxoom",
       "name": "Medxoom",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -8779,7 +8899,7 @@
       "id": "org_ecgo",
       "name": "ECGO",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -8843,26 +8963,6 @@
     {
       "id": "org_institute_for_leadership_and_social_impact",
       "name": "Institute for Leadership and Social Impact",
-      "segment": "Uncategorized",
-      "orgType": null,
-      "city": null,
-      "state": null,
-      "lat": null,
-      "lng": null,
-      "website": null,
-      "description": null,
-      "locationId": null,
-      "contactIds": [],
-      "capitalFlowIds": [],
-      "capitalAllocationIds": [],
-      "sdgIds": [],
-      "sectorIds": [],
-      "populationIds": [],
-      "ownershipIds": []
-    },
-    {
-      "id": "org_organization_396",
-      "name": "Unknown",
       "segment": "Uncategorized",
       "orgType": null,
       "city": null,
@@ -9298,7 +9398,8 @@
       "description": null,
       "locationId": "loc_atlanta_ga",
       "contactIds": [
-        "contact_emily_giordano"
+        "contact_emily_giordano",
+        "contact_matt_reynolds"
       ],
       "capitalFlowIds": [],
       "capitalAllocationIds": [],
@@ -9310,8 +9411,8 @@
     {
       "id": "org_neighborworks_columbus",
       "name": "NeighborWorks Columbus",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Aggregator",
+      "orgType": "CDFI or Credit Union",
       "city": "reclfz7xn1AdNql2a",
       "state": "GA",
       "lat": 32.51,
@@ -9336,7 +9437,7 @@
       "id": "org_inovcares",
       "name": "InovCares",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -9376,7 +9477,7 @@
       "id": "org_clientsfirst_consulting",
       "name": "CLIENTSFirst Consulting",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -9554,7 +9655,7 @@
       "id": "org_l2c",
       "name": "L2C",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -9593,7 +9694,7 @@
     {
       "id": "org_fiserv",
       "name": "Fiserv",
-      "segment": "Uncategorized",
+      "segment": "Capital Allocator",
       "orgType": "Publicly Traded Company",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
@@ -9658,7 +9759,7 @@
       "id": "org_bank_of_dade",
       "name": "Bank of Dade",
       "segment": "Capital Aggregator",
-      "orgType": null,
+      "orgType": "CDFI or Credit Union",
       "city": "recR8bk4DZHIS9t0D",
       "state": "GA",
       "lat": 34.8741,
@@ -9691,7 +9792,9 @@
       "website": null,
       "description": null,
       "locationId": null,
-      "contactIds": [],
+      "contactIds": [
+        "contact_meredith_johnson"
+      ],
       "capitalFlowIds": [],
       "capitalAllocationIds": [],
       "sdgIds": [],
@@ -9965,9 +10068,11 @@
       "lat": 33.7628,
       "lng": -84.422,
       "website": null,
-      "description": null,
+      "description": "The Fraser-Parker Foundation is a private grantmaking organization based in Atlanta, Georgia, with over $210 million in assets. It provides significant annual grants to pre-selected charities, focusing primarily on education, human services, and philanthropy",
       "locationId": "loc_atlanta_ga",
-      "contactIds": [],
+      "contactIds": [
+        "contact_erin_boorn"
+      ],
       "capitalFlowIds": [],
       "capitalAllocationIds": [],
       "sdgIds": [],
@@ -10163,8 +10268,8 @@
     {
       "id": "org_nationsbank_south",
       "name": "NationsBank South",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Aggregator",
+      "orgType": "Bank (Commercial)",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -10276,8 +10381,8 @@
     {
       "id": "org_the_imlay_foundation",
       "name": "The Imlay Foundation",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Allocator",
+      "orgType": "Foundation (Private)",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -10297,7 +10402,7 @@
       "id": "org_advance_global_capital",
       "name": "Advance Global Capital",
       "segment": "Capital Aggregator",
-      "orgType": null,
+      "orgType": "Financial Services Firm",
       "city": "recUKpQLbb8dcIqUG",
       "state": "-",
       "lat": 51.509865,
@@ -10317,7 +10422,7 @@
       "id": "org_lockstep_technology_group",
       "name": "Lockstep Technology Group",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recTtxV45VvsclUnN",
       "state": "GA",
       "lat": 33.9379,
@@ -10337,7 +10442,7 @@
       "id": "org_loupe_entertainment_software",
       "name": "Loupe (Entertainment Software)",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -10485,7 +10590,7 @@
       "id": "org_peachtree_infrastructure",
       "name": "Peachtree Infrastructure",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -10547,7 +10652,7 @@
       "id": "org_soma_foundation_inc",
       "name": "Soma Foundation Inc.",
       "segment": "Uncategorized",
-      "orgType": null,
+      "orgType": "Foundation (Private)",
       "city": "reclfz7xn1AdNql2a",
       "state": "GA",
       "lat": 32.51,
@@ -10587,7 +10692,7 @@
       "id": "org_brighter_investing_pbc",
       "name": "Brighter Investing PBC",
       "segment": "Capital Aggregator",
-      "orgType": null,
+      "orgType": "Financial Services Firm",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -10693,7 +10798,7 @@
       "id": "org_ampliphi",
       "name": "Ampliphi",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -10798,7 +10903,7 @@
       "id": "org_1st_choice_credit_union",
       "name": "1st Choice Credit Union",
       "segment": "Capital Aggregator",
-      "orgType": null,
+      "orgType": "CDFI or Credit Union",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -10909,7 +11014,7 @@
       "id": "org_omnivore",
       "name": "Omnivore",
       "segment": "Capital Aggregator",
-      "orgType": null,
+      "orgType": "PE or Venture Capital Firm",
       "city": "recXDK59xO4Aic5r9",
       "state": "-",
       "lat": 19.076,
@@ -10949,7 +11054,7 @@
       "id": "org_jewish_federation_of_greater_atlanta",
       "name": "Jewish Federation of Greater Atlanta",
       "segment": "Capital Allocator",
-      "orgType": null,
+      "orgType": "Foundation (Public DAF Sponsor)",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -11014,7 +11119,7 @@
       "id": "org_american_pride_bank",
       "name": "American Pride Bank",
       "segment": "Capital Aggregator",
-      "orgType": null,
+      "orgType": "Bank (Community)",
       "city": "rec8Kgp5YMvPb5MoY",
       "state": "GA",
       "lat": 32.8065,
@@ -11059,7 +11164,7 @@
       "id": "org_camilla_bancshares_inc",
       "name": "Camilla Bancshares Inc",
       "segment": "Capital Aggregator",
-      "orgType": null,
+      "orgType": "CDFI or Credit Union",
       "city": "recXGjOeIHBRYVlFl",
       "state": "GA",
       "lat": 31.2337,
@@ -11104,8 +11209,8 @@
     {
       "id": "org_the_red_backpack_foundation_spanx",
       "name": "The Red Backpack Foundation (Spanx)",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Allocator",
+      "orgType": "Foundation (Corporate)",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -11124,8 +11229,8 @@
     {
       "id": "org_first_national_bank_of_decatur_county",
       "name": "First National Bank of Decatur County",
-      "segment": "Capital Enabler",
-      "orgType": null,
+      "segment": "Capital Aggregator",
+      "orgType": "Bank (Community)",
       "city": "rec265i2rFDer5c2X",
       "state": "GA",
       "lat": 30.9052,
@@ -11209,7 +11314,7 @@
       "id": "org_athens_area_community_foundation",
       "name": "Athens Area Community Foundation",
       "segment": "Capital Allocator",
-      "orgType": null,
+      "orgType": "Foundation (Public DAF Sponsor)",
       "city": "recHK2S0Pa6kb8OJR",
       "state": "GA",
       "lat": 33.9508,
@@ -11236,7 +11341,7 @@
       "id": "org_american_express_foundation",
       "name": "American Express Foundation",
       "segment": "Capital Allocator",
-      "orgType": null,
+      "orgType": "Foundation (Corporate)",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -11369,7 +11474,7 @@
       "id": "org_keep_financial",
       "name": "Keep Financial",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -11431,7 +11536,7 @@
       "id": "org_ecoatex",
       "name": "Ecoatex",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recHK2S0Pa6kb8OJR",
       "state": "GA",
       "lat": 33.9508,
@@ -11460,7 +11565,9 @@
       "description": "Advancing opportunities for exceptional students of the arts with financial need.",
       "locationId": "loc_atlanta_ga",
       "contactIds": [
-        "contact_patricia_luna"
+        "contact_patricia_luna",
+        "contact_olivia_chatman",
+        "contact_christina_szczepanaski"
       ],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
@@ -11484,6 +11591,28 @@
       "description": null,
       "locationId": "loc_atlanta_ga",
       "contactIds": [],
+      "capitalFlowIds": [],
+      "capitalAllocationIds": [],
+      "sdgIds": [],
+      "sectorIds": [],
+      "populationIds": [],
+      "ownershipIds": []
+    },
+    {
+      "id": "org_kara",
+      "name": "Kara",
+      "segment": "Uncategorized",
+      "orgType": null,
+      "city": null,
+      "state": null,
+      "lat": null,
+      "lng": null,
+      "website": null,
+      "description": null,
+      "locationId": null,
+      "contactIds": [
+        "contact_mariam_roure"
+      ],
       "capitalFlowIds": [],
       "capitalAllocationIds": [],
       "sdgIds": [],
@@ -11516,7 +11645,10 @@
         "contact_marquette_key",
         "contact_melody_echols",
         "contact_phil_perkins",
-        "contact_micah_tamura"
+        "contact_micah_tamura",
+        "contact_evan_daily",
+        "contact_felicia_neal",
+        "contact_kiera_riley"
       ],
       "capitalFlowIds": [],
       "capitalAllocationIds": [],
@@ -11613,13 +11745,13 @@
       "id": "org_arthur_m_blank_foundation",
       "name": "Arthur M. Blank Foundation",
       "segment": "Capital Allocator",
-      "orgType": null,
+      "orgType": "Foundation (Private)",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
       "lng": -84.422,
       "website": null,
-      "description": "Fighting for positive change and empowering the youth.",
+      "description": null,
       "locationId": "loc_atlanta_ga",
       "contactIds": [
         "contact_fay_twersky",
@@ -11783,7 +11915,7 @@
       "id": "org_tqintelligence",
       "name": "TQIntelligence",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -11803,7 +11935,7 @@
       "id": "org_atlanta_micro_fund_inc",
       "name": "Atlanta Micro Fund Inc",
       "segment": "Capital Aggregator",
-      "orgType": null,
+      "orgType": "Loan or Private Investment Fund",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -11939,26 +12071,6 @@
       "ownershipIds": []
     },
     {
-      "id": "org_organization_538",
-      "name": "Unknown",
-      "segment": "Uncategorized",
-      "orgType": "Financial Services Firm",
-      "city": null,
-      "state": null,
-      "lat": null,
-      "lng": null,
-      "website": null,
-      "description": null,
-      "locationId": null,
-      "contactIds": [],
-      "capitalFlowIds": [],
-      "capitalAllocationIds": [],
-      "sdgIds": [],
-      "sectorIds": [],
-      "populationIds": [],
-      "ownershipIds": []
-    },
-    {
       "id": "org_investtvl",
       "name": "InvestTVL",
       "segment": "Capital Aggregator",
@@ -12035,7 +12147,9 @@
       "website": null,
       "description": null,
       "locationId": "loc_atlanta_ga",
-      "contactIds": [],
+      "contactIds": [
+        "contact_ky_lindbergh"
+      ],
       "capitalFlowIds": [
         "flow_180"
       ],
@@ -12071,7 +12185,7 @@
       "id": "org_terrah_conservation_capital_llc",
       "name": "Terrah Conservation Capital LLC",
       "segment": "Capital Allocator",
-      "orgType": null,
+      "orgType": "HNWI or Family Office",
       "city": "rec63cXWND9Qy66aJ",
       "state": "GA",
       "lat": 33.5818,
@@ -12103,7 +12217,7 @@
       "id": "org_asr_healthcare",
       "name": "ASR Healthcare",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recHaj7yU16wH50fr",
       "state": "GA",
       "lat": 34.0053,
@@ -12143,7 +12257,7 @@
       "id": "org_the_kendeda_fund",
       "name": "The Kendeda Fund",
       "segment": "Capital Allocator",
-      "orgType": null,
+      "orgType": "Foundation (Private)",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -12258,7 +12372,7 @@
       "id": "org_trustpoint_solutions",
       "name": "TrustPoint Solutions",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recvXdSYzDSaa4od8",
       "state": "GA",
       "lat": 34.0508,
@@ -12278,7 +12392,7 @@
       "id": "org_athens_land_trust",
       "name": "Athens Land Trust",
       "segment": "Capital Aggregator",
-      "orgType": null,
+      "orgType": "Real Estate Development Firm",
       "city": "recHK2S0Pa6kb8OJR",
       "state": "GA",
       "lat": 33.9508,
@@ -12298,7 +12412,7 @@
       "id": "org_evco_research",
       "name": "EvCo Research",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recKLifMf6XU0HxvI",
       "state": "GA",
       "lat": 34.1646,
@@ -12364,7 +12478,7 @@
       "id": "org_bradley_turner_foundation",
       "name": "Bradley-Turner Foundation",
       "segment": "Capital Allocator",
-      "orgType": null,
+      "orgType": "Foundation (Private)",
       "city": "reclfz7xn1AdNql2a",
       "state": "GA",
       "lat": 32.51,
@@ -12411,7 +12525,7 @@
       "id": "org_wattch",
       "name": "Wattch",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recTO29aGZT6DZH3L",
       "state": "GA",
       "lat": 33.8633,
@@ -12439,9 +12553,7 @@
       "website": null,
       "description": null,
       "locationId": "loc_atlanta_ga",
-      "contactIds": [
-        "contact_matthew_paschall"
-      ],
+      "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [],
       "sdgIds": [],
@@ -12453,7 +12565,7 @@
       "id": "org_atlanta_postal_credit_union",
       "name": "Atlanta Postal Credit Union",
       "segment": "Capital Aggregator",
-      "orgType": null,
+      "orgType": "CDFI or Credit Union",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -12536,8 +12648,8 @@
     {
       "id": "org_grady_health_system",
       "name": "Grady Health System",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Allocator",
+      "orgType": "Healthcare System",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -12685,7 +12797,7 @@
       "id": "org_oncolens",
       "name": "OncoLens",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -12770,8 +12882,8 @@
     {
       "id": "org_newtown_macon",
       "name": "NewTown Macon",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Aggregator",
+      "orgType": "CDFI or Credit Union",
       "city": "rec8Kgp5YMvPb5MoY",
       "state": "GA",
       "lat": 32.8065,
@@ -12779,7 +12891,9 @@
       "website": null,
       "description": null,
       "locationId": "loc_macon_ga",
-      "contactIds": [],
+      "contactIds": [
+        "contact_lauren_marshall"
+      ],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
         "flow_88",
@@ -12796,7 +12910,7 @@
       "id": "org_rentbureau",
       "name": "RentBureau",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -12839,7 +12953,7 @@
       "id": "org_legal_equalizer_app",
       "name": "Legal Equalizer App",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -12901,7 +13015,7 @@
       "id": "org_superior_flight_school",
       "name": "Superior Flight School",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "rec1SRZIBm1xuuq3u",
       "state": "GA",
       "lat": 34.026,
@@ -12921,7 +13035,7 @@
       "id": "org_crescerance",
       "name": "Crescerance",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -12942,8 +13056,8 @@
     {
       "id": "org_jesse_parker_williams_foundation",
       "name": "Jesse Parker Williams Foundation",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Allocator",
+      "orgType": "Foundation (Private)",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -13025,8 +13139,8 @@
     {
       "id": "org_the_j_b_fuqua_foundation",
       "name": "The J.B. Fuqua Foundation",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Allocator",
+      "orgType": "Foundation (Private)",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -13091,7 +13205,7 @@
       "id": "org_ghost_gaming",
       "name": "Ghost Gaming",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -13104,26 +13218,6 @@
       "capitalAllocationIds": [
         "flow_74"
       ],
-      "sdgIds": [],
-      "sectorIds": [],
-      "populationIds": [],
-      "ownershipIds": []
-    },
-    {
-      "id": "org_organization_592",
-      "name": "Unknown",
-      "segment": "Uncategorized",
-      "orgType": null,
-      "city": null,
-      "state": null,
-      "lat": null,
-      "lng": null,
-      "website": null,
-      "description": null,
-      "locationId": null,
-      "contactIds": [],
-      "capitalFlowIds": [],
-      "capitalAllocationIds": [],
       "sdgIds": [],
       "sectorIds": [],
       "populationIds": [],
@@ -13229,7 +13323,9 @@
       "website": null,
       "description": null,
       "locationId": "loc_atlanta_ga",
-      "contactIds": [],
+      "contactIds": [
+        "contact_william_leonard"
+      ],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
         "flow_223"
@@ -13274,7 +13370,9 @@
       "website": null,
       "description": null,
       "locationId": "loc_savannah_ga",
-      "contactIds": [],
+      "contactIds": [
+        "contact_robert_james_ii"
+      ],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
         "flow_206",
@@ -13328,7 +13426,7 @@
       "id": "org_north_georgia_clinical_research",
       "name": "North Georgia Clinical Research",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recPtKXqaInxaNugj",
       "state": "GA",
       "lat": 34.1026,
@@ -13376,7 +13474,9 @@
       "website": null,
       "description": null,
       "locationId": "loc_dalton_ga",
-      "contactIds": [],
+      "contactIds": [
+        "contact_daniel_gura"
+      ],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
         "flow_62"
@@ -13452,7 +13552,7 @@
       "id": "org_earthspring_biochar",
       "name": "EarthSpring Biochar",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recdubMRCw9RdJCl5",
       "state": "GA",
       "lat": 33.9533,
@@ -13495,7 +13595,7 @@
       "id": "org_boardwalk_capital",
       "name": "Boardwalk Capital",
       "segment": "Capital Aggregator",
-      "orgType": null,
+      "orgType": "Financial Services Firm",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -13545,7 +13645,7 @@
       "lat": null,
       "lng": null,
       "website": null,
-      "description": "Philanthropic wing of Towne Financial.",
+      "description": null,
       "locationId": null,
       "contactIds": [
         "contact_lain_shakespeare"
@@ -13582,6 +13682,28 @@
       "ownershipIds": []
     },
     {
+      "id": "org_atlanta_public_schools",
+      "name": "Atlanta Public Schools",
+      "segment": "Uncategorized",
+      "orgType": null,
+      "city": null,
+      "state": null,
+      "lat": null,
+      "lng": null,
+      "website": null,
+      "description": null,
+      "locationId": null,
+      "contactIds": [
+        "contact_kaitlyn_water"
+      ],
+      "capitalFlowIds": [],
+      "capitalAllocationIds": [],
+      "sdgIds": [],
+      "sectorIds": [],
+      "populationIds": [],
+      "ownershipIds": []
+    },
+    {
       "id": "org_new_profit",
       "name": "New Profit",
       "segment": "Uncategorized",
@@ -13604,8 +13726,8 @@
     {
       "id": "org_zeist_foundation",
       "name": "Zeist Foundation",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Allocator",
+      "orgType": "Foundation (Private)",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -13628,7 +13750,7 @@
       "id": "org_green_badger",
       "name": "Green Badger",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recftVD4IEE8rCQnF",
       "state": "GA",
       "lat": 32.0286,
@@ -13703,28 +13825,6 @@
       "capitalAllocationIds": [],
       "sdgIds": [],
       "sectorIds": [],
-      "populationIds": [],
-      "ownershipIds": []
-    },
-    {
-      "id": "org_organization_619",
-      "name": "Unknown",
-      "segment": "Uncategorized",
-      "orgType": null,
-      "city": null,
-      "state": null,
-      "lat": null,
-      "lng": null,
-      "website": null,
-      "description": null,
-      "locationId": null,
-      "contactIds": [],
-      "capitalFlowIds": [],
-      "capitalAllocationIds": [],
-      "sdgIds": [],
-      "sectorIds": [
-        "dim_climate_solutions_green_infrastructure"
-      ],
       "populationIds": [],
       "ownershipIds": []
     },
@@ -13805,8 +13905,8 @@
     {
       "id": "org_woodforest_national_bank",
       "name": "Woodforest National Bank",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Aggregator",
+      "orgType": "Bank (Commercial)",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -13838,7 +13938,8 @@
       "locationId": "loc_san_diego_ca",
       "contactIds": [
         "contact_briam_hernandez",
-        "contact_david_anderson"
+        "contact_david_anderson",
+        "contact_quita_liu"
       ],
       "capitalFlowIds": [],
       "capitalAllocationIds": [],
@@ -13851,7 +13952,7 @@
       "id": "org_nthdegree",
       "name": "NthDegree",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recHaj7yU16wH50fr",
       "state": "GA",
       "lat": 34.0053,
@@ -13975,7 +14076,7 @@
       "id": "org_georgia_metals",
       "name": "Georgia Metals",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recgb0n8PwicOj8PD",
       "state": "GA",
       "lat": 34.1238,
@@ -14057,7 +14158,7 @@
       "id": "org_ared",
       "name": "Ared",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recdubMRCw9RdJCl5",
       "state": "GA",
       "lat": 33.9533,
@@ -14077,7 +14178,7 @@
       "id": "org_algovalue",
       "name": "AlgoValue",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -14156,26 +14257,6 @@
       "ownershipIds": []
     },
     {
-      "id": "org_access_to_capital_for_entrepreneurs",
-      "name": "Access to Capital for Entrepreneurs",
-      "segment": "Uncategorized",
-      "orgType": null,
-      "city": null,
-      "state": null,
-      "lat": null,
-      "lng": null,
-      "website": null,
-      "description": null,
-      "locationId": "loc_cleveland_ga",
-      "contactIds": [],
-      "capitalFlowIds": [],
-      "capitalAllocationIds": [],
-      "sdgIds": [],
-      "sectorIds": [],
-      "populationIds": [],
-      "ownershipIds": []
-    },
-    {
       "id": "org_kimley_horn",
       "name": "Kimley-Horn",
       "segment": "Uncategorized",
@@ -14201,7 +14282,7 @@
       "id": "org_geodigital",
       "name": "GeoDigital",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recC0pG4hIHnzV5gU",
       "state": "GA",
       "lat": 33.9366,
@@ -14287,7 +14368,7 @@
       "id": "org_blackrock",
       "name": "Blackrock",
       "segment": "Capital Aggregator",
-      "orgType": null,
+      "orgType": "Financial Services Firm",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -14366,8 +14447,8 @@
     {
       "id": "org_mypanda",
       "name": "MyPanda",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Seeker",
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -14388,7 +14469,7 @@
     {
       "id": "org_jpmorgan_chase",
       "name": "JPMorgan Chase",
-      "segment": "Uncategorized",
+      "segment": "Capital Aggregator",
       "orgType": "Bank (Commercial)",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
@@ -14411,7 +14492,7 @@
       "id": "org_the_louver_shop",
       "name": "The Louver Shop",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recS0Lm9VsHdHaOc9",
       "state": "GA",
       "lat": 34.2902,
@@ -14451,7 +14532,7 @@
       "id": "org_sora_schools",
       "name": "Sora Schools",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -14471,7 +14552,7 @@
       "id": "org_aetos_imaging",
       "name": "Aetos Imaging",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -14521,7 +14602,9 @@
       "website": null,
       "description": null,
       "locationId": "loc_columbus_ga",
-      "contactIds": [],
+      "contactIds": [
+        "contact_lisa_scrivner"
+      ],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
         "flow_119",
@@ -14604,10 +14687,32 @@
       "ownershipIds": []
     },
     {
+      "id": "org_spring_leaf_advisors",
+      "name": "Spring Leaf Advisors",
+      "segment": "Uncategorized",
+      "orgType": null,
+      "city": null,
+      "state": null,
+      "lat": null,
+      "lng": null,
+      "website": null,
+      "description": null,
+      "locationId": null,
+      "contactIds": [
+        "contact_ashley_a_jones"
+      ],
+      "capitalFlowIds": [],
+      "capitalAllocationIds": [],
+      "sdgIds": [],
+      "sectorIds": [],
+      "populationIds": [],
+      "ownershipIds": []
+    },
+    {
       "id": "org_fullstory",
       "name": "FullStory",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -14626,7 +14731,7 @@
     {
       "id": "org_first_step_staffing",
       "name": "First Step Staffing",
-      "segment": "Uncategorized",
+      "segment": "Capital Seeker",
       "orgType": null,
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
@@ -14654,7 +14759,7 @@
       "id": "org_ryla_teleservices",
       "name": "Ryla Teleservices",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "rec1SRZIBm1xuuq3u",
       "state": "GA",
       "lat": 34.026,
@@ -14713,10 +14818,32 @@
       "ownershipIds": []
     },
     {
+      "id": "org_paschall_ventures",
+      "name": "Paschall Ventures",
+      "segment": "Uncategorized",
+      "orgType": null,
+      "city": null,
+      "state": null,
+      "lat": null,
+      "lng": null,
+      "website": null,
+      "description": null,
+      "locationId": null,
+      "contactIds": [
+        "contact_matthew_paschall"
+      ],
+      "capitalFlowIds": [],
+      "capitalAllocationIds": [],
+      "sdgIds": [],
+      "sectorIds": [],
+      "populationIds": [],
+      "ownershipIds": []
+    },
+    {
       "id": "org_equipment_management_group",
       "name": "Equipment Management Group",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -14758,7 +14885,7 @@
       "id": "org_carver_financial_corporation",
       "name": "Carver Financial Corporation",
       "segment": "Capital Aggregator",
-      "orgType": null,
+      "orgType": "CDFI or Credit Union",
       "city": "recftVD4IEE8rCQnF",
       "state": "GA",
       "lat": 32.0286,
@@ -14766,7 +14893,9 @@
       "website": null,
       "description": null,
       "locationId": "loc_savannah_ga",
-      "contactIds": [],
+      "contactIds": [
+        "contact_robert_james_ii"
+      ],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
         "flow_101",
@@ -14807,6 +14936,28 @@
       "locationId": null,
       "contactIds": [
         "contact_marvin_francois"
+      ],
+      "capitalFlowIds": [],
+      "capitalAllocationIds": [],
+      "sdgIds": [],
+      "sectorIds": [],
+      "populationIds": [],
+      "ownershipIds": []
+    },
+    {
+      "id": "org_nehemiah_project_cdc",
+      "name": "Nehemiah Project CDC",
+      "segment": "Uncategorized",
+      "orgType": null,
+      "city": null,
+      "state": null,
+      "lat": null,
+      "lng": null,
+      "website": null,
+      "description": null,
+      "locationId": null,
+      "contactIds": [
+        "contact_ingrid_thompson"
       ],
       "capitalFlowIds": [],
       "capitalAllocationIds": [],
@@ -14944,8 +15095,8 @@
     {
       "id": "org_the_peyton_anderson_foundation",
       "name": "The Peyton Anderson Foundation",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Allocator",
+      "orgType": "Foundation (Private)",
       "city": "rec8Kgp5YMvPb5MoY",
       "state": "GA",
       "lat": 32.8065,
@@ -14966,8 +15117,8 @@
     {
       "id": "org_marshland_credit_union",
       "name": "Marshland Credit Union",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Aggregator",
+      "orgType": "CDFI or Credit Union",
       "city": "rectHiZU7fdXxws4G",
       "state": "GA",
       "lat": 31.1449,
@@ -15101,7 +15252,7 @@
       "id": "org_refuge_coffee_company",
       "name": "Refuge Coffee Company",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "rec3H2USlFynxalxH",
       "state": "GA",
       "lat": 33.8117,
@@ -15141,7 +15292,7 @@
       "id": "org_danti",
       "name": "Danti",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -15184,8 +15335,8 @@
     {
       "id": "org_capital_impact_partners",
       "name": "Capital Impact Partners",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Aggregator",
+      "orgType": "CDFI or Credit Union",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -15245,7 +15396,7 @@
       "id": "org_capre_group",
       "name": "Capre Group",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -15289,8 +15440,8 @@
     {
       "id": "org_the_john_gooddard_foundation",
       "name": "The John Gooddard Foundation",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Allocator",
+      "orgType": "Foundation (Private)",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -15318,7 +15469,7 @@
       "lat": 33.7628,
       "lng": -84.422,
       "website": null,
-      "description": "Focused on fighting poverty through education.",
+      "description": null,
       "locationId": "loc_atlanta_ga",
       "contactIds": [],
       "capitalFlowIds": [],
@@ -15331,8 +15482,8 @@
     {
       "id": "org_ups",
       "name": "UPS",
-      "segment": "Capital Seeker",
-      "orgType": null,
+      "segment": "Capital Allocator",
+      "orgType": "Publicly Traded Company",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -15353,8 +15504,8 @@
     {
       "id": "org_ruth_t_jinks_foundation",
       "name": "Ruth T. Jinks Foundation",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Allocator",
+      "orgType": "Foundation (Private)",
       "city": "rectDUVQvM4XIDBxh",
       "state": "GA",
       "lat": 31.1741,
@@ -15376,8 +15527,8 @@
     {
       "id": "org_wellstar",
       "name": "Wellstar",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Allocator",
+      "orgType": "Healthcare System",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -15401,7 +15552,7 @@
       "id": "org_catalis",
       "name": "Catalis",
       "segment": "Capital Seeker",
-      "orgType": null,
+      "orgType": "Business or Social Enterprise",
       "city": "recy2CHvGyXRSdzaZ",
       "state": "GA",
       "lat": 34.0704,
@@ -15609,7 +15760,7 @@
       "id": "org_bank_of_america_foundation",
       "name": "Bank of America Foundation",
       "segment": "Capital Allocator",
-      "orgType": null,
+      "orgType": "Foundation (Corporate)",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -15740,7 +15891,7 @@
       "id": "org_city_of_east_point",
       "name": "City of East Point",
       "segment": "Capital Enabler",
-      "orgType": null,
+      "orgType": "Government Agency",
       "city": "receoPy3l3vAsiAvh",
       "state": "GA",
       "lat": 33.6696,
@@ -15781,8 +15932,8 @@
     {
       "id": "org_cox_enterprises",
       "name": "Cox Enterprises",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Allocator",
+      "orgType": "Publicly Traded Company",
       "city": "recxXXcnQqSoDt3Xq",
       "state": "GA",
       "lat": 33.7628,
@@ -35810,7 +35961,8 @@
         "org_kindred_futures",
         "org_wellstar",
         "org_sunu_capital",
-        "org_southstate_bank"
+        "org_southstate_bank",
+        "org_chrysalis_lab"
       ]
     },
     {
@@ -36375,14 +36527,14 @@
     {
       "id": "contact_leyla_karaha",
       "name": "Leyla Karaha",
-      "email": null,
+      "email": "leyla712@yahoo.com",
       "organizationIds": [],
       "isKeyContact": false
     },
     {
       "id": "contact_bithika_misha_schmidt",
       "name": "Bithika 'Misha' Schmidt",
-      "email": null,
+      "email": "bithika.schmidt@gmail.com",
       "organizationIds": [
         "org_better_good_collective",
         "org_bip_wealth"
@@ -36392,28 +36544,28 @@
     {
       "id": "contact_miguel_granier",
       "name": "Miguel Granier",
-      "email": null,
+      "email": "mdgranier@gmail.com",
       "organizationIds": [],
       "isKeyContact": false
     },
     {
       "id": "contact_desha_elliot",
       "name": "Desha Elliot",
-      "email": null,
+      "email": "drdeshaelliott@gmail.com",
       "organizationIds": [],
       "isKeyContact": false
     },
     {
       "id": "contact_lee_anne_andanje",
       "name": "Lee-Anne Andanje",
-      "email": null,
+      "email": "lnandanje@gmail.com",
       "organizationIds": [],
       "isKeyContact": false
     },
     {
       "id": "contact_emilia_ndely_ogundipe",
       "name": "Emilia Ndely-Ogundipe",
-      "email": null,
+      "email": "emilia.ndely@gmail.com",
       "organizationIds": [
         "org_white_house_presidential_innovation_fellows"
       ],
@@ -36422,7 +36574,7 @@
     {
       "id": "contact_kirsten_george_ryans",
       "name": "Kirsten George-Ryans",
-      "email": null,
+      "email": "kryans@investatlanta.com",
       "organizationIds": [],
       "isKeyContact": false
     },
@@ -36438,7 +36590,7 @@
     {
       "id": "contact_ginger_chubbs",
       "name": "Ginger Chubbs",
-      "email": null,
+      "email": "ginger.chubbs@yahoo.com",
       "organizationIds": [
         "org_cherokee_federal"
       ],
@@ -36447,7 +36599,7 @@
     {
       "id": "contact_atharva_abhyankar",
       "name": "Atharva Abhyankar",
-      "email": null,
+      "email": "atharva@tullfoundation.org",
       "organizationIds": [
         "org_tull_charitable_foundation"
       ],
@@ -36474,7 +36626,7 @@
     {
       "id": "contact_ashley_cornelison",
       "name": "Ashley Cornelison",
-      "email": null,
+      "email": "ashley.cornelison@portalinnovations.com",
       "organizationIds": [
         "org_portal_innovations"
       ],
@@ -36492,14 +36644,16 @@
     {
       "id": "contact_ingrid_thompson",
       "name": "Ingrid Thompson",
-      "email": null,
-      "organizationIds": [],
+      "email": "ingrid@nehemiahprojectcdc.org",
+      "organizationIds": [
+        "org_nehemiah_project_cdc"
+      ],
       "isKeyContact": false
     },
     {
       "id": "contact_rachel_shanklin",
       "name": "Rachel  Shanklin",
-      "email": null,
+      "email": "rshanklin@smallbusinessmajority.org",
       "organizationIds": [
         "org_small_business_majority"
       ],
@@ -36508,7 +36662,7 @@
     {
       "id": "contact_nirva_dhaya",
       "name": "Nirva Dhaya",
-      "email": null,
+      "email": "nirvadhaya@gmail.com",
       "organizationIds": [
         "org_watson_institute"
       ],
@@ -36526,7 +36680,7 @@
     {
       "id": "contact_laurie_prickett",
       "name": "Laurie Prickett",
-      "email": null,
+      "email": "lprickett@investatlanta.com",
       "organizationIds": [
         "org_invest_atlanta"
       ],
@@ -36544,7 +36698,7 @@
     {
       "id": "contact_kim_tong",
       "name": "Kim Tong",
-      "email": null,
+      "email": "kim.t.tong@bofa.com",
       "organizationIds": [
         "org_bank_of_america"
       ],
@@ -36562,7 +36716,7 @@
     {
       "id": "contact_robert_cooke",
       "name": "Robert Cooke",
-      "email": null,
+      "email": "rcooke@swgau.org",
       "organizationIds": [
         "org_southwest_georgia_united"
       ],
@@ -36580,7 +36734,7 @@
     {
       "id": "contact_ninh_kieu_lee",
       "name": "Ninh-Kieu Lee",
-      "email": null,
+      "email": "nklee@redf.org",
       "organizationIds": [
         "org_redf"
       ],
@@ -36589,7 +36743,7 @@
     {
       "id": "contact_devin_carter",
       "name": "Devin Carter",
-      "email": null,
+      "email": "Devin.Carter@Firsthorizon.com",
       "organizationIds": [
         "org_first_horizon_bank"
       ],
@@ -36598,7 +36752,7 @@
     {
       "id": "contact_lily_rolader_baucom",
       "name": "Lily Rolader Baucom",
-      "email": null,
+      "email": "lilyrbaucom@gmail.com",
       "organizationIds": [
         "org_the_j_b_fuqua_foundation"
       ],
@@ -36607,35 +36761,39 @@
     {
       "id": "contact_mariam_roure",
       "name": "Mariam Roure",
-      "email": null,
-      "organizationIds": [],
+      "email": "miriam@joinkara.com",
+      "organizationIds": [
+        "org_kara"
+      ],
       "isKeyContact": false
     },
     {
       "id": "contact_ken_daniels",
       "name": "Ken Daniels",
-      "email": null,
+      "email": "danielsfintech@gmail.com",
       "organizationIds": [],
       "isKeyContact": false
     },
     {
       "id": "contact_jennifer_bonnett",
       "name": "Jennifer Bonnett",
-      "email": null,
+      "email": "jbonnett@investatlanta.com",
       "organizationIds": [],
       "isKeyContact": false
     },
     {
       "id": "contact_jt_trujillo",
       "name": "JT Trujillo",
-      "email": null,
-      "organizationIds": [],
+      "email": "jt@angelcityadvisors.com",
+      "organizationIds": [
+        "org_angel_city_advisors"
+      ],
       "isKeyContact": false
     },
     {
       "id": "contact_harriett_williams",
       "name": "Harriett Williams",
-      "email": null,
+      "email": "harriett@villagemicrofund.com",
       "organizationIds": [
         "org_village_micro_fund"
       ],
@@ -36644,7 +36802,7 @@
     {
       "id": "contact_elise_eplan",
       "name": "Elise Eplan",
-      "email": null,
+      "email": "elise@bephilanthropy.com",
       "organizationIds": [
         "org_be_philanthropy_partners"
       ],
@@ -36653,7 +36811,7 @@
     {
       "id": "contact_lauren_patrick",
       "name": "Lauren Patrick",
-      "email": null,
+      "email": "lauren@infinitegiving.com",
       "organizationIds": [
         "org_infinite_giving"
       ],
@@ -36671,7 +36829,7 @@
     {
       "id": "contact_scott_satterwhite",
       "name": "Scott Satterwhite",
-      "email": null,
+      "email": "scottsatterwhite@comcast.net",
       "organizationIds": [
         "org_william_josef_foundation"
       ],
@@ -36689,7 +36847,7 @@
     {
       "id": "contact_thais_pepe",
       "name": "Thais Pepe",
-      "email": null,
+      "email": "tpepe@nlp-inc.com",
       "organizationIds": [
         "org_neighborhood_lending_partners"
       ],
@@ -36698,7 +36856,7 @@
     {
       "id": "contact_vanessa_barnes",
       "name": "Vanessa Barnes",
-      "email": null,
+      "email": "vabarnes08@gmail.com",
       "organizationIds": [
         "org_novelis"
       ],
@@ -36716,8 +36874,10 @@
     {
       "id": "contact_kaitlyn_water",
       "name": "Kaitlyn Water",
-      "email": null,
-      "organizationIds": [],
+      "email": "kaitlynwaters23@gmail.com",
+      "organizationIds": [
+        "org_atlanta_public_schools"
+      ],
       "isKeyContact": false
     },
     {
@@ -36732,7 +36892,7 @@
     {
       "id": "contact_jon_ingram",
       "name": "Jon Ingram ",
-      "email": null,
+      "email": "jon@westsidefuturefund.org",
       "organizationIds": [
         "org_westside_future_fund"
       ],
@@ -36741,7 +36901,7 @@
     {
       "id": "contact_ashley_rivera",
       "name": "Ashley Rivera",
-      "email": null,
+      "email": "arivera@investatlanta.com",
       "organizationIds": [
         "org_invest_atlanta"
       ],
@@ -36750,7 +36910,7 @@
     {
       "id": "contact_tony_alexander",
       "name": "Tony Alexander",
-      "email": null,
+      "email": "tony.alexander@ingenuityunlimited.us",
       "organizationIds": [
         "org_ingenuity_unlimited"
       ],
@@ -36759,8 +36919,10 @@
     {
       "id": "contact_jonathan_rosado",
       "name": "Jonathan Rosado",
-      "email": null,
-      "organizationIds": [],
+      "email": "jrosado@miamifoundation.org",
+      "organizationIds": [
+        "org_the_miami_foundation"
+      ],
       "isKeyContact": false
     },
     {
@@ -36775,7 +36937,7 @@
     {
       "id": "contact_shakura_conoly",
       "name": "Shakura Conoly",
-      "email": null,
+      "email": "Shakura.conoly@weinspirit.org",
       "organizationIds": [
         "org_thrive_community_lending"
       ],
@@ -36784,8 +36946,10 @@
     {
       "id": "contact_judith_winfrey",
       "name": "Judith Winfrey",
-      "email": null,
-      "organizationIds": [],
+      "email": "judith@loveislovecooperativefarm.com",
+      "organizationIds": [
+        "org_love_is_love_cooperative_farm"
+      ],
       "isKeyContact": false
     },
     {
@@ -36798,7 +36962,7 @@
     {
       "id": "contact_gilbert_miller",
       "name": "Gilbert Miller",
-      "email": null,
+      "email": "gmiller@bradleyturner.org",
       "organizationIds": [
         "org_bradley_turner_foundation"
       ],
@@ -36807,7 +36971,7 @@
     {
       "id": "contact_samiha_ross",
       "name": "Samiha Ross",
-      "email": null,
+      "email": "samihaross@gmail.com",
       "organizationIds": [
         "org_international_rescue_committee"
       ],
@@ -36816,7 +36980,7 @@
     {
       "id": "contact_will_johnston",
       "name": "Will Johnston",
-      "email": null,
+      "email": "will@microlifeinstitute.org",
       "organizationIds": [
         "org_microlife_institute"
       ],
@@ -36834,7 +36998,7 @@
     {
       "id": "contact_adiclere_evans",
       "name": "Adiclere Evans",
-      "email": null,
+      "email": "adiclere@thebeec.org",
       "organizationIds": [
         "org_black_entertainment_economic_council"
       ],
@@ -36852,14 +37016,16 @@
     {
       "id": "contact_evan_daily",
       "name": "Evan Daily",
-      "email": null,
-      "organizationIds": [],
+      "email": "edaily@investatlanta.com",
+      "organizationIds": [
+        "org_invest_atlanta"
+      ],
       "isKeyContact": false
     },
     {
       "id": "contact_marsha_pope",
       "name": "Marsha Pope",
-      "email": null,
+      "email": "pope@topekacommunityfoundation.org",
       "organizationIds": [
         "org_topeka_community_foundation"
       ],
@@ -36868,7 +37034,7 @@
     {
       "id": "contact_emauri_watson",
       "name": "Emauri Watson",
-      "email": null,
+      "email": "watson@housingpartnership.net",
       "organizationIds": [
         "org_housing_partnership_network"
       ],
@@ -36877,23 +37043,16 @@
     {
       "id": "contact_jilea_hemmings",
       "name": "Jilea Hemmings",
-      "email": null,
+      "email": "jilea@nourishandbloommarket.com",
       "organizationIds": [
         "org_nourish_bloom"
       ],
       "isKeyContact": false
     },
     {
-      "id": "contact_laura_linman",
-      "name": "Laura Linman",
-      "email": null,
-      "organizationIds": [],
-      "isKeyContact": false
-    },
-    {
       "id": "contact_mary_howell",
       "name": "Mary Howell",
-      "email": null,
+      "email": "mary.howell@armhc.org",
       "organizationIds": [
         "org_atlanta_ronald_mcdonald_house_charities"
       ],
@@ -36902,7 +37061,7 @@
     {
       "id": "contact_ashlee_reevely",
       "name": "Ashlee Reevely",
-      "email": null,
+      "email": "areevely@investatlanta.com",
       "organizationIds": [
         "org_invest_atlanta"
       ],
@@ -36911,7 +37070,7 @@
     {
       "id": "contact_brittany_morgan",
       "name": "Brittany Morgan",
-      "email": null,
+      "email": "bmorgan@miamifoundation.org",
       "organizationIds": [
         "org_the_miami_foundation"
       ],
@@ -36920,7 +37079,7 @@
     {
       "id": "contact_patrick_kelley",
       "name": "Patrick Kelley",
-      "email": null,
+      "email": "kelley@housingpartnership.net",
       "organizationIds": [
         "org_national_housing_partnership"
       ],
@@ -36929,8 +37088,10 @@
     {
       "id": "contact_april_atkins",
       "name": "April Atkins",
-      "email": null,
-      "organizationIds": [],
+      "email": "april.atkins@occ.treas.gov",
+      "organizationIds": [
+        "org_the_office_of_the_comptroller_of_the_currency_occ"
+      ],
       "isKeyContact": false
     },
     {
@@ -36963,7 +37124,7 @@
     {
       "id": "contact_anna_cable",
       "name": "Anna Cable",
-      "email": null,
+      "email": "cable.anna@gmail.com",
       "organizationIds": [
         "org_remerge"
       ],
@@ -36972,7 +37133,7 @@
     {
       "id": "contact_marlon_brown",
       "name": "Marlon Brown",
-      "email": null,
+      "email": "Marlonbrown@organizefinancial.com",
       "organizationIds": [
         "org_organized_financials"
       ],
@@ -36981,7 +37142,7 @@
     {
       "id": "contact_mark_parker",
       "name": "Mark Parker",
-      "email": null,
+      "email": "mark.parker@mmhpinvest.com",
       "organizationIds": [
         "org_mmhp_investment_advisors",
         "org_williams_family_foundation",
@@ -36999,23 +37160,18 @@
       "isKeyContact": false
     },
     {
-      "id": "contact_matt_paschall",
-      "name": "Matt Paschall",
-      "email": null,
-      "organizationIds": [],
-      "isKeyContact": false
-    },
-    {
       "id": "contact_quita_liu",
       "name": "Quita Liu",
-      "email": null,
-      "organizationIds": [],
+      "email": "quita@missiondrivenfinance.com",
+      "organizationIds": [
+        "org_mission_driven_finance"
+      ],
       "isKeyContact": false
     },
     {
       "id": "contact_marquette_key",
       "name": "Marquette Key",
-      "email": null,
+      "email": "mkey@investatlanta.com",
       "organizationIds": [
         "org_invest_atlanta"
       ],
@@ -37024,14 +37180,16 @@
     {
       "id": "contact_olivia_chatman",
       "name": "Olivia Chatman",
-      "email": null,
-      "organizationIds": [],
+      "email": "Olivia.chatman@reinvestment.com",
+      "organizationIds": [
+        "org_reinvestment_fund"
+      ],
       "isKeyContact": false
     },
     {
       "id": "contact_caroline_kinchler",
       "name": "Caroline Kinchler",
-      "email": null,
+      "email": "caroline.kinchler@gmail.com",
       "organizationIds": [
         "org_georgia_department_of_economic_development"
       ],
@@ -37040,7 +37198,7 @@
     {
       "id": "contact_mariama_n_diaye",
       "name": "Mariama N'Diaye",
-      "email": null,
+      "email": "mndiaye@atlantaga.gov",
       "organizationIds": [
         "org_city_of_atlanta"
       ],
@@ -37049,7 +37207,7 @@
     {
       "id": "contact_eula_parker",
       "name": "Eula Parker",
-      "email": null,
+      "email": "Eula.Parker@southstatebank.com",
       "organizationIds": [
         "org_southstate_bank"
       ],
@@ -37067,15 +37225,17 @@
     {
       "id": "contact_jennifer_fine",
       "name": "Jennifer Fine",
-      "email": null,
+      "email": "jfine@investatlanta.com",
       "organizationIds": [],
       "isKeyContact": false
     },
     {
-      "id": "contact_sjackson_tjgcpa_comm",
-      "name": "sjackson@tjgcpa.comm",
-      "email": null,
-      "organizationIds": [],
+      "id": "contact_karyl_miller",
+      "name": "Karyl Miller",
+      "email": "kmiller@cfneg.org",
+      "organizationIds": [
+        "org_community_foundation_of_northeast_georgia"
+      ],
       "isKeyContact": false
     },
     {
@@ -37090,7 +37250,7 @@
     {
       "id": "contact_blain_allen",
       "name": "Blain Allen",
-      "email": null,
+      "email": "ballen@alstons.com",
       "organizationIds": [
         "org_the_john_gooddard_foundation"
       ],
@@ -37108,7 +37268,7 @@
     {
       "id": "contact_phil_perkins",
       "name": "Phil Perkins",
-      "email": null,
+      "email": "pperkins@investatlanta.com",
       "organizationIds": [
         "org_invest_atlanta"
       ],
@@ -37117,7 +37277,7 @@
     {
       "id": "contact_briam_hernandez",
       "name": "Briam Hernandez",
-      "email": null,
+      "email": "briam@missiondrivenfinance.com",
       "organizationIds": [
         "org_mission_driven_finance"
       ],
@@ -37135,7 +37295,7 @@
     {
       "id": "contact_michael_oden",
       "name": "Michael Oden",
-      "email": null,
+      "email": "Mo@dreamhometoday.net",
       "organizationIds": [
         "org_dreamhometoday_net"
       ],
@@ -37144,23 +37304,16 @@
     {
       "id": "contact_margaret_bugbee",
       "name": "Margaret Bugbee",
-      "email": null,
+      "email": "mbugbee@cfneg.org",
       "organizationIds": [
         "org_community_foundation_of_northeast_georgia"
       ],
       "isKeyContact": false
     },
     {
-      "id": "contact_emilia_ndely_ogundipe",
-      "name": "Emilia Ndely-Ogundipe ",
-      "email": null,
-      "organizationIds": [],
-      "isKeyContact": false
-    },
-    {
       "id": "contact_adrienne_white",
       "name": "Adrienne White",
-      "email": null,
+      "email": "adrienne.white@southstatebank.com",
       "organizationIds": [
         "org_southstate_bank"
       ],
@@ -37178,7 +37331,7 @@
     {
       "id": "contact_don_hunter",
       "name": "Don Hunter",
-      "email": null,
+      "email": "kim.t.tong@bofa.com",
       "organizationIds": [
         "org_bank_of_america"
       ],
@@ -37196,7 +37349,7 @@
     {
       "id": "contact_fay_twersky",
       "name": "Fay Twersky",
-      "email": null,
+      "email": "fay.twersky@ambfo.com",
       "organizationIds": [
         "org_arthur_m_blank_foundation"
       ],
@@ -37205,7 +37358,7 @@
     {
       "id": "contact_monique_march",
       "name": "Monique March",
-      "email": null,
+      "email": "moniquesmarch@gmail.com",
       "organizationIds": [
         "org_impact_finance_center"
       ],
@@ -37214,7 +37367,7 @@
     {
       "id": "contact_raven_hinson",
       "name": "Raven Hinson",
-      "email": null,
+      "email": "ravenhinson4885@gmail.com",
       "organizationIds": [
         "org_delta_air_lines"
       ],
@@ -37223,14 +37376,14 @@
     {
       "id": "contact_neha_shingane",
       "name": "Neha Shingane",
-      "email": null,
+      "email": "nehashingane@gmail.com",
       "organizationIds": [],
       "isKeyContact": false
     },
     {
       "id": "contact_ron_alston",
       "name": "Ron Alston",
-      "email": null,
+      "email": "ron.alston@truist.com",
       "organizationIds": [
         "org_truist_bank",
         "org_georgia_social_impact_collaborative"
@@ -37240,14 +37393,14 @@
     {
       "id": "contact_rick_branch",
       "name": "Rick Branch",
-      "email": null,
+      "email": "rbranc2@gmail.com",
       "organizationIds": [],
       "isKeyContact": false
     },
     {
       "id": "contact_andrew_spector",
       "name": "Andrew Spector",
-      "email": null,
+      "email": "aspector@thepattersonfoundation.org",
       "organizationIds": [
         "org_the_patterson_foundation"
       ],
@@ -37256,7 +37409,7 @@
     {
       "id": "contact_sam_moss",
       "name": "Sam Moss",
-      "email": null,
+      "email": "Sam@Mossmoss.org",
       "organizationIds": [
         "org_georgia_social_impact_collaborative"
       ],
@@ -37274,7 +37427,7 @@
     {
       "id": "contact_maggie_brennan",
       "name": "Maggie Brennan",
-      "email": null,
+      "email": "mbrennan@advantagecap.com",
       "organizationIds": [
         "org_advantage_capital"
       ],
@@ -37292,7 +37445,7 @@
     {
       "id": "contact_brittany_collins",
       "name": "Brittany Collins",
-      "email": null,
+      "email": "brittanycollins@bettyanddavisfitzgerald.org",
       "organizationIds": [
         "org_betty_and_davis_fitzgerald_foundation"
       ],
@@ -37312,7 +37465,7 @@
     {
       "id": "contact_stephen_newland",
       "name": "Stephen Newland",
-      "email": null,
+      "email": "stephen@moneypathfpa.com",
       "organizationIds": [
         "org_moneypath"
       ],
@@ -37321,7 +37474,7 @@
     {
       "id": "contact_bobby_smith",
       "name": "Bobby Smith",
-      "email": null,
+      "email": "Bobby@theschoolofimpact.com",
       "organizationIds": [
         "org_the_school_of_impact"
       ],
@@ -37330,7 +37483,7 @@
     {
       "id": "contact_betsy_covington",
       "name": "Betsy Covington",
-      "email": null,
+      "email": "bcovington@cfcv.com",
       "organizationIds": [
         "org_community_foundation_of_the_chattahoochee_valley"
       ],
@@ -37339,7 +37492,7 @@
     {
       "id": "contact_thomas_morse",
       "name": "Thomas Morse",
-      "email": null,
+      "email": "support@selfeducatorsinc.com",
       "organizationIds": [
         "org_self_educators_inc"
       ],
@@ -37357,7 +37510,7 @@
     {
       "id": "contact_michelle_reape",
       "name": "Michelle Reape",
-      "email": null,
+      "email": "michellereape@gmail.com",
       "organizationIds": [
         "org_elevate_collective"
       ],
@@ -37385,7 +37538,7 @@
     {
       "id": "contact_micah_tamura",
       "name": "Micah Tamura",
-      "email": null,
+      "email": "micahtamura@gmail.com",
       "organizationIds": [
         "org_invest_atlanta"
       ],
@@ -37394,7 +37547,7 @@
     {
       "id": "contact_kaila_pouncy",
       "name": "Kaila Pouncy",
-      "email": null,
+      "email": "kailapouncy@gmail.com",
       "organizationIds": [
         "org_restoreher_u_s_america"
       ],
@@ -37412,7 +37565,7 @@
     {
       "id": "contact_erik_speakman",
       "name": "Erik Speakman",
-      "email": null,
+      "email": "erik@speakmanconsulting.com",
       "organizationIds": [],
       "isKeyContact": false
     },
@@ -37438,7 +37591,7 @@
     {
       "id": "contact_deva_hirsch",
       "name": "Deva Hirsch",
-      "email": null,
+      "email": "deva.hirsch@pnc.com",
       "organizationIds": [
         "org_pnc_bank"
       ],
@@ -37456,7 +37609,7 @@
     {
       "id": "contact_katrina_rolle",
       "name": "Katrina Rolle",
-      "email": null,
+      "email": "krolle@cfnf.org",
       "organizationIds": [
         "org_community_foundation_for_north_florida"
       ],
@@ -37484,7 +37637,7 @@
     {
       "id": "contact_neerja_bhatnagar",
       "name": "Neerja Bhatnagar",
-      "email": null,
+      "email": "neerja1105@gmail.com",
       "organizationIds": [],
       "isKeyContact": false
     },
@@ -37500,7 +37653,7 @@
     {
       "id": "contact_michaela_master",
       "name": "Michaela Master",
-      "email": null,
+      "email": "michaela.master@georgiaconservancy.org",
       "organizationIds": [
         "org_georgia_conservancy"
       ],
@@ -37509,7 +37662,7 @@
     {
       "id": "contact_olayinka_osibodu",
       "name": "Olayinka Osibodu",
-      "email": null,
+      "email": "olayinkacredle@gmail.com",
       "organizationIds": [
         "org_owes"
       ],
@@ -37518,7 +37671,7 @@
     {
       "id": "contact_derrick_williams",
       "name": "Derrick Williams",
-      "email": null,
+      "email": "derrick@wmsandwms.com",
       "organizationIds": [],
       "isKeyContact": false
     },
@@ -37534,7 +37687,7 @@
     {
       "id": "contact_barbara_guillory",
       "name": "Barbara Guillory",
-      "email": null,
+      "email": "Levelblend@yahoo.com ",
       "organizationIds": [
         "org_downpaymeaccess"
       ],
@@ -37543,7 +37696,7 @@
     {
       "id": "contact_khalid_el_shabazz",
       "name": "Khalid El-Shabazz",
-      "email": null,
+      "email": "Khalid.ElShabazz@Dominiuminc.com",
       "organizationIds": [
         "org_dominium_partners"
       ],
@@ -37552,7 +37705,7 @@
     {
       "id": "contact_isabel_dejesus",
       "name": "Isabel DeJesus",
-      "email": null,
+      "email": "isabel@watson.is",
       "organizationIds": [
         "org_watson_institute"
       ],
@@ -37561,7 +37714,7 @@
     {
       "id": "contact_keenan_yates",
       "name": "Keenan Yates",
-      "email": null,
+      "email": "kyates@habitat.org",
       "organizationIds": [
         "org_habitat_mortgage_solutions"
       ],
@@ -37579,25 +37732,25 @@
     {
       "id": "contact_scott_hughes",
       "name": "Scott Hughes",
-      "email": null,
+      "email": "shughes189@gmail.com",
       "organizationIds": [
         "org_trinity_community_ministries"
       ],
       "isKeyContact": false
     },
     {
-      "id": "contact_christina_zepanaski",
-      "name": "Christina Zepanaski",
-      "email": null,
+      "id": "contact_christina_szczepanaski",
+      "name": "Christina Szczepanaski",
+      "email": "christina.szczepanski@reinvestment.com",
       "organizationIds": [
-        "org_regions_bank"
+        "org_reinvestment_fund"
       ],
       "isKeyContact": false
     },
     {
       "id": "contact_jonathan_arogeti",
       "name": "Jonathan Arogeti",
-      "email": null,
+      "email": "jarogeti@gmail.com ",
       "organizationIds": [
         "org_the_argo_family_fund"
       ],
@@ -37606,7 +37759,7 @@
     {
       "id": "contact_suzanna_stribling",
       "name": "Suzanna Stribling",
-      "email": null,
+      "email": "sstribling@glennfmly.com",
       "organizationIds": [
         "org_the_wilbur_hilda_glenn_family_foundation"
       ],
@@ -37624,7 +37777,7 @@
     {
       "id": "contact_marie_davis",
       "name": "Marie Davis",
-      "email": null,
+      "email": "marie@gaceo.org",
       "organizationIds": [
         "org_georgia_center_for_employee_ownership"
       ],
@@ -37640,7 +37793,7 @@
     {
       "id": "contact_tracy_kartye",
       "name": "Tracy Kartye",
-      "email": null,
+      "email": "tkartye@aecf.org",
       "organizationIds": [
         "org_the_annie_e_casey_foundation"
       ],
@@ -37674,13 +37827,6 @@
       "isKeyContact": false
     },
     {
-      "id": "contact_marcia_mayoue",
-      "name": "Marcia Mayoue",
-      "email": null,
-      "organizationIds": [],
-      "isKeyContact": false
-    },
-    {
       "id": "contact_martina_edwards",
       "name": "Martina Edwards",
       "email": "edwards@aceloans.org",
@@ -37692,23 +37838,16 @@
     {
       "id": "contact_erin_igleheart",
       "name": "Erin Igleheart",
-      "email": null,
+      "email": "erin.igleheart@emory.edu",
       "organizationIds": [
         "org_emory_university"
       ],
       "isKeyContact": false
     },
     {
-      "id": "contact_micaela_preston",
-      "name": "Micaela Preston",
-      "email": null,
-      "organizationIds": [],
-      "isKeyContact": false
-    },
-    {
       "id": "contact_grayson_stuart",
       "name": "Grayson Stuart",
-      "email": null,
+      "email": "grayson@goodr.co",
       "organizationIds": [
         "org_goodr"
       ],
@@ -37717,7 +37856,7 @@
     {
       "id": "contact_meaghan_shannon_vlkovic",
       "name": "Meaghan Shannon Vlkovic",
-      "email": null,
+      "email": "mvlkovic@enterprisecommunity.com",
       "organizationIds": [
         "org_enterprise_community_partners"
       ],
@@ -37735,7 +37874,7 @@
     {
       "id": "contact_emily_best",
       "name": "Emily Best",
-      "email": null,
+      "email": "emily@seedandspark.com",
       "organizationIds": [
         "org_seed_spark"
       ],
@@ -37744,8 +37883,10 @@
     {
       "id": "contact_khadija_t",
       "name": "Khadija T. ",
-      "email": null,
-      "organizationIds": [],
+      "email": "khadijahrobinson@spelman.edu",
+      "organizationIds": [
+        "org_spelman_college"
+      ],
       "isKeyContact": false
     },
     {
@@ -37758,18 +37899,9 @@
       "isKeyContact": false
     },
     {
-      "id": "contact_unknown",
-      "name": "Unknown",
-      "email": null,
-      "organizationIds": [
-        "org_mnz"
-      ],
-      "isKeyContact": false
-    },
-    {
       "id": "contact_whitney_ward",
       "name": "Whitney Ward",
-      "email": null,
+      "email": "whitney@cre-endeavors.com",
       "organizationIds": [
         "org_cre_endeavors"
       ],
@@ -37778,7 +37910,7 @@
     {
       "id": "contact_johnetta_daniels",
       "name": "Johnetta Daniels ",
-      "email": null,
+      "email": "Johnetta.daniels@usbank.com",
       "organizationIds": [
         "org_us_bancorp_impact_finance"
       ],
@@ -37787,7 +37919,7 @@
     {
       "id": "contact_vickey_roberts",
       "name": "Vickey Roberts",
-      "email": null,
+      "email": "vroberts@investatlanta.com",
       "organizationIds": [
         "org_invest_atlanta"
       ],
@@ -37796,7 +37928,7 @@
     {
       "id": "contact_john_arnold",
       "name": "John Arnold",
-      "email": null,
+      "email": "john.arnold@weinspirit.org",
       "organizationIds": [
         "org_thrive_community_lending"
       ],
@@ -37805,7 +37937,7 @@
     {
       "id": "contact_tess_martin",
       "name": "Tess Martin",
-      "email": null,
+      "email": "tess@coastalcommunityfoundation.org",
       "organizationIds": [
         "org_coastal_community_foundation"
       ],
@@ -37814,7 +37946,7 @@
     {
       "id": "contact_candra_livsey",
       "name": "Candra Livsey",
-      "email": null,
+      "email": "candra@chadlivseyproject.com",
       "organizationIds": [
         "org_the_chad_livsey_project"
       ],
@@ -37830,7 +37962,7 @@
     {
       "id": "contact_tim_mccue",
       "name": "Tim McCue",
-      "email": null,
+      "email": "TMccue@habitat.org",
       "organizationIds": [
         "org_habitat_capital"
       ],
@@ -37839,7 +37971,7 @@
     {
       "id": "contact_meg_anderson",
       "name": "Meg Anderson",
-      "email": null,
+      "email": "meg@luminaryworks.co",
       "organizationIds": [
         "org_luminary_works_foundation"
       ],
@@ -37857,7 +37989,7 @@
     {
       "id": "contact_brock_thompson",
       "name": "Brock Thompson",
-      "email": null,
+      "email": "brockthompson@gormanusa.com",
       "organizationIds": [
         "org_gorman_and_company"
       ],
@@ -37866,7 +37998,7 @@
     {
       "id": "contact_david_anderson",
       "name": "David Anderson",
-      "email": null,
+      "email": "david.anderson@missiondrivenfinance.org",
       "organizationIds": [
         "org_mission_driven_finance"
       ],
@@ -37875,7 +38007,7 @@
     {
       "id": "contact_carolyn_kovar",
       "name": "Carolyn Kovar",
-      "email": null,
+      "email": "ckovar@atlantaga.gov",
       "organizationIds": [
         "org_city_of_atlanta"
       ],
@@ -37884,21 +38016,21 @@
     {
       "id": "contact_rebecca_schmidt",
       "name": "Rebecca Schmidt",
-      "email": null,
+      "email": "Bzb2jy@virginia.edu",
       "organizationIds": [],
       "isKeyContact": false
     },
     {
       "id": "contact_sebastian_ibarra",
       "name": "Sebastian Ibarra",
-      "email": null,
+      "email": "sibarra95@gmail.com",
       "organizationIds": [],
       "isKeyContact": false
     },
     {
       "id": "contact_ann_giornelli_woodward",
       "name": "Ann Giornelli Woodward",
-      "email": null,
+      "email": "awoodward@cffdn.org",
       "organizationIds": [
         "org_cousins_foundation"
       ],
@@ -37907,7 +38039,7 @@
     {
       "id": "contact_jasmine_burton",
       "name": "Jasmine Burton",
-      "email": null,
+      "email": "jasminekburton@gmail.com",
       "organizationIds": [],
       "isKeyContact": false
     },
@@ -37921,10 +38053,12 @@
       "isKeyContact": false
     },
     {
-      "id": "contact_marciam_mayoue",
-      "name": "Marciam Mayoue",
-      "email": null,
-      "organizationIds": [],
+      "id": "contact_marcia_mayoue",
+      "name": "Marcia Mayoue",
+      "email": "mmayoue@bipwealth.com",
+      "organizationIds": [
+        "org_bip_wealth"
+      ],
       "isKeyContact": false
     },
     {
@@ -37937,7 +38071,7 @@
     {
       "id": "contact_emily_gell",
       "name": "Emily Gell",
-      "email": null,
+      "email": "emily.gell02@gmail.com",
       "organizationIds": [],
       "isKeyContact": false
     },
@@ -37962,7 +38096,7 @@
     {
       "id": "contact_tamara_vrooman_lucas",
       "name": "Tamara Vrooman Lucas",
-      "email": null,
+      "email": "tamara@mypandaapp.com",
       "organizationIds": [
         "org_mypanda"
       ],
@@ -37971,7 +38105,7 @@
     {
       "id": "contact_marni_pittman",
       "name": "Marni Pittman",
-      "email": null,
+      "email": "marni@westsidefuturefund.org",
       "organizationIds": [
         "org_westside_future_fund"
       ],
@@ -37980,7 +38114,7 @@
     {
       "id": "contact_mark_callaway",
       "name": "Mark Callaway",
-      "email": null,
+      "email": "markccallaway@me.com",
       "organizationIds": [
         "org_morning_star_foundation"
       ],
@@ -37989,14 +38123,14 @@
     {
       "id": "contact_edmond_green",
       "name": "Edmond Green",
-      "email": null,
+      "email": "edmondgreen12.eg@yahoo.com",
       "organizationIds": [],
       "isKeyContact": false
     },
     {
       "id": "contact_jori_mendel",
       "name": "Jori Mendel",
-      "email": null,
+      "email": "jmendel@investwithroots.com",
       "organizationIds": [
         "org_invest_with_roots"
       ],
@@ -38005,21 +38139,23 @@
     {
       "id": "contact_william_leonard",
       "name": "William Leonard",
-      "email": null,
-      "organizationIds": [],
+      "email": "william@valor.vc",
+      "organizationIds": [
+        "org_valor_ventures"
+      ],
       "isKeyContact": false
     },
     {
       "id": "contact_feyi_ige",
       "name": "Feyi Ige",
-      "email": null,
+      "email": "feyiige17@gmail.com",
       "organizationIds": [],
       "isKeyContact": false
     },
     {
       "id": "contact_toya_pearson",
       "name": "Toya Pearson",
-      "email": null,
+      "email": "pearson.toya@gmail.com",
       "organizationIds": [],
       "isKeyContact": false
     },
@@ -38035,7 +38171,7 @@
     {
       "id": "contact_lynn_pattillo",
       "name": "Lynn Pattillo",
-      "email": null,
+      "email": "lpattillo@pattillore.com",
       "organizationIds": [
         "org_the_pittulloch_foundation_inc"
       ],
@@ -38044,21 +38180,21 @@
     {
       "id": "contact_semira_ajani",
       "name": "Semira Ajani",
-      "email": null,
+      "email": "semira@kw.com",
       "organizationIds": [],
       "isKeyContact": false
     },
     {
       "id": "contact_kern_dolland",
       "name": "Kern Dolland",
-      "email": null,
+      "email": "kern.dolland@gmail.com",
       "organizationIds": [],
       "isKeyContact": false
     },
     {
       "id": "contact_khaliff_davis",
       "name": "Khaliff Davis",
-      "email": null,
+      "email": "khaliff.davis@reinvestment.com",
       "organizationIds": [
         "org_regions_bank"
       ],
@@ -38067,21 +38203,21 @@
     {
       "id": "contact_rani_shetti",
       "name": "Rani Shetti",
-      "email": null,
+      "email": "rani.shetti@gmail.com",
       "organizationIds": [],
       "isKeyContact": false
     },
     {
       "id": "contact_pavan_iyer",
       "name": "Pavan Iyer",
-      "email": null,
+      "email": "pavan@eightvillage.com",
       "organizationIds": [],
       "isKeyContact": false
     },
     {
       "id": "contact_brad_greeson",
       "name": "Brad Greeson",
-      "email": null,
+      "email": "greesonbrad@gmail.com",
       "organizationIds": [
         "org_domain_capital_group"
       ],
@@ -38099,7 +38235,7 @@
     {
       "id": "contact_rohit_malhotra",
       "name": "Rohit Malhotra",
-      "email": null,
+      "email": "rohit@civicatlanta.org",
       "organizationIds": [
         "org_center_for_civic_innovation"
       ],
@@ -38117,14 +38253,14 @@
     {
       "id": "contact_samara_daise",
       "name": "Samara Daise",
-      "email": null,
+      "email": "samara@enrichkidsnow.com",
       "organizationIds": [],
       "isKeyContact": false
     },
     {
       "id": "contact_joe_thomas",
       "name": "Joe Thomas",
-      "email": null,
+      "email": "joe@sapelofoundation.org ",
       "organizationIds": [
         "org_the_sapelo_foundation"
       ],
@@ -38133,8 +38269,10 @@
     {
       "id": "contact_karina_vadillo",
       "name": "Karina Vadillo",
-      "email": null,
-      "organizationIds": [],
+      "email": "kvadillo@redf.org",
+      "organizationIds": [
+        "org_redf"
+      ],
       "isKeyContact": false
     },
     {
@@ -38149,7 +38287,7 @@
     {
       "id": "contact_markeena_novembre",
       "name": "Markeena Novembre",
-      "email": null,
+      "email": "mnovembre@investatlanta.com",
       "organizationIds": [
         "org_invest_atlanta"
       ],
@@ -38158,7 +38296,7 @@
     {
       "id": "contact_eric_sharp",
       "name": "Eric Sharp",
-      "email": null,
+      "email": "eric.sharp@coxecurry.com",
       "organizationIds": [
         "org_coxe_curry_associates"
       ],
@@ -38167,7 +38305,7 @@
     {
       "id": "contact_abby_vankudre",
       "name": "Abby Vankudre",
-      "email": null,
+      "email": "abbyvankudre@gmail.com",
       "organizationIds": [
         "org_robert_w_woodruff_foundation"
       ],
@@ -38176,7 +38314,7 @@
     {
       "id": "contact_kim_jones",
       "name": "Kim Jones",
-      "email": null,
+      "email": "kim@cfwg.net",
       "organizationIds": [
         "org_community_foundation_of_west_georgia"
       ],
@@ -38185,7 +38323,7 @@
     {
       "id": "contact_maurice_stewart",
       "name": "Maurice Stewart",
-      "email": null,
+      "email": "mauricestewart@gmail.com",
       "organizationIds": [
         "org_cfogroupatl"
       ],
@@ -38194,16 +38332,16 @@
     {
       "id": "contact_matthew_paschall",
       "name": "Matthew Paschall",
-      "email": null,
+      "email": "matt@paschallventures.com",
       "organizationIds": [
-        "org_eq_housing_advisors_inc"
+        "org_paschall_ventures"
       ],
       "isKeyContact": false
     },
     {
       "id": "contact_jen_soltis",
       "name": "Jen Soltis",
-      "email": null,
+      "email": "jensoltis9@gmail.com",
       "organizationIds": [],
       "isKeyContact": false
     },
@@ -38217,25 +38355,27 @@
       "isKeyContact": false
     },
     {
+      "id": "contact_ade_oguntoye",
+      "name": "Ade Oguntoye",
+      "email": "AOguntoye@aecf.org",
+      "organizationIds": [
+        "org_the_annie_e_casey_foundation"
+      ],
+      "isKeyContact": false
+    },
+    {
       "id": "contact_anita_allgood",
       "name": "Anita Allgood",
-      "email": null,
+      "email": "aallgood@investatlanta.com",
       "organizationIds": [
         "org_invest_atlanta"
       ],
       "isKeyContact": false
     },
     {
-      "id": "contact_emily_barton",
-      "name": "Emily Barton",
-      "email": null,
-      "organizationIds": [],
-      "isKeyContact": false
-    },
-    {
       "id": "contact_jessica_duveen",
       "name": "Jessica Duveen",
-      "email": null,
+      "email": "jessica@wearethelo.com",
       "organizationIds": [
         "org_the_lo"
       ],
@@ -38244,21 +38384,25 @@
     {
       "id": "contact_evan_maag",
       "name": "Evan Maag",
-      "email": null,
-      "organizationIds": [],
+      "email": "evanmaag@protonmail.com",
+      "organizationIds": [
+        "org_regions_bank"
+      ],
       "isKeyContact": false
     },
     {
       "id": "contact_georgia_barefoot",
       "name": "Georgia Barefoot",
       "email": null,
-      "organizationIds": [],
+      "organizationIds": [
+        "org_georgia_barefoot"
+      ],
       "isKeyContact": false
     },
     {
       "id": "contact_roswell_satterwhite",
       "name": "Roswell Satterwhite",
-      "email": null,
+      "email": "wrsatterwhite88@gmail.com",
       "organizationIds": [
         "org_william_josef_foundation"
       ],
@@ -38276,7 +38420,7 @@
     {
       "id": "contact_cherie_ong",
       "name": "Cherie Ong",
-      "email": null,
+      "email": "cherie@goodplaces.properties",
       "organizationIds": [
         "org_good_places"
       ],
@@ -38285,7 +38429,7 @@
     {
       "id": "contact_michael_chen",
       "name": "Michael Chen",
-      "email": null,
+      "email": "michael.chen@joinhomegrown.com",
       "organizationIds": [
         "org_homegrown"
       ],
@@ -38294,7 +38438,7 @@
     {
       "id": "contact_tia_robinson",
       "name": "Tia Robinson",
-      "email": null,
+      "email": "tia@verticalactivewear.com",
       "organizationIds": [
         "org_vertical_activewear"
       ],
@@ -38321,7 +38465,7 @@
     {
       "id": "contact_justin_jones",
       "name": "Justin Jones",
-      "email": null,
+      "email": "justin@villagemicrofund.com",
       "organizationIds": [
         "org_village_micro_fund"
       ],
@@ -38330,7 +38474,7 @@
     {
       "id": "contact_amelia_thompson",
       "name": "Amelia Thompson",
-      "email": null,
+      "email": "athompson@twofive.online",
       "organizationIds": [
         "org_harvard_women_in_defense_development_and_diplomacy"
       ],
@@ -38339,7 +38483,7 @@
     {
       "id": "contact_aarin_singh",
       "name": "Aarin Singh",
-      "email": null,
+      "email": "aarinsingh44@gmail.com",
       "organizationIds": [
         "org_emory_university"
       ],
@@ -38348,7 +38492,7 @@
     {
       "id": "contact_alena_green",
       "name": "Alena Green",
-      "email": null,
+      "email": "agreen@atlantadowntown.com; amdauria@gmail.com",
       "organizationIds": [
         "org_central_atlanta_progress"
       ],
@@ -38357,14 +38501,14 @@
     {
       "id": "contact_leo_rose",
       "name": "Leo Rose",
-      "email": null,
+      "email": "leoroseiv@gmail.com",
       "organizationIds": [],
       "isKeyContact": false
     },
     {
       "id": "contact_melanie_couchman",
       "name": "Melanie Couchman",
-      "email": null,
+      "email": "couchm02@mindspring.com",
       "organizationIds": [
         "org_couchman_noble_foundation"
       ],
@@ -38380,7 +38524,7 @@
     {
       "id": "contact_ashley_tavalario",
       "name": "Ashley Tavalario",
-      "email": null,
+      "email": "ashley.tavalario@gmail.com",
       "organizationIds": [
         "org_us_bancorp_impact_finance"
       ],
@@ -38389,7 +38533,7 @@
     {
       "id": "contact_will_kauffman",
       "name": "Will Kauffman",
-      "email": null,
+      "email": "wkauffman87@gmail.com",
       "organizationIds": [
         "org_the_sage_foundation"
       ],
@@ -38398,7 +38542,7 @@
     {
       "id": "contact_patricia_luna",
       "name": "Patricia Luna",
-      "email": null,
+      "email": "Patricia.luna@reinvestment.com",
       "organizationIds": [
         "org_reinvestment_fund"
       ],
@@ -38416,7 +38560,7 @@
     {
       "id": "contact_jyot_singh",
       "name": "Jyot Singh",
-      "email": null,
+      "email": "99.jyot@gmail.com",
       "organizationIds": [
         "org_blue_husky_group_llc"
       ],
@@ -38425,7 +38569,7 @@
     {
       "id": "contact_shell_berry",
       "name": "Shell Berry",
-      "email": null,
+      "email": "shellkberry@cfcsra.org",
       "organizationIds": [
         "org_community_foundation_for_the_central_savannah_river_area"
       ],
@@ -38434,7 +38578,7 @@
     {
       "id": "contact_jeannie_tarkenton",
       "name": "Jeannie Tarkenton ",
-      "email": null,
+      "email": "jeannie@funding-u.com",
       "organizationIds": [
         "org_funding_u"
       ],
@@ -38443,7 +38587,7 @@
     {
       "id": "contact_molly_mcloughlin",
       "name": "Molly Mcloughlin",
-      "email": null,
+      "email": "molly@ohioriversouth.com",
       "organizationIds": [
         "org_ohio_river_south"
       ],
@@ -38452,7 +38596,7 @@
     {
       "id": "contact_john_hardman",
       "name": "John Hardman",
-      "email": null,
+      "email": "john@woodleafpartners.com",
       "organizationIds": [
         "org_dot_lam_hardman_family_foundation",
         "org_woodleaf_partners",
@@ -38479,7 +38623,7 @@
     {
       "id": "contact_katessa_archer",
       "name": "Katessa Archer",
-      "email": null,
+      "email": "katessa.archer@Dominiuminc.com",
       "organizationIds": [
         "org_dominium_partners"
       ],
@@ -38488,7 +38632,7 @@
     {
       "id": "contact_cindy_woodley",
       "name": "Cindy Woodley",
-      "email": null,
+      "email": "Cindy.wooprinting@gmail.com",
       "organizationIds": [
         "org_woo_printing_inc"
       ],
@@ -38497,7 +38641,7 @@
     {
       "id": "contact_avery_fontaine",
       "name": "Avery Fontaine",
-      "email": null,
+      "email": "avery.fontaine@hawthorn.pnc.com",
       "organizationIds": [
         "org_pnc_bank"
       ],
@@ -38506,7 +38650,7 @@
     {
       "id": "contact_melody_echols",
       "name": "Melody Echols",
-      "email": null,
+      "email": "mechols@investatlanta.com",
       "organizationIds": [
         "org_invest_atlanta"
       ],
@@ -38515,7 +38659,7 @@
     {
       "id": "contact_jasmine_crowe",
       "name": "Jasmine Crowe",
-      "email": null,
+      "email": "jasmine@goodr.co",
       "organizationIds": [
         "org_goodr"
       ],
@@ -38524,7 +38668,7 @@
     {
       "id": "contact_catherine_covington",
       "name": "Catherine Covington",
-      "email": null,
+      "email": "cat.covington@gmail.com",
       "organizationIds": [
         "org_mce_social_capital",
         "org_georgia_social_impact_collaborative"
@@ -38534,7 +38678,7 @@
     {
       "id": "contact_sanjiv_doreswamy",
       "name": "Sanjiv Doreswamy",
-      "email": null,
+      "email": "Sdoresw1@att.net",
       "organizationIds": [
         "org_purpose_built_communities"
       ],
@@ -38543,7 +38687,7 @@
     {
       "id": "contact_latresa_mclawhorn_ryan",
       "name": "Latresa McLawhorn Ryan",
-      "email": null,
+      "email": "lmcryan@outlook.com",
       "organizationIds": [
         "org_blackbird_strategy_group",
         "org_georgia_social_impact_collaborative"
@@ -38562,14 +38706,14 @@
     {
       "id": "contact_ray_pennie",
       "name": "Ray Pennie",
-      "email": null,
+      "email": "ray@willowtreelamb.co",
       "organizationIds": [],
       "isKeyContact": false
     },
     {
       "id": "contact_lorenzo_lugo",
       "name": "Lorenzo Lugo",
-      "email": null,
+      "email": "Lorenzooolugo@gmail.com",
       "organizationIds": [
         "org_alexander_group"
       ],
@@ -38594,7 +38738,7 @@
     {
       "id": "contact_patrick_dixon",
       "name": "Patrick Dixon",
-      "email": null,
+      "email": "pdixon@ncrc.org",
       "organizationIds": [
         "org_ncrc_community_development_fund"
       ],
@@ -38603,7 +38747,7 @@
     {
       "id": "contact_kathryn_dennis",
       "name": "Kathryn Dennis",
-      "email": null,
+      "email": "kdennis@cfcga.org",
       "organizationIds": [
         "org_community_foundation_of_central_georgia"
       ],
@@ -38612,7 +38756,7 @@
     {
       "id": "contact_julianna_cagle",
       "name": "Julianna Cagle",
-      "email": null,
+      "email": "jcagle@goizuetafoundation.org",
       "organizationIds": [
         "org_the_goizueta_foundation"
       ],
@@ -38621,7 +38765,7 @@
     {
       "id": "contact_candice_jordan",
       "name": "Candice Jordan",
-      "email": null,
+      "email": "candice.jordan@atlantahabitat.org",
       "organizationIds": [
         "org_atlanta_housing_authority"
       ],
@@ -38646,16 +38790,9 @@
       "isKeyContact": false
     },
     {
-      "id": "contact_natasha_mcdowell",
-      "name": "Natasha McDowell",
-      "email": null,
-      "organizationIds": [],
-      "isKeyContact": false
-    },
-    {
       "id": "contact_lucia_stanislas",
       "name": "Lucia Stanislas",
-      "email": null,
+      "email": "lucfernandes@msn.com",
       "organizationIds": [
         "org_mwika_social_innovation_hub"
       ],
@@ -38673,7 +38810,7 @@
     {
       "id": "contact_david_gutt",
       "name": "David Gutt",
-      "email": null,
+      "email": "davidgutt@montagwealth.com",
       "organizationIds": [
         "org_montag_wealth_management"
       ],
@@ -38700,7 +38837,7 @@
     {
       "id": "contact_jordan_kiel",
       "name": "Jordan Kiel",
-      "email": null,
+      "email": "jsk10@ntrs.com",
       "organizationIds": [
         "org_northern_trust"
       ],
@@ -38716,7 +38853,7 @@
     {
       "id": "contact_diana_lara",
       "name": "Diana Lara",
-      "email": null,
+      "email": "diana.s.lara@gmail.com",
       "organizationIds": [
         "org_houseroots_llc"
       ],
@@ -38734,7 +38871,7 @@
     {
       "id": "contact_katherine_kennedy",
       "name": "Katherine Kennedy",
-      "email": null,
+      "email": "katherine@concrete-jungle.org",
       "organizationIds": [
         "org_concrete_jungle"
       ],
@@ -38752,7 +38889,7 @@
     {
       "id": "contact_megan_donovan",
       "name": "Megan Donovan",
-      "email": null,
+      "email": "mdonovan@cacfonline.org",
       "organizationIds": [],
       "isKeyContact": false
     },
@@ -38768,7 +38905,7 @@
     {
       "id": "contact_kara_bullock",
       "name": "Kara Bullock",
-      "email": null,
+      "email": "kara.bullock@coxenterprises.com",
       "organizationIds": [
         "org_james_m_cox_foundation"
       ],
@@ -38793,16 +38930,9 @@
       "isKeyContact": false
     },
     {
-      "id": "contact_abigail_evans",
-      "name": "Abigail Evans",
-      "email": null,
-      "organizationIds": [],
-      "isKeyContact": false
-    },
-    {
       "id": "contact_lexie_newhouse",
       "name": "Lexie Newhouse",
-      "email": null,
+      "email": "lexie@boomtownaccelerators.com",
       "organizationIds": [
         "org_boomtown_accelerators"
       ],
@@ -38811,7 +38941,7 @@
     {
       "id": "contact_adam_kolojejchick_kotch",
       "name": "Adam Kolojejchick-Kotch",
-      "email": null,
+      "email": "adam@padsplit.com",
       "organizationIds": [
         "org_padsplit"
       ],
@@ -38820,7 +38950,7 @@
     {
       "id": "contact_david_carlton",
       "name": "David Carlton",
-      "email": null,
+      "email": "dcarlton@cfsga.net",
       "organizationIds": [
         "org_community_foundation_of_south_georgia"
       ],
@@ -38846,7 +38976,7 @@
     {
       "id": "contact_keena_pierre",
       "name": "Keena Pierre",
-      "email": null,
+      "email": "Keena@prep.capital",
       "organizationIds": [
         "org_erez_capital",
         "org_prep_capital"
@@ -38854,16 +38984,27 @@
       "isKeyContact": false
     },
     {
+      "id": "contact_erin_boorn",
+      "name": "Erin Boorn",
+      "email": "eboorn@fraserparkerfoundation.org",
+      "organizationIds": [
+        "org_fraser_parker_foundation"
+      ],
+      "isKeyContact": false
+    },
+    {
       "id": "contact_kemberly_english",
       "name": "Kemberly English",
-      "email": null,
-      "organizationIds": [],
+      "email": "kenglish@frontlineresponse.org",
+      "organizationIds": [
+        "org_frontline_response"
+      ],
       "isKeyContact": false
     },
     {
       "id": "contact_veronica_woodruff",
       "name": "Veronica Woodruff",
-      "email": null,
+      "email": "veronica@travelsist.com",
       "organizationIds": [
         "org_travelsist"
       ],
@@ -38881,7 +39022,7 @@
     {
       "id": "contact_lindsey_caldwell",
       "name": "Lindsey Caldwell",
-      "email": null,
+      "email": "Lindsey.Caldwell@coxecurry.com",
       "organizationIds": [
         "org_coxe_curry_associates"
       ],
@@ -38890,7 +39031,7 @@
     {
       "id": "contact_meghan_pietrantonio",
       "name": "Meghan Pietrantonio",
-      "email": null,
+      "email": "meghan@georgiagrantmakers.org",
       "organizationIds": [
         "org_georgia_grantmakers_alliance"
       ],
@@ -38908,7 +39049,7 @@
     {
       "id": "contact_katrina_mitchell",
       "name": "Katrina Mitchell",
-      "email": null,
+      "email": "kmitchell@aecf.org",
       "organizationIds": [
         "org_the_annie_e_casey_foundation"
       ],
@@ -38942,7 +39083,7 @@
     {
       "id": "contact_dani_parra_delriego",
       "name": "Dani Parra Delriego",
-      "email": null,
+      "email": "danielaparradelriego@gmail.com",
       "organizationIds": [
         "org_emory_university"
       ],
@@ -38960,7 +39101,7 @@
     {
       "id": "contact_keeva_kase",
       "name": "Keeva Kase",
-      "email": null,
+      "email": "kkase@coastalgeorgiafoundation.org",
       "organizationIds": [
         "org_communities_of_coastal_georgia_foundation"
       ],
@@ -38976,7 +39117,7 @@
     {
       "id": "contact_kyle_schaffer",
       "name": "Kyle Schaffer",
-      "email": null,
+      "email": "kyle@amiqo.life",
       "organizationIds": [
         "org_amiqo_life"
       ],
@@ -39004,14 +39145,14 @@
     {
       "id": "contact_eliott_gardy",
       "name": "Eliott Gardy",
-      "email": null,
+      "email": "eliott0720@gmail.com",
       "organizationIds": [],
       "isKeyContact": false
     },
     {
       "id": "contact_amit_khanduri",
       "name": "Amit Khanduri",
-      "email": null,
+      "email": "amit@thegrofund.org",
       "organizationIds": [
         "org_invest_atlanta",
         "org_georgia_resilience_and_opportunity_fund"
@@ -39021,7 +39162,7 @@
     {
       "id": "contact_donte_miller",
       "name": "Donte Miller",
-      "email": null,
+      "email": "Donte@villagemicrofund.com",
       "organizationIds": [
         "org_village_micro_fund"
       ],
@@ -39030,7 +39171,7 @@
     {
       "id": "contact_courtney_eskew",
       "name": "Courtney Eskew",
-      "email": null,
+      "email": "courtney.eskew@gmail.com",
       "organizationIds": [
         "org_globalgiving"
       ],
@@ -39039,7 +39180,7 @@
     {
       "id": "contact_brett_howell",
       "name": "Brett Howell",
-      "email": null,
+      "email": "brett@howellconservation.org",
       "organizationIds": [
         "org_howell_conservation"
       ],
@@ -39048,7 +39189,7 @@
     {
       "id": "contact_felix_rodriguez",
       "name": "Felix Rodriguez",
-      "email": null,
+      "email": "felix@civicatlanta.org",
       "organizationIds": [
         "org_center_for_civic_innovation"
       ],
@@ -39057,7 +39198,7 @@
     {
       "id": "contact_grace_nelson",
       "name": "Grace Nelson",
-      "email": null,
+      "email": "grace@magentastrategy.org",
       "organizationIds": [
         "org_magenta"
       ],
@@ -39066,7 +39207,7 @@
     {
       "id": "contact_shweta_agrawal",
       "name": "Shweta Agrawal",
-      "email": null,
+      "email": "sagrawal111991@gmail.com",
       "organizationIds": [
         "org_ey_supply_chain_consulting"
       ],
@@ -39093,7 +39234,7 @@
     {
       "id": "contact_chari_chin_young_caston",
       "name": "Chari Chin-Young Caston",
-      "email": null,
+      "email": "charichinyoung@gmail.com",
       "organizationIds": [
         "org_worldpeaceconnection_us"
       ],
@@ -39111,14 +39252,16 @@
     {
       "id": "contact_kt_mcbratney",
       "name": "Kt McBratney",
-      "email": null,
-      "organizationIds": [],
+      "email": "kt@renewvc.com",
+      "organizationIds": [
+        "org_renew_vc"
+      ],
       "isKeyContact": false
     },
     {
       "id": "contact_ginny_hodges_mclendon",
       "name": "Ginny Hodges McLendon",
-      "email": null,
+      "email": "ginnyhmclendon@gmail.com",
       "organizationIds": [
         "org_wells_fargo_bank",
         "org_wells_fargo_foundation"
@@ -39128,7 +39271,7 @@
     {
       "id": "contact_michael_haynes",
       "name": "Michael Haynes",
-      "email": null,
+      "email": "michaelznetworkz@gmail.com",
       "organizationIds": [
         "org_mnz"
       ],
@@ -39137,8 +39280,10 @@
     {
       "id": "contact_felicia_neal",
       "name": "Felicia Neal",
-      "email": null,
-      "organizationIds": [],
+      "email": "fneal@investatlanta.com",
+      "organizationIds": [
+        "org_invest_atlanta"
+      ],
       "isKeyContact": false
     },
     {
@@ -39153,7 +39298,7 @@
     {
       "id": "contact_ivy_hall",
       "name": "Ivy Hall",
-      "email": null,
+      "email": "ivybhall@gmail.com",
       "organizationIds": [
         "org_city_national_bank_of_florida"
       ],
@@ -39162,7 +39307,7 @@
     {
       "id": "contact_annie_appleton",
       "name": "Annie Appleton",
-      "email": null,
+      "email": "aappleton@lanierfamilyfoundation.org",
       "organizationIds": [
         "org_sartain_lanier_family_foundation"
       ],
@@ -39180,7 +39325,7 @@
     {
       "id": "contact_allison_clark",
       "name": "Allison Clark",
-      "email": null,
+      "email": "aclark@macfound.org",
       "organizationIds": [
         "org_macarthur_foundation"
       ],
@@ -39198,7 +39343,7 @@
     {
       "id": "contact_rachel_wilson",
       "name": "Rachel Wilson",
-      "email": null,
+      "email": "Rachel@projectwellspring.com",
       "organizationIds": [
         "org_project_wellspring"
       ],
@@ -39216,9 +39361,18 @@
     {
       "id": "contact_danni_dong",
       "name": "Danni Dong",
-      "email": null,
+      "email": "danni.dong1@gmail.com",
       "organizationIds": [
         "org_emory_university"
+      ],
+      "isKeyContact": false
+    },
+    {
+      "id": "contact_maurice_raeford",
+      "name": "Maurice Raeford",
+      "email": "Maurice.raeford@bffund.org",
+      "organizationIds": [
+        "org_bf_fund"
       ],
       "isKeyContact": false
     },
@@ -39243,7 +39397,7 @@
     {
       "id": "contact_kelsey_brantley",
       "name": "Kelsey Brantley",
-      "email": null,
+      "email": "kbrantley@investatlanta.com",
       "organizationIds": [
         "org_invest_atlanta"
       ],
@@ -39252,7 +39406,7 @@
     {
       "id": "contact_ivan_alfaro",
       "name": "Ivan Alfaro",
-      "email": null,
+      "email": "alfaro@commonwalk.com",
       "organizationIds": [
         "org_common_walk_llc"
       ],
@@ -39261,14 +39415,14 @@
     {
       "id": "contact_tracey_jarmon",
       "name": "Tracey Jarmon",
-      "email": null,
+      "email": "traceyjarmon@gmail.com",
       "organizationIds": [],
       "isKeyContact": false
     },
     {
       "id": "contact_laderrius_williams",
       "name": "LaDerrius Williams",
-      "email": null,
+      "email": "laderriusd.williams@gmail.com",
       "organizationIds": [
         "org_ditto",
         "org_georgia_resilience_and_opportunity_fund"
@@ -39278,7 +39432,7 @@
     {
       "id": "contact_corey_white",
       "name": "Corey White",
-      "email": null,
+      "email": "corey.white10@gmail.com",
       "organizationIds": [
         "org_habitat_for_humanity_international"
       ],
@@ -39287,7 +39441,7 @@
     {
       "id": "contact_anna_moceyunaa",
       "name": "Anna Moceyunaa",
-      "email": null,
+      "email": "anna.moceyunas@emory.edu",
       "organizationIds": [
         "org_emory_university_goizueta_business_school"
       ],
@@ -39296,7 +39450,7 @@
     {
       "id": "contact_christopher_mitchell",
       "name": "Christopher Mitchell",
-      "email": null,
+      "email": "chris@mitchellrealtygrp.com",
       "organizationIds": [
         "org_mitchell_realty_group"
       ],
@@ -39305,14 +39459,16 @@
     {
       "id": "contact_lauren_jeong",
       "name": "Lauren Jeong",
-      "email": null,
-      "organizationIds": [],
+      "email": "lauren@chrysalislab.org",
+      "organizationIds": [
+        "org_chrysalis_lab"
+      ],
       "isKeyContact": false
     },
     {
       "id": "contact_nadine_phelps",
       "name": "Nadine Phelps",
-      "email": null,
+      "email": "nadine@civicatlanta.org",
       "organizationIds": [
         "org_center_for_civic_innovation"
       ],
@@ -39330,7 +39486,7 @@
     {
       "id": "contact_mona_elminyawi",
       "name": "Mona Elminyawi",
-      "email": null,
+      "email": "monaelmin@gmail.com",
       "organizationIds": [
         "org_community_housing_capital"
       ],
@@ -39346,14 +39502,16 @@
     {
       "id": "contact_jamal_lewis",
       "name": "Jamal Lewis",
-      "email": null,
-      "organizationIds": [],
+      "email": "jamal.lewis@innovate.gatech.edu",
+      "organizationIds": [
+        "org_partnership_for_inclusive_innovation"
+      ],
       "isKeyContact": false
     },
     {
       "id": "contact_sara_haas",
       "name": "Sara Haas",
-      "email": null,
+      "email": "shaas@andpi.org",
       "organizationIds": [
         "org_atlanta_neighborhood_development_partners"
       ],
@@ -39371,7 +39529,7 @@
     {
       "id": "contact_jennifer_singh",
       "name": "Jennifer Singh",
-      "email": null,
+      "email": "jennifer.singh@atdc.org",
       "organizationIds": [
         "org_advanced_technology_development_center_atdc"
       ],
@@ -39414,7 +39572,7 @@
     {
       "id": "contact_dont_council",
       "name": "Dontá Council",
-      "email": null,
+      "email": "Donta.council@atl.frb.org",
       "organizationIds": [
         "org_federal_reserve_bank_of_atlanta"
       ],
@@ -39423,23 +39581,16 @@
     {
       "id": "contact_karen_lambert",
       "name": "Karen Lambert",
-      "email": null,
+      "email": "klambert@pafdn.org",
       "organizationIds": [
         "org_the_peyton_anderson_foundation"
       ],
       "isKeyContact": false
     },
     {
-      "id": "contact_paige_mitchell",
-      "name": "Paige Mitchell",
-      "email": null,
-      "organizationIds": [],
-      "isKeyContact": false
-    },
-    {
       "id": "contact_sandy_feliciano",
       "name": "Sandy Feliciano",
-      "email": null,
+      "email": "Sandy.Feliciano@coxecurry.com",
       "organizationIds": [
         "org_coxe_curry_associates"
       ],
@@ -39457,7 +39608,7 @@
     {
       "id": "contact_harold_tessendorf",
       "name": "Harold Tessendorf",
-      "email": null,
+      "email": "harold.tessendorf@tessendorfconsulting.com",
       "organizationIds": [
         "org_together_for_hope"
       ],
@@ -39475,7 +39626,7 @@
     {
       "id": "contact_toney_green",
       "name": "Toney Green",
-      "email": null,
+      "email": "Toney Green",
       "organizationIds": [
         "org_foxpoint_capital_group"
       ],
@@ -39484,7 +39635,7 @@
     {
       "id": "contact_susan_hart",
       "name": "Susan Hart",
-      "email": null,
+      "email": "shart25@gsu.edu",
       "organizationIds": [
         "org_georgia_state_university"
       ],
@@ -39493,7 +39644,7 @@
     {
       "id": "contact_cora_miller",
       "name": "Cora Miller",
-      "email": null,
+      "email": "cora.miller86@gmail.com",
       "organizationIds": [
         "org_young_king_hair_care"
       ],
@@ -39520,7 +39671,7 @@
     {
       "id": "contact_emily_giordano",
       "name": "Emily Giordano",
-      "email": null,
+      "email": "emily@plywoodpeople.com",
       "organizationIds": [
         "org_plywood_people"
       ],
@@ -39529,7 +39680,7 @@
     {
       "id": "contact_kaylin_berinhout",
       "name": "Kaylin Berinhout ",
-      "email": null,
+      "email": "kaylinb9@gmail.com",
       "organizationIds": [
         "org_jewish_federation_of_greater_atlanta"
       ],
@@ -39556,14 +39707,16 @@
     {
       "id": "contact_matt_reynolds",
       "name": "Matt Reynolds",
-      "email": null,
-      "organizationIds": [],
+      "email": "matt@plywoodpeople.com",
+      "organizationIds": [
+        "org_plywood_people"
+      ],
       "isKeyContact": false
     },
     {
       "id": "contact_danny_shoy",
       "name": "Danny Shoy",
-      "email": null,
+      "email": "danny.shoy@ambff.org",
       "organizationIds": [
         "org_arthur_m_blank_foundation"
       ],
@@ -39572,16 +39725,25 @@
     {
       "id": "contact_nathan_stuck",
       "name": "Nathan Stuck",
-      "email": null,
+      "email": "Nathan@profitablepurposeconsulting.com",
       "organizationIds": [
         "org_profitable_purpose_consulting"
       ],
       "isKeyContact": false
     },
     {
+      "id": "contact_lauren_marshall",
+      "name": "Lauren Marshall",
+      "email": "lauren@newtownmacon.com",
+      "organizationIds": [
+        "org_newtown_macon"
+      ],
+      "isKeyContact": false
+    },
+    {
       "id": "contact_brian_goebel",
       "name": "Brian Goebel",
-      "email": null,
+      "email": "bgoebel@emory.edu",
       "organizationIds": [
         "org_emory_university_goizueta_business_school"
       ],
@@ -39590,7 +39752,7 @@
     {
       "id": "contact_aphrodite",
       "name": "Aphrodite ",
-      "email": null,
+      "email": "Admin@qualitylifemanagement.org",
       "organizationIds": [
         "org_quality_life_management"
       ],
@@ -39599,7 +39761,7 @@
     {
       "id": "contact_atiba_mbiwan",
       "name": "Atiba Mbiwan",
-      "email": null,
+      "email": "atiba@zfo.net",
       "organizationIds": [
         "org_zeist_foundation"
       ],
@@ -39608,7 +39770,7 @@
     {
       "id": "contact_katie_chastain",
       "name": "Katie Chastain",
-      "email": null,
+      "email": "katie@thomasvillecdc.org",
       "organizationIds": [
         "org_thomasville_community_development_corporation",
         "org_investtvl"
@@ -39618,16 +39780,25 @@
     {
       "id": "contact_lexi_wallace",
       "name": "Lexi Wallace",
-      "email": null,
+      "email": "Lexi.wallace1314@gmail.com",
       "organizationIds": [
         "org_tractian"
       ],
       "isKeyContact": false
     },
     {
+      "id": "contact_lisa_scrivner",
+      "name": "Lisa Scrivner",
+      "email": "lscrivner@nwcolumbus.org",
+      "organizationIds": [
+        "org_columbus_housing_initiative"
+      ],
+      "isKeyContact": false
+    },
+    {
       "id": "contact_andrea_carter",
       "name": "Andrea Carter",
-      "email": null,
+      "email": "andreakcarter@gmail.com",
       "organizationIds": [
         "org_vystar_credit_union"
       ],
@@ -39636,23 +39807,16 @@
     {
       "id": "contact_michael_heckmann",
       "name": "Michael Heckmann",
-      "email": null,
+      "email": "michael.t.heckmann@gmail.com",
       "organizationIds": [
         "org_at_work_on_purpose"
       ],
       "isKeyContact": false
     },
     {
-      "id": "contact_jeannie_tarkenton",
-      "name": "Jeannie Tarkenton",
-      "email": null,
-      "organizationIds": [],
-      "isKeyContact": false
-    },
-    {
       "id": "contact_jacquel_clemons_moore",
       "name": "Jacquel Clemons Moore",
-      "email": null,
+      "email": "jacquelclemons504@gmail.com",
       "organizationIds": [
         "org_grady_health_system"
       ],
@@ -39661,7 +39825,7 @@
     {
       "id": "contact_annie_kuensting",
       "name": "Annie Kuensting",
-      "email": null,
+      "email": "annie@beaconempowerment.net",
       "organizationIds": [
         "org_beacon_empowerment"
       ],
@@ -39670,7 +39834,7 @@
     {
       "id": "contact_sabah_mohammed",
       "name": "Sabah Mohammed",
-      "email": null,
+      "email": "zousarahy@gmail.com",
       "organizationIds": [
         "org_culdesac",
         "org_grama_care"
@@ -39687,7 +39851,7 @@
     {
       "id": "contact_david_aft",
       "name": "David Aft",
-      "email": null,
+      "email": "david.aft@communityfoundationnwga.org",
       "organizationIds": [
         "org_community_foundation_of_northwest_georgia_inc"
       ],
@@ -39696,14 +39860,14 @@
     {
       "id": "contact_mindy_kao",
       "name": "Mindy Kao",
-      "email": null,
+      "email": "mindykao3@gmail.com",
       "organizationIds": [],
       "isKeyContact": false
     },
     {
       "id": "contact_karen_rose",
       "name": "Karen Rose",
-      "email": null,
+      "email": "krose@groveparkfoundation.org",
       "organizationIds": [
         "org_grove_park_foundation"
       ],
@@ -39712,7 +39876,7 @@
     {
       "id": "contact_nia_badley",
       "name": "Nia Badley",
-      "email": null,
+      "email": "NiaMBadley@gmail.com",
       "organizationIds": [
         "org_city_of_east_point"
       ],
@@ -39730,7 +39894,7 @@
     {
       "id": "contact_aja_adeyemi",
       "name": "Aja Adeyemi",
-      "email": null,
+      "email": "aja@southerncommunitiesinitiative.com",
       "organizationIds": [
         "org_southern_communities_initiative_sci"
       ],
@@ -39739,7 +39903,7 @@
     {
       "id": "contact_clara_prieto",
       "name": "Clara Prieto",
-      "email": null,
+      "email": "claraprieto2828@gmail.com",
       "organizationIds": [
         "org_neo_cre"
       ],
@@ -39748,7 +39912,7 @@
     {
       "id": "contact_devin_olmack",
       "name": "Devin Olmack",
-      "email": null,
+      "email": "dlolmack@gmail.com",
       "organizationIds": [
         "org_atlanta_beltline",
         "org_mission_driven_bank_fund"
@@ -39758,7 +39922,7 @@
     {
       "id": "contact_stephen_mcrae",
       "name": "Stephen McRae",
-      "email": null,
+      "email": "smcrae@investatlanta.com",
       "organizationIds": [
         "org_invest_atlanta"
       ],
@@ -39776,7 +39940,7 @@
     {
       "id": "contact_marvin_francois",
       "name": "Marvin Francois",
-      "email": null,
+      "email": "marvin@oneKIN.co",
       "organizationIds": [
         "org_onekin"
       ],
@@ -39803,7 +39967,7 @@
     {
       "id": "contact_clarence_anthony_jr",
       "name": "Clarence Anthony Jr. ",
-      "email": null,
+      "email": "clarence.anthony.jr@innovate.gatech.edu",
       "organizationIds": [
         "org_partnership_for_inclusive_innovation"
       ],
@@ -39819,7 +39983,7 @@
     {
       "id": "contact_carolyn_pitt",
       "name": "Carolyn Pitt",
-      "email": null,
+      "email": "Carolyn@productions.com",
       "organizationIds": [
         "org_productions_com"
       ],
@@ -39828,21 +39992,16 @@
     {
       "id": "contact_shanon_stewart",
       "name": "Shanon Stewart",
-      "email": null,
-      "organizationIds": [],
-      "isKeyContact": false
-    },
-    {
-      "id": "contact_mlemchukwu",
-      "name": "Mlemchukwu",
-      "email": null,
-      "organizationIds": [],
+      "email": "stewart@aceloans.org",
+      "organizationIds": [
+        "org_access_to_capital_for_entrepreneurs"
+      ],
       "isKeyContact": false
     },
     {
       "id": "contact_cynthia_mueller",
       "name": "Cynthia Mueller",
-      "email": null,
+      "email": "cynthia.muller@wkkf.org",
       "organizationIds": [
         "org_w_k_kellogg_foundation"
       ],
@@ -39851,7 +40010,7 @@
     {
       "id": "contact_rita_breen",
       "name": "Rita Breen",
-      "email": null,
+      "email": "rmbreen@southernco.com",
       "organizationIds": [
         "org_georgia_power_foundation"
       ],
@@ -39860,15 +40019,17 @@
     {
       "id": "contact_whitney_adams",
       "name": "Whitney Adams",
-      "email": null,
+      "email": "whit.adams@outlook.com",
       "organizationIds": [],
       "isKeyContact": false
     },
     {
       "id": "contact_ashley_a_jones",
       "name": "Ashley A. Jones",
-      "email": null,
-      "organizationIds": [],
+      "email": "ashley@springleafadvisors.com",
+      "organizationIds": [
+        "org_spring_leaf_advisors"
+      ],
       "isKeyContact": false
     },
     {
@@ -39892,9 +40053,28 @@
     {
       "id": "contact_kashi_sehgal",
       "name": "Kashi Sehgal",
-      "email": null,
+      "email": "kashi@retaaza.com",
       "organizationIds": [
         "org_retaaza"
+      ],
+      "isKeyContact": false
+    },
+    {
+      "id": "contact_daniel_gura",
+      "name": "Daniel Gura",
+      "email": "dgura@habitat.org",
+      "organizationIds": [
+        "org_habitat_for_humanity_georgia"
+      ],
+      "isKeyContact": false
+    },
+    {
+      "id": "contact_robert_james_ii",
+      "name": "Robert James II",
+      "email": "rjamesii@carverstatebank.com",
+      "organizationIds": [
+        "org_carver_financial_corporation",
+        "org_carver_state_bank"
       ],
       "isKeyContact": false
     },
@@ -39910,7 +40090,7 @@
     {
       "id": "contact_jason_terrell",
       "name": "Jason Terrell",
-      "email": null,
+      "email": "jterrell@rhdobbs.net",
       "organizationIds": [
         "org_r_howard_dobbs_jr_foundation",
         "org_georgia_social_impact_collaborative"
@@ -39920,7 +40100,7 @@
     {
       "id": "contact_andrew_rabuck",
       "name": "Andrew Rabuck",
-      "email": null,
+      "email": "andrewr@woodforest.com",
       "organizationIds": [
         "org_woodforest_national_bank"
       ],
@@ -39929,7 +40109,7 @@
     {
       "id": "contact_debra_lam",
       "name": "Debra Lam",
-      "email": null,
+      "email": "debrah.lam@innovate.gatech.edu",
       "organizationIds": [
         "org_partnership_for_inclusive_innovation",
         "org_betty_and_davis_fitzgerald_foundation"
@@ -39939,7 +40119,7 @@
     {
       "id": "contact_lonnie_smith",
       "name": "Lonnie Smith",
-      "email": null,
+      "email": "Smithlonnie845@gmail.com",
       "organizationIds": [
         "org_prospect_wabash"
       ],
@@ -39948,21 +40128,25 @@
     {
       "id": "contact_meredith_johnson",
       "name": "Meredith Johnson",
-      "email": null,
-      "organizationIds": [],
+      "email": "meredithj@possefoundation.org",
+      "organizationIds": [
+        "org_the_posse_foundation"
+      ],
       "isKeyContact": false
     },
     {
       "id": "contact_kiera_riley",
       "name": "Kiera Riley",
-      "email": null,
-      "organizationIds": [],
+      "email": "kriley@investatlanta.com",
+      "organizationIds": [
+        "org_invest_atlanta"
+      ],
       "isKeyContact": false
     },
     {
       "id": "contact_trevor_gunter",
       "name": "Trevor Gunter",
-      "email": null,
+      "email": "trevor@fourpinesfinancial.com",
       "organizationIds": [
         "org_four_pines_financial"
       ],
@@ -39971,16 +40155,16 @@
     {
       "id": "contact_ky_lindbergh",
       "name": "Ky Lindbergh",
-      "email": null,
+      "email": "kyesha@georgiahealthinitiative.or",
       "organizationIds": [
-        "org_atlanta_jewish_foundation"
+        "org_georgia_health_initiative"
       ],
       "isKeyContact": false
     },
     {
       "id": "contact_dwayne_marshall",
       "name": "Dwayne Marshall",
-      "email": null,
+      "email": "dwayne.a.marshall@gmail.com",
       "organizationIds": [
         "org_catalyst_development_corporation"
       ],
@@ -39989,7 +40173,7 @@
     {
       "id": "contact_emily_barton",
       "name": "Emily Barton",
-      "email": null,
+      "email": "emily@foodwellalliance.org",
       "organizationIds": [
         "org_food_well_alliance"
       ],
@@ -40007,7 +40191,7 @@
     {
       "id": "contact_mark_kendall",
       "name": "Mark Kendall",
-      "email": null,
+      "email": "markokendall@gmail.com",
       "organizationIds": [
         "org_coolcoolcool_productions"
       ],
@@ -40016,7 +40200,7 @@
     {
       "id": "contact_kenya_jackson",
       "name": "Kenya Jackson",
-      "email": null,
+      "email": "kjackson@urbanhealthperspectives.com",
       "organizationIds": [
         "org_urban_health_perspectives"
       ],
@@ -40025,7 +40209,7 @@
     {
       "id": "contact_kyle_walcott",
       "name": "Kyle Walcott",
-      "email": null,
+      "email": "walcottkyle1@gmail.com",
       "organizationIds": [
         "org_coca_cola_foundation"
       ],
@@ -40043,7 +40227,7 @@
     {
       "id": "contact_phillip_sangokoya",
       "name": "Phillip Sangokoya",
-      "email": null,
+      "email": "phillipsangokoya@gmail.com",
       "organizationIds": [
         "org_us_bancorp_impact_finance"
       ],
@@ -40059,7 +40243,7 @@
     {
       "id": "contact_stuart_alan_jackson",
       "name": "Stuart Alan Jackson ",
-      "email": "sjackson@tjgcpa.comm",
+      "email": "sjackson@tjgcpa.com",
       "organizationIds": [
         "org_the_jackson_group_pc"
       ],
@@ -40077,7 +40261,7 @@
     {
       "id": "contact_tiana_tukes",
       "name": "Tiana Tukes",
-      "email": null,
+      "email": "tianatukes@gmail.com",
       "organizationIds": [
         "org_spelman_college"
       ],
@@ -40104,7 +40288,7 @@
     {
       "id": "contact_matthew_sutton",
       "name": "Matthew Sutton",
-      "email": null,
+      "email": "matthewsutton2018@gmail.com",
       "organizationIds": [
         "org_community_foundation_for_greater_atlanta"
       ],
@@ -40113,7 +40297,7 @@
     {
       "id": "contact_marybeth_deiters",
       "name": "MaryBeth Deiters",
-      "email": null,
+      "email": "marybeth@sapelofoundation.org",
       "organizationIds": [
         "org_the_sapelo_foundation"
       ],
@@ -40149,7 +40333,7 @@
     {
       "id": "contact_trace_welch",
       "name": "Trace Welch",
-      "email": null,
+      "email": "trace@trimtabimpact.com",
       "organizationIds": [
         "org_trimtab_impact"
       ],
@@ -40158,7 +40342,7 @@
     {
       "id": "contact_mandy_eidson",
       "name": "Mandy Eidson",
-      "email": null,
+      "email": "mandy.eidson@self-help.org",
       "organizationIds": [
         "org_self_help_credit_union",
         "org_georgia_social_impact_collaborative"
@@ -40168,7 +40352,7 @@
     {
       "id": "contact_jamal_usman",
       "name": "Jamal Usman",
-      "email": null,
+      "email": "usman@reflexuas.com",
       "organizationIds": [
         "org_reflex"
       ],
@@ -40184,16 +40368,9 @@
       "isKeyContact": false
     },
     {
-      "id": "contact_jasmine_aimes",
-      "name": "Jasmine Aimes",
-      "email": null,
-      "organizationIds": [],
-      "isKeyContact": false
-    },
-    {
       "id": "contact_charaun_cash",
       "name": "Charaun Cash",
-      "email": null,
+      "email": "charaun@voxatl.org",
       "organizationIds": [
         "org_vox_atl"
       ],
@@ -40202,7 +40379,7 @@
     {
       "id": "contact_cathy_williams",
       "name": "Cathy Williams",
-      "email": null,
+      "email": "cwilliams@nwcolumbus.org",
       "organizationIds": [
         "org_neighborworks_columbus"
       ],
@@ -40211,7 +40388,7 @@
     {
       "id": "contact_emily_dalton",
       "name": "Emily Dalton",
-      "email": null,
+      "email": "emilysdalton1@gmail.com",
       "organizationIds": [
         "org_crow_island_community_capital"
       ],
@@ -40220,7 +40397,7 @@
     {
       "id": "contact_quranna_coley",
       "name": "Quranna Coley",
-      "email": null,
+      "email": "quranna@blackgirlssmile.org",
       "organizationIds": [
         "org_black_girls_smile"
       ],
@@ -40229,7 +40406,7 @@
     {
       "id": "contact_brian_friedman",
       "name": "Brian Friedman",
-      "email": null,
+      "email": "bfriedman@wellspringassociates.com",
       "organizationIds": [
         "org_wellspring_associates"
       ],
@@ -40254,7 +40431,7 @@
     {
       "id": "contact_oluwamayowa_kusemiju",
       "name": "Oluwamayowa Kusemiju",
-      "email": null,
+      "email": "mayowakush@icloud.com",
       "organizationIds": [
         "org_smurfit_westrock"
       ],
@@ -40263,7 +40440,7 @@
     {
       "id": "contact_nikhil_mathur",
       "name": "Nikhil Mathur",
-      "email": null,
+      "email": "mathur.nikhil91@gmail.com",
       "organizationIds": [],
       "isKeyContact": false
     }
