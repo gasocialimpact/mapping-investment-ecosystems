@@ -13,8 +13,10 @@ export function OrgDetail({ id }: { id: string }) {
   if (!org) return <p className="text-sm text-slate-400">Organization not found.</p>;
 
   const style = SEGMENT_STYLES[org.segment];
-  const location = [org.city, org.state].filter(Boolean).join(', ');
   const loc = org.locationId ? maps.locationById.get(org.locationId) : null;
+  const city = loc?.cityName ?? (org.city?.startsWith('rec') ? null : org.city);
+  const state = loc?.stateName ?? (org.state?.startsWith('rec') ? null : org.state);
+  const location = [city, state].filter(Boolean).join(', ');
 
   const outbound = data!.capitalFlows.filter((f) => f.sourceId === org.id);
   const inbound = data!.capitalFlows.filter((f) => f.recipientId === org.id);

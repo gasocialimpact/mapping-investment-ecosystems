@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react';
 import L from 'leaflet';
-import type { Organization } from '../types';
+import type { Organization, Location } from '../types';
 import { SEGMENT_STYLES } from '../types';
+import { useData } from '../context/DataContext';
 
 // Default view: Georgia, USA. Markers fit-bounds override this when present.
 const GEORGIA_CENTER: L.LatLngExpression = [33.0, -83.5];
@@ -16,8 +17,11 @@ function markerIcon(color: string): L.DivIcon {
   });
 }
 
-function popupHtml(org: Organization): string {
-  const location = [org.city, org.state].filter(Boolean).join(', ');
+function popupHtml(org: Organization, locationById: Map<string, Location>): string {
+  const loc = org.locationId ? locationById.get(org.locationId) : undefined;
+  const city = loc?.cityName ?? (org.city?.startsWith('rec') ? null : org.city);
+  const state = loc?.stateName ?? (org.state?.startsWith('rec') ? null : org.state);
+  const location = [city, state].filter(Boolean).join(', ');
   const esc = (s: string) => {
     const d = document.createElement('div');
     d.textContent = s;
@@ -36,6 +40,7 @@ function popupHtml(org: Organization): string {
 }
 
 export function MapView({ organizations }: { organizations: Organization[] }) {
+  const { maps } = useData();
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<L.Map | null>(null);
   const layerRef = useRef<L.LayerGroup | null>(null);
@@ -72,7 +77,7 @@ export function MapView({ organizations }: { organizations: Organization[] }) {
     for (const org of mapped) {
       const color = SEGMENT_STYLES[org.segment].color;
       const marker = L.marker([org.lat as number, org.lng as number], { icon: markerIcon(color) });
-      marker.bindPopup(popupHtml(org), { maxWidth: 260 });
+      marker.bindPopup(popupHtml(org, maps.locationById), { maxWidth: 260 });
       marker.addTo(layer);
       latlngs.push([org.lat as number, org.lng as number]);
     }

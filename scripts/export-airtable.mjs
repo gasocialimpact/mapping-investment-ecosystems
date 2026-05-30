@@ -185,12 +185,16 @@ async function main() {
   }));
 
   // --- Locations ---
+  const recIdToLocCity = new Map();
+  const recIdToLocState = new Map();
   locRecs.forEach((r) => {
     const f = r.fields;
     const city = f['city_name'] || 'Unknown';
     const state = f['state_id'] || f['state_name'] || '';
     const id = slug(`${city}_${state}`, 'loc');
     recIdToLocId.set(r.id, id);
+    recIdToLocCity.set(r.id, city);
+    recIdToLocState.set(r.id, state || null);
   });
 
   // --- Contacts ---
@@ -254,8 +258,8 @@ async function main() {
       name,
       segment: scalar(f['Segment']) || 'Uncategorized',
       orgType: scalar(f['Org. Type']) || null,
-      city: scalar(f['City']) || scalar(f['city_name (from Location)']) || null,
-      state: scalar(f['state_id (from Location)']) || null,
+      city: (() => { const rid = scalar(f['City']); return rid ? (recIdToLocCity.get(rid) ?? rid) : null; })(),
+      state: (() => { const rid = scalar(f['City']); return rid ? (recIdToLocState.get(rid) ?? null) : (scalar(f['state_id (from Location)']) || null); })(),
       lat: num(f['lat (from City)']),
       lng: num(f['lng (from City)']),
       website: scalar(f['Website']) || null,

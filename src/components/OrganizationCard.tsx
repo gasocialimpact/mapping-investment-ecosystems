@@ -2,6 +2,7 @@ import { MapPin, ArrowRightLeft } from 'lucide-react';
 import type { Organization } from '../types';
 import { SEGMENT_STYLES } from '../types';
 import { useDetail } from '../context/DetailContext';
+import { useData } from '../context/DataContext';
 
 interface Props {
   org: Organization;
@@ -10,7 +11,11 @@ interface Props {
 
 export function OrganizationCard({ org, flowCount }: Props) {
   const style = SEGMENT_STYLES[org.segment];
-  const location = [org.city, org.state].filter(Boolean).join(', ') || 'Location not set';
+  const { maps } = useData();
+  const loc = org.locationId ? maps.locationById.get(org.locationId) : undefined;
+  const city = loc?.cityName ?? (org.city?.startsWith('rec') ? null : org.city);
+  const state = loc?.stateName ?? (org.state?.startsWith('rec') ? null : org.state);
+  const location = [city, state].filter(Boolean).join(', ') || 'Location not set';
   const { open } = useDetail();
 
   return (
