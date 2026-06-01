@@ -35,11 +35,15 @@ export function FlowDetail({ id }: { id: string }) {
         {flow.year && <span className="text-sm text-slate-400">{flow.year}</span>}
       </div>
 
-      {flow.type && (
-        <span className="inline-block mt-2 text-xs px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
-          {flow.type}
-        </span>
-      )}
+      {(() => {
+        const inst0 = instruments[0];
+        const typeLabel = inst0?.name ?? (flow.type?.startsWith('rec') ? null : flow.type);
+        return typeLabel ? (
+          <span className="inline-block mt-2 text-xs px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
+            {typeLabel}
+          </span>
+        ) : null;
+      })()}
 
       {flow.description && <p className="text-sm text-slate-600 mt-3">{flow.description}</p>}
 

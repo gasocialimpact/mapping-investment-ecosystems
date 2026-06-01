@@ -2,9 +2,15 @@ import { ArrowRight } from 'lucide-react';
 import type { CapitalFlow } from '../types';
 import { formatCurrencyFull } from '../lib/format';
 import { useDetail } from '../context/DetailContext';
+import { useData } from '../context/DataContext';
 
 export function CapitalFlowCard({ flow }: { flow: CapitalFlow }) {
   const { open } = useDetail();
+  const { maps } = useData();
+  const inst = flow.capitalInstrumentIds.length
+    ? maps.instrumentById.get(flow.capitalInstrumentIds[0])
+    : undefined;
+  const typeLabel = inst?.name ?? (flow.type?.startsWith('rec') ? null : flow.type);
 
   return (
     <button
@@ -26,9 +32,9 @@ export function CapitalFlowCard({ flow }: { flow: CapitalFlow }) {
 
       <div className="mt-3 flex items-center justify-between">
         <span className="text-base font-bold text-brand-green">{formatCurrencyFull(flow.amount)}</span>
-        {flow.type && (
+        {typeLabel && (
           <span className="text-[10px] font-medium text-slate-600 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-full">
-            {flow.type}
+            {typeLabel}
           </span>
         )}
       </div>
