@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-10T07:39:06.256Z",
+  "generatedAt": "2026-06-11T07:51:25.566Z",
   "source": "Airtable base appAi19SJ3WzFEIvj",
   "organizations": [
     {
@@ -1288,8 +1288,8 @@
     {
       "id": "org_houseatl",
       "name": "HouseATL",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Enabler",
+      "orgType": "Ecosystem Builder or Think-Tank",
       "city": "Atlanta",
       "state": "GA",
       "lat": 33.7628,
@@ -1520,8 +1520,8 @@
     {
       "id": "org_mutual_federal_savings_bank",
       "name": "Mutual Federal Savings Bank",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Aggregator",
+      "orgType": "Bank (Community)",
       "city": "Atlanta",
       "state": "GA",
       "lat": 33.7628,
@@ -1627,8 +1627,8 @@
     {
       "id": "org_wellspring_associates",
       "name": "Wellspring Associates",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Aggregator",
+      "orgType": "Financial Services Firm",
       "city": "Atlanta",
       "state": "GA",
       "lat": 33.7628,
@@ -1713,7 +1713,7 @@
     {
       "id": "org_synergies_fund",
       "name": "Synergies Fund",
-      "segment": "Uncategorized",
+      "segment": "Capital Enabler",
       "orgType": null,
       "city": "Atlanta",
       "state": "GA",
@@ -2010,8 +2010,8 @@
     {
       "id": "org_monarch_private_capital",
       "name": "Monarch Private Capital",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Aggregator",
+      "orgType": "Real Estate Development Firm",
       "city": "Atlanta",
       "state": "GA",
       "lat": 33.7628,
@@ -2705,7 +2705,7 @@
     {
       "id": "org_mosley_ventures",
       "name": "Mosley Ventures",
-      "segment": "Uncategorized",
+      "segment": "Capital Allocator",
       "orgType": null,
       "city": "Atlanta",
       "state": "GA",
@@ -3410,8 +3410,8 @@
     {
       "id": "org_taintanchi_foundation",
       "name": "Taintanchi Foundation",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Allocator",
+      "orgType": "Foundation (Private)",
       "city": "Atlanta",
       "state": "GA",
       "lat": 33.7628,
@@ -5298,8 +5298,8 @@
     {
       "id": "org_mmhp_investment_advisors",
       "name": "MMHP Investment Advisors",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Aggregator",
+      "orgType": "Financial Services Firm",
       "city": "Thomasville",
       "state": "GA",
       "lat": 30.8394,
@@ -6451,7 +6451,7 @@
     {
       "id": "org_southern_communities_initiative_sci",
       "name": "Southern Communities Initiative (SCI)",
-      "segment": "Uncategorized",
+      "segment": "Capital Enabler",
       "orgType": null,
       "city": "Atlanta",
       "state": "GA",
@@ -7621,6 +7621,28 @@
       "ownershipIds": []
     },
     {
+      "id": "org_mildred_miller_fort_foundation",
+      "name": "Mildred Miller Fort Foundation",
+      "segment": "Capital Allocator",
+      "orgType": "Foundation (Private)",
+      "city": "Columbus",
+      "state": "GA",
+      "lat": 32.51,
+      "lng": -84.8771,
+      "website": null,
+      "description": null,
+      "locationId": "loc_columbus_ga",
+      "contactIds": [
+        "contact_alan_rothschild"
+      ],
+      "capitalFlowIds": [],
+      "capitalAllocationIds": [],
+      "sdgIds": [],
+      "sectorIds": [],
+      "populationIds": [],
+      "ownershipIds": []
+    },
+    {
       "id": "org_neo_cre",
       "name": "NEO CRE",
       "segment": "Uncategorized",
@@ -8418,6 +8440,26 @@
       "capitalAllocationIds": [
         "flow_187"
       ],
+      "sdgIds": [],
+      "sectorIds": [],
+      "populationIds": [],
+      "ownershipIds": []
+    },
+    {
+      "id": "org_the_sara_giles_moore_foundation",
+      "name": "The Sara Giles Moore Foundation",
+      "segment": "Capital Allocator",
+      "orgType": "Foundation (Private)",
+      "city": "Atlanta",
+      "state": "GA",
+      "lat": 33.7628,
+      "lng": -84.422,
+      "website": "https://thesaragilesmoorefoundation.org/",
+      "description": null,
+      "locationId": "loc_atlanta_ga",
+      "contactIds": [],
+      "capitalFlowIds": [],
+      "capitalAllocationIds": [],
       "sdgIds": [],
       "sectorIds": [],
       "populationIds": [],
@@ -10159,7 +10201,8 @@
       "locationId": "loc_atlanta_ga",
       "contactIds": [
         "contact_erik_johnson",
-        "contact_abby_vankudre"
+        "contact_abby_vankudre",
+        "contact_dalhia_brown"
       ],
       "capitalFlowIds": [],
       "capitalAllocationIds": [],
@@ -10191,8 +10234,8 @@
     {
       "id": "org_the_working_farms_fund",
       "name": "The Working Farms Fund",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Aggregator",
+      "orgType": "Loan or Private Investment Fund",
       "city": "East Point",
       "state": "GA",
       "lat": 33.6696,
@@ -10395,7 +10438,7 @@
     {
       "id": "org_the_nature_conservancy",
       "name": "The Nature Conservancy",
-      "segment": "Uncategorized",
+      "segment": "Capital Aggregator",
       "orgType": null,
       "city": "Atlanta",
       "state": "GA",
@@ -10426,8 +10469,8 @@
     {
       "id": "org_woodleaf_partners",
       "name": "WoodLeaf Partners",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Aggregator",
+      "orgType": "Financial Services Firm",
       "city": "Atlanta",
       "state": "GA",
       "lat": 33.7628,
@@ -10738,7 +10781,7 @@
     {
       "id": "org_soma_foundation_inc",
       "name": "Soma Foundation Inc.",
-      "segment": "Uncategorized",
+      "segment": "Capital Allocator",
       "orgType": "Foundation (Private)",
       "city": "Columbus",
       "state": "GA",
@@ -12428,8 +12471,8 @@
     {
       "id": "org_organized_financials",
       "name": "Organized Financials",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Enabler",
+      "orgType": "Professional Service Provider",
       "city": "Atlanta",
       "state": "GA",
       "lat": 33.7628,
@@ -12450,7 +12493,7 @@
     {
       "id": "org_swipe_credit",
       "name": "Swipe Credit",
-      "segment": "Uncategorized",
+      "segment": "Capital Enabler",
       "orgType": null,
       "city": "Atlanta",
       "state": "GA",
@@ -14026,8 +14069,8 @@
     {
       "id": "org_green_south_foundation",
       "name": "Green South Foundation",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Allocator",
+      "orgType": "Foundation (Private)",
       "city": "Carrollton",
       "state": "GA",
       "lat": 33.5818,
@@ -14208,7 +14251,7 @@
     {
       "id": "org_start_me",
       "name": "Start:Me",
-      "segment": "Uncategorized",
+      "segment": "Capital Enabler",
       "orgType": null,
       "city": "Atlanta",
       "state": "GA",
@@ -14258,6 +14301,29 @@
       "description": "Founded in 2000, HCAP Partners provides mezzanine debt, private equity, and technical assistance for underserved businesses throughout the Western United States to drive operational excellence, quality job creation, and economic opportunity for women, people of color, and low- to moderate-income workers.",
       "locationId": "loc_san_diego_ca",
       "contactIds": [],
+      "capitalFlowIds": [],
+      "capitalAllocationIds": [],
+      "sdgIds": [],
+      "sectorIds": [],
+      "populationIds": [],
+      "ownershipIds": []
+    },
+    {
+      "id": "org_the_kelin_foundation",
+      "name": "The Kelin Foundation",
+      "segment": "Capital Allocator",
+      "orgType": "Foundation (Private)",
+      "city": "Atlanta",
+      "state": "GA",
+      "lat": 33.7628,
+      "lng": -84.422,
+      "website": null,
+      "description": null,
+      "locationId": "loc_atlanta_ga",
+      "contactIds": [
+        "contact_beth_holder",
+        "contact_kelsey_robinson"
+      ],
       "capitalFlowIds": [],
       "capitalAllocationIds": [],
       "sdgIds": [],
@@ -15184,7 +15250,7 @@
     {
       "id": "org_startup_atlanta",
       "name": "Startup Atlanta",
-      "segment": "Uncategorized",
+      "segment": "Capital Enabler",
       "orgType": null,
       "city": "Atlanta",
       "state": "GA",
@@ -15292,7 +15358,7 @@
     {
       "id": "org_the_common_market",
       "name": "The Common Market",
-      "segment": "Uncategorized",
+      "segment": "Capital Aggregator",
       "orgType": null,
       "city": "East Point",
       "state": "GA",
@@ -15337,7 +15403,7 @@
     {
       "id": "org_tech_af_founder_academy",
       "name": "Tech AF Founder Academy",
-      "segment": "Uncategorized",
+      "segment": "Capital Enabler",
       "orgType": null,
       "city": "Atlanta",
       "state": "GA",
@@ -16065,8 +16131,8 @@
     {
       "id": "org_kindred_futures",
       "name": "Kindred Futures",
-      "segment": "Uncategorized",
-      "orgType": null,
+      "segment": "Capital Enabler",
+      "orgType": "Ecosystem Builder or Think-Tank",
       "city": "Atlanta",
       "state": "GA",
       "lat": 33.7628,
@@ -33068,7 +33134,8 @@
         "org_neighborworks_columbus",
         "org_soma_foundation_inc",
         "org_columbus_housing_initiative",
-        "org_historic_columbus_foundation"
+        "org_historic_columbus_foundation",
+        "org_mildred_miller_fort_foundation"
       ]
     },
     {
@@ -36361,7 +36428,9 @@
         "org_southstate_bank",
         "org_chrysalis_lab",
         "org_lisc_atlanta",
-        "org_environmental_community_action_inc"
+        "org_environmental_community_action_inc",
+        "org_the_kelin_foundation",
+        "org_the_sara_giles_moore_foundation"
       ]
     },
     {
@@ -38034,6 +38103,15 @@
       "isKeyContact": false
     },
     {
+      "id": "contact_beth_holder",
+      "name": "Beth Holder",
+      "email": "edholder@me.com",
+      "organizationIds": [
+        "org_the_kelin_foundation"
+      ],
+      "isKeyContact": false
+    },
+    {
       "id": "contact_neerja_bhatnagar",
       "name": "Neerja Bhatnagar",
       "email": "neerja1105@gmail.com",
@@ -38475,6 +38553,15 @@
       "isKeyContact": false
     },
     {
+      "id": "contact_alan_rothschild",
+      "name": "Alan Rothschild",
+      "email": null,
+      "organizationIds": [
+        "org_mildred_miller_fort_foundation"
+      ],
+      "isKeyContact": false
+    },
+    {
       "id": "contact_nandi_edouard",
       "name": "Nandi Edouard",
       "email": null,
@@ -38747,7 +38834,7 @@
     {
       "id": "contact_erik_johnson",
       "name": "Erik Johnson",
-      "email": null,
+      "email": "johnson@woodruff.org",
       "organizationIds": [
         "org_robert_w_woodruff_foundation"
       ],
@@ -39061,6 +39148,15 @@
       "email": "jasmine@goodr.co",
       "organizationIds": [
         "org_goodr"
+      ],
+      "isKeyContact": false
+    },
+    {
+      "id": "contact_dalhia_brown",
+      "name": "Dalhia Brown",
+      "email": "brown@woodruff.org",
+      "organizationIds": [
+        "org_robert_w_woodruff_foundation"
       ],
       "isKeyContact": false
     },
@@ -40717,6 +40813,15 @@
       "email": "svick@wffg.org",
       "organizationIds": [
         "org_williams_family_foundation"
+      ],
+      "isKeyContact": false
+    },
+    {
+      "id": "contact_kelsey_robinson",
+      "name": "Kelsey Robinson",
+      "email": "krobinson@kelin.org",
+      "organizationIds": [
+        "org_the_kelin_foundation"
       ],
       "isKeyContact": false
     },
