@@ -13,7 +13,7 @@ import { InstrumentCard } from './components/InstrumentCard';
 import { LocationCard } from './components/LocationCard';
 import { OverviewMap } from './components/OverviewMap';
 import { DetailDrawer } from './components/detail/DetailDrawer';
-import { FrameworkTab } from './components/FrameworkTab';
+import { FrameworkTab, FrameworkView } from './components/FrameworkTab';
 import { SegmentDonut } from './components/charts/SegmentDonut';
 import { FlowTypeBar } from './components/charts/FlowTypeBar';
 import { ImpactBreakdown } from './components/charts/ImpactBreakdown';
@@ -25,7 +25,7 @@ const TABS: { id: Tab; label: string; icon: typeof LayoutDashboard }[] = [
   { id: 'flows', label: 'Capital Flows', icon: ArrowRightLeft },
   { id: 'instruments', label: 'Instruments', icon: Briefcase },
   { id: 'locations', label: 'Locations', icon: MapPin },
-  { id: 'framework', label: 'Framework & Terminology', icon: BookOpen },
+  { id: 'framework', label: 'Glossary & Key Terms', icon: BookOpen },
 ];
 
 export default function App() {
@@ -65,15 +65,12 @@ function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen">
-      <header className="bg-white border-b border-slate-200 sticky top-0 z-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4 flex-wrap">
+    <div className="h-screen flex flex-col overflow-hidden">
+      <header className="bg-white border-b border-slate-200 shrink-0 z-20">
+        <div className="max-w-[1500px] mx-auto px-6 py-[14px] flex items-center justify-between gap-[14px] flex-wrap">
           <div className="flex items-center gap-3">
-            <div className="w-7 h-7 rounded-lg shrink-0" style={{ background: 'conic-gradient(from 90deg, #4750a2, #53c3c2, #f1d25b, #279a49)', border: '1px solid #e4e8f2' }} />
-            <div>
-              <h1 className="text-lg font-bold text-slate-800">Investment Ecosystem Dashboard</h1>
-              <p className="text-xs text-slate-500">Georgia Impact Investing Ecosystem</p>
-            </div>
+            <div className="w-6 h-6 rounded-lg shrink-0" style={{ background: 'conic-gradient(from 90deg, #4750a2, #53c3c2, #f1d25b, #279a49)', border: '1px solid #e4e8f2' }} />
+            <h1 className="text-sm font-bold text-slate-800 uppercase tracking-wide">Georgia's Impact Investing Ecosystem Map</h1>
           </div>
           <div className="flex items-center gap-2">
             <button
@@ -96,7 +93,7 @@ function Dashboard() {
             </button>
           </div>
         </div>
-        <nav className="max-w-7xl mx-auto px-4 sm:px-6 flex gap-1 overflow-x-auto">
+        <nav className="max-w-[1500px] mx-auto px-4 sm:px-6 flex gap-1 overflow-x-auto">
           {TABS.map((t) => (
             <button
               key={t.id}
@@ -114,7 +111,8 @@ function Dashboard() {
         </nav>
       </header>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-6">
+      <main className="flex-1 min-h-0">
+        <div className="max-w-[1500px] mx-auto h-full overflow-y-scroll px-6 py-4 pb-8 space-y-6">
         <FilterBar />
 
         {activeTab === 'overview' && <OverviewTab />}
@@ -123,6 +121,7 @@ function Dashboard() {
         {activeTab === 'instruments' && <InstrumentsTab />}
         {activeTab === 'locations' && <LocationsTab />}
         {activeTab === 'framework' && <FrameworkTab />}
+        </div>
       </main>
     </div>
   );
@@ -186,6 +185,9 @@ function OverviewTab() {
 
   return (
     <div className="space-y-6">
+      <FrameworkView search="" />
+
+      <div className="pt-2" />
       <StatCards
         orgCount={filteredOrgs.length}
         flowCount={filteredFlows.length}
@@ -233,25 +235,6 @@ function OverviewTab() {
         <FlowTypeBar data={flowTypeData} />
         <ImpactBreakdown data={impactData} />
       </div>
-
-      {locationsWithOrgs.length > 0 && (
-        <div>
-          <h2 className="text-sm font-semibold text-slate-700 mb-3">Place-Based Universes</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
-            {locationsWithOrgs
-              .sort((a, b) => {
-                const aGA = a.stateName === 'GA' || a.stateName === 'Georgia' ? 1 : 0;
-                const bGA = b.stateName === 'GA' || b.stateName === 'Georgia' ? 1 : 0;
-                if (aGA !== bGA) return bGA - aGA;
-                return b.organizationIds.length - a.organizationIds.length;
-              })
-              .slice(0, 12)
-              .map((l) => (
-                <LocationCard key={l.id} location={l} />
-              ))}
-          </div>
-        </div>
-      )}
     </div>
   );
 }

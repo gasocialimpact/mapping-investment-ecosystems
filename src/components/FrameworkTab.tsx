@@ -9,16 +9,16 @@ import {
 } from '../data/frameworkData';
 import type { FrameworkNode, StrategyCategory, Strategy } from '../data/frameworkData';
 
-type SubView = 'framework' | 'glossary' | 'strategies';
+type SubView = 'glossary' | 'strategies';
 
 export function FrameworkTab() {
-  const [subView, setSubView] = useState<SubView>('framework');
+  const [subView, setSubView] = useState<SubView>('glossary');
   const [search, setSearch] = useState('');
 
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-3 flex-wrap">
-        {(['framework', 'glossary', 'strategies'] as SubView[]).map((v) => (
+        {(['glossary', 'strategies'] as SubView[]).map((v) => (
           <button
             key={v}
             onClick={() => setSubView(v)}
@@ -28,7 +28,7 @@ export function FrameworkTab() {
                 : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'
             }`}
           >
-            {v === 'framework' ? 'Ecosystem Framework' : v === 'glossary' ? 'Glossary' : 'Investment Strategies'}
+            {v === 'glossary' ? 'Glossary' : 'Investment Strategies'}
           </button>
         ))}
 
@@ -38,7 +38,7 @@ export function FrameworkTab() {
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder={subView === 'glossary' ? 'Search terms...' : 'Search stakeholders...'}
+            placeholder={subView === 'glossary' ? 'Search terms...' : 'Search strategies...'}
             className="w-full text-sm border border-slate-200 rounded-md pl-8 pr-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-brand-indigo/30"
           />
           {search && (
@@ -49,14 +49,13 @@ export function FrameworkTab() {
         </div>
       </div>
 
-      {subView === 'framework' && <FrameworkView search={search} />}
       {subView === 'glossary' && <GlossaryView search={search} />}
       {subView === 'strategies' && <StrategiesView search={search} />}
     </div>
   );
 }
 
-function FrameworkView({ search }: { search: string }) {
+export function FrameworkView({ search }: { search: string }) {
   const [selectedNode, setSelectedNode] = useState<FrameworkNode | null>(null);
   const [fnFilter, setFnFilter] = useState<string | null>(null);
 

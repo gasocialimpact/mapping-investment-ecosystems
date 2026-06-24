@@ -64,10 +64,10 @@ export const FRAMEWORK_FUNCTIONS: FrameworkFunction[] = [
 
 export const FRAMEWORK_SEGMENTS: FrameworkSegment[] = [
   { key: 'supply', label: 'Capital Allocators', color: '#279a49' },
-  { key: 'aggs', label: 'Capital Aggregators', color: '#53c3c2' },
-  { key: 'seek', label: 'Capital Seekers', color: '#f1d25b' },
-  { key: 'enab', label: 'Capital Enablers', color: '#4750a2' },
-  { key: 'infra', label: 'Infrastructure', color: '#929adf' },
+  { key: 'aggs', label: 'Capital Aggregators', color: '#4750a2' },
+  { key: 'seek', label: 'Capital Seekers', color: '#f15921' },
+  { key: 'enab', label: 'Capital Enablers', color: '#53c3c2' },
+  { key: 'infra', label: 'Infrastructure', color: '#939699' },
 ];
 
 export const FRAMEWORK_NODES: FrameworkNode[] = [
