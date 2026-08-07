@@ -135,23 +135,21 @@ async function loadCVI() {
 async function main() {
   console.log('Fetching all tables from Airtable...');
 
-  const [orgRecs, contactRecs, locRecs, flowRecs, instrRecs, dimRecs] = await Promise.all([
+  const [orgRecs, locRecs, flowRecs, instrRecs, dimRecs] = await Promise.all([
     getRecords(TABLES.organizations),
-    getRecords(TABLES.contacts),
     getRecords(TABLES.locations),
     getRecords(TABLES.capitalFlows),
     getRecords(TABLES.capitalInstruments),
     getRecords(TABLES.impactDimensions),
   ]);
 
-  console.log(`Fetched: ${orgRecs.length} orgs, ${contactRecs.length} contacts, ${locRecs.length} locations, ${flowRecs.length} flows, ${instrRecs.length} instruments, ${dimRecs.length} dimensions`);
+  console.log(`Fetched: ${orgRecs.length} orgs, ${locRecs.length} locations, ${flowRecs.length} flows, ${instrRecs.length} instruments, ${dimRecs.length} dimensions`);
 
   // Build Airtable recID -> slug ID maps
   const recIdToOrgId = new Map();
   const recIdToFlowId = new Map();
   const recIdToInstrId = new Map();
   const recIdToLocId = new Map();
-  const recIdToContactId = new Map();
   const recIdToDimId = new Map();
 
   // --- Impact Dimensions ---
@@ -195,14 +193,6 @@ async function main() {
     recIdToLocId.set(r.id, id);
     recIdToLocCity.set(r.id, city);
     recIdToLocState.set(r.id, state || null);
-  });
-
-  // --- Contacts ---
-  contactRecs.forEach((r) => {
-    const f = r.fields;
-    const name = f['Name'] || 'Unknown';
-    const id = slug(name, 'contact');
-    recIdToContactId.set(r.id, id);
   });
 
   // --- Capital Instruments ---
@@ -251,7 +241,6 @@ async function main() {
     const populationIds = linkIds(f['Population Focus']).map((rid) => recIdToDimId.get(rid)).filter(Boolean);
     const ownershipIds = linkIds(f['Ownership Focus']).map((rid) => recIdToDimId.get(rid)).filter(Boolean);
 
-    const contactIds = linkIds(f['Organization Contacts']).map((rid) => recIdToContactId.get(rid)).filter(Boolean);
 
     return {
       id,
@@ -265,7 +254,7 @@ async function main() {
       website: scalar(f['Website']) || null,
       description: scalar(f['Description/focus']) || null,
       locationId,
-      contactIds,
+      contactIds: [],
       capitalFlowIds,
       capitalAllocationIds,
       sdgIds,
@@ -428,24 +417,14 @@ async function main() {
     };
   });
 
-  const contacts = contactRecs.map((r) => {
-    const f = r.fields;
-    const name = f['Name'] || 'Unknown';
-    const id = recIdToContactId.get(r.id);
-    const organizationIds = linkIds(f['Organization']).map((rid) => recIdToOrgId.get(rid)).filter(Boolean);
-
-    return {
-      id,
-      name,
-      email: f['Email address'] || null,
-      organizationIds,
-      isKeyContact: !!f['Org. Key Contact'],
-    };
-  });
+  // Contacts are intentionally NOT exported: the snapshot is published on a
+  // public site, and contact names/emails are personal data. The empty array
+  // keeps the snapshot shape stable for the app.
+  const contacts = [];
 
   const snapshot = {
     generatedAt: new Date().toISOString(),
-    source: `Airtable base ${BASE_ID}`,
+    source: 'Airtable',
     organizations,
     capitalFlows,
     capitalInstruments,
