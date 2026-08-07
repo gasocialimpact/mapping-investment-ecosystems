@@ -23,3 +23,59 @@ body {
   background: transparent;
   border: none;
 }
+
+/* The app's scroll container: white track so the gutter disappears into the page. */
+.app-scroll {
+  scrollbar-color: #e2e8f0 #ffffff; /* Firefox */
+}
+.app-scroll::-webkit-scrollbar {
+  width: 12px;
+}
+.app-scroll::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+.app-scroll::-webkit-scrollbar-thumb {
+  background: #e2e8f0;
+  border-radius: 6px;
+  border: 3px solid #ffffff;
+}
+.app-scroll::-webkit-scrollbar-thumb:hover {
+  background: #cbd5e1;
+}
+
+/* Printing: un-clip the scroll layout so "Save as PDF" captures full pages. */
+@media print {
+  html,
+  body,
+  #root {
+    height: auto !important;
+    overflow: visible !important;
+  }
+  .print-unclip {
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+  }
+  .print\:hidden {
+    display: none !important;
+  }
+  /* Record-modal PDF: print only the open record, as a plain document. */
+  body.print-record #root > *:not(.record-modal) {
+    display: none !important;
+  }
+  body.print-record .record-modal {
+    position: static !important;
+    padding: 0 !important;
+    display: block !important;
+  }
+  body.print-record .record-overlay {
+    display: none !important;
+  }
+  body.print-record .record-panel {
+    max-height: none !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+}

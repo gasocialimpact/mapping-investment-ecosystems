@@ -1,12 +1,11 @@
 import { useMemo, useState } from 'react';
-import { Info } from 'lucide-react';
 import { useData } from '../context/DataContext';
 import type { Organization, CapitalFlow } from '../types';
 import {
   FRAMEWORK_FUNCTIONS, FRAMEWORK_SEGMENTS, FRAMEWORK_NODES, getSegment,
 } from '../data/frameworkData';
 import type { FrameworkNode } from '../data/frameworkData';
-import { NodeDetail } from './FrameworkTab';
+import { NodeDetailCard } from './FrameworkTab';
 import { OrgGrid, FlowList, InstrumentList, useInstrumentsForFlows } from './explore/EcosystemLayers';
 import { formatCurrency } from '../lib/format';
 
@@ -56,7 +55,6 @@ export function FramingTab() {
   const { data } = useData();
   const [fnFilter, setFnFilter] = useState<string | null>(null);
   const [selection, setSelection] = useState<Selection>(null);
-  const [aboutNode, setAboutNode] = useState<FrameworkNode | null>(null);
 
   const nodes = useMemo(
     () => FRAMEWORK_NODES.filter((n) => !fnFilter || n.fn.includes(fnFilter)),
@@ -175,6 +173,14 @@ export function FramingTab() {
         })}
       </div>
 
+      {/* Stakeholder-type description card */}
+      {selection?.kind === 'node' && (
+        <NodeDetailCard
+          node={selection.node}
+          onNavigate={(n) => setSelection({ kind: 'node', node: n })}
+        />
+      )}
+
       {/* Unfurl panel */}
       {selection && (
         <RecordsPanel
@@ -182,7 +188,6 @@ export function FramingTab() {
           title={selTitle}
           orgs={selOrgs}
           flows={selFlows}
-          onAbout={selection.kind === 'node' ? () => setAboutNode((selection as { kind: 'node'; node: FrameworkNode }).node) : undefined}
           onClose={() => setSelection(null)}
         />
       )}
@@ -197,9 +202,6 @@ export function FramingTab() {
         </button>
       )}
 
-      {aboutNode && (
-        <NodeDetail node={aboutNode} onClose={() => setAboutNode(null)} onNavigate={setAboutNode} />
-      )}
     </div>
   );
 }
@@ -208,11 +210,10 @@ type RecordsView = 'orgs' | 'flows' | 'instruments';
 
 // The unfurled records behind a framework selection, switched with the same
 // pill sub-tab style used on the Explore scope tabs and the Glossary tab.
-function RecordsPanel({ title, orgs, flows, onAbout, onClose }: {
+function RecordsPanel({ title, orgs, flows, onClose }: {
   title: string;
   orgs: Organization[];
   flows: CapitalFlow[];
-  onAbout?: () => void;
   onClose: () => void;
 }) {
   const [view, setView] = useState<RecordsView>('orgs');
@@ -231,11 +232,6 @@ function RecordsPanel({ title, orgs, flows, onAbout, onClose }: {
         <h3 className="text-xl font-bold text-slate-800">{title}</h3>
         {totalCapital > 0 && (
           <span className="text-xs text-slate-500">{formatCurrency(totalCapital)} in tracked flows</span>
-        )}
-        {onAbout && (
-          <button onClick={onAbout} className="flex items-center gap-1 text-xs font-semibold text-brand-indigo hover:underline">
-            <Info size={12} /> About this stakeholder type
-          </button>
         )}
         <button onClick={onClose} className="ml-auto text-xs text-slate-400 hover:text-slate-600">✕ Close</button>
       </div>

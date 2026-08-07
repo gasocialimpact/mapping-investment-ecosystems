@@ -55,25 +55,19 @@ export function FrameworkTab() {
   );
 }
 
-export function NodeDetail({ node, onClose, onNavigate }: { node: FrameworkNode; onClose: () => void; onNavigate: (n: FrameworkNode) => void }) {
+// Inline card describing a stakeholder type — rendered between the framework
+// grid and the records panel on Framing Our Ecosystem.
+export function NodeDetailCard({ node, onNavigate }: { node: FrameworkNode; onNavigate: (n: FrameworkNode) => void }) {
   const seg = getSegment(node.seg);
   const fnLabels = FRAMEWORK_FUNCTIONS.filter((f) => node.fn.includes(f.key)).map((f) => f.label);
 
   return (
-    <div className="fixed inset-0 z-30 flex items-start justify-center pt-[8vh] px-4 pb-4" onClick={onClose}>
-      <div className="absolute inset-0 bg-black/25" />
-      <div
-        className="relative w-full max-w-2xl max-h-[82vh] overflow-y-auto bg-white rounded-xl border border-slate-200 shadow-xl"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="sticky top-0 bg-white border-b border-slate-100 px-5 py-3 flex items-center justify-between z-10">
-          <div>
-            <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: seg?.color }}>
-              {seg?.label}
-            </span>
-            <h2 className="text-lg font-bold text-slate-800">{node.title}</h2>
-          </div>
-          <button onClick={onClose} className="text-slate-400 hover:text-slate-600"><X size={18} /></button>
+    <div className="mt-6 bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden" style={{ borderLeft: `4px solid ${seg?.color ?? '#4750a2'}` }}>
+        <div className="border-b border-slate-100 px-5 py-3">
+          <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: seg?.color }}>
+            {seg?.label}
+          </span>
+          <h2 className="text-lg font-bold text-slate-800">{node.title}</h2>
         </div>
 
         <div className="p-5 space-y-5">
@@ -163,7 +157,6 @@ export function NodeDetail({ node, onClose, onNavigate }: { node: FrameworkNode;
             </div>
           )}
         </div>
-      </div>
     </div>
   );
 }
