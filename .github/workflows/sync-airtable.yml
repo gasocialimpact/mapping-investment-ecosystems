@@ -27,21 +27,16 @@ jobs:
           AIRTABLE_TOKEN: ${{ secrets.AIRTABLE_TOKEN }}
         run: node scripts/export-airtable.mjs
 
-      # Refresh place data from the Community Data Explorer. Non-fatal so a
-      # source-repo hiccup doesn't block the Airtable sync.
-      - name: Fetch place data
-        run: node scripts/fetch-place-data.mjs || echo "Place data fetch failed; keeping existing files"
-
       - name: Check for changes
         id: changes
         run: |
-          git diff --quiet public/data/ public/icons/ && echo "changed=false" >> $GITHUB_OUTPUT || echo "changed=true" >> $GITHUB_OUTPUT
+          git diff --quiet public/data/ecosystem.json public/icons/ && echo "changed=false" >> $GITHUB_OUTPUT || echo "changed=true" >> $GITHUB_OUTPUT
 
       - name: Commit and push
         if: steps.changes.outputs.changed == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add public/data/ public/icons/
+          git add public/data/ecosystem.json public/icons/
           git commit -m "chore: sync Airtable data $(date -u +%Y-%m-%d)"
           git push
