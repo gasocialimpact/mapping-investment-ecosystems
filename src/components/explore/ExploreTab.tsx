@@ -2,40 +2,37 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { ChevronRight } from 'lucide-react';
 import { useData } from '../../context/DataContext';
 import { usePlace } from '../../context/PlaceContext';
+import type { PlaceScope } from '../../context/PlaceContext';
 import { formatCurrency } from '../../lib/format';
 import { ExploreMap } from './ExploreMap';
 import { HighLowCard, DistributionCard, GapsCard } from './ExploreSidebar';
 import { PlaceReport } from './PlaceReport';
 
-type Scope = 'county' | 'tract';
-
 // The Explore tab: the Community Data Explorer's information structure with
 // the Ecosystem Map's branding, and the ecosystem layered into each place.
 export function ExploreTab() {
   const { data } = useData();
-  const { place, selectedFips, setSelectedFips, ensureTracts } = usePlace();
-  const [scope, setScope] = useState<Scope>('county');
-  const prevFips = useRef<string | null>(null);
+  const { place, scope, setScope, selectedFips, setSelectedFips, selectedGeoid, ensureTracts } = usePlace();
+  const prevSelection = useRef<string | null>(null);
 
-  // Scroll to the report when a county is newly selected.
+  // Scroll to the report when a county or tract is newly selected.
   useEffect(() => {
-    if (selectedFips && selectedFips !== prevFips.current) {
+    const current = selectedGeoid ?? selectedFips;
+    if (current && current !== prevSelection.current) {
       setTimeout(() => document.getElementById('place-report')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
     }
-    prevFips.current = selectedFips;
-  }, [selectedFips]);
+    prevSelection.current = current;
+  }, [selectedFips, selectedGeoid]);
 
   const stats = useMemo(() => {
     const orgCount = data?.organizations.length ?? 0;
     const totalCapital = (data?.capitalFlows ?? []).reduce((s, f) => s + (f.amount ?? 0), 0);
     let medianCvi: number | null = null;
-    let top10 = 0;
     if (place) {
       const scores = place.counties.map((c) => c.scores[0]).sort((a, b) => a - b);
       medianCvi = scores[Math.floor(scores.length / 2)];
-      top10 = place.counties.filter((c) => c.pctiles[0] >= 90).length;
     }
-    return { orgCount, totalCapital, medianCvi, top10 };
+    return { orgCount, totalCapital, medianCvi };
   }, [data, place]);
 
   const counties = useMemo(
@@ -45,28 +42,6 @@ export function ExploreTab() {
 
   return (
     <div className="pb-10">
-      {/* Intro accordions */}
-      <div className="mt-6 bg-white rounded-xl border border-slate-200 p-4 space-y-2.5 shadow-sm">
-        <IntroAccordion summary="What is the Climate Vulnerability Index?">
-          The CVI (Lewis et al. 2023) combines 184 measures of community health, income, housing,
-          infrastructure, environment, and climate-related risk into one score for every U.S. county
-          and census tract. Higher scores mean greater vulnerability; percentiles rank each place
-          against all 3,143 U.S. counties.
-        </IntroAccordion>
-        <IntroAccordion summary="What is the Populations at Risk data?">
-          Demographic and economic-security indicators from the CDC/ATSDR Social Vulnerability Index
-          (ACS 2018–22 five-year estimates), benchmarked against Georgia and the United States, with
-          change since 2010–14 where available.
-        </IntroAccordion>
-        <IntroAccordion summary="Who is in the ecosystem map?">
-          {stats.orgCount} organizations — capital allocators, aggregators, enablers, and seekers —
-          plus {data?.capitalFlows.length ?? 0} tracked capital flows and{' '}
-          {data?.capitalInstruments.length ?? 0} instruments, synced nightly from the ecosystem
-          database and mapped to the places on this page. See Framing Our Ecosystem for how the
-          pieces fit together.
-        </IntroAccordion>
-      </div>
-
       {/* Stat tiles */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
         <StatTile value="159" label="Counties" bg="bg-brand-green-soft" fg="text-[#17632e]" />
@@ -76,8 +51,8 @@ export function ExploreTab() {
       </div>
 
       {/* Scope tabs + picker */}
-      <div className="flex gap-7 border-b border-slate-200 mt-9">
-        {(['county', 'tract'] as Scope[]).map((s) => (
+      <div className="flex gap-7 border-b border-slate-200 mt-8">
+        {(['county', 'tract'] as PlaceScope[]).map((s) => (
           <button
             key={s}
             onClick={() => { setScope(s); if (s === 'tract') ensureTracts(); }}
@@ -113,12 +88,12 @@ export function ExploreTab() {
           ))}
         </select>
         {scope === 'tract' && (
-          <span className="text-xs text-slate-400">Pick a county to see its census tracts on the map and in the report.</span>
+          <span className="text-xs text-slate-400">Click any tract on the map to load its report.</span>
         )}
       </div>
 
-      {/* Map + sidebar */}
-      <div className="grid grid-cols-1 lg:grid-cols-[1.55fr_1fr] gap-5 mt-5 items-start">
+      {/* Map + sidebar — the map card stretches to match the sidebar height */}
+      <div className="grid grid-cols-1 lg:grid-cols-[1.55fr_1fr] gap-5 mt-5">
         <ExploreMap organizations={data?.organizations ?? []} />
         <div className="space-y-5">
           <HighLowCard />
@@ -128,9 +103,31 @@ export function ExploreTab() {
       </div>
 
       {/* Place report */}
-      <PlaceReport scope={scope} />
+      <PlaceReport />
 
-      <p className="text-[11px] text-slate-400 mt-10 max-w-3xl">
+      {/* Context accordions */}
+      <div className="mt-10 bg-white rounded-xl border border-slate-200 p-4 space-y-2.5 shadow-sm">
+        <IntroAccordion summary="What is the Climate Vulnerability Index?">
+          The CVI (Lewis et al. 2023) combines 184 measures of community health, income, housing,
+          infrastructure, environment, and climate-related risk into one score for every U.S. county
+          and census tract. Higher scores mean greater vulnerability; percentiles rank each place
+          against all 3,143 U.S. counties.
+        </IntroAccordion>
+        <IntroAccordion summary="What is the Populations at Risk data?">
+          Demographic and economic-security indicators from the CDC/ATSDR Social Vulnerability Index
+          (ACS 2018–22 five-year estimates), benchmarked against Georgia and the United States, with
+          change since 2010–14 where available.
+        </IntroAccordion>
+        <IntroAccordion summary="Who is in the ecosystem map?">
+          {stats.orgCount} organizations — capital allocators, aggregators, enablers, and seekers —
+          plus {data?.capitalFlows.length ?? 0} tracked capital flows and{' '}
+          {data?.capitalInstruments.length ?? 0} instruments, synced nightly from the ecosystem
+          database and mapped to the places on this page. See Framing Our Ecosystem for how the
+          pieces fit together.
+        </IntroAccordion>
+      </div>
+
+      <p className="text-[11px] text-slate-400 mt-6 max-w-3xl">
         Data: U.S. Climate Vulnerability Index (Lewis et al. 2023) · CDC/ATSDR SVI 2022 (ACS 5-year
         estimates) · Federal Reserve Bank of St. Louis Community Investment Explorer · Ecosystem
         database synced nightly from Airtable.

@@ -5,14 +5,20 @@ import { loadCountyPlaceData, loadTractPlaceData } from '../data/loadData';
 import { useData } from './DataContext';
 
 type TractStatus = 'idle' | 'loading' | 'ready' | 'error';
+export type PlaceScope = 'county' | 'tract';
 
 interface PlaceContextValue {
   place: PlaceCountyData | null;
   countyByFips: Map<string, PlaceCounty>;
   metric: PlaceMetric;
   setMetric: (m: PlaceMetric) => void;
+  scope: PlaceScope;
+  setScope: (s: PlaceScope) => void;
   selectedFips: string | null;
   setSelectedFips: (f: string | null) => void;
+  // Selected census tract (11-digit GEOID), used in tract scope.
+  selectedGeoid: string | null;
+  setSelectedGeoid: (g: string | null) => void;
   tracts: PlaceTractData | null;
   tractStatus: TractStatus;
   ensureTracts: () => void;
@@ -24,8 +30,12 @@ const Ctx = createContext<PlaceContextValue>({
   countyByFips: new Map(),
   metric: 'cvi',
   setMetric: () => {},
+  scope: 'county',
+  setScope: () => {},
   selectedFips: null,
   setSelectedFips: () => {},
+  selectedGeoid: null,
+  setSelectedGeoid: () => {},
   tracts: null,
   tractStatus: 'idle',
   ensureTracts: () => {},
@@ -36,7 +46,9 @@ export function PlaceProvider({ children }: { children: ReactNode }) {
   const { data } = useData();
   const [place, setPlace] = useState<PlaceCountyData | null>(null);
   const [metric, setMetric] = useState<PlaceMetric>('cvi');
+  const [scope, setScope] = useState<PlaceScope>('county');
   const [selectedFips, setSelectedFips] = useState<string | null>(null);
+  const [selectedGeoid, setSelectedGeoid] = useState<string | null>(null);
   const [tracts, setTracts] = useState<PlaceTractData | null>(null);
   const [tractStatus, setTractStatus] = useState<TractStatus>('idle');
   const tractFetchStarted = useRef(false);
@@ -93,7 +105,9 @@ export function PlaceProvider({ children }: { children: ReactNode }) {
     <Ctx.Provider
       value={{
         place, countyByFips, metric, setMetric,
+        scope, setScope,
         selectedFips, setSelectedFips,
+        selectedGeoid, setSelectedGeoid,
         tracts, tractStatus, ensureTracts, orgsByCountyFips,
       }}
     >
