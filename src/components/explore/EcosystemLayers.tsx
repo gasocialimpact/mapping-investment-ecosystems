@@ -80,6 +80,35 @@ export function FlowList({ flows }: { flows: CapitalFlow[] }) {
   );
 }
 
+// Instrument record list mirroring the org/flow rows, with click-through to
+// the drawer.
+export function InstrumentList({ instruments }: { instruments: CapitalInstrument[] }) {
+  const { open } = useDetail();
+  const sorted = useMemo(
+    () => [...instruments].sort((a, b) => b.capitalFlowIds.length - a.capitalFlowIds.length),
+    [instruments],
+  );
+  return (
+    <div className="divide-y divide-slate-50">
+      {sorted.map((i) => (
+        <button
+          key={i.id}
+          onClick={() => open('instrument', i.id)}
+          className="w-full flex items-center gap-2.5 text-left text-[13px] py-2 hover:bg-slate-50 rounded transition-colors"
+        >
+          <span className="font-semibold text-slate-700 shrink-0">{i.name}</span>
+          <span className="text-slate-500 truncate">
+            {(i.description?.split('\n')[0] || i.capitalFlowType) ?? ''}
+          </span>
+          <span className="ml-auto shrink-0 text-[10px] text-slate-400 tabular-nums">
+            {i.capitalFlowIds.length} flow{i.capitalFlowIds.length === 1 ? '' : 's'}
+          </span>
+        </button>
+      ))}
+    </div>
+  );
+}
+
 // Instrument chips with click-through to the drawer.
 export function InstrumentChips({ instruments }: { instruments: CapitalInstrument[] }) {
   const { open } = useDetail();

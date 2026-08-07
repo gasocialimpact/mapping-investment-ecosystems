@@ -7,7 +7,7 @@ import {
 } from '../data/frameworkData';
 import type { FrameworkNode } from '../data/frameworkData';
 import { NodeDetail } from './FrameworkTab';
-import { OrgGrid, FlowList, InstrumentChips, useInstrumentsForFlows } from './explore/EcosystemLayers';
+import { OrgGrid, FlowList, InstrumentList, useInstrumentsForFlows } from './explore/EcosystemLayers';
 import { formatCurrency } from '../lib/format';
 
 // Framework segment key → ecosystem data segment name. Infrastructure has no
@@ -265,7 +265,7 @@ function RecordsPanel({ title, orgs, flows, onAbout, onClose }: {
           <div className="mt-4">
             {view === 'orgs' && <OrgGrid orgs={orgs} />}
             {view === 'flows' && (flows.length > 0 ? <FlowList flows={flows} /> : <p className="text-sm text-slate-400">No tracked capital flows touch these organizations yet.</p>)}
-            {view === 'instruments' && (instruments.length > 0 ? <InstrumentChips instruments={instruments} /> : <p className="text-sm text-slate-400">No instruments are linked to these organizations' flows yet.</p>)}
+            {view === 'instruments' && (instruments.length > 0 ? <InstrumentList instruments={instruments} /> : <p className="text-sm text-slate-400">No instruments are linked to these organizations' flows yet.</p>)}
           </div>
         </>
       )}
