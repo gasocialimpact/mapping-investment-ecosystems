@@ -173,23 +173,23 @@ export function FramingTab() {
         })}
       </div>
 
-      {/* Stakeholder-type description card */}
-      {selection?.kind === 'node' && (
-        <NodeDetailCard
-          node={selection.node}
-          onNavigate={(n) => setSelection({ kind: 'node', node: n })}
-        />
-      )}
-
-      {/* Unfurl panel */}
+      {/* Selection detail: description card (40%) beside the records (60%) */}
       {selection && (
-        <RecordsPanel
-          key={selTitle}
-          title={selTitle}
-          orgs={selOrgs}
-          flows={selFlows}
-          onClose={() => setSelection(null)}
-        />
+        <div className={`mt-6 grid gap-5 items-start grid-cols-1 ${selection.kind === 'node' ? 'lg:grid-cols-[2fr_3fr]' : ''}`}>
+          {selection.kind === 'node' && (
+            <NodeDetailCard
+              node={selection.node}
+              onNavigate={(n) => setSelection({ kind: 'node', node: n })}
+            />
+          )}
+          <RecordsPanel
+            key={selTitle}
+            title={selTitle}
+            orgs={selOrgs}
+            flows={selFlows}
+            onClose={() => setSelection(null)}
+          />
+        </div>
       )}
 
       {/* Uncategorized records stay reachable */}
@@ -227,7 +227,7 @@ function RecordsPanel({ title, orgs, flows, onClose }: {
   ];
 
   return (
-    <div className="mt-6 border border-slate-200 rounded-xl p-5 shadow-sm" style={{ borderLeft: '4px solid #4750a2' }}>
+    <div className="border border-slate-200 rounded-xl p-5 shadow-sm" style={{ borderLeft: '4px solid #4750a2' }}>
       <div className="flex items-baseline gap-3 flex-wrap">
         <h3 className="text-xl font-bold text-slate-800">{title}</h3>
         {totalCapital > 0 && (

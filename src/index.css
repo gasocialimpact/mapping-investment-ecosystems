@@ -43,6 +43,17 @@ body {
   background: #cbd5e1;
 }
 
+/* Fixed layout width during PDF export — applied on screen momentarily so
+   the height measurement matches the printed layout exactly. */
+body.pdf-fixed .app-scroll {
+  width: 1600px !important;
+  max-width: none !important;
+}
+body.print-record .record-panel {
+  width: 672px !important;
+  max-width: 672px !important;
+}
+
 /* Printing: un-clip the scroll layout so "Save as PDF" captures full pages. */
 @media print {
   html,

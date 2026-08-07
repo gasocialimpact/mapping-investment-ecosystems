@@ -1,27 +1,17 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { X, ArrowLeft, FileDown } from 'lucide-react';
 import { useDetail } from '../../context/DetailContext';
+import { saveRecordAsPdf } from '../../lib/savePdf';
 import { OrgDetail } from './OrgDetail';
 import { FlowDetail } from './FlowDetail';
 import { InstrumentDetail } from './InstrumentDetail';
 import { LocationDetail } from './LocationDetail';
 import { ImpactDimensionDetail } from './ImpactDimensionDetail';
 
-// Prints only the open record: the print-record body class hides everything
-// else (see index.css), and the browser's dialog saves it as a PDF.
-function printRecord() {
-  document.body.classList.add('print-record');
-  const done = () => {
-    document.body.classList.remove('print-record');
-    window.removeEventListener('afterprint', done);
-  };
-  window.addEventListener('afterprint', done);
-  window.print();
-}
-
 // Centered record modal (no sliding drawers anywhere in the app).
 export function DetailDrawer() {
   const { current, close, back, canGoBack } = useDetail();
+  const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!current) return;
@@ -57,6 +47,7 @@ export function DetailDrawer() {
     <div className="record-modal fixed inset-0 z-30 flex items-start justify-center pt-[7vh] px-4 pb-6" onClick={close}>
       <div className="record-overlay absolute inset-0 bg-black/30" />
       <div
+        ref={panelRef}
         className="record-panel relative w-full max-w-2xl bg-white rounded-xl border border-slate-200 shadow-xl max-h-[85vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
@@ -70,7 +61,7 @@ export function DetailDrawer() {
           </div>
           <div className="flex items-center gap-2">
             <button
-              onClick={printRecord}
+              onClick={() => panelRef.current && saveRecordAsPdf(panelRef.current)}
               className="flex items-center gap-1.5 text-xs font-medium px-2.5 py-1.5 rounded-md border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 transition-colors"
             >
               <FileDown size={12} /> Download PDF

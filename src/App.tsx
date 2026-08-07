@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Map, Network, BookOpen, RotateCcw, HelpCircle } from 'lucide-react';
+import { Map, Network, BookOpen, RotateCcw } from 'lucide-react';
 import type { Tab } from './types';
 import { DataProvider, useData } from './context/DataContext';
 import { PlaceProvider, usePlace } from './context/PlaceContext';
@@ -67,12 +67,6 @@ function Dashboard() {
               className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-md border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 transition-colors"
             >
               <RotateCcw size={12} /> Reset View
-            </button>
-            <button
-              onClick={() => setActiveTab('glossary')}
-              className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-md border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 transition-colors"
-            >
-              <HelpCircle size={12} /> How To
             </button>
           </div>
         </div>

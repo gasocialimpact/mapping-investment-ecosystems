@@ -62,7 +62,7 @@ export function NodeDetailCard({ node, onNavigate }: { node: FrameworkNode; onNa
   const fnLabels = FRAMEWORK_FUNCTIONS.filter((f) => node.fn.includes(f.key)).map((f) => f.label);
 
   return (
-    <div className="mt-6 bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden" style={{ borderLeft: `4px solid ${seg?.color ?? '#4750a2'}` }}>
+    <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden" style={{ borderLeft: `4px solid ${seg?.color ?? '#4750a2'}` }}>
         <div className="border-b border-slate-100 px-5 py-3">
           <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: seg?.color }}>
             {seg?.label}
