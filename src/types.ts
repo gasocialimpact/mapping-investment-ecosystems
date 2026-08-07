@@ -39,7 +39,6 @@ export interface Organization {
   website: string | null;
   description: string | null;
   locationId: string | null;
-  contactIds: string[];
   capitalFlowIds: string[];
   capitalAllocationIds: string[];
   sdgIds: string[];
@@ -94,14 +93,6 @@ export interface Location {
   organizationIds: string[];
 }
 
-export interface Contact {
-  id: string;
-  name: string;
-  email: string | null;
-  organizationIds: string[];
-  isKeyContact: boolean;
-}
-
 export type ImpactDimensionType =
   | 'SDG Alignment'
   | 'Population Focus'
@@ -126,6 +117,5 @@ export interface EcosystemData {
   capitalFlows: CapitalFlow[];
   capitalInstruments: CapitalInstrument[];
   locations: Location[];
-  contacts: Contact[];
   impactDimensions: ImpactDimension[];
 }

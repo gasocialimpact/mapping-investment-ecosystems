@@ -1,22 +1,27 @@
 # Mapping Investment Ecosystems
 
-A layered **Ecosystem Dashboard** for the Georgia impact-investing capital ecosystem,
-modeled on a relational Airtable base (Organizations → Capital Flows → Capital Instruments).
+**Georgia's Impact Investing Ecosystem Map** — a place-first view of the state's impact
+investing ecosystem, combining community data (climate vulnerability, Populations at Risk,
+community investment) with the organizations, capital flows, and instruments working in
+each place.
 
-Built with **React + Vite + TypeScript + Tailwind**, with a **Leaflet / OpenStreetMap**
-map view. It reads a baked JSON **snapshot** of the Airtable data, so it deploys as a
-static site with no backend or API keys in the browser.
+Built with **React + Vite + TypeScript + Tailwind** and **Leaflet / OpenStreetMap**.
+Deploys as a static site (GitHub Pages) — no backend, no API keys in the browser.
 
-## Views
+## Tabs
 
-- **Overview** — headline counts, capital deployed by source segment, and the largest flows.
-- **Organizations** — grouped by ecosystem segment (Capital Aggregator / Allocator / Enabler / Seeker),
-  collapsible, with search + segment filters. Click any org for a relational drill-down drawer
-  showing its inbound/outbound capital flows.
-- **Capital Flows** — every source → recipient transaction with amount, year, and instrument type.
-- **Capital Instruments** — the financial instruments (PRIs, recoverable grants, blended finance, …).
-- **Map** — Leaflet/OSM plot of every organization with coordinates, colored by segment.
-  Records without `lat`/`lng` are skipped (and the count of skipped records is shown).
+- **Explore** — the heart of the tool, modeled on the
+  [Georgia Community Data Explorer](https://gasocialimpact.github.io/georgia-community-data-explorer/):
+  a county choropleth (CVI layers + 17 demographic indicators) with organization markers on
+  top, Highest & Lowest rankings, score distribution, and a compact Investment Gaps card.
+  Selecting a county loads its full report — CVI category profile, top vulnerability drivers,
+  Populations at Risk vs. Georgia/U.S. benchmarks, per-capita community investment — plus the
+  ecosystem layers for that place (organizations, capital flows, instruments). Census-tract
+  scope adds tract-level shading and a tract table.
+- **Framing Our Ecosystem** — the Core Functions framework. Each stakeholder type unfurls
+  the records behind it (organizations / capital flows / instruments as pill sub-tabs);
+  segment headers browse a whole column.
+- **Glossary & Key Terms** — investment terminology and impact investing strategies.
 
 ## Run locally
 
@@ -27,22 +32,24 @@ npm run build    # type-check + production build to dist/
 npm run preview  # serve the production build
 ```
 
-Deploy `dist/` to any static host (GitHub Pages, Netlify, S3, …). `vite.config.ts` uses a
-relative `base`, so it works from a domain root or a subpath.
+## Data pipeline
 
-## Data: how it flows
+Two static datasets under `public/data/`, both refreshed by the nightly GitHub Action
+(`.github/workflows/sync-airtable.yml`):
 
-The dashboard reads `public/data/ecosystem.json`, defined by `src/types.ts` (`EcosystemData`).
-A nightly GitHub Action (`.github/workflows/sync-airtable.yml`) regenerates it from the
-Airtable base and commits the result. To refresh manually:
+| File | Source | Contents |
+|---|---|---|
+| `ecosystem.json` | Airtable via `scripts/export-airtable.mjs` | organizations, capital flows, instruments, locations (with county FIPS + CVI scores), impact dimensions |
+| `place-counties.json` / `place-tracts.json` | Community Data Explorer via `scripts/fetch-place-data.mjs` | county & tract CVI scores, demographics, vulnerability drivers, Fed CIE investment data, boundary geometry |
+
+Manual refresh:
 
 ```bash
-AIRTABLE_TOKEN=<your token> npm run export-data
+AIRTABLE_TOKEN=<your token> npm run export-data   # Airtable → ecosystem.json
+npm run fetch-place-data                          # Data Explorer → place-*.json
 ```
 
-The export script (`scripts/export-airtable.mjs`) pulls the base's tables, resolves the
-relationships between organizations, capital flows, instruments, and locations, downloads
-impact-dimension icons, and enriches locations with county CVI scores.
+The two datasets join on 5-digit county FIPS codes.
 
 ## Security & privacy notes
 
@@ -54,11 +61,18 @@ impact-dimension icons, and enriches locations with county CVI scores.
 ## Project layout
 
 ```
-public/data/ecosystem.json     # the snapshot the app reads
-scripts/export-airtable.mjs    # regenerate the snapshot from Airtable
+public/data/                     # the static snapshots the app reads
+scripts/export-airtable.mjs      # Airtable → ecosystem.json
+scripts/fetch-place-data.mjs     # Community Data Explorer → place-*.json
 src/
-  types.ts                     # EcosystemData model + segment styling
-  data/loadData.ts             # fetches the snapshot at runtime
-  components/                  # StatCards, SegmentSection, *Card, MapView
-  App.tsx                      # tabs, filters, relational drill-down drawer
+  types.ts, types/place.ts       # data models
+  context/                       # Data / Place / Detail providers
+  components/explore/            # map, sidebar cards, place report, ecosystem layers
+  components/FramingTab.tsx      # Core Functions framework + record unfurls
+  components/FrameworkTab.tsx    # glossary & investment strategies
+  components/detail/             # click-through detail drawer panels
+  App.tsx                        # header + three tabs
 ```
+
+Data sources: U.S. Climate Vulnerability Index (Lewis et al. 2023) · CDC/ATSDR SVI 2022
+(ACS 5-year estimates) · Federal Reserve Bank of St. Louis Community Investment Explorer.

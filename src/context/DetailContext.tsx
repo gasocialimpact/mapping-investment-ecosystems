@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useCallback } from 'react';
 import type { ReactNode } from 'react';
 
-export type DetailType = 'organization' | 'flow' | 'instrument' | 'location' | 'contact' | 'impactDimension';
+export type DetailType = 'organization' | 'flow' | 'instrument' | 'location' | 'impactDimension';
 
 interface DetailEntry {
   type: DetailType;

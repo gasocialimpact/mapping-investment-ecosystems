@@ -1,4 +1,4 @@
-import { Globe, MapPin, Mail, User } from 'lucide-react';
+import { Globe, MapPin } from 'lucide-react';
 import { useData } from '../../context/DataContext';
 import { useDetail } from '../../context/DetailContext';
 import { SEGMENT_STYLES } from '../../types';
@@ -20,8 +20,6 @@ export function OrgDetail({ id }: { id: string }) {
 
   const outbound = data!.capitalFlows.filter((f) => f.sourceId === org.id);
   const inbound = data!.capitalFlows.filter((f) => f.recipientId === org.id);
-
-  const contacts = org.contactIds.map((cid) => maps.contactById.get(cid)).filter(Boolean);
 
   const allDimIds = [...org.sdgIds, ...org.sectorIds, ...org.populationIds, ...org.ownershipIds];
   const dims = allDimIds.map((did) => maps.impactDimensionById.get(did)).filter(Boolean);
@@ -60,23 +58,6 @@ export function OrgDetail({ id }: { id: string }) {
       )}
 
       {org.description && <p className="text-sm text-slate-600 mt-3">{org.description}</p>}
-
-      {contacts.length > 0 && (
-        <Section title="Contacts">
-          {contacts.map((c) => c && (
-            <button
-              key={c.id}
-              onClick={() => open('contact', c.id)}
-              className="flex items-center gap-2 text-sm text-slate-700 hover:text-brand-indigo py-1"
-            >
-              <User size={14} className="text-slate-400" />
-              <span>{c.name}</span>
-              {c.isKeyContact && <span className="text-[9px] bg-brand-yellow-soft text-yellow-800 px-1.5 py-0.5 rounded-full font-medium">Key</span>}
-              {c.email && <Mail size={12} className="text-slate-300 ml-auto" />}
-            </button>
-          ))}
-        </Section>
-      )}
 
       <FlowSection title="Capital Deployed (Outbound)" flows={outbound} counterpartKey="recipientId" />
       <FlowSection title="Capital Received (Inbound)" flows={inbound} counterpartKey="sourceId" />

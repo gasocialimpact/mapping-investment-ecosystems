@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState, useMemo } from 'react';
 import type { ReactNode } from 'react';
 import type {
   EcosystemData, Organization, CapitalFlow, CapitalInstrument,
-  Location, Contact, ImpactDimension,
+  Location, ImpactDimension,
 } from '../types';
 import { loadEcosystemData } from '../data/loadData';
 
@@ -11,7 +11,6 @@ interface LookupMaps {
   flowById: Map<string, CapitalFlow>;
   instrumentById: Map<string, CapitalInstrument>;
   locationById: Map<string, Location>;
-  contactById: Map<string, Contact>;
   impactDimensionById: Map<string, ImpactDimension>;
 }
 
@@ -26,7 +25,6 @@ const empty: LookupMaps = {
   flowById: new Map(),
   instrumentById: new Map(),
   locationById: new Map(),
-  contactById: new Map(),
   impactDimensionById: new Map(),
 };
 
@@ -46,9 +44,8 @@ export function DataProvider({ children }: { children: ReactNode }) {
     const flowById = new Map(data.capitalFlows.map((f) => [f.id, f]));
     const instrumentById = new Map(data.capitalInstruments.map((i) => [i.id, i]));
     const locationById = new Map(data.locations.map((l) => [l.id, l]));
-    const contactById = new Map(data.contacts.map((c) => [c.id, c]));
     const impactDimensionById = new Map(data.impactDimensions.map((d) => [d.id, d]));
-    return { orgById, flowById, instrumentById, locationById, contactById, impactDimensionById };
+    return { orgById, flowById, instrumentById, locationById, impactDimensionById };
   }, [data]);
 
   return <Ctx.Provider value={{ data, error, maps }}>{children}</Ctx.Provider>;

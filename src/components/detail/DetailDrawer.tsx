@@ -5,7 +5,6 @@ import { OrgDetail } from './OrgDetail';
 import { FlowDetail } from './FlowDetail';
 import { InstrumentDetail } from './InstrumentDetail';
 import { LocationDetail } from './LocationDetail';
-import { ContactDetail } from './ContactDetail';
 import { ImpactDimensionDetail } from './ImpactDimensionDetail';
 
 export function DetailDrawer() {
@@ -35,9 +34,6 @@ export function DetailDrawer() {
       break;
     case 'location':
       content = <LocationDetail id={current.id} />;
-      break;
-    case 'contact':
-      content = <ContactDetail id={current.id} />;
       break;
     case 'impactDimension':
       content = <ImpactDimensionDetail id={current.id} />;
