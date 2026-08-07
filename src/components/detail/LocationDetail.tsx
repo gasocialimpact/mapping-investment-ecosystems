@@ -1,6 +1,7 @@
 import { Building2, TrendingUp } from 'lucide-react';
 import { useData } from '../../context/DataContext';
 import { useDetail, type DetailType } from '../../context/DetailContext';
+import { usePlace } from '../../context/PlaceContext';
 import { SEGMENT_STYLES, type Organization } from '../../types';
 import { formatCurrency } from '../../lib/format';
 
@@ -22,8 +23,14 @@ const CVI_CLIMATE: { key: string; label: string; color: string }[] = [
 export function LocationDetail({ id }: { id: string }) {
   const { data, maps } = useData();
   const { open } = useDetail();
+  const { countyByFips } = usePlace();
   const loc = maps.locationById.get(id);
   if (!loc) return <p className="text-sm text-slate-400">Location not found.</p>;
+
+  const placeCounty = loc.fipsCode ? countyByFips.get(loc.fipsCode) : undefined;
+  // The snapshot's percentile field has historically been null; the place
+  // dataset carries the authoritative national percentile per county.
+  const nationalPercentile = loc.cviNationalPercentile ?? placeCounty?.pctiles[0] ?? null;
 
   const orgs = loc.organizationIds.map((oid) => maps.orgById.get(oid)).filter((o): o is Organization => !!o);
   const totalCapital = data!.capitalFlows
@@ -84,9 +91,9 @@ export function LocationDetail({ id }: { id: string }) {
             <div className="h-2 rounded-full bg-slate-100 overflow-hidden">
               <div className="h-full rounded-full" style={{ width: `${Math.min(loc.cviToxPi! * 100, 100)}%`, background: '#4750a2' }} />
             </div>
-            {loc.cviNationalPercentile != null && (
+            {nationalPercentile != null && (
               <p className="text-[10px] text-slate-500 mt-1">
-                More vulnerable than <span className="font-semibold text-slate-700">{loc.cviNationalPercentile}%</span> of U.S. counties
+                More vulnerable than <span className="font-semibold text-slate-700">{Math.round(nationalPercentile)}%</span> of U.S. counties
               </p>
             )}
           </div>

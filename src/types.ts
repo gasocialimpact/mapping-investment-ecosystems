@@ -117,7 +117,7 @@ export interface ImpactDimension {
   iconUrl: string | null;
 }
 
-export type Tab = 'overview' | 'organizations' | 'flows' | 'instruments' | 'locations' | 'framework';
+export type Tab = 'explore' | 'framing' | 'glossary';
 
 export interface EcosystemData {
   generatedAt: string;

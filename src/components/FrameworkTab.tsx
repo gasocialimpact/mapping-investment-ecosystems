@@ -4,7 +4,7 @@ import {
   Zap, AlertTriangle, Link2, Layers, BookOpen,
 } from 'lucide-react';
 import {
-  FRAMEWORK_FUNCTIONS, FRAMEWORK_SEGMENTS, FRAMEWORK_NODES,
+  FRAMEWORK_FUNCTIONS,
   GLOSSARY, STRATEGY_CATEGORIES, STRATEGY_PROGRESSION, STRATEGIES, getNodeById, getSegment,
 } from '../data/frameworkData';
 import type { FrameworkNode, StrategyCategory, Strategy } from '../data/frameworkData';
@@ -55,86 +55,7 @@ export function FrameworkTab() {
   );
 }
 
-export function FrameworkView({ search }: { search: string }) {
-  const [selectedNode, setSelectedNode] = useState<FrameworkNode | null>(null);
-  const [fnFilter, setFnFilter] = useState<string | null>(null);
-
-  const q = search.toLowerCase().trim();
-
-  const filtered = useMemo(() => {
-    return FRAMEWORK_NODES.filter((n) => {
-      if (fnFilter && !n.fn.includes(fnFilter)) return false;
-      if (q && !n.title.toLowerCase().includes(q) && !n.meta.toLowerCase().includes(q) && !n.descLong.toLowerCase().includes(q)) return false;
-      return true;
-    });
-  }, [q, fnFilter]);
-
-  return (
-    <div>
-      <div className="bg-white rounded-lg border border-slate-200 p-4 shadow-sm mb-4">
-        <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">Core Functions</h3>
-        <p className="text-xs text-slate-400 mb-3">Filter the framework by function to see which stakeholders participate</p>
-        <div className="flex gap-2 flex-wrap">
-          <button
-            onClick={() => setFnFilter(null)}
-            className={`text-xs px-2.5 py-1 rounded-full border transition-colors ${
-              !fnFilter ? 'bg-brand-indigo text-white border-brand-indigo' : 'bg-white text-slate-600 border-slate-200'
-            }`}
-          >
-            All Functions
-          </button>
-          {FRAMEWORK_FUNCTIONS.map((f) => (
-            <button
-              key={f.key}
-              onClick={() => setFnFilter(fnFilter === f.key ? null : f.key)}
-              className={`text-xs px-2.5 py-1 rounded-full border transition-colors ${
-                fnFilter === f.key ? 'bg-brand-indigo text-white border-brand-indigo' : 'bg-white text-slate-600 border-slate-200'
-              }`}
-              title={f.desc}
-            >
-              {f.label}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-        {FRAMEWORK_SEGMENTS.map((seg) => {
-          const nodes = filtered.filter((n) => n.seg === seg.key);
-          return (
-            <div key={seg.key} className="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
-              <div className="px-3 py-2 border-b" style={{ borderBottomColor: seg.color }}>
-                <h3 className="text-xs font-bold uppercase tracking-wider" style={{ color: seg.color }}>{seg.label}</h3>
-                <p className="text-[10px] text-slate-400">{nodes.length} stakeholder type{nodes.length !== 1 ? 's' : ''}</p>
-              </div>
-              <div className="p-2 space-y-1.5">
-                {nodes.map((node) => (
-                  <button
-                    key={node.id}
-                    onClick={() => setSelectedNode(selectedNode?.id === node.id ? null : node)}
-                    className="w-full text-left p-2 rounded-md border border-slate-100 hover:border-slate-300 hover:bg-slate-50 transition-colors"
-                  >
-                    <p className="text-xs font-semibold text-slate-800">{node.title}</p>
-                    <p className="text-[10px] text-slate-400 mt-0.5">{node.meta}</p>
-                  </button>
-                ))}
-                {nodes.length === 0 && (
-                  <p className="text-[10px] text-slate-300 p-2">No matches</p>
-                )}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {selectedNode && (
-        <NodeDetail node={selectedNode} onClose={() => setSelectedNode(null)} onNavigate={setSelectedNode} />
-      )}
-    </div>
-  );
-}
-
-function NodeDetail({ node, onClose, onNavigate }: { node: FrameworkNode; onClose: () => void; onNavigate: (n: FrameworkNode) => void }) {
+export function NodeDetail({ node, onClose, onNavigate }: { node: FrameworkNode; onClose: () => void; onNavigate: (n: FrameworkNode) => void }) {
   const seg = getSegment(node.seg);
   const fnLabels = FRAMEWORK_FUNCTIONS.filter((f) => node.fn.includes(f.key)).map((f) => f.label);
 

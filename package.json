@@ -9,7 +9,8 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
-    "export-data": "node scripts/export-airtable.mjs"
+    "export-data": "node scripts/export-airtable.mjs",
+    "fetch-place-data": "node scripts/fetch-place-data.mjs"
   },
   "dependencies": {
     "leaflet": "^1.9.4",
