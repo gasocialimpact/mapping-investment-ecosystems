@@ -108,7 +108,7 @@ export interface ImpactDimension {
   iconUrl: string | null;
 }
 
-export type Tab = 'explore' | 'framing' | 'glossary';
+export type Tab = 'explore' | 'capital' | 'framing' | 'glossary';
 
 export interface EcosystemData {
   generatedAt: string;

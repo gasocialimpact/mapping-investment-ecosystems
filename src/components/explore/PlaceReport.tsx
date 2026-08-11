@@ -5,6 +5,7 @@ import type { Organization, CapitalFlow } from '../../types';
 import { formatCurrency } from '../../lib/format';
 import { pctileDisplay } from '../../lib/choropleth';
 import { EcosystemLayers } from './EcosystemLayers';
+import { CountyInvestmentTrend, TractInvestmentTrend } from '../capital/PlaceInvestmentTrend';
 
 // Category chip colors, consistent with the CVI meters used elsewhere.
 const DRIVER_CATEGORY_COLORS: Record<string, string> = {
@@ -174,6 +175,9 @@ function CountyReport() {
               </div>
             </ReportCard>
           )}
+
+          {/* Investment over time (tract-level program data, county rollup) */}
+          <CountyInvestmentTrend fips={county.fips} countyLabel={`${county.county}`} />
         </div>
 
         <div className="space-y-5">
@@ -347,6 +351,7 @@ function TractReport() {
           </table>
         </ReportCard>
 
+        <div className="space-y-5">
         {/* Tract CVI */}
         <ReportCard title="CVI Profile" sub="Tract score vs. the national median (tick). Higher = more vulnerable.">
           <div className="space-y-3 mt-1">
@@ -366,6 +371,10 @@ function TractReport() {
             ))}
           </div>
         </ReportCard>
+
+        {/* Investment over time in this tract */}
+        <TractInvestmentTrend geoid={tract.geoid} />
+        </div>
       </div>
 
       {county && (

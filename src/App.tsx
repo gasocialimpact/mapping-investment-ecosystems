@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Map, Network, BookOpen, RotateCcw } from 'lucide-react';
+import { Map, TrendingUp, Network, BookOpen, RotateCcw } from 'lucide-react';
 import type { Tab } from './types';
 import { DataProvider, useData } from './context/DataContext';
 import { PlaceProvider, usePlace } from './context/PlaceContext';
@@ -7,11 +7,13 @@ import { DetailProvider } from './context/DetailContext';
 import { DetailDrawer } from './components/detail/DetailDrawer';
 import { ExploreTab } from './components/explore/ExploreTab';
 import { SavePdfButton } from './components/SavePdfButton';
+import { CapitalTab } from './components/capital/CapitalTab';
 import { FramingTab } from './components/FramingTab';
 import { FrameworkTab } from './components/FrameworkTab';
 
 const TABS: { id: Tab; label: string; icon: typeof Map }[] = [
   { id: 'explore', label: 'Explore', icon: Map },
+  { id: 'capital', label: 'Tracking Capital Changes Over Time', icon: TrendingUp },
   { id: 'framing', label: 'Framing Our Ecosystem', icon: Network },
   { id: 'glossary', label: 'Glossary & Key Terms', icon: BookOpen },
 ];
@@ -92,6 +94,7 @@ function Dashboard() {
         <div className="app-scroll max-w-[1600px] mx-auto h-full overflow-y-scroll px-6 print-unclip">
           <SavePdfButton />
           {activeTab === 'explore' && <ExploreTab />}
+          {activeTab === 'capital' && <CapitalTab />}
           {activeTab === 'framing' && <FramingTab />}
           {activeTab === 'glossary' && <div className="pb-10 pt-2"><FrameworkTab /></div>}
         </div>
