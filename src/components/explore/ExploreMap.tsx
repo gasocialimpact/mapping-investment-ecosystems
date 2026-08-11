@@ -77,7 +77,22 @@ export function ExploreMap({ organizations }: Props) {
     canvasRendererRef.current = L.canvas({ pane: 'tractPane' });
     layerRef.current = L.layerGroup().addTo(map);
     mapRef.current = map;
+    // The container's flex height settles after first paint (and changes with
+    // the sidebar). Without re-measuring, Leaflet can initialize at the wrong
+    // size and render blank until a manual refresh.
+    const ro = new ResizeObserver(() => {
+      map.invalidateSize();
+      if (!fittedRef.current && (containerRef.current?.clientHeight ?? 0) > 100) {
+        const bounds = (countyLayerRef.current ?? outlineLayerRef.current)?.getBounds();
+        if (bounds?.isValid()) {
+          map.fitBounds(bounds.pad(0.02));
+          fittedRef.current = true;
+        }
+      }
+    });
+    ro.observe(containerRef.current);
     return () => {
+      ro.disconnect();
       map.remove();
       mapRef.current = null;
       layerRef.current = null;
@@ -105,7 +120,8 @@ export function ExploreMap({ organizations }: Props) {
         interactive: false,
         style: { fill: false, color: '#1e293b', weight: 0.8, opacity: 0.45 },
       }).addTo(map);
-      if (!fittedRef.current) {
+      if (!fittedRef.current && (containerRef.current?.clientHeight ?? 0) > 100) {
+        map.invalidateSize();
         map.fitBounds(outlineLayerRef.current.getBounds().pad(0.02));
         fittedRef.current = true;
       }
@@ -161,7 +177,11 @@ export function ExploreMap({ organizations }: Props) {
     }).addTo(map);
     layer.bringToBack();
     countyLayerRef.current = layer;
-    if (!fittedRef.current && !selectedFips) {
+    // Only fit once the container has real dimensions — a zero-height fit
+    // computes a broken zoom and the map looks blank. The ResizeObserver in
+    // the init effect performs the fit once layout settles otherwise.
+    if (!fittedRef.current && !selectedFips && (containerRef.current?.clientHeight ?? 0) > 100) {
+      map.invalidateSize();
       map.fitBounds(layer.getBounds().pad(0.02));
       fittedRef.current = true;
     }
@@ -254,8 +274,11 @@ export function ExploreMap({ organizations }: Props) {
 
   if (!place) {
     return (
-      <div className="bg-white rounded-lg border border-slate-200 p-4 shadow-sm text-sm text-slate-400">
-        Place data unavailable — the map needs the Community Data Explorer dataset.
+      <div className="bg-white rounded-lg border border-slate-200 shadow-sm h-full min-h-[520px] flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-8 h-8 mx-auto rounded-full border-[3px] border-slate-200 border-t-brand-green animate-spin" />
+          <p className="text-sm text-slate-400 mt-3">Loading the map…</p>
+        </div>
       </div>
     );
   }

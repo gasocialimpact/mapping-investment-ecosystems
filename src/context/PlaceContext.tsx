@@ -54,11 +54,20 @@ export function PlaceProvider({ children }: { children: ReactNode }) {
   const tractFetchStarted = useRef(false);
 
   useEffect(() => {
-    // Place data is optional: if the file is missing the map simply has no
-    // choropleth, so failures are logged rather than surfaced as app errors.
-    loadCountyPlaceData()
-      .then(setPlace)
-      .catch((e) => console.warn('Place data unavailable:', e.message));
+    // Retry the place-data fetch a few times with backoff: a transient network
+    // hiccup here used to leave the map blank until a manual page refresh.
+    let cancelled = false;
+    const attempt = (n: number) => {
+      loadCountyPlaceData()
+        .then((d) => { if (!cancelled) setPlace(d); })
+        .catch((e) => {
+          if (cancelled) return;
+          if (n < 3) setTimeout(() => attempt(n + 1), 1200 * (n + 1));
+          else console.warn('Place data unavailable after retries:', e.message);
+        });
+    };
+    attempt(0);
+    return () => { cancelled = true; };
   }, []);
 
   const ensureTracts = useCallback(() => {
