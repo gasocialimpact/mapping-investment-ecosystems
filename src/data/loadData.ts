@@ -7,7 +7,9 @@ import type { PlaceCountyData, PlaceTractData } from '../types/place';
 const SNAPSHOT_URL = `${import.meta.env.BASE_URL}data/ecosystem.json`;
 
 export async function loadEcosystemData(): Promise<EcosystemData> {
-  const res = await fetch(SNAPSHOT_URL, { cache: 'no-cache' });
+  // Plain fetch (no cache override) so it reuses the <link rel="preload">
+  // request from index.html; GitHub Pages' short max-age keeps data fresh.
+  const res = await fetch(SNAPSHOT_URL);
   if (!res.ok) {
     throw new Error(`Failed to load ecosystem snapshot (${res.status}). Expected at ${SNAPSHOT_URL}.`);
   }

@@ -7,6 +7,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet" />
+    <!-- Start the data fetches before the JS bundle parses — matters most when
+         the tool is iframe-embedded and everything loads in sequence. -->
+    <link rel="preload" href="data/ecosystem.json" as="fetch" />
+    <link rel="preload" href="data/place-counties.json" as="fetch" />
+    <!-- Warm the map-tile connections so the basemap paints immediately. -->
+    <link rel="preconnect" href="https://a.tile.openstreetmap.org" crossorigin />
+    <link rel="preconnect" href="https://b.tile.openstreetmap.org" crossorigin />
+    <link rel="preconnect" href="https://c.tile.openstreetmap.org" crossorigin />
   </head>
   <body>
     <div id="root"></div>
