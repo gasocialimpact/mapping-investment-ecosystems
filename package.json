@@ -13,6 +13,7 @@
     "fetch-place-data": "node scripts/fetch-place-data.mjs"
   },
   "dependencies": {
+    "html-to-image": "^1.11.13",
     "leaflet": "^1.9.4",
     "lucide-react": "^1.17.0",
     "react": "^18.3.1",

@@ -10,6 +10,7 @@ import {
   CHART_W, niceTicks,
 } from './charts';
 import type { StackSeries, LineSeries, TooltipState } from './charts';
+import { SnapshotCard } from '../SnapshotButton';
 
 type Scope = 'federal_only' | 'all_programs';
 
@@ -81,12 +82,9 @@ export function CapitalTab() {
 
 function Card({ title, sub, children, note }: { title: string; sub?: string; note?: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white rounded-lg border border-slate-200 p-5 shadow-sm">
-      <h3 className="text-base font-bold text-slate-800">{title}</h3>
-      {sub && <p className="text-xs text-slate-500 mt-1 max-w-xl">{sub}</p>}
+    <SnapshotCard title={title} sub={sub && <span className="block max-w-xl">{sub}</span>} note={note}>
       <div className="mt-3">{children}</div>
-      {note && <p className="text-[10px] text-slate-400 mt-2">{note}</p>}
-    </div>
+    </SnapshotCard>
   );
 }
 

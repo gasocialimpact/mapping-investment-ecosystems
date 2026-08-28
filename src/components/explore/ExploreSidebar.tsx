@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { usePlace } from '../../context/PlaceContext';
 import type { PlaceCounty } from '../../types/place';
 import { pctileDisplay } from '../../lib/choropleth';
+import { SnapshotCard } from '../SnapshotButton';
 
 // Which of the three CVI layers the sidebar ranks by (falls back to Overall
 // when a demographic indicator is shading the map).
@@ -46,9 +47,11 @@ export function HighLowCard() {
   );
 
   return (
-    <div className="bg-white rounded-lg border border-slate-200 p-5 shadow-sm">
-      <h3 className="text-base font-bold text-slate-800">Highest &amp; Lowest — {label}</h3>
-      <p className="text-xs text-slate-500 mt-1">Click a name to open its report.</p>
+    <SnapshotCard
+      title={<>Highest &amp; Lowest — {label}</>}
+      sub="Click a name to open its report."
+      snapshotLabel={`Highest and lowest ${label}`}
+    >
       <div className="grid grid-cols-2 gap-4 mt-3">
         <List title="Most vulnerable" items={highest} />
         <List title="Least vulnerable" items={lowest} />
@@ -58,7 +61,7 @@ export function HighLowCard() {
         counties in the U.S. top-10% most vulnerable, <span className="font-semibold text-slate-700">{top10NoOrgs.length} have
         no mapped organizations</span>.
       </div>
-    </div>
+    </SnapshotCard>
   );
 }
 
@@ -84,11 +87,11 @@ export function DistributionCard() {
   const maxBar = Math.max(...bars, 1);
 
   return (
-    <div className="bg-white rounded-lg border border-slate-200 p-5 shadow-sm">
-      <h3 className="text-base font-bold text-slate-800">Score Distribution — {place.metricLabels[mi]}</h3>
-      <p className="text-xs text-slate-500 mt-1">
-        {hlBin >= 0 ? 'The highlighted bar contains the selected county.' : 'Select a county to highlight where it falls.'}
-      </p>
+    <SnapshotCard
+      title={<>Score Distribution — {place.metricLabels[mi]}</>}
+      sub={hlBin >= 0 ? 'The highlighted bar contains the selected county.' : 'Select a county to highlight where it falls.'}
+      snapshotLabel={`Score distribution ${place.metricLabels[mi]}`}
+    >
       <div className="flex items-end gap-1 h-20 mt-3">
         {bars.map((v, i) => (
           <div
@@ -99,7 +102,7 @@ export function DistributionCard() {
           />
         ))}
       </div>
-    </div>
+    </SnapshotCard>
   );
 }
 
@@ -127,12 +130,13 @@ export function GapsCard() {
   if (!place || gaps.length === 0) return null;
 
   return (
-    <div className="bg-white rounded-lg border border-slate-200 p-5 shadow-sm">
-      <h3 className="text-base font-bold text-slate-800">Investment Gaps</h3>
-      <p className="text-xs text-slate-500 mt-1">
+    <SnapshotCard
+      title="Investment Gaps"
+      sub={<>
         <span className="font-semibold text-brand-orange">{gaps.length} counties</span> rank in the top-20%
         most vulnerable nationally but receive below-median CRA small-business lending.
-      </p>
+      </>}
+    >
       <ul className="mt-3 space-y-1">
         {gaps.slice(0, 6).map((c) => {
           const orgs = orgsByCountyFips.get(c.fips)?.length ?? 0;
@@ -155,6 +159,6 @@ export function GapsCard() {
       {gaps.length > 6 && (
         <p className="text-[11px] text-slate-400 mt-2">+{gaps.length - 6} more — darker counties on the map with few markers tell the same story.</p>
       )}
-    </div>
+    </SnapshotCard>
   );
 }

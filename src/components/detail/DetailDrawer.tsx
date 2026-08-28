@@ -3,6 +3,7 @@ import { X, ArrowLeft, FileDown, ChevronLeft, ChevronRight } from 'lucide-react'
 import { useDetail } from '../../context/DetailContext';
 import { useVisibleBand } from '../../lib/useVisibleBand';
 import { saveRecordAsPdf } from '../../lib/savePdf';
+import { SnapshotButton } from '../SnapshotButton';
 import { OrgDetail } from './OrgDetail';
 import { FlowDetail } from './FlowDetail';
 import { InstrumentDetail } from './InstrumentDetail';
@@ -57,6 +58,9 @@ export function DetailDrawer() {
       break;
   }
 
+  // The record's own heading makes the better filename than its type.
+  const recordLabel = () => panelRef.current?.querySelector('h2')?.textContent?.trim() || 'record';
+
   const offset = Math.min(Math.round(band.height * 0.06), 48);
   const maxHeight = Math.max(band.height - offset - EDGE_GAP, 240);
   const atStart = !!position && position.index === 1;
@@ -75,7 +79,9 @@ export function DetailDrawer() {
         style={{ maxHeight }}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="sticky top-0 bg-white z-10 flex items-center gap-2 px-5 py-3 border-b border-slate-100 print:hidden">
+        {/* Excluded from snapshots for the same reason it is hidden in print:
+            the toolbar is chrome, not part of the record. */}
+        <div data-snapshot="hide" className="sticky top-0 bg-white z-10 flex items-center gap-2 px-5 py-3 border-b border-slate-100 print:hidden">
           <div className="flex-1 min-w-0">
             {canGoBack && (
               <button onClick={back} className="flex items-center gap-1 text-xs text-slate-500 hover:text-slate-700">
@@ -109,6 +115,7 @@ export function DetailDrawer() {
           )}
 
           <div className="flex-1 flex items-center justify-end gap-2">
+            <SnapshotButton target={panelRef} label={recordLabel} />
             <button
               onClick={() => panelRef.current && saveRecordAsPdf(panelRef.current)}
               className="flex items-center gap-1.5 text-xs font-medium px-2.5 py-1.5 rounded-md border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 transition-colors"

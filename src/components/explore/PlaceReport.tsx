@@ -6,6 +6,7 @@ import { formatCurrency } from '../../lib/format';
 import { pctileDisplay } from '../../lib/choropleth';
 import { EcosystemLayers } from './EcosystemLayers';
 import { CountyInvestmentTrend, TractInvestmentTrend } from '../capital/PlaceInvestmentTrend';
+import { SnapshotCard } from '../SnapshotButton';
 
 // Category chip colors, consistent with the CVI meters used elsewhere.
 const DRIVER_CATEGORY_COLORS: Record<string, string> = {
@@ -391,11 +392,9 @@ function TractReport() {
 
 function ReportCard({ title, sub, children }: { title: string; sub?: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white rounded-lg border border-slate-200 p-5 shadow-sm">
-      <h3 className="text-base font-bold text-slate-800">{title}</h3>
-      {sub && <p className="text-xs text-slate-500 mt-1">{sub}</p>}
+    <SnapshotCard title={title} sub={sub}>
       {children}
-    </div>
+    </SnapshotCard>
   );
 }
 

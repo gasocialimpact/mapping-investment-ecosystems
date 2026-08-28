@@ -1,10 +1,11 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { ChevronRight } from 'lucide-react';
 import { useData } from '../../context/DataContext';
 import { useDetail } from '../../context/DetailContext';
 import type { Organization, CapitalFlow, CapitalInstrument } from '../../types';
 import { SEGMENT_STYLES } from '../../types';
 import { formatCurrency } from '../../lib/format';
+import { SnapshotButton } from '../SnapshotButton';
 
 const ORG_PREVIEW = 10;
 const FLOW_PREVIEW = 8;
@@ -188,16 +189,22 @@ function Layer({ accent, label, count, defaultOpen, children }: {
   children: React.ReactNode;
 }) {
   const [isOpen, setIsOpen] = useState(!!defaultOpen);
+  const ref = useRef<HTMLDivElement>(null);
   return (
-    <div className="mt-3 bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm" style={{ borderLeft: `4px solid ${accent}` }}>
+    <div ref={ref} className="relative mt-3 bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm" style={{ borderLeft: `4px solid ${accent}` }}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center gap-2.5 px-4 py-3 text-left hover:bg-slate-50 transition-colors"
+        className="w-full flex items-center gap-2.5 px-4 py-3 pr-16 text-left hover:bg-slate-50 transition-colors"
       >
         <ChevronRight size={14} className={`text-slate-400 transition-transform ${isOpen ? 'rotate-90' : ''}`} />
         <span className="text-sm font-bold text-slate-800">{label}</span>
         <span className="ml-auto text-xs text-slate-500 tabular-nums">{count}</span>
       </button>
+      {isOpen && (
+        <div className="absolute top-2.5 right-3 print:hidden">
+          <SnapshotButton target={ref} label={label} />
+        </div>
+      )}
       {isOpen && <div className="px-4 pb-4 pl-[42px]">{children}</div>}
     </div>
   );

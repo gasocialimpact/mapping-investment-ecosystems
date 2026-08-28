@@ -32,6 +32,21 @@ npm run build    # type-check + production build to dist/
 npm run preview  # serve the production build
 ```
 
+## Embedding
+
+The tool is built to sit in an iframe. It measures the part of the frame that is actually
+on screen (`src/lib/useVisibleBand.ts`) and keeps the header, tabs and record modals inside
+it, so a frame taller than the browser window still behaves.
+
+```html
+<iframe src="https://…/" width="100%" height="1200" allow="clipboard-write"></iframe>
+```
+
+`allow="clipboard-write"` is what lets the **snapshot buttons** (the camera icon on cards,
+charts, tables and record modals) copy a PNG straight to the clipboard — a cross-origin
+iframe does not get that permission by default. Without it nothing breaks: the button
+falls back to downloading the PNG instead.
+
 ## Data pipeline
 
 Two static datasets under `public/data/`, both refreshed by the nightly GitHub Action
