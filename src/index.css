@@ -67,6 +67,12 @@ body.print-record .record-panel {
     min-height: 0 !important;
     overflow: visible !important;
   }
+  /* The shell is positioned to the on-screen slice of the frame; printing
+     needs it back in normal flow. */
+  .app-shell {
+    position: static !important;
+    top: auto !important;
+  }
   .print\:hidden {
     display: none !important;
   }

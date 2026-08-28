@@ -254,10 +254,13 @@ export function ExploreMap({ organizations }: Props) {
     if (!map || !layer) return;
     layer.clearLayers();
 
-    for (const org of organizations) {
-      if (org.lat == null || org.lng == null) continue;
-      const marker = L.marker([org.lat, org.lng], { icon: markerIcon(SEGMENT_STYLES[org.segment].color) });
-      marker.on('click', () => openRef.current('organization', org.id));
+    // Every mapped org is a sibling, so the record modal pages across the pins.
+    const mapped = organizations.filter((o) => o.lat != null && o.lng != null);
+    const ids = mapped.map((o) => o.id);
+
+    for (const org of mapped) {
+      const marker = L.marker([org.lat!, org.lng!], { icon: markerIcon(SEGMENT_STYLES[org.segment].color) });
+      marker.on('click', () => openRef.current('organization', org.id, ids));
       marker.bindTooltip(org.name, { direction: 'top', offset: [0, -8], className: 'ecosystem-tooltip' });
       marker.addTo(layer);
     }

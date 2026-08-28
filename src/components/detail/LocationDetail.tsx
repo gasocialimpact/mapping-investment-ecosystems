@@ -1,6 +1,6 @@
 import { Building2, TrendingUp } from 'lucide-react';
 import { useData } from '../../context/DataContext';
-import { useDetail, type DetailType } from '../../context/DetailContext';
+import { useDetail, type OpenDetail } from '../../context/DetailContext';
 import { usePlace } from '../../context/PlaceContext';
 import { SEGMENT_STYLES, type Organization } from '../../types';
 import { formatCurrency } from '../../lib/format';
@@ -145,8 +145,9 @@ export function LocationDetail({ id }: { id: string }) {
   );
 }
 
-function OrgList({ orgs, open }: { orgs: Organization[]; open: (type: DetailType, id: string) => void }) {
+function OrgList({ orgs, open }: { orgs: Organization[]; open: OpenDetail }) {
   const visible = orgs.slice(0, MAX_VISIBLE);
+  const ids = orgs.map((o) => o.id);
   const remaining = orgs.length - visible.length;
 
   return (
@@ -156,7 +157,7 @@ function OrgList({ orgs, open }: { orgs: Organization[]; open: (type: DetailType
         {visible.map((o) => (
           <li key={o.id}>
             <button
-              onClick={() => open('organization', o.id)}
+              onClick={() => open('organization', o.id, ids)}
               className="w-full flex items-center gap-2 text-sm text-left border border-slate-100 rounded-md px-3 py-2 hover:border-slate-300"
             >
               <span

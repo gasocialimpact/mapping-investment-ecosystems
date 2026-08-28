@@ -1,5 +1,5 @@
 import { useData } from '../../context/DataContext';
-import { useDetail } from '../../context/DetailContext';
+import { useDetail, type OpenDetail } from '../../context/DetailContext';
 import { formatCurrencyFull } from '../../lib/format';
 
 const MAX_VISIBLE = 8;
@@ -43,9 +43,10 @@ export function InstrumentDetail({ id }: { id: string }) {
   );
 }
 
-function FlowList({ flows, open }: { flows: any[]; open: (type: 'flow', id: string) => void }) {
+function FlowList({ flows, open }: { flows: any[]; open: OpenDetail }) {
   const visible = flows.slice(0, MAX_VISIBLE);
   const remaining = flows.length - visible.length;
+  const ids = flows.map((f) => f.id);
 
   return (
     <div className="mt-5">
@@ -56,7 +57,7 @@ function FlowList({ flows, open }: { flows: any[]; open: (type: 'flow', id: stri
         {visible.map((f) => (
           <li key={f.id}>
             <button
-              onClick={() => open('flow', f.id)}
+              onClick={() => open('flow', f.id, ids)}
               className="w-full flex items-center justify-between text-sm border border-slate-100 rounded-md px-3 py-2 hover:border-slate-300"
             >
               <span className="text-slate-600 truncate">

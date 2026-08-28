@@ -4,6 +4,7 @@ import type { Tab } from './types';
 import { DataProvider, useData } from './context/DataContext';
 import { PlaceProvider, usePlace } from './context/PlaceContext';
 import { DetailProvider } from './context/DetailContext';
+import { useVisibleBand } from './lib/useVisibleBand';
 import { DetailDrawer } from './components/detail/DetailDrawer';
 import { ExploreTab } from './components/explore/ExploreTab';
 import { SavePdfButton } from './components/SavePdfButton';
@@ -31,10 +32,15 @@ export default function App() {
   );
 }
 
+// Below this the app is too cramped to be worth reflowing into, so it stops
+// tracking the window and simply scrolls out of view with the rest of the page.
+const MIN_SHELL_HEIGHT = 420;
+
 function Dashboard() {
   const { data, error } = useData();
   const { setSelectedFips } = usePlace();
   const [activeTab, setActiveTab] = useState<Tab>('explore');
+  const band = useVisibleBand();
 
   if (error) {
     return (
@@ -55,8 +61,21 @@ function Dashboard() {
     );
   }
 
+  // Fit the app to what the reader can actually see. Standalone this is the
+  // whole viewport; embedded in an iframe taller than the browser window it
+  // keeps the header, tabs and scroll area inside the on-screen slice instead
+  // of stranding them above it.
+  const shellHeight = Math.min(band.frameHeight, Math.max(band.height, MIN_SHELL_HEIGHT));
+  const shellTop = Math.max(
+    0,
+    Math.min(band.top + (band.height - shellHeight) / 2, band.frameHeight - shellHeight),
+  );
+
   return (
-    <div className="h-screen flex flex-col overflow-hidden bg-white print-unclip">
+    <div
+      className="app-shell flex flex-col overflow-hidden bg-white print-unclip"
+      style={{ position: 'fixed', top: shellTop, left: 0, right: 0, height: shellHeight }}
+    >
       <header className="bg-white border-b border-slate-200 shrink-0 z-20">
         <div className="max-w-[1600px] mx-auto px-6 py-[14px] flex items-center justify-between gap-[14px] flex-wrap">
           <div className="flex items-center gap-3">

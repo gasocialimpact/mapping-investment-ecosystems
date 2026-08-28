@@ -26,13 +26,16 @@ export function OrgGrid({ orgs }: { orgs: Organization[] }) {
   const { open } = useDetail();
   const [showAll, setShowAll] = useState(false);
   const visible = showAll ? orgs : orgs.slice(0, ORG_PREVIEW);
+  // Paging inside the modal covers the whole filtered list, not just the
+  // rows currently previewed.
+  const ids = useMemo(() => orgs.map((o) => o.id), [orgs]);
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
         {visible.map((o) => (
           <button
             key={o.id}
-            onClick={() => open('organization', o.id)}
+            onClick={() => open('organization', o.id, ids)}
             className="flex items-center gap-2.5 text-left text-[13px] border border-slate-100 rounded-lg px-3 py-2 hover:border-slate-300 transition-colors"
           >
             <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ background: SEGMENT_STYLES[o.segment].color }} />
@@ -56,13 +59,14 @@ export function FlowList({ flows }: { flows: CapitalFlow[] }) {
   const [showAll, setShowAll] = useState(false);
   const sorted = useMemo(() => [...flows].sort((a, b) => (b.amount ?? 0) - (a.amount ?? 0)), [flows]);
   const visible = showAll ? sorted : sorted.slice(0, FLOW_PREVIEW);
+  const ids = useMemo(() => sorted.map((f) => f.id), [sorted]);
   return (
     <>
       <div className="divide-y divide-slate-50">
         {visible.map((f) => (
           <button
             key={f.id}
-            onClick={() => open('flow', f.id)}
+            onClick={() => open('flow', f.id, ids)}
             className="w-full flex items-center gap-2.5 text-left text-[13px] py-2 hover:bg-slate-50 rounded transition-colors"
           >
             <span className="text-slate-700 truncate">{f.sourceName ?? '?'} → {f.recipientName ?? '?'}</span>
@@ -88,12 +92,13 @@ export function InstrumentList({ instruments }: { instruments: CapitalInstrument
     () => [...instruments].sort((a, b) => b.capitalFlowIds.length - a.capitalFlowIds.length),
     [instruments],
   );
+  const ids = useMemo(() => sorted.map((i) => i.id), [sorted]);
   return (
     <div className="divide-y divide-slate-50">
       {sorted.map((i) => (
         <button
           key={i.id}
-          onClick={() => open('instrument', i.id)}
+          onClick={() => open('instrument', i.id, ids)}
           className="w-full flex items-center gap-2.5 text-left text-[13px] py-2 hover:bg-slate-50 rounded transition-colors"
         >
           <span className="font-semibold text-slate-700 shrink-0">{i.name}</span>
@@ -112,12 +117,13 @@ export function InstrumentList({ instruments }: { instruments: CapitalInstrument
 // Instrument chips with click-through to the drawer.
 export function InstrumentChips({ instruments }: { instruments: CapitalInstrument[] }) {
   const { open } = useDetail();
+  const ids = useMemo(() => instruments.map((i) => i.id), [instruments]);
   return (
     <div className="flex flex-wrap gap-2">
       {instruments.map((i) => (
         <button
           key={i.id}
-          onClick={() => open('instrument', i.id)}
+          onClick={() => open('instrument', i.id, ids)}
           className="text-xs font-semibold bg-brand-teal-soft text-[#20605f] rounded-full px-3 py-1.5 hover:brightness-95 transition"
         >
           {i.name}

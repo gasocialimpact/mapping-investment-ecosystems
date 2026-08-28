@@ -54,7 +54,7 @@ export function FlowDetail({ id }: { id: string }) {
             {instruments.map((inst) => inst && (
               <button
                 key={inst.id}
-                onClick={() => open('instrument', inst.id)}
+                onClick={() => open('instrument', inst.id, instruments.map((x) => x!.id))}
                 className="w-full text-left text-sm border border-slate-100 rounded-md px-3 py-2 hover:border-slate-300"
               >
                 {inst.name}
@@ -71,7 +71,7 @@ export function FlowDetail({ id }: { id: string }) {
             {dims.map((d) => d && (
               <button
                 key={d.id}
-                onClick={() => open('impactDimension', d.id)}
+                onClick={() => open('impactDimension', d.id, dims.map((x) => x!.id))}
                 className="text-[11px] px-2 py-0.5 rounded-full bg-brand-teal-soft text-brand-teal-light hover:opacity-80"
               >
                 {d.label}

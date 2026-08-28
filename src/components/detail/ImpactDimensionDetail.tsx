@@ -39,9 +39,9 @@ export function ImpactDimensionDetail({ id }: { id: string }) {
           title="Organizations"
           items={relatedOrgs}
           hint="see Organizations tab to browse all"
-          renderItem={(o) => (
+          renderItem={(o, ids) => (
             <button
-              onClick={() => open('organization', o.id)}
+              onClick={() => open('organization', o.id, ids)}
               className="w-full flex items-center gap-2 text-sm text-left border border-slate-100 rounded-md px-3 py-2 hover:border-slate-300"
             >
               <span className="h-2 w-2 rounded-full shrink-0" style={{ background: SEGMENT_STYLES[o.segment].color }} />
@@ -56,9 +56,9 @@ export function ImpactDimensionDetail({ id }: { id: string }) {
           title="Capital Flows"
           items={relatedFlows}
           hint="see Capital Flows tab for full list"
-          renderItem={(f) => (
+          renderItem={(f, ids) => (
             <button
-              onClick={() => open('flow', f.id)}
+              onClick={() => open('flow', f.id, ids)}
               className="w-full text-left text-sm border border-slate-100 rounded-md px-3 py-2 hover:border-slate-300"
             >
               {f.sourceName ?? 'Unknown'} → {f.recipientName ?? 'Unknown'}
@@ -70,9 +70,11 @@ export function ImpactDimensionDetail({ id }: { id: string }) {
   );
 }
 
-function CappedList<T extends { id: string }>({ title, items, hint, renderItem }: { title: string; items: T[]; hint: string; renderItem: (item: T) => React.ReactNode }) {
+function CappedList<T extends { id: string }>({ title, items, hint, renderItem }: { title: string; items: T[]; hint: string; renderItem: (item: T, ids: string[]) => React.ReactNode }) {
   const visible = items.slice(0, MAX_VISIBLE);
   const remaining = items.length - visible.length;
+  // The whole list pages inside the modal, including the capped-off tail.
+  const ids = items.map((item) => item.id);
 
   return (
     <div className="mt-5">
@@ -81,7 +83,7 @@ function CappedList<T extends { id: string }>({ title, items, hint, renderItem }
       </h3>
       <ul className="space-y-1.5">
         {visible.map((item) => (
-          <li key={item.id}>{renderItem(item)}</li>
+          <li key={item.id}>{renderItem(item, ids)}</li>
         ))}
       </ul>
       {remaining > 0 && (

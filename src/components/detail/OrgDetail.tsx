@@ -75,7 +75,7 @@ export function OrgDetail({ id }: { id: string }) {
                 {items.map((d) => d && (
                   <button
                     key={d.id}
-                    onClick={() => open('impactDimension', d.id)}
+                    onClick={() => open('impactDimension', d.id, items.map((x) => x!.id))}
                     className="flex items-center gap-1.5 text-[11px] px-2 py-1 rounded-lg bg-brand-teal-soft text-brand-teal-light hover:opacity-80 border border-brand-teal-soft"
                   >
                     {d.iconUrl && <img src={d.iconUrl} alt="" className="w-5 h-5 rounded-sm shrink-0" />}
@@ -113,6 +113,9 @@ function FlowSection({
 
   const visible = flows.slice(0, MAX_VISIBLE);
   const remaining = flows.length - visible.length;
+  // Siblings cover every flow in the section, so the modal's ‹ › pager reaches
+  // the ones the preview cuts off.
+  const ids = flows.map((f) => f.id);
 
   return (
     <Section title={`${title} (${flows.length})`}>
@@ -124,7 +127,7 @@ function FlowSection({
           return (
             <li key={f.id}>
               <button
-                onClick={() => open('flow', f.id)}
+                onClick={() => open('flow', f.id, ids)}
                 className="w-full flex items-center justify-between text-sm border border-slate-100 rounded-md px-3 py-2 hover:border-slate-300 transition-colors"
               >
                 <span className="text-slate-600 truncate">{cpName}</span>
