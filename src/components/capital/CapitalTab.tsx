@@ -7,7 +7,7 @@ import type { CapitalTables } from '../../data/capital';
 import { usePlace } from '../../context/PlaceContext';
 import {
   StackedBarChart, LineChart, ShareBarChart, Legend, Tooltip,
-  CHART_W, niceTicks,
+  niceTicks, fittedTicks, useMeasuredWidth, textWidth,
 } from './charts';
 import type { StackSeries, LineSeries, TooltipState } from './charts';
 import { SnapshotCard } from '../SnapshotButton';
@@ -80,11 +80,28 @@ export function CapitalTab() {
   );
 }
 
-function Card({ title, sub, children, note }: { title: string; sub?: string; note?: string; children: React.ReactNode }) {
+// A chart card. `span` is how many of the 6 grid columns it takes on wide
+// screens: charts with many series or many rows need the full width, compact
+// ones read fine at half.
+function Card({ title, sub, children, note, span = 'half' }: {
+  title: string; sub?: string; note?: string; span?: 'half' | 'full';
+  children: React.ReactNode;
+}) {
   return (
-    <SnapshotCard title={title} sub={sub && <span className="block max-w-xl">{sub}</span>} note={note}>
-      <div className="mt-3">{children}</div>
-    </SnapshotCard>
+    <div className={span === 'full' ? 'xl:col-span-6' : 'xl:col-span-3'}>
+      <SnapshotCard title={title} sub={sub && <span className="block max-w-3xl">{sub}</span>} note={note}>
+        <div className="mt-3">{children}</div>
+      </SnapshotCard>
+    </div>
+  );
+}
+
+function SectionHeading({ children, hint }: { children: React.ReactNode; hint?: string }) {
+  return (
+    <div className="xl:col-span-6 flex items-baseline gap-3 flex-wrap mt-2 first:mt-0">
+      <h2 className="text-sm font-bold uppercase tracking-widest text-slate-500">{children}</h2>
+      {hint && <span className="text-xs text-slate-400">{hint}</span>}
+    </div>
   );
 }
 
@@ -150,7 +167,9 @@ function StatewideView({ tables, scope }: { tables: CapitalTables; scope: Scope 
   const scopeLabel = scope === 'federal_only' ? 'federal programs only (CRA excluded)' : 'all programs including CRA';
 
   return (
-    <div className="grid grid-cols-1 xl:grid-cols-2 gap-5 mt-5">
+    <div className="grid grid-cols-1 xl:grid-cols-6 gap-5 mt-5">
+      <SectionHeading hint="Totals and growth, 2018–2022">How much moved</SectionHeading>
+
       <Card
         title="Program dollars by year"
         sub="Federal community development programs, stacked by 2022 size. CRA small-business lending is charted separately below — it runs roughly ten times everything else combined."
@@ -169,12 +188,16 @@ function StatewideView({ tables, scope }: { tables: CapitalTables; scope: Scope 
           series={indexSeries}
           ticks={niceTicks(maxIndex)}
           format={(v) => String(Math.round(v))}
+          height={300}
           endLabels
         />
         <Legend items={[{ key: 'CDFI', color: '#4750a2' }, { key: 'Other programs', color: '#cbd5e1' }]} />
       </Card>
 
+      <SectionHeading hint="Whether the dollars land in the places that need them">Who they reach</SectionHeading>
+
       <Card
+        span="full"
         title="Share of dollars reaching low- and moderate-income tracts"
         sub="Line color reflects the 2018 → 2022 change: green improved, orange weakened, gray flat (within 2 points). Program-years with fewer than 20 records are suppressed."
       >
@@ -183,6 +206,7 @@ function StatewideView({ tables, scope }: { tables: CapitalTables; scope: Scope 
           series={lmiSeries}
           ticks={[0, 0.25, 0.5, 0.75, 1]}
           format={(v) => `${Math.round(v * 100)}%`}
+          height={320}
           endLabels
         />
         <Legend items={[
@@ -191,6 +215,8 @@ function StatewideView({ tables, scope }: { tables: CapitalTables; scope: Scope 
           { key: 'Flat', color: DIRECTION_COLORS.flat },
         ]} />
       </Card>
+
+      <SectionHeading hint="By tract income level and by region">Where they land</SectionHeading>
 
       <Card
         title="Where the dollars land, by tract income level"
@@ -207,14 +233,18 @@ function StatewideView({ tables, scope }: { tables: CapitalTables; scope: Scope 
         <LineChart
           years={years}
           series={regionSeries}
-          ticks={[0, 0.25, 0.5, 0.75, 1]}
+          ticks={fittedTicks(regionSeries.flatMap((s) => s.points.map((pt) => pt.value)))}
           format={(v) => `${Math.round(v * 100)}%`}
+          reference={{ value: 0.5, label: 'even split' }}
           endLabels
         />
         <Legend items={Object.entries(REGION_COLORS).map(([key, color]) => ({ key, color }))} />
       </Card>
 
+      <SectionHeading hint="Counties clearing $25M in either year">County detail</SectionHeading>
+
       <Card
+        span="full"
         title="County change, 2018 → 2022"
         sub="Federal-program dollars by county (CRA excluded), for counties clearing $25M in either year. Green moved up, orange moved down; the caption under each county shows how broadly the dollars spread."
       >
@@ -227,21 +257,29 @@ function StatewideView({ tables, scope }: { tables: CapitalTables; scope: Scope 
 // --- Arrow (dumbbell) chart --------------------------------------------------
 
 function ArrowChart({ tables }: { tables: CapitalTables }) {
+  const [ref, w] = useMeasuredWidth();
   const [tip, setTip] = useState<TooltipState | null>(null);
   const arrows = tables.county_arrows;
   const rowH = 30;
-  const padL = 120, padR = 60, padT = 8;
+  // The name gutter is sized to the longest county rather than a fixed 120,
+  // so nothing is clipped and nothing is padding empty space.
+  const padL = Math.min(
+    Math.max(...arrows.map((a) => textWidth(a.county_name, 11)), 60) + 14,
+    Math.max(90, w * 0.28),
+  );
+  const padR = 68, padT = 8;
   const H = padT + arrows.length * rowH + 8;
   const max = Math.max(...arrows.flatMap((a) => [a.amount_2018, a.amount_2022]));
-  const sx = (v: number) => padL + (v / max) * (CHART_W - padL - padR);
+  const sx = (v: number) => padL + (v / max) * (w - padL - padR);
 
   const meta = new Map(
     tables.county_year_totals.filter((r) => r.year === 2022).map((r) => [r.county_fips, r]),
   );
 
   return (
-    <div className="relative">
-      <svg viewBox={`0 0 ${CHART_W} ${H}`} className="w-full">
+    <div ref={ref} className="relative">
+      {w > 0 && (
+      <svg width={w} height={H} className="block overflow-visible">
         {arrows.map((a, i) => {
           const y = padT + i * rowH + rowH / 2;
           const x1 = sx(a.amount_2018);
@@ -261,20 +299,21 @@ function ArrowChart({ tables }: { tables: CapitalTables }) {
               })}
               onMouseLeave={() => setTip(null)}
             >
-              <text x={padL - 8} y={y + 3} textAnchor="end" fontSize={10} fontWeight={600} className="fill-slate-600">
+              <text x={padL - 8} y={y + 4} textAnchor="end" fontSize={11} fontWeight={600} className="fill-slate-600">
                 {a.county_name}
               </text>
               <line x1={x1} y1={y} x2={x2} y2={y} stroke={color} strokeWidth={2} />
               <circle cx={x1} cy={y} r={3.5} fill="#fff" stroke={color} strokeWidth={2} />
               <circle cx={x2} cy={y} r={4.5} fill={color} />
               {/* confidence caption: breadth of programs/tracts, not just dollars */}
-              <text x={Math.max(x1, x2) + 10} y={y + 3} fontSize={8.5} className="fill-slate-400">
+              <text x={Math.max(x1, x2) + 10} y={y + 4} fontSize={10} className="fill-slate-400">
                 {m ? `${m.program_count}p · ${m.tract_count}t` : ''}
               </text>
             </g>
           );
         })}
       </svg>
+      )}
       <Tooltip tip={tip} />
       <p className="text-[10px] text-slate-400 mt-1">
         Open circle = 2018 · filled circle = 2022 · caption = programs and tracts receiving dollars in 2022.
@@ -319,7 +358,7 @@ function CountyView({ tables, fips, name }: { tables: CapitalTables; fips: strin
         <h2 className="text-xl font-bold text-slate-800">{label} County, 2018–2022</h2>
         <span className="text-sm text-slate-500">{fmtDollars(totalAll)} across all programs</span>
       </div>
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-5 mt-4">
+      <div className="grid grid-cols-1 xl:grid-cols-6 gap-5 mt-4">
         <Card title="All program dollars by year" sub="Every program including CRA small-business lending. Hover a point for how broadly the dollars spread.">
           <LineChart years={years} series={trendSeries} ticks={niceTicks(maxTrend)} format={fmtDollars} />
         </Card>
