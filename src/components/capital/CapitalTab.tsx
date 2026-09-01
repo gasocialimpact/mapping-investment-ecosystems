@@ -75,8 +75,9 @@ export function CapitalTab() {
       <p className="text-[11px] text-slate-400 mt-8 max-w-3xl">
         Community investment programs by census tract, {tables.years[0]}–{tables.years[tables.years.length - 1]}:
         CRA small-business lending, CDFI, CDBG, HOME, LIHTC, NMTC, Historic Tax Credit, and SBA
-        504 / 7(a). Amounts are reported dollars per tract-year; thin cells (fewer than 20 records)
-        are suppressed in share calculations. No single year carries every program — LIHTC reports
+        504 / 7(a). Amounts are reported dollars per tract-year; cells built on fewer than 20
+        records are marked with an asterisk rather than removed. No single year carries every
+        program — LIHTC reports
         {' '}{tables.program_coverage.find((c) => c.program === 'LIHTC')?.first_year}–
         {tables.program_coverage.find((c) => c.program === 'LIHTC')?.last_year} and the SBA programs
         {' '}{tables.program_coverage.find((c) => c.program === 'SBA 7(a)')?.first_year}–
@@ -163,13 +164,22 @@ function StatewideView({ tables, scope }: { tables: CapitalTables; scope: Scope 
   const maxIndex = Math.max(...tables.program_index.map((r) => r.index_value ?? 0));
 
   // T3 — LMI share lines, colored by precomputed direction
-  const lmiPrograms = [...new Set(tables.lmi_share_by_program.map((r) => r.program))];
+  const lmiRows = tables.lmi_share_by_program;
+  const lmiPrograms = [...new Set(lmiRows.map((r) => r.program))];
   const lmiSeries: LineSeries[] = lmiPrograms.map((program) => {
     const rows = tables.lmi_share_by_program.filter((r) => r.program === program && r.lmi_share != null);
     return {
       key: program,
-      color: DIRECTION_COLORS[rows[0]?.direction ?? 'flat'] ?? '#94a3b8',
-      points: rows.map((r) => ({ year: r.year, value: r.lmi_share!, label: `${(r.lmi_share! * 100).toFixed(1)}% to LMI tracts · ${r.record_count} records` })),
+      // No direction verdict means too few reliable years to judge — drawn
+      // dashed and in neutral gray rather than scored as "flat".
+      color: rows[0]?.direction ? DIRECTION_COLORS[rows[0].direction] : '#94a3b8',
+      dashed: !rows[0]?.direction,
+      points: rows.map((r) => ({
+        year: r.year,
+        value: r.lmi_share!,
+        thin: r.thin,
+        label: `${(r.lmi_share! * 100).toFixed(1)}% to LMI tracts · ${r.record_count} records${r.thin ? ' (thin)' : ''}`,
+      })),
     };
   });
 
@@ -264,7 +274,7 @@ function StatewideView({ tables, scope }: { tables: CapitalTables; scope: Scope 
       <Card
         span="full"
         title="Share of dollars reaching low- and moderate-income tracts"
-        sub="Line color reflects the change across each program's own first and last reported year: green improved, orange weakened, gray flat (within 2 points). Program-years with fewer than 20 records are suppressed."
+        sub="Line color reflects the change across each program's own first and last reliably-reported year: green improved, orange weakened, gray flat (within 2 points). Thin program-years are marked, not removed — see the note under the table."
       >
         <LineChart
           years={years}
@@ -286,20 +296,24 @@ function StatewideView({ tables, scope }: { tables: CapitalTables; scope: Scope 
               color: sr.color,
               cells: [
                 ...years.map((y) => {
-                  const pt = sr.points.find((q) => q.year === y);
-                  return pt ? pct(pt.value) : NO_DATA;
+                  const row = lmiRows.find((r) => r.program === sr.key && r.year === y);
+                  if (!row || row.lmi_share == null) return NO_DATA;
+                  return row.thin
+                    ? <span className="text-slate-400" title={`${row.record_count} records — too few to be stable`}>{pct(row.lmi_share)}*</span>
+                    : pct(row.lmi_share);
                 }),
                 delta == null ? NO_DATA
                   : `${delta > 0 ? '+' : ''}${(delta * 100).toFixed(1)} pts`,
               ],
             };
           })}
-          note={`A dash is either a year the program did not report, or a program-year with fewer than 20 records, suppressed as too thin to trust. ${coverage}`}
+          note={`* marks a program-year built on fewer than 20 records — shown because it is real, greyed because one large deal can swing the share by tens of points. Hollow points on the chart mark the same cells, and a dashed line means too few reliable years to call a direction. A dash is a year the program did not report. ${coverage}`}
         />
         <Legend items={[
           { key: 'Improved', color: DIRECTION_COLORS.improved },
           { key: 'Weakened', color: DIRECTION_COLORS.weakened },
           { key: 'Flat', color: DIRECTION_COLORS.flat },
+          { key: 'Too few reliable years to call', color: '#94a3b8' },
         ]} />
       </Card>
 

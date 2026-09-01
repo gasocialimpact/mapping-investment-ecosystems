@@ -33,6 +33,8 @@ export interface LmiShareRow {
   direction_from: number | null;
   direction_to: number | null;
   record_count: number;
+  /** Fewer than 20 records: shown, but marked as volatile rather than dropped. */
+  thin: boolean;
 }
 
 export interface IncomeMixRow {

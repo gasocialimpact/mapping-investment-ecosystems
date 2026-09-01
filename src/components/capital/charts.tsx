@@ -251,7 +251,9 @@ export interface LineSeries {
   key: string;
   color: string;
   width?: number;
-  points: { year: number; value: number; label?: string }[];
+  /** Drawn dashed — used when the series has no reliable trend verdict. */
+  dashed?: boolean;
+  points: { year: number; value: number; label?: string; thin?: boolean }[];
 }
 
 export function LineChart({
@@ -324,9 +326,23 @@ export function LineChart({
                 fill="none"
                 stroke={sr.color}
                 strokeWidth={sr.width ?? 2}
+                strokeDasharray={sr.dashed ? '5 4' : undefined}
                 strokeLinejoin="round"
                 strokeLinecap="round"
               />
+              {/* Thin points get a hollow ring: the value is real, the share
+                  behind it rests on very few records. */}
+              {sr.points.filter((pt) => pt.thin).map((pt) => (
+                <circle
+                  key={`thin-${pt.year}`}
+                  cx={sx(pt.year)}
+                  cy={sy(pt.value)}
+                  r={3.5}
+                  fill="#fff"
+                  stroke={sr.color}
+                  strokeWidth={1.5}
+                />
+              ))}
               {sr.points.map((pt) => (
                 <circle
                   key={pt.year}

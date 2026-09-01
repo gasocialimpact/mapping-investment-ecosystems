@@ -230,14 +230,20 @@ const lmi_share_by_program = [];
 {
   const byProgramYear = groupBy(inYears, (r) => `${r.program}|${r.year}`);
   // First pass: totals per program-year, suppressing thin cells (<20 records)
-  const kept = new Map();
+  // A share computed from a handful of projects is volatile — one large deal
+  // can swing HOME or LIHTC by tens of points. That is a reason to MARK a cell,
+  // not to delete it: dropping thin cells hid $1.02B and removed HOME from this
+  // chart entirely. Every program-year is emitted with a `thin` flag, and the
+  // direction verdict below is still computed only from reliable years.
+  const THIN_RECORDS = 20;
+  const kept = byProgramYear;
+  const solid = new Map();
   for (const [key, group] of byProgramYear) {
-    if (group.length < 20) continue; // HOME/LIHTC swing wildly on 1-2 projects
-    kept.set(key, group);
+    if (group.length >= THIN_RECORDS) solid.set(key, group);
   }
   // direction: 2022 share vs 2018 share, flat under 2 percentage points
   const shareOf = (key) => {
-    const g = kept.get(key);
+    const g = solid.get(key);
     if (!g) return null;
     const total = sum(g);
     return total > 0 ? sum(g.filter((r) => r.lmi_flag)) / total : null;
@@ -247,7 +253,8 @@ const lmi_share_by_program = [];
   const directions = new Map();
   const spans = new Map();
   for (const program of new Set(records.map((r) => r.program))) {
-    const kept_years = YEARS.filter((y) => kept.has(`${program}|${y}`));
+    // Only reliable years can anchor a direction verdict.
+    const kept_years = YEARS.filter((y) => solid.has(`${program}|${y}`));
     const first = kept_years[0];
     const last = kept_years[kept_years.length - 1];
     let direction = null;
@@ -272,6 +279,8 @@ const lmi_share_by_program = [];
       direction_from: spans.get(program)?.first ?? null,
       direction_to: spans.get(program)?.last ?? null,
       record_count: group.length,
+      // Below the reliability threshold: shown, but marked everywhere.
+      thin: group.length < THIN_RECORDS,
     });
   }
   lmi_share_by_program.sort((a, b) => a.program.localeCompare(b.program) || a.year - b.year);
