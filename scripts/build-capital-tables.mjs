@@ -192,38 +192,6 @@ const program_year_totals = [];
   });
 }
 
-// --- Table 2: program_index (2018–2022, SBA dropped, 2018 = 100) -----------
-
-const program_index = [];
-{
-  for (const [program, group] of groupBy(records, (r) => r.program)) {
-    const byYear = groupBy(group, (r) => r.year);
-    // Each program is indexed to its own first reporting year rather than a
-    // shared 2018. SBA has no 2018 and used to be dropped from this chart
-    // entirely; now it is charted from 2019, its actual base.
-    const base_year = Math.min(...byYear.keys());
-    const base = byYear.get(base_year);
-    const base_amount = Math.round(sum(base));
-    for (const year of YEARS) {
-      const yearRows = byYear.get(year);
-      if (!yearRows) continue; // absent year stays absent — never a zero
-      const total_amount = Math.round(sum(yearRows));
-      program_index.push({
-        program,
-        year,
-        base_year,
-        total_amount,
-        base_amount,
-        index_value: base_amount > 0 ? Math.round((total_amount / base_amount) * 1000) / 10 : null,
-        record_count: yearRows.length,
-        // Reserved emphasis column — repoint it later without touching charts.
-        highlight: program === 'CDFI',
-      });
-    }
-  }
-  program_index.sort((a, b) => a.program.localeCompare(b.program) || a.year - b.year);
-}
-
 // --- Table 3: lmi_share_by_program (2018–2022) -----------------------------
 
 const lmi_share_by_program = [];
@@ -435,7 +403,6 @@ writeFileSync(tablesPath, JSON.stringify({
   atlanta_core: [...ATLANTA_CORE],
   program_coverage,
   program_year_totals,
-  program_index,
   lmi_share_by_program,
   income_mix_by_year,
   region_share_by_year,
@@ -454,7 +421,6 @@ for (const c of program_coverage) {
   console.log(`     ${c.program.padEnd(20)} ${c.first_year}-${c.last_year}  ${String(c.record_count).padStart(6)} rows  $${c.total_amount.toLocaleString()}`);
 }
 console.log(`  T1 program_year_totals: ${program_year_totals.length} rows`);
-console.log(`  T2 program_index:       ${program_index.length} rows`);
 console.log(`  T3 lmi_share:           ${lmi_share_by_program.length} rows`);
 console.log(`  T4 income_mix:          ${income_mix_by_year.length} rows (2 scopes)`);
 console.log(`  T5 region_share:        ${region_share_by_year.length} rows (2 scopes)`);

@@ -10,18 +10,6 @@ export interface ProgramYearTotal {
   exclude_from_stack: boolean;
 }
 
-export interface ProgramIndexRow {
-  program: string;
-  year: number;
-  /** The program's own first reporting year, which the index is based on. */
-  base_year: number;
-  total_amount: number;
-  base_amount: number;
-  index_value: number | null;
-  record_count: number;
-  highlight: boolean;
-}
-
 export interface LmiShareRow {
   program: string;
   year: number;
@@ -108,7 +96,6 @@ export interface CapitalTables {
   atlanta_core: string[];
   program_coverage: ProgramCoverage[];
   program_year_totals: ProgramYearTotal[];
-  program_index: ProgramIndexRow[];
   lmi_share_by_program: LmiShareRow[];
   income_mix_by_year: IncomeMixRow[];
   region_share_by_year: RegionShareRow[];

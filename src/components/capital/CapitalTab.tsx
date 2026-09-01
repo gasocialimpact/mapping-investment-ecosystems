@@ -104,6 +104,27 @@ function Card({ title, sub, children, note, span = 'half' }: {
   );
 }
 
+/**
+ * A program's change from its first to its last reported year.
+ *
+ * Each program is measured over its own window, because no two of them share
+ * one — so the cell carries the years it actually spans.
+ */
+function changeSinceFirst(rows: { year: number; total_amount: number }[]) {
+  const sorted = [...rows].sort((a, b) => a.year - b.year);
+  const first = sorted[0];
+  const last = sorted[sorted.length - 1];
+  if (!first || !last || first.year === last.year || !first.total_amount) return NO_DATA;
+  const change = (last.total_amount - first.total_amount) / first.total_amount;
+  const color = change > 0.02 ? DIRECTION_COLORS.improved : change < -0.02 ? DIRECTION_COLORS.weakened : DIRECTION_COLORS.flat;
+  return (
+    <span style={{ color }} title={`${first.year} → ${last.year}`}>
+      {change > 0 ? '+' : ''}{Math.round(change * 100)}%
+      <span className="text-slate-400 font-normal"> ({first.year}–{last.year})</span>
+    </span>
+  );
+}
+
 // Programs report over different windows, so a missing cell has to be readable
 // as "not reported" rather than "zero dollars". Every card that spans multiple
 // programs carries this.
@@ -147,22 +168,6 @@ function StatewideView({ tables, scope }: { tables: CapitalTables; scope: Scope 
   }));
   const craByYear = tables.program_year_totals.filter((r) => r.program === CRA);
 
-  // T2 — indexed growth, CDFI highlighted via the data's highlight column
-  const indexPrograms = [...new Set(tables.program_index.map((r) => r.program))];
-  const indexSeries: LineSeries[] = indexPrograms.map((program) => {
-    const rows = tables.program_index.filter((r) => r.program === program);
-    const highlight = rows[0]?.highlight;
-    return {
-      key: program,
-      color: highlight ? '#4750a2' : '#cbd5e1',
-      width: highlight ? 2.5 : 1.5,
-      points: rows.filter((r) => r.index_value != null).map((r) => ({
-        year: r.year, value: r.index_value!, label: `index ${r.index_value} · ${fmtDollars(r.total_amount)}`,
-      })),
-    };
-  }).sort((a, b) => Number(a.color !== '#cbd5e1') - Number(b.color !== '#cbd5e1')); // highlighted drawn last
-  const maxIndex = Math.max(...tables.program_index.map((r) => r.index_value ?? 0));
-
   // T3 — LMI share lines, colored by precomputed direction
   const lmiRows = tables.lmi_share_by_program;
   const lmiPrograms = [...new Set(lmiRows.map((r) => r.program))];
@@ -204,9 +209,10 @@ function StatewideView({ tables, scope }: { tables: CapitalTables; scope: Scope 
 
   return (
     <div className="grid grid-cols-1 xl:grid-cols-6 gap-5 mt-5">
-      <SectionHeading hint={`Totals and growth, ${years[0]}\u2013${years[years.length - 1]}`}>How much moved</SectionHeading>
+      <SectionHeading hint={`Totals by program, ${years[0]}\u2013${years[years.length - 1]}`}>How much moved</SectionHeading>
 
       <Card
+        span="full"
         title="Program dollars by year"
         sub={`Federal community development programs, stacked by ${tables.reference_year} size. CRA small-business lending is in the table but kept out of the stack — it runs roughly ten times everything else combined.`}
         note={coverage}
@@ -214,58 +220,42 @@ function StatewideView({ tables, scope }: { tables: CapitalTables; scope: Scope 
         <StackedBarChart years={stackYears} series={stackSeries} />
         <DataTable
           rowHeader="Program"
-          columns={stackYears.map(String)}
+          columns={[...stackYears.map(String), '% change']}
           rows={[
             ...stackSeries.map((sr): TableRow => ({
               label: sr.key,
               color: sr.color,
-              cells: stackYears.map((y) => (sr.values.get(y) ? fmtDollars(sr.values.get(y)!) : NO_DATA)),
+              cells: [
+                ...stackYears.map((y) => (sr.values.get(y) ? fmtDollars(sr.values.get(y)!) : NO_DATA)),
+                changeSinceFirst(
+                  tables.program_year_totals.filter((r) => r.program === sr.key),
+                ),
+              ],
             })),
             {
               label: 'Total (stacked)',
               strong: true,
-              cells: stackYears.map((y) =>
-                fmtDollars(stackSeries.reduce((t, sr) => t + (sr.values.get(y) ?? 0), 0))),
+              cells: [
+                ...stackYears.map((y) =>
+                  fmtDollars(stackSeries.reduce((t, sr) => t + (sr.values.get(y) ?? 0), 0))),
+                // Deliberately blank: the first and last year hold different
+                // programs, so a portfolio-level change would compare LIHTC
+                // alone against SBA alone.
+                <span className="text-slate-400" title="Not comparable — the program mix differs between the first and last year">{NO_DATA}</span>,
+              ],
             },
             {
               label: 'CRA small business (not stacked)',
-              cells: stackYears.map((y) => {
-                const row = craByYear.find((r) => r.year === y);
-                return row ? fmtDollars(row.total_amount) : NO_DATA;
-              }),
+              cells: [
+                ...stackYears.map((y) => {
+                  const row = craByYear.find((r) => r.year === y);
+                  return row ? fmtDollars(row.total_amount) : NO_DATA;
+                }),
+                changeSinceFirst(craByYear),
+              ],
             },
           ]}
-          note={coverage}
-        />
-      </Card>
-
-      <Card
-        title="Growth since each program's first year"
-        sub="Each program indexed to its own first reporting year. CDFI is highlighted. SBA programs start in 2019 and were previously left off this chart entirely."
-      >
-        <LineChart
-          years={years}
-          series={indexSeries}
-          ticks={niceTicks(maxIndex)}
-          format={(v) => String(Math.round(v))}
-          height={300}
-          endLabels
-        />
-        <DataTable
-          rowHeader="Program"
-          columns={years.map(String)}
-          rows={indexSeries.map((sr): TableRow => {
-            const base = tables.program_index.find((r) => r.program === sr.key)?.base_year;
-            return {
-              label: base ? `${sr.key} (${base} = 100)` : sr.key,
-              color: sr.color,
-              cells: years.map((y) => {
-                const pt = sr.points.find((q) => q.year === y);
-                return pt ? Math.round(pt.value) : NO_DATA;
-              }),
-            };
-          })}
-          note={`A value of 150 means the program moved half again as many dollars as in its base year. ${coverage}`}
+          note={`% change runs from each program's own first reported year to its last — the span is shown beside each figure. The stacked total has no change figure because the first and last years hold different programs. ${coverage}`}
         />
       </Card>
 
