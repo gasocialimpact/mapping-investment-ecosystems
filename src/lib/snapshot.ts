@@ -81,7 +81,7 @@ async function capture(node: HTMLElement): Promise<Blob | null> {
     backgroundColor: BACKGROUND,
     // Styles land on the clone, not the live node, so nothing flickers on
     // screen. Un-clipping lets a scrolled panel capture its whole content.
-    style: { maxHeight: 'none', overflow: 'visible' },
+    style: { maxHeight: 'none', overflow: 'visible', transform: 'none' },
     height: fullHeight(node),
     filter: (n) => !isHidden(n),
     fontEmbedCSS: await embeddedFontCss(node),

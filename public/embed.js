@@ -47,6 +47,31 @@
     });
   }
 
+  // Hold the page still while the tool has a record modal open. The modal
+  // learns where the window is over postMessage, so if the page kept scrolling
+  // the modal would always be a frame behind it and visibly drift. Freezing the
+  // background is also just what a modal should do.
+  var locked = null;
+  function setScrollLock(on) {
+    var doc = document.documentElement;
+    var body = document.body;
+    if (on) {
+      if (locked) return;
+      // Replacing the scrollbar with padding keeps the page from shifting
+      // sideways as it locks.
+      var scrollbar = window.innerWidth - doc.clientWidth;
+      var padding = parseFloat(getComputedStyle(body).paddingRight) || 0;
+      locked = { overflow: doc.style.overflow, paddingRight: body.style.paddingRight };
+      doc.style.overflow = 'hidden';
+      if (scrollbar > 0) body.style.paddingRight = padding + scrollbar + 'px';
+    } else {
+      if (!locked) return;
+      doc.style.overflow = locked.overflow;
+      body.style.paddingRight = locked.paddingRight;
+      locked = null;
+    }
+  }
+
   var ticking = false;
   function onScrollOrResize() {
     if (ticking) return;
@@ -89,6 +114,11 @@
       return;
     }
 
+    if (data.type === 'scrollLock') {
+      setScrollLock(!!data.locked);
+      return;
+    }
+
     if (data.type === 'scrollTo') {
       // A point inside the frame the tool wants brought into view.
       var top = frame.getBoundingClientRect().top + window.scrollY + (data.top || 0);
@@ -103,5 +133,10 @@
   frames().forEach(function (frame) {
     frame.setAttribute('scrolling', 'no');
     reportViewport(frame);
+    // Never let a reload strand the page in a locked state.
+    frame.addEventListener('load', function () {
+      setScrollLock(false);
+      reportViewport(frame);
+    });
   });
 })();

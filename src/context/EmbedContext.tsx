@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
-import { connectToHost, isEmbedded, requestHostScroll } from '../lib/embed';
+import { connectToHost, isEmbedded, requestHostScroll, requestScrollLock } from '../lib/embed';
 import type { EmbedMode, HostViewport } from '../lib/embed';
 
 export interface VisibleBand {
@@ -18,6 +18,8 @@ interface EmbedContextValue {
   scrollIntoView: (el: HTMLElement | null) => void;
   /** Return to the top of the tool, whoever owns the scrollbar. */
   scrollToTop: () => void;
+  /** Freeze the page behind an open modal so nothing has to chase the scroll. */
+  setScrollLock: (locked: boolean) => void;
 }
 
 const Ctx = createContext<EmbedContextValue>({
@@ -25,6 +27,7 @@ const Ctx = createContext<EmbedContextValue>({
   band: { top: 0, height: 0 },
   scrollIntoView: () => {},
   scrollToTop: () => {},
+  setScrollLock: () => {},
 });
 
 // Tiling the frame with probes is how the visible slice is found when the host
@@ -138,6 +141,11 @@ export function EmbedProvider({ children }: { children: ReactNode }) {
       scrollToTop: () => {
         if (mode === 'flow') requestHostScroll(0);
         else document.querySelector('.app-scroll')?.scrollTo({ top: 0, behavior: 'smooth' });
+      },
+      // Only the host can hold its own scrollbar still. Standalone and framed
+      // fallback already clip the document, so there is nothing to lock.
+      setScrollLock: (locked: boolean) => {
+        if (mode === 'flow') requestScrollLock(locked);
       },
     }),
     [mode, band],
