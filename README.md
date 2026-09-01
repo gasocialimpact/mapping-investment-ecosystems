@@ -34,18 +34,42 @@ npm run preview  # serve the production build
 
 ## Embedding
 
-The tool is built to sit in an iframe. It measures the part of the frame that is actually
-on screen (`src/lib/useVisibleBand.ts`) and keeps the header, tabs and record modals inside
-it, so a frame taller than the browser window still behaves.
+Paste both tags. The script is what makes the embed behave — without it the frame is a
+fixed box that the content either overflows or rattles around inside.
 
 ```html
-<iframe src="https://…/" width="100%" height="1200" allow="clipboard-write"></iframe>
+<iframe
+  src="https://gasocialimpact.github.io/mapping-investment-ecosystems/"
+  data-ecosystem-map
+  width="100%" height="1200"
+  title="Georgia's Impact Investing Ecosystem Map"
+  allow="clipboard-write"
+  style="border:none;border-radius:8px;display:block;width:100%"></iframe>
+<script src="https://gasocialimpact.github.io/mapping-investment-ecosystems/embed.js"></script>
 ```
 
-`allow="clipboard-write"` is what lets the **snapshot buttons** (the camera icon on cards,
-charts, tables and record modals) copy a PNG straight to the clipboard — a cross-origin
-iframe does not get that permission by default. Without it nothing breaks: the button
-falls back to downloading the PNG instead.
+`public/embed.js` resizes the frame to the content and tells the tool where the browser
+window sits. The tool (`src/lib/embed.ts`, `src/context/EmbedContext.tsx`) then lays out in
+one continuous flow — no scrollbar inside a scrollbar — and opens record modals in view
+rather than at the top of a tall frame. Content height is reported from a `ResizeObserver`,
+so the frame follows tab switches, accordions and county reports.
+
+Three layout modes, picked automatically:
+
+| Mode | When | Behavior |
+|---|---|---|
+| `standalone` | not in a frame | fills the viewport, scrolls internally |
+| `framed` | in a frame, no snippet | fills the frame, scrolls internally |
+| `flow` | host snippet answered | grows to content; the page owns the scrollbar |
+
+Notes on the two attributes that are easy to drop:
+
+- `data-ecosystem-map` is how the script finds the frame. Without it nothing happens.
+- `allow="clipboard-write"` lets the **snapshot buttons** copy a PNG straight to the
+  clipboard — a cross-origin iframe does not get that permission by default. Without it
+  the button downloads the PNG instead.
+
+The `height` is only what shows before the tool reports its own.
 
 ## Data pipeline
 

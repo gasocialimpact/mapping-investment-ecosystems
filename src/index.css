@@ -12,6 +12,16 @@ body,
   overflow: hidden;
 }
 
+/* Flow mode: the host page has told us it will size the frame to our content,
+   so the document grows instead of clipping to a scroller of its own. This is
+   what removes the scrollbar-inside-a-scrollbar for embedded readers. */
+html.embed-flow,
+html.embed-flow body,
+html.embed-flow #root {
+  height: auto;
+  overflow: visible;
+}
+
 body {
   margin: 0;
   background: #ffffff;

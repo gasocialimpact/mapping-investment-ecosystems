@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { X, ArrowLeft, FileDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useDetail } from '../../context/DetailContext';
-import { useVisibleBand } from '../../lib/useVisibleBand';
+import { useVisibleBand } from '../../context/EmbedContext';
 import { saveRecordAsPdf } from '../../lib/savePdf';
 import { SnapshotButton } from '../SnapshotButton';
 import { OrgDetail } from './OrgDetail';

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { ChevronRight } from 'lucide-react';
 import { useData } from '../../context/DataContext';
 import { usePlace } from '../../context/PlaceContext';
+import { useEmbed } from '../../context/EmbedContext';
 import type { PlaceScope } from '../../context/PlaceContext';
 import { formatCurrency } from '../../lib/format';
 import { ExploreMap } from './ExploreMap';
@@ -13,16 +14,19 @@ import { PlaceReport } from './PlaceReport';
 export function ExploreTab() {
   const { data } = useData();
   const { place, scope, setScope, selectedFips, setSelectedFips, selectedGeoid, ensureTracts } = usePlace();
+  const { scrollIntoView } = useEmbed();
   const prevSelection = useRef<string | null>(null);
 
-  // Scroll to the report when a county or tract is newly selected.
+  // Scroll to the report when a county or tract is newly selected. In flow
+  // mode the host page owns the scrollbar, so this is a request rather than a
+  // direct scroll — a cross-origin frame cannot move its parent itself.
   useEffect(() => {
     const current = selectedGeoid ?? selectedFips;
     if (current && current !== prevSelection.current) {
-      setTimeout(() => document.getElementById('place-report')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+      setTimeout(() => scrollIntoView(document.getElementById('place-report')), 100);
     }
     prevSelection.current = current;
-  }, [selectedFips, selectedGeoid]);
+  }, [selectedFips, selectedGeoid, scrollIntoView]);
 
   const stats = useMemo(() => {
     const orgCount = data?.organizations.length ?? 0;

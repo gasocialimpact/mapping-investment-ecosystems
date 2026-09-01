@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Map, TrendingUp, Network, BookOpen, RotateCcw } from 'lucide-react';
 import type { Tab } from './types';
 import { DataProvider, useData } from './context/DataContext';
 import { PlaceProvider, usePlace } from './context/PlaceContext';
 import { DetailProvider } from './context/DetailContext';
-import { useVisibleBand } from './lib/useVisibleBand';
+import { EmbedProvider, useEmbed } from './context/EmbedContext';
 import { DetailDrawer } from './components/detail/DetailDrawer';
 import { ExploreTab } from './components/explore/ExploreTab';
 import { SavePdfButton } from './components/SavePdfButton';
@@ -21,30 +21,36 @@ const TABS: { id: Tab; label: string; icon: typeof Map }[] = [
 
 export default function App() {
   return (
-    <DataProvider>
-      <PlaceProvider>
-        <DetailProvider>
-          <Dashboard />
-          <DetailDrawer />
-        </DetailProvider>
-      </PlaceProvider>
-    </DataProvider>
+    <EmbedProvider>
+      <DataProvider>
+        <PlaceProvider>
+          <DetailProvider>
+            <Dashboard />
+            <DetailDrawer />
+          </DetailProvider>
+        </PlaceProvider>
+      </DataProvider>
+    </EmbedProvider>
   );
 }
-
-// Below this the app is too cramped to be worth reflowing into, so it stops
-// tracking the window and simply scrolls out of view with the rest of the page.
-const MIN_SHELL_HEIGHT = 420;
 
 function Dashboard() {
   const { data, error } = useData();
   const { setSelectedFips } = usePlace();
   const [activeTab, setActiveTab] = useState<Tab>('explore');
-  const band = useVisibleBand();
+  const { mode, scrollToTop } = useEmbed();
+  const flow = mode === 'flow';
+
+  // In flow mode the host page grows the frame to fit and owns the scrollbar,
+  // so the document itself must be allowed to grow rather than clipping to a
+  // fixed height with a scroller inside it.
+  useEffect(() => {
+    document.documentElement.classList.toggle('embed-flow', flow);
+  }, [flow]);
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-6">
+      <div className={`${flow ? 'min-h-[320px]' : 'min-h-screen'} flex items-center justify-center p-6`}>
         <div className="bg-white rounded-lg border border-red-200 p-6 max-w-md text-center shadow-sm">
           <p className="text-red-600 font-semibold">Could not load data</p>
           <p className="text-sm text-slate-500 mt-2">{error}</p>
@@ -55,26 +61,17 @@ function Dashboard() {
 
   if (!data) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-slate-400 text-sm">
+      <div className={`${flow ? 'min-h-[320px]' : 'min-h-screen'} flex items-center justify-center text-slate-400 text-sm`}>
         Loading ecosystem data...
       </div>
     );
   }
 
-  // Fit the app to what the reader can actually see. Standalone this is the
-  // whole viewport; embedded in an iframe taller than the browser window it
-  // keeps the header, tabs and scroll area inside the on-screen slice instead
-  // of stranding them above it.
-  const shellHeight = Math.min(band.frameHeight, Math.max(band.height, MIN_SHELL_HEIGHT));
-  const shellTop = Math.max(
-    0,
-    Math.min(band.top + (band.height - shellHeight) / 2, band.frameHeight - shellHeight),
-  );
-
   return (
     <div
-      className="app-shell flex flex-col overflow-hidden bg-white print-unclip"
-      style={{ position: 'fixed', top: shellTop, left: 0, right: 0, height: shellHeight }}
+      className={`app-shell flex flex-col bg-white print-unclip ${
+        flow ? '' : 'h-screen overflow-hidden'
+      }`}
     >
       <header className="bg-white border-b border-slate-200 shrink-0 z-20">
         <div className="max-w-[1600px] mx-auto px-6 py-[14px] flex items-center justify-between gap-[14px] flex-wrap">
@@ -84,7 +81,7 @@ function Dashboard() {
           </div>
           <div className="flex items-center gap-2">
             <button
-              onClick={() => { setActiveTab('explore'); setSelectedFips(null); window.scrollTo(0, 0); }}
+              onClick={() => { setActiveTab('explore'); setSelectedFips(null); scrollToTop(); }}
               className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-md border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 transition-colors"
             >
               <RotateCcw size={12} /> Reset View
@@ -109,8 +106,12 @@ function Dashboard() {
         </nav>
       </header>
 
-      <main className="flex-1 min-h-0 print-unclip">
-        <div className="app-scroll max-w-[1600px] mx-auto h-full overflow-y-scroll px-6 print-unclip">
+      <main className={`print-unclip ${flow ? '' : 'flex-1 min-h-0'}`}>
+        <div
+          className={`app-scroll max-w-[1600px] mx-auto px-6 print-unclip ${
+            flow ? '' : 'h-full overflow-y-scroll'
+          }`}
+        >
           <SavePdfButton />
           {activeTab === 'explore' && <ExploreTab />}
           {activeTab === 'capital' && <CapitalTab />}
