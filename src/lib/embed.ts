@@ -17,7 +17,8 @@ const HOST = 'ga-ecosystem-map-host';
 type OutboundMessage =
   | { source: typeof APP; type: 'ready' }
   | { source: typeof APP; type: 'height'; height: number }
-  | { source: typeof APP; type: 'scrollTo'; top: number };
+  | { source: typeof APP; type: 'scrollTo'; top: number }
+  | { source: typeof APP; type: 'scrollLock'; locked: boolean };
 
 /** Sent down by the host snippet. */
 export interface HostViewport {
@@ -58,6 +59,18 @@ function post(message: OutboundMessage) {
  */
 export function requestHostScroll(top: number) {
   post({ source: APP, type: 'scrollTo', top: Math.round(top) });
+}
+
+/**
+ * Hold the host page still while a modal is open.
+ *
+ * Without this the modal has to chase the scroll: its position comes from the
+ * host over postMessage, so it is always a frame behind the scrolling it is
+ * trying to follow, and it visibly drifts. Freezing the page behind the modal
+ * is what a modal is supposed to do anyway, and it means nothing has to move.
+ */
+export function requestScrollLock(locked: boolean) {
+  post({ source: APP, type: 'scrollLock', locked });
 }
 
 interface Listeners {

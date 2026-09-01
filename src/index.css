@@ -100,6 +100,9 @@ body.print-record .record-panel {
   }
   body.print-record .record-panel {
     max-height: none !important;
+    /* The panel is offset into the visible band on screen; printing needs it
+       back at the origin. */
+    transform: none !important;
     max-width: 100% !important;
     overflow: visible !important;
     border: none !important;

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { X, ArrowLeft, FileDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useDetail } from '../../context/DetailContext';
-import { useVisibleBand } from '../../context/EmbedContext';
+import { useEmbed } from '../../context/EmbedContext';
 import { saveRecordAsPdf } from '../../lib/savePdf';
 import { SnapshotButton } from '../SnapshotButton';
 import { OrgDetail } from './OrgDetail';
@@ -18,8 +18,17 @@ const EDGE_GAP = 16; // px of breathing room at the bottom of the visible band
 // where the reader is looking.
 export function DetailDrawer() {
   const { current, close, back, canGoBack, step, position } = useDetail();
-  const band = useVisibleBand();
+  const { band, setScrollLock } = useEmbed();
   const panelRef = useRef<HTMLDivElement>(null);
+  const isOpen = !!current;
+
+  // Hold the page still while a record is open. Otherwise the modal has to
+  // follow a scroll it only hears about second-hand, and trails behind it.
+  useEffect(() => {
+    if (!isOpen) return;
+    setScrollLock(true);
+    return () => setScrollLock(false);
+  }, [isOpen, setScrollLock]);
 
   useEffect(() => {
     if (!current) return;
@@ -69,14 +78,13 @@ export function DetailDrawer() {
   return (
     <div
       className="record-modal fixed inset-0 z-30 flex items-start justify-center px-4"
-      style={{ paddingTop: band.top + offset, paddingBottom: EDGE_GAP }}
       onClick={close}
     >
       <div className="record-overlay absolute inset-0 bg-black/30" />
       <div
         ref={panelRef}
         className="record-panel relative w-full max-w-2xl bg-white rounded-xl border border-slate-200 shadow-xl overflow-y-auto"
-        style={{ maxHeight }}
+        style={{ maxHeight, transform: `translate3d(0, ${band.top + offset}px, 0)` }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Excluded from snapshots for the same reason it is hidden in print:
