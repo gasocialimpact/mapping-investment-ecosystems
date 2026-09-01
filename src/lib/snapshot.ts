@@ -14,16 +14,31 @@ export const SNAPSHOT_EXCLUDE = { 'data-snapshot': 'hide' } as const;
 // means fetching the Google Fonts CSS plus every font file it references, so
 // it is done once and the promise reused for the rest of the session.
 //
-// It is also the one step that reaches off-origin, so it is bounded: a slow or
-// blocked font server degrades the snapshot to system type rather than leaving
-// the reader staring at a button that never finishes.
-const FONT_TIMEOUT_MS = 3000;
+// Falling back to system type is NOT a graceful degradation here. The capture
+// freezes every element to the width it has in the live font and only then
+// re-renders the text, so a wider fallback overflows boxes it was never
+// measured for: labels clip mid-word, ellipses appear where the text actually
+// fits, and flex rows wrap. The font has to be there, so the budget is
+// generous — it is paid once per session, and warmSnapshotFonts() usually
+// spends it before the reader clicks.
+const FONT_TIMEOUT_MS = 10_000;
 let fontCss: Promise<string> | null = null;
+
+async function resolveFontCss(node: HTMLElement): Promise<string> {
+  // getFontEmbedCSS reads the loaded stylesheets, so wait for the document's
+  // own webfonts to settle before asking.
+  try {
+    await document.fonts?.ready;
+  } catch {
+    // Font loading API unavailable — carry on and try the embed anyway.
+  }
+  return getFontEmbedCSS(node);
+}
 
 function embeddedFontCss(node: HTMLElement): Promise<string> {
   if (fontCss) return fontCss;
   const attempt = Promise.race([
-    getFontEmbedCSS(node),
+    resolveFontCss(node),
     new Promise<string>((resolve) => setTimeout(resolve, FONT_TIMEOUT_MS, '')),
   ]).catch(() => '');
   fontCss = attempt;
@@ -63,7 +78,19 @@ function fullHeight(node: HTMLElement): number {
 const RENDER_TIMEOUT_MS = 15_000;
 
 async function renderPng(node: HTMLElement): Promise<Blob> {
-  const blob = await withTimeout(capture(node), RENDER_TIMEOUT_MS, 'The image took too long to render.');
+  // Resolved before the render clock starts, so a slow font fetch does not eat
+  // the drawing budget.
+  const fontEmbedCSS = await embeddedFontCss(node);
+  // Without the webfont the capture is not merely off-brand, it is wrong: text
+  // clips and wraps inside boxes measured for a different typeface. Better a
+  // retryable failure than a broken image pasted into a deck unnoticed.
+  if (!fontEmbedCSS) throw new Error('The typeface could not be loaded for the image.');
+
+  const blob = await withTimeout(
+    capture(node, fontEmbedCSS),
+    RENDER_TIMEOUT_MS,
+    'The image took too long to render.',
+  );
   if (!blob) throw new Error('The image came back empty.');
   return blob;
 }
@@ -75,7 +102,7 @@ function withTimeout<T>(work: Promise<T>, ms: number, message: string): Promise<
   ]);
 }
 
-async function capture(node: HTMLElement): Promise<Blob | null> {
+async function capture(node: HTMLElement, fontEmbedCSS: string): Promise<Blob | null> {
   return toBlob(node, {
     pixelRatio: PIXEL_RATIO,
     backgroundColor: BACKGROUND,
@@ -84,7 +111,7 @@ async function capture(node: HTMLElement): Promise<Blob | null> {
     style: { maxHeight: 'none', overflow: 'visible' },
     height: fullHeight(node),
     filter: (n) => !isHidden(n),
-    fontEmbedCSS: await embeddedFontCss(node),
+    fontEmbedCSS,
   });
 }
 
