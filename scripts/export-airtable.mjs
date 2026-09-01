@@ -185,7 +185,12 @@ async function main() {
       const filename = icon.filename;
       const localName = filename.toLowerCase().replace(/[^a-z0-9.]+/g, '_').replace(/^_/, '');
       const destPath = join(iconDir, localName);
-      const ok = await downloadIfMissing(icon.url, destPath);
+      // Prefer Airtable's generated thumbnail. The SDG attachments are 3000px
+      // CMYK print masters (~1.5 MB each) and they render here at 20–48px; the
+      // thumbnail is web-sized and already sRGB, which browsers handle
+      // consistently where CMYK JPEGs do not.
+      const source = icon.thumbnails?.large?.url ?? icon.url;
+      const ok = await downloadIfMissing(source, destPath);
       if (ok) iconUrl = `icons/impact/${localName}`;
     }
 
