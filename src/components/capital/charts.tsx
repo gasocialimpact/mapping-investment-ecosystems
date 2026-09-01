@@ -82,12 +82,20 @@ function xScaleOf(years: number[], p: Plot) {
   return (year: number) => p.l + ((year - years[0]) / span) * (p.w - p.l - p.r);
 }
 
+/** Point scale inset by half a bar, so bars sit inside the plot rather than on its edges. */
+function bandScaleOf(years: number[], p: Plot, barW: number) {
+  const inset = barW / 2 + 6;
+  const span = Math.max(1, years[years.length - 1] - years[0]);
+  const usable = Math.max(1, p.w - p.l - p.r - inset * 2);
+  return (year: number) => p.l + inset + ((year - years[0]) / span) * usable;
+}
+
 function yScaleOf(max: number, min: number, p: Plot) {
   return (v: number) => p.h - p.b - ((v - min) / Math.max(1e-9, max - min)) * (p.h - p.t - p.b);
 }
 
-function YearTicks({ years, p }: { years: number[]; p: Plot }) {
-  const sx = xScaleOf(years, p);
+function YearTicks({ years, p, scale }: { years: number[]; p: Plot; scale?: (y: number) => number }) {
+  const sx = scale ?? xScaleOf(years, p);
   return (
     <>
       {years.map((y) => (
@@ -177,18 +185,33 @@ export function StackedBarChart({ years, series, valueLabel = fmtDollars, height
   const [tip, setTip] = useState<TooltipState | null>(null);
   const totals = years.map((y) => series.reduce((s, sr) => s + (sr.values.get(y) ?? 0), 0));
   const ticks = niceTicks(Math.max(...totals, 1));
-  // The axis gutter has to fit the widest formatted value, not a guessed 52px.
-  const p = plotOf(w, height, 16, Math.max(44, textWidth(valueLabel(ticks[ticks.length - 1]), AXIS_FONT) + 16));
-  const sx = xScaleOf(years, p);
-  const sy = yScaleOf(ticks[ticks.length - 1], 0, p);
+  // Room above the tallest bar for its printed total.
+  const p = { ...plotOf(w, height, 16, Math.max(44, textWidth(valueLabel(ticks[ticks.length - 1]), AXIS_FONT) + 16)), t: 26 };
   const barW = Math.min(64, ((p.w - p.l - p.r) / years.length) * 0.5);
+  const sx = bandScaleOf(years, p, barW);
+  const sy = yScaleOf(ticks[ticks.length - 1], 0, p);
+  // Print the year total on the bar so the headline number never needs a hover.
+  const showTotals = barW >= 26;
 
   return (
     <div ref={ref} className="relative">
       {w > 0 && (
         <svg width={w} height={height} className="block overflow-visible">
           <GridLines ticks={ticks} format={valueLabel} p={p} />
-          <YearTicks years={years} p={p} />
+          <YearTicks years={years} p={p} scale={sx} />
+          {showTotals && years.map((year, yi) => (
+            <text
+              key={`total-${year}`}
+              x={sx(year)}
+              y={sy(totals[yi]) - 7}
+              textAnchor="middle"
+              fontSize={11}
+              fontWeight={600}
+              className="fill-slate-600"
+            >
+              {valueLabel(totals[yi])}
+            </text>
+          ))}
           {years.map((year, yi) => {
             let acc = 0;
             return series.map((sr) => {
@@ -349,16 +372,16 @@ export function ShareBarChart({ years, series, height = CHART_H }: {
   const [ref, w] = useMeasuredWidth();
   const [tip, setTip] = useState<TooltipState | null>(null);
   const p = plotOf(w, height, 16, 48);
-  const sx = xScaleOf(years, p);
   const sy = yScaleOf(1, 0, p);
   const barW = Math.min(64, ((p.w - p.l - p.r) / years.length) * 0.5);
+  const sx = bandScaleOf(years, p, barW);
 
   return (
     <div ref={ref} className="relative">
       {w > 0 && (
         <svg width={w} height={height} className="block overflow-visible">
           <GridLines ticks={[0, 0.25, 0.5, 0.75, 1]} format={(v) => `${Math.round(v * 100)}%`} p={p} />
-          <YearTicks years={years} p={p} />
+          <YearTicks years={years} p={p} scale={sx} />
           {years.map((year) => {
             let acc = 0;
             return series.map((sr) => {

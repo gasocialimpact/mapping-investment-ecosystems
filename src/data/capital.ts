@@ -13,6 +13,8 @@ export interface ProgramYearTotal {
 export interface ProgramIndexRow {
   program: string;
   year: number;
+  /** The program's own first reporting year, which the index is based on. */
+  base_year: number;
   total_amount: number;
   base_amount: number;
   index_value: number | null;
@@ -27,12 +29,17 @@ export interface LmiShareRow {
   lmi_amount: number;
   lmi_share: number | null;
   direction: 'improved' | 'weakened' | 'flat' | null;
+  /** The years `direction` compares — each program's own first and last. */
+  direction_from: number | null;
+  direction_to: number | null;
   record_count: number;
 }
 
 export interface IncomeMixRow {
   program_scope: 'federal_only' | 'all_programs';
   year: number;
+  /** How many programs make up this year — a 1 means the mix describes one program. */
+  programs_reporting: number;
   tract_income_level: string;
   income_level_order: number;
   total_amount: number;
@@ -43,6 +50,8 @@ export interface IncomeMixRow {
 export interface RegionShareRow {
   program_scope: 'federal_only' | 'all_programs';
   year: number;
+  /** How many programs make up this year — a 1 means the split describes one program. */
+  programs_reporting: number;
   region: 'Atlanta core' | 'Rest of state';
   total_amount: number;
   share_of_year: number | null;
@@ -77,12 +86,25 @@ export interface CountyProgramYear {
   record_count: number;
 }
 
+/** Which years a program actually reports, so gaps are never drawn as zeros. */
+export interface ProgramCoverage {
+  program: string;
+  years: number[];
+  first_year: number;
+  last_year: number;
+  record_count: number;
+  total_amount: number;
+  spans_all_years: boolean;
+}
+
 export interface CapitalTables {
   generatedAt: string;
   source: string;
   years: number[];
+  reference_year: number;
   income_order: string[];
   atlanta_core: string[];
+  program_coverage: ProgramCoverage[];
   program_year_totals: ProgramYearTotal[];
   program_index: ProgramIndexRow[];
   lmi_share_by_program: LmiShareRow[];

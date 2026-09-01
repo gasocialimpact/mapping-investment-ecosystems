@@ -47,9 +47,19 @@ const PROGRAM_LOOKUP = {
 
 const ATLANTA_CORE = new Set(['Fulton', 'DeKalb', 'Cobb', 'Gwinnett', 'Clayton']);
 const CRA = 'CRA Small Business';
-const SBA_PROGRAMS = new Set(['SBA 504', 'SBA 7(a)']); // no 2018 base year
 const INCOME_ORDER = ['Low', 'Moderate', 'Middle', 'Upper'];
-const YEARS = [2018, 2019, 2020, 2021, 2022];
+
+// The full span present in the source file. Earlier builds clipped to 2018-2022
+// because that window maximises the number of programs reporting at once, but
+// clipping silently discarded $924M of real records: LIHTC 2016-2017 and the
+// 2023 SBA rows. Every program is carried across its own reporting window now,
+// and program_coverage below tells the UI which cells are genuinely absent so a
+// gap is never drawn as a zero.
+const YEARS = [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
+
+// Year used to order the stack and to anchor like-for-like comparisons: the
+// last year with broad multi-program coverage.
+const REFERENCE_YEAR = 2022;
 
 // --- Load & derive ---------------------------------------------------------
 
@@ -128,14 +138,35 @@ const groupBy = (rows, keyFn) => {
   return m;
 };
 
-const inYears = records.filter((r) => r.year >= 2018 && r.year <= 2022);
+// Everything. Per-table windows are applied explicitly where they are needed.
+const inYears = records;
+
+// --- Table 0: program_coverage --------------------------------------------
+// Which years each program actually reports. This is what lets the UI print an
+// em dash for "not reported" instead of a zero, and footnote the gap.
+const program_coverage = [];
+{
+  for (const [program, group] of groupBy(records, (r) => r.program)) {
+    const years = [...new Set(group.map((r) => r.year))].sort((a, b) => a - b);
+    program_coverage.push({
+      program,
+      years,
+      first_year: years[0],
+      last_year: years[years.length - 1],
+      record_count: group.length,
+      total_amount: Math.round(sum(group)),
+      // A program is only comparable across the whole span if it reports in all of it.
+      spans_all_years: years.length === YEARS.length,
+    });
+  }
+  program_coverage.sort((a, b) => b.total_amount - a.total_amount);
+}
 
 // --- Table 1: program_year_totals (2019–2022) ------------------------------
 
 const program_year_totals = [];
 {
-  const rows = records.filter((r) => r.year >= 2019 && r.year <= 2022);
-  for (const [key, group] of groupBy(rows, (r) => `${r.program}|${r.year}`)) {
+  for (const [key, group] of groupBy(records, (r) => `${r.program}|${r.year}`)) {
     const [program, year] = key.split('|');
     program_year_totals.push({
       program,
@@ -146,13 +177,13 @@ const program_year_totals = [];
     });
   }
   // rank within year by total, 1 = largest
-  for (const year of [2019, 2020, 2021, 2022]) {
+  for (const year of YEARS) {
     const inYear = program_year_totals.filter((r) => r.year === year).sort((a, b) => b.total_amount - a.total_amount);
     inYear.forEach((r, i) => { r.rank_within_year = i + 1; });
   }
-  // stack order: by 2022 magnitude descending (largest band at the bottom)
+  // stack order: by reference-year magnitude descending (largest band at the bottom)
   const order2022 = program_year_totals
-    .filter((r) => r.year === 2022 && !r.exclude_from_stack)
+    .filter((r) => r.year === REFERENCE_YEAR && !r.exclude_from_stack)
     .sort((a, b) => b.total_amount - a.total_amount)
     .map((r) => r.program);
   program_year_totals.sort((a, b) => {
@@ -165,20 +196,22 @@ const program_year_totals = [];
 
 const program_index = [];
 {
-  const rows = inYears.filter((r) => !SBA_PROGRAMS.has(r.program));
-  const byProgram = groupBy(rows, (r) => r.program);
-  for (const [program, group] of byProgram) {
+  for (const [program, group] of groupBy(records, (r) => r.program)) {
     const byYear = groupBy(group, (r) => r.year);
-    const base = byYear.get(2018);
-    if (!base) continue; // no 2018 base year — cannot index
+    // Each program is indexed to its own first reporting year rather than a
+    // shared 2018. SBA has no 2018 and used to be dropped from this chart
+    // entirely; now it is charted from 2019, its actual base.
+    const base_year = Math.min(...byYear.keys());
+    const base = byYear.get(base_year);
     const base_amount = Math.round(sum(base));
     for (const year of YEARS) {
       const yearRows = byYear.get(year);
-      if (!yearRows) continue;
+      if (!yearRows) continue; // absent year stays absent — never a zero
       const total_amount = Math.round(sum(yearRows));
       program_index.push({
         program,
         year,
+        base_year,
         total_amount,
         base_amount,
         index_value: base_amount > 0 ? Math.round((total_amount / base_amount) * 1000) / 10 : null,
@@ -209,16 +242,21 @@ const lmi_share_by_program = [];
     const total = sum(g);
     return total > 0 ? sum(g.filter((r) => r.lmi_flag)) / total : null;
   };
+  // Direction spans each program's own first and last *kept* year, so a
+  // program that stops reporting is not scored against a year it never had.
   const directions = new Map();
-  for (const program of new Set(inYears.map((r) => r.program))) {
-    const s18 = shareOf(`${program}|2018`);
-    const s22 = shareOf(`${program}|2022`);
+  const spans = new Map();
+  for (const program of new Set(records.map((r) => r.program))) {
+    const kept_years = YEARS.filter((y) => kept.has(`${program}|${y}`));
+    const first = kept_years[0];
+    const last = kept_years[kept_years.length - 1];
     let direction = null;
-    if (s18 != null && s22 != null) {
-      const delta = s22 - s18;
+    if (first != null && last != null && first !== last) {
+      const delta = shareOf(`${program}|${last}`) - shareOf(`${program}|${first}`);
       direction = Math.abs(delta) < 0.02 ? 'flat' : delta > 0 ? 'improved' : 'weakened';
     }
     directions.set(program, direction);
+    spans.set(program, { first, last });
   }
   for (const [key, group] of kept) {
     const [program, year] = key.split('|');
@@ -231,6 +269,8 @@ const lmi_share_by_program = [];
       lmi_amount,
       lmi_share: total_amount > 0 ? Math.round((lmi_amount / total_amount) * 1000) / 1000 : null,
       direction: directions.get(program),
+      direction_from: spans.get(program)?.first ?? null,
+      direction_to: spans.get(program)?.last ?? null,
       record_count: group.length,
     });
   }
@@ -254,6 +294,7 @@ const income_mix_by_year = [];
         income_mix_by_year.push({
           program_scope: scope,
           year,
+          programs_reporting: new Set(yearRows.map((r) => r.program)).size,
           tract_income_level: level,
           income_level_order: INCOME_ORDER.indexOf(level), // never sort alphabetically
           total_amount: Math.round(sum(group)),
@@ -280,6 +321,7 @@ const region_share_by_year = [];
         region_share_by_year.push({
           program_scope: scope,
           year,
+          programs_reporting: new Set(yearRows.map((r) => r.program)).size,
           region,
           total_amount: Math.round(sum(group)),
           share_of_year: yearTotal > 0 ? Math.round((sum(group) / yearTotal) * 1000) / 1000 : null,
@@ -371,7 +413,7 @@ tract_year_totals.sort((a, b) => a.geoid.localeCompare(b.geoid) || a.year - b.ye
 // --- Write -----------------------------------------------------------------
 
 const generatedAt = new Date().toISOString();
-const source = 'Community investment programs by census tract (CRA, CDFI, CDBG, HOME, LIHTC, NMTC, HTC, SBA), 2018–2022';
+const source = 'Community investment programs by census tract (CRA, CDFI, CDBG, HOME, LIHTC, NMTC, HTC, SBA), 2016–2023';
 
 mkdirSync(outDir, { recursive: true });
 const tablesPath = join(outDir, 'capital-tables.json');
@@ -379,8 +421,10 @@ writeFileSync(tablesPath, JSON.stringify({
   generatedAt,
   source,
   years: YEARS,
+  reference_year: REFERENCE_YEAR,
   income_order: INCOME_ORDER,
   atlanta_core: [...ATLANTA_CORE],
+  program_coverage,
   program_year_totals,
   program_index,
   lmi_share_by_program,
@@ -396,6 +440,10 @@ writeFileSync(tractsPath, JSON.stringify({ generatedAt, source, tract_year_total
 
 const kb = (p) => `${Math.round(readFileSync(p).length / 1024)} KB`;
 console.log(`Wrote ${tablesPath} (${kb(tablesPath)})`);
+console.log('  T0 program_coverage:');
+for (const c of program_coverage) {
+  console.log(`     ${c.program.padEnd(20)} ${c.first_year}-${c.last_year}  ${String(c.record_count).padStart(6)} rows  $${c.total_amount.toLocaleString()}`);
+}
 console.log(`  T1 program_year_totals: ${program_year_totals.length} rows`);
 console.log(`  T2 program_index:       ${program_index.length} rows`);
 console.log(`  T3 lmi_share:           ${lmi_share_by_program.length} rows`);

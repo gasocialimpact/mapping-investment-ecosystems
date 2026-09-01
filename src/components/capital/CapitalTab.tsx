@@ -3,21 +3,23 @@ import {
   loadCapitalTables, fmtDollars,
   PROGRAM_COLORS, DIRECTION_COLORS, INCOME_COLORS, REGION_COLORS,
 } from '../../data/capital';
-import type { CapitalTables } from '../../data/capital';
+import type { CapitalTables, ProgramCoverage } from '../../data/capital';
 import { usePlace } from '../../context/PlaceContext';
 import {
-  StackedBarChart, LineChart, ShareBarChart, Legend, Tooltip,
-  niceTicks, fittedTicks, useMeasuredWidth, textWidth,
+  StackedBarChart, LineChart, ShareBarChart, Legend, niceTicks, fittedTicks,
 } from './charts';
-import type { StackSeries, LineSeries, TooltipState } from './charts';
+import type { StackSeries, LineSeries } from './charts';
 import { SnapshotCard } from '../SnapshotButton';
+import { DataTable, pct, NO_DATA } from './DataTable';
+import type { TableRow } from './DataTable';
 
 type Scope = 'federal_only' | 'all_programs';
 
 const CRA = 'CRA Small Business';
 
 // Tab 2 — Tracking Capital Changes Over Time. A zoomed-out statewide view of
-// community-investment dollars, 2018–2022, with an optional county lens.
+// community-investment dollars across the source's full span, with an
+// optional county lens.
 export function CapitalTab() {
   const [tables, setTables] = useState<CapitalTables | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -71,10 +73,15 @@ export function CapitalTab() {
       )}
 
       <p className="text-[11px] text-slate-400 mt-8 max-w-3xl">
-        Community investment programs by census tract, 2018–2022: CRA small-business lending, CDFI,
-        CDBG, HOME, LIHTC, NMTC, Historic Tax Credit, and SBA 504 / 7(a). Amounts are reported
-        dollars per tract-year; thin cells (fewer than 20 records) are suppressed in share
-        calculations. SBA programs lack a 2018 base year and are excluded from indexed trends.
+        Community investment programs by census tract, {tables.years[0]}–{tables.years[tables.years.length - 1]}:
+        CRA small-business lending, CDFI, CDBG, HOME, LIHTC, NMTC, Historic Tax Credit, and SBA
+        504 / 7(a). Amounts are reported dollars per tract-year; thin cells (fewer than 20 records)
+        are suppressed in share calculations. No single year carries every program — LIHTC reports
+        {' '}{tables.program_coverage.find((c) => c.program === 'LIHTC')?.first_year}–
+        {tables.program_coverage.find((c) => c.program === 'LIHTC')?.last_year} and the SBA programs
+        {' '}{tables.program_coverage.find((c) => c.program === 'SBA 7(a)')?.first_year}–
+        {tables.program_coverage.find((c) => c.program === 'SBA 7(a)')?.last_year} — so each chart marks
+        absent years with a dash rather than closing the gap.
       </p>
     </div>
   );
@@ -96,6 +103,23 @@ function Card({ title, sub, children, note, span = 'half' }: {
   );
 }
 
+// Programs report over different windows, so a missing cell has to be readable
+// as "not reported" rather than "zero dollars". Every card that spans multiple
+// programs carries this.
+function coverageNote(coverage: ProgramCoverage[]): string {
+  const partial = coverage.filter((c) => !c.spans_all_years);
+  if (partial.length === 0) return '';
+  const windows = partial.map((c) => `${c.program} ${c.first_year}–${c.last_year}`).join(' · ');
+  return `Reporting windows differ by program — ${windows}. A dash means the program did not report that year; it is not a zero.`;
+}
+
+/** Years whose totals come from only one program, so shares describe that program alone. */
+function thinYearsNote(rows: { year: number; programs_reporting: number }[]): string {
+  const thin = [...new Set(rows.filter((r) => r.programs_reporting === 1).map((r) => r.year))].sort();
+  if (thin.length === 0) return '';
+  return ` ${thin.join(' and ')} ${thin.length > 1 ? 'are years' : 'is a year'} in which only one program reported, so the split there describes that program rather than the portfolio.`;
+}
+
 function SectionHeading({ children, hint }: { children: React.ReactNode; hint?: string }) {
   return (
     <div className="xl:col-span-6 flex items-baseline gap-3 flex-wrap mt-2 first:mt-0">
@@ -109,7 +133,9 @@ function SectionHeading({ children, hint }: { children: React.ReactNode; hint?: 
 
 function StatewideView({ tables, scope }: { tables: CapitalTables; scope: Scope }) {
   const years = tables.years;
-  const stackYears = [2019, 2020, 2021, 2022];
+  // Was [2019..2022]. The stack now spans whatever the source actually holds.
+  const stackYears = years;
+  const coverage = coverageNote(tables.program_coverage);
 
   // T1 — program stack (CRA excluded by exclude_from_stack) + CRA context line
   const stackOrder = [...new Set(tables.program_year_totals.filter((r) => !r.exclude_from_stack).map((r) => r.program))];
@@ -168,20 +194,44 @@ function StatewideView({ tables, scope }: { tables: CapitalTables; scope: Scope 
 
   return (
     <div className="grid grid-cols-1 xl:grid-cols-6 gap-5 mt-5">
-      <SectionHeading hint="Totals and growth, 2018–2022">How much moved</SectionHeading>
+      <SectionHeading hint={`Totals and growth, ${years[0]}\u2013${years[years.length - 1]}`}>How much moved</SectionHeading>
 
       <Card
         title="Program dollars by year"
-        sub="Federal community development programs, stacked by 2022 size. CRA small-business lending is charted separately below — it runs roughly ten times everything else combined."
-        note={`CRA small-business lending by year: ${craByYear.map((r) => `${r.year} ${fmtDollars(r.total_amount)}`).join(' · ')}`}
+        sub={`Federal community development programs, stacked by ${tables.reference_year} size. CRA small-business lending is in the table but kept out of the stack — it runs roughly ten times everything else combined.`}
+        note={coverage}
       >
         <StackedBarChart years={stackYears} series={stackSeries} />
-        <Legend items={stackOrder.map((p) => ({ key: p, color: PROGRAM_COLORS[p] }))} />
+        <DataTable
+          rowHeader="Program"
+          columns={stackYears.map(String)}
+          rows={[
+            ...stackSeries.map((sr): TableRow => ({
+              label: sr.key,
+              color: sr.color,
+              cells: stackYears.map((y) => (sr.values.get(y) ? fmtDollars(sr.values.get(y)!) : NO_DATA)),
+            })),
+            {
+              label: 'Total (stacked)',
+              strong: true,
+              cells: stackYears.map((y) =>
+                fmtDollars(stackSeries.reduce((t, sr) => t + (sr.values.get(y) ?? 0), 0))),
+            },
+            {
+              label: 'CRA small business (not stacked)',
+              cells: stackYears.map((y) => {
+                const row = craByYear.find((r) => r.year === y);
+                return row ? fmtDollars(row.total_amount) : NO_DATA;
+              }),
+            },
+          ]}
+          note={coverage}
+        />
       </Card>
 
       <Card
-        title="Growth since 2018 (2018 = 100)"
-        sub="Each program indexed to its own 2018 total. CDFI is highlighted; SBA programs have no 2018 base year and are excluded."
+        title="Growth since each program's first year"
+        sub="Each program indexed to its own first reporting year. CDFI is highlighted. SBA programs start in 2019 and were previously left off this chart entirely."
       >
         <LineChart
           years={years}
@@ -191,7 +241,22 @@ function StatewideView({ tables, scope }: { tables: CapitalTables; scope: Scope 
           height={300}
           endLabels
         />
-        <Legend items={[{ key: 'CDFI', color: '#4750a2' }, { key: 'Other programs', color: '#cbd5e1' }]} />
+        <DataTable
+          rowHeader="Program"
+          columns={years.map(String)}
+          rows={indexSeries.map((sr): TableRow => {
+            const base = tables.program_index.find((r) => r.program === sr.key)?.base_year;
+            return {
+              label: base ? `${sr.key} (${base} = 100)` : sr.key,
+              color: sr.color,
+              cells: years.map((y) => {
+                const pt = sr.points.find((q) => q.year === y);
+                return pt ? Math.round(pt.value) : NO_DATA;
+              }),
+            };
+          })}
+          note={`A value of 150 means the program moved half again as many dollars as in its base year. ${coverage}`}
+        />
       </Card>
 
       <SectionHeading hint="Whether the dollars land in the places that need them">Who they reach</SectionHeading>
@@ -199,7 +264,7 @@ function StatewideView({ tables, scope }: { tables: CapitalTables; scope: Scope 
       <Card
         span="full"
         title="Share of dollars reaching low- and moderate-income tracts"
-        sub="Line color reflects the 2018 → 2022 change: green improved, orange weakened, gray flat (within 2 points). Program-years with fewer than 20 records are suppressed."
+        sub="Line color reflects the change across each program's own first and last reported year: green improved, orange weakened, gray flat (within 2 points). Program-years with fewer than 20 records are suppressed."
       >
         <LineChart
           years={years}
@@ -208,6 +273,28 @@ function StatewideView({ tables, scope }: { tables: CapitalTables; scope: Scope 
           format={(v) => `${Math.round(v * 100)}%`}
           height={320}
           endLabels
+        />
+        <DataTable
+          rowHeader="Program"
+          columns={[...years.map(String), 'First \u2192 last']}
+          rows={lmiSeries.map((sr): TableRow => {
+            const first = sr.points[0];
+            const last = sr.points[sr.points.length - 1];
+            const delta = first && last && first.year !== last.year ? last.value - first.value : null;
+            return {
+              label: sr.key,
+              color: sr.color,
+              cells: [
+                ...years.map((y) => {
+                  const pt = sr.points.find((q) => q.year === y);
+                  return pt ? pct(pt.value) : NO_DATA;
+                }),
+                delta == null ? NO_DATA
+                  : `${delta > 0 ? '+' : ''}${(delta * 100).toFixed(1)} pts`,
+              ],
+            };
+          })}
+          note={`A dash is either a year the program did not report, or a program-year with fewer than 20 records, suppressed as too thin to trust. ${coverage}`}
         />
         <Legend items={[
           { key: 'Improved', color: DIRECTION_COLORS.improved },
@@ -223,7 +310,16 @@ function StatewideView({ tables, scope }: { tables: CapitalTables; scope: Scope 
         sub={`Share of each year's dollars by tract income level — ${scopeLabel}. Toggle the scope above: with CRA included the mix is nearly flat; federal-only, the low-income share falls by half.`}
       >
         <ShareBarChart years={years} series={mixSeries} />
-        <Legend items={tables.income_order.map((l) => ({ key: l, color: INCOME_COLORS[l] }))} />
+        <DataTable
+          rowHeader="Tract income level"
+          columns={years.map(String)}
+          rows={mixSeries.map((sr): TableRow => ({
+            label: sr.key,
+            color: sr.color,
+            cells: years.map((y) => pct(sr.values.get(y))),
+          }))}
+          note={`Shares are of each year's total.${thinYearsNote(mixRows)}`}
+        />
       </Card>
 
       <Card
@@ -238,7 +334,19 @@ function StatewideView({ tables, scope }: { tables: CapitalTables; scope: Scope 
           reference={{ value: 0.5, label: 'even split' }}
           endLabels
         />
-        <Legend items={Object.entries(REGION_COLORS).map(([key, color]) => ({ key, color }))} />
+        <DataTable
+          rowHeader="Region"
+          columns={years.map(String)}
+          rows={regionSeries.map((sr): TableRow => ({
+            label: sr.key,
+            color: sr.color,
+            cells: years.map((y) => {
+              const pt = sr.points.find((q) => q.year === y);
+              return pt ? pct(pt.value) : NO_DATA;
+            }),
+          }))}
+          note={`Atlanta core is Fulton, DeKalb, Cobb, Gwinnett and Clayton.${thinYearsNote(regionRows)}`}
+        />
       </Card>
 
       <SectionHeading hint="Counties clearing $25M in either year">County detail</SectionHeading>
@@ -248,77 +356,62 @@ function StatewideView({ tables, scope }: { tables: CapitalTables; scope: Scope 
         title="County change, 2018 → 2022"
         sub="Federal-program dollars by county (CRA excluded), for counties clearing $25M in either year. Green moved up, orange moved down; the caption under each county shows how broadly the dollars spread."
       >
-        <ArrowChart tables={tables} />
+        <CountyChangeTable tables={tables} />
       </Card>
     </div>
   );
 }
 
-// --- Arrow (dumbbell) chart --------------------------------------------------
+// --- County movement table ---------------------------------------------------
 
-function ArrowChart({ tables }: { tables: CapitalTables }) {
-  const [ref, w] = useMeasuredWidth();
-  const [tip, setTip] = useState<TooltipState | null>(null);
+// Was a dumbbell chart. For two dozen counties compared on two numbers, a table
+// carries far more: the actual dollars, the percent change and the breadth
+// columns are all readable at once instead of one at a time under the cursor.
+// The bar stays as an inline cell so the shape is still scannable down the page.
+function CountyChangeTable({ tables }: { tables: CapitalTables }) {
   const arrows = tables.county_arrows;
-  const rowH = 30;
-  // The name gutter is sized to the longest county rather than a fixed 120,
-  // so nothing is clipped and nothing is padding empty space.
-  const padL = Math.min(
-    Math.max(...arrows.map((a) => textWidth(a.county_name, 11)), 60) + 14,
-    Math.max(90, w * 0.28),
-  );
-  const padR = 68, padT = 8;
-  const H = padT + arrows.length * rowH + 8;
-  const max = Math.max(...arrows.flatMap((a) => [a.amount_2018, a.amount_2022]));
-  const sx = (v: number) => padL + (v / max) * (w - padL - padR);
-
+  const max = Math.max(...arrows.flatMap((a) => [a.amount_2018, a.amount_2022]), 1);
   const meta = new Map(
     tables.county_year_totals.filter((r) => r.year === 2022).map((r) => [r.county_fips, r]),
   );
 
+  const rows: TableRow[] = arrows.map((a) => {
+    const color = a.change_direction === 'up' ? '#279a49' : a.change_direction === 'down' ? '#f15921' : '#94a3b8';
+    const m = meta.get(a.county_fips);
+    const change = a.amount_2018 > 0 ? (a.amount_2022 - a.amount_2018) / a.amount_2018 : null;
+    const lo = Math.min(a.amount_2018, a.amount_2022) / max;
+    const hi = Math.max(a.amount_2018, a.amount_2022) / max;
+    return {
+      label: a.county_name,
+      cells: [
+        fmtDollars(a.amount_2018),
+        fmtDollars(a.amount_2022),
+        <span style={{ color }}>{change == null ? '—' : `${change > 0 ? '+' : ''}${Math.round(change * 100)}%`}</span>,
+        m ? m.program_count : '—',
+        m ? m.tract_count : '—',
+        // 2018 → 2022 span, drawn in place so the movement reads down the column
+        <span className="inline-block relative w-[120px] h-2 align-middle" aria-hidden="true">
+          <span className="absolute inset-y-0 my-auto h-[3px] rounded-full" style={{
+            left: `${lo * 100}%`, width: `${Math.max(1, (hi - lo) * 100)}%`, background: color,
+          }} />
+          <span className="absolute w-2 h-2 rounded-full border-2 bg-white" style={{
+            left: `calc(${(a.amount_2018 / max) * 100}% - 4px)`, borderColor: color, top: 0,
+          }} />
+          <span className="absolute w-2 h-2 rounded-full" style={{
+            left: `calc(${(a.amount_2022 / max) * 100}% - 4px)`, background: color, top: 0,
+          }} />
+        </span>,
+      ],
+    };
+  });
+
   return (
-    <div ref={ref} className="relative">
-      {w > 0 && (
-      <svg width={w} height={H} className="block overflow-visible">
-        {arrows.map((a, i) => {
-          const y = padT + i * rowH + rowH / 2;
-          const x1 = sx(a.amount_2018);
-          const x2 = sx(a.amount_2022);
-          const color = a.change_direction === 'up' ? '#279a49' : a.change_direction === 'down' ? '#f15921' : '#94a3b8';
-          const m = meta.get(a.county_fips);
-          return (
-            <g
-              key={a.county_fips}
-              onMouseEnter={() => setTip({
-                x: Math.max(x1, x2), y: y - 8,
-                lines: [
-                  `${a.county_name} County`,
-                  `2018 ${fmtDollars(a.amount_2018)} → 2022 ${fmtDollars(a.amount_2022)}`,
-                  m ? `${m.program_count} programs · ${m.tract_count} tracts in 2022` : '',
-                ].filter(Boolean),
-              })}
-              onMouseLeave={() => setTip(null)}
-            >
-              <text x={padL - 8} y={y + 4} textAnchor="end" fontSize={11} fontWeight={600} className="fill-slate-600">
-                {a.county_name}
-              </text>
-              <line x1={x1} y1={y} x2={x2} y2={y} stroke={color} strokeWidth={2} />
-              <circle cx={x1} cy={y} r={3.5} fill="#fff" stroke={color} strokeWidth={2} />
-              <circle cx={x2} cy={y} r={4.5} fill={color} />
-              {/* confidence caption: breadth of programs/tracts, not just dollars */}
-              <text x={Math.max(x1, x2) + 10} y={y + 4} fontSize={10} className="fill-slate-400">
-                {m ? `${m.program_count}p · ${m.tract_count}t` : ''}
-              </text>
-            </g>
-          );
-        })}
-      </svg>
-      )}
-      <Tooltip tip={tip} />
-      <p className="text-[10px] text-slate-400 mt-1">
-        Open circle = 2018 · filled circle = 2022 · caption = programs and tracts receiving dollars in 2022.
-      </p>
-    </div>
+    <DataTable
+      rowHeader="County"
+      columns={['2018', '2022', 'Change', 'Programs', 'Tracts', '2018 → 2022']}
+      rows={rows}
+      note="Programs and tracts are the count receiving dollars in 2022 — how broadly the money spread. Open circle = 2018, filled = 2022."
+    />
   );
 }
 
@@ -355,12 +448,26 @@ function CountyView({ tables, fips, name }: { tables: CapitalTables; fips: strin
   return (
     <div className="mt-5">
       <div className="flex items-baseline gap-3 flex-wrap">
-        <h2 className="text-xl font-bold text-slate-800">{label} County, 2018–2022</h2>
+        <h2 className="text-xl font-bold text-slate-800">{label} County, {years[0]}–{years[years.length - 1]}</h2>
         <span className="text-sm text-slate-500">{fmtDollars(totalAll)} across all programs</span>
       </div>
       <div className="grid grid-cols-1 xl:grid-cols-6 gap-5 mt-4">
         <Card title="All program dollars by year" sub="Every program including CRA small-business lending. Hover a point for how broadly the dollars spread.">
           <LineChart years={years} series={trendSeries} ticks={niceTicks(maxTrend)} format={fmtDollars} />
+          <DataTable
+            rowHeader="Measure"
+            columns={years.map(String)}
+            rows={[
+              { label: 'All program dollars', color: '#4750a2', strong: true,
+                cells: years.map((y) => {
+                  const r = countyRows.find((q) => q.year === y);
+                  return r ? fmtDollars(r.total_amount) : NO_DATA;
+                }) },
+              { label: 'Programs active', cells: years.map((y) => countyRows.find((q) => q.year === y)?.program_count ?? NO_DATA) },
+              { label: 'Tracts reached', cells: years.map((y) => countyRows.find((q) => q.year === y)?.tract_count ?? NO_DATA) },
+              { label: 'Records', cells: years.map((y) => countyRows.find((q) => q.year === y)?.record_count ?? NO_DATA) },
+            ]}
+          />
         </Card>
         <Card
           title="Federal program mix by year"
@@ -370,9 +477,20 @@ function CountyView({ tables, fips, name }: { tables: CapitalTables; fips: strin
           {fedSeries.length > 0
             ? <>
                 <StackedBarChart years={years} series={fedSeries} />
-                <Legend items={fedSeries.map((s) => ({ key: s.key, color: s.color }))} />
+                <DataTable
+                  rowHeader="Program"
+                  columns={years.map(String)}
+                  rows={[
+                    ...fedSeries.map((sr): TableRow => ({
+                      label: sr.key, color: sr.color,
+                      cells: years.map((y) => (sr.values.get(y) ? fmtDollars(sr.values.get(y)!) : NO_DATA)),
+                    })),
+                    { label: 'Total (stacked)', strong: true,
+                      cells: years.map((y) => fmtDollars(fedSeries.reduce((t, sr) => t + (sr.values.get(y) ?? 0), 0))) },
+                  ]}
+                />
               </>
-            : <p className="text-sm text-slate-400">No federal program dollars recorded in {label} County for 2018–2022.</p>}
+            : <p className="text-sm text-slate-400">No federal program dollars recorded in {label} County.</p>}
         </Card>
       </div>
     </div>
