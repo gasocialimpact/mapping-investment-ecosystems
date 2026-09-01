@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { X, ArrowLeft, FileDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useDetail } from '../../context/DetailContext';
-import { useVisibleBand } from '../../context/EmbedContext';
+import { useEmbed } from '../../context/EmbedContext';
 import { saveRecordAsPdf } from '../../lib/savePdf';
 import { SnapshotButton } from '../SnapshotButton';
 import { OrgDetail } from './OrgDetail';
@@ -18,8 +18,17 @@ const EDGE_GAP = 16; // px of breathing room at the bottom of the visible band
 // where the reader is looking.
 export function DetailDrawer() {
   const { current, close, back, canGoBack, step, position } = useDetail();
-  const band = useVisibleBand();
+  const { band, setScrollLock } = useEmbed();
   const panelRef = useRef<HTMLDivElement>(null);
+  const isOpen = !!current;
+
+  // Hold the page still while a record is open, so the modal never has to
+  // follow a scroll it only hears about second-hand.
+  useEffect(() => {
+    if (!isOpen) return;
+    setScrollLock(true);
+    return () => setScrollLock(false);
+  }, [isOpen, setScrollLock]);
 
   useEffect(() => {
     if (!current) return;
@@ -61,24 +70,26 @@ export function DetailDrawer() {
   // The record's own heading makes the better filename than its type.
   const recordLabel = () => panelRef.current?.querySelector('h2')?.textContent?.trim() || 'record';
 
-  const offset = Math.min(Math.round(band.height * 0.06), 48);
-  const maxHeight = Math.max(band.height - offset - EDGE_GAP, 240);
+  const maxHeight = Math.max(band.height - EDGE_GAP * 2, 240);
   const atStart = !!position && position.index === 1;
   const atEnd = !!position && position.index === position.total;
 
   return (
-    <div
-      className="record-modal fixed inset-0 z-30 flex items-start justify-center px-4"
-      style={{ paddingTop: band.top + offset, paddingBottom: EDGE_GAP }}
-      onClick={close}
-    >
+    <div className="record-modal fixed inset-0 z-30" onClick={close}>
       <div className="record-overlay absolute inset-0 bg-black/30" />
+      {/* The stage is the slice of the frame that is on screen and clear of any
+          host-page nav. Centring in it keeps the toolbar — and the close
+          button — reachable whatever chrome the host has. */}
       <div
-        ref={panelRef}
-        className="record-panel relative w-full max-w-2xl bg-white rounded-xl border border-slate-200 shadow-xl overflow-y-auto"
-        style={{ maxHeight }}
-        onClick={(e) => e.stopPropagation()}
+        className="record-stage absolute left-0 right-0 flex items-center justify-center px-4"
+        style={{ top: band.top, height: band.height }}
       >
+        <div
+          ref={panelRef}
+          className="record-panel relative w-full max-w-2xl bg-white rounded-xl border border-slate-200 shadow-xl overflow-y-auto"
+          style={{ maxHeight }}
+          onClick={(e) => e.stopPropagation()}
+        >
         {/* Excluded from snapshots for the same reason it is hidden in print:
             the toolbar is chrome, not part of the record. */}
         <div data-snapshot="hide" className="sticky top-0 bg-white z-10 flex items-center gap-2 px-5 py-3 border-b border-slate-100 print:hidden">
@@ -127,7 +138,8 @@ export function DetailDrawer() {
             </button>
           </div>
         </div>
-        <div className="p-5">{content}</div>
+          <div className="p-5">{content}</div>
+        </div>
       </div>
     </div>
   );

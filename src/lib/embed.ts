@@ -17,7 +17,8 @@ const HOST = 'ga-ecosystem-map-host';
 type OutboundMessage =
   | { source: typeof APP; type: 'ready' }
   | { source: typeof APP; type: 'height'; height: number }
-  | { source: typeof APP; type: 'scrollTo'; top: number };
+  | { source: typeof APP; type: 'scrollTo'; top: number }
+  | { source: typeof APP; type: 'scrollLock'; locked: boolean };
 
 /** Sent down by the host snippet. */
 export interface HostViewport {
@@ -25,6 +26,8 @@ export interface HostViewport {
   top: number;
   /** Height of the browser window. */
   height: number;
+  /** Host chrome pinned to the top of the window (a site nav), in px. */
+  inset?: number;
 }
 
 export type EmbedMode =
@@ -58,6 +61,18 @@ function post(message: OutboundMessage) {
  */
 export function requestHostScroll(top: number) {
   post({ source: APP, type: 'scrollTo', top: Math.round(top) });
+}
+
+/**
+ * Hold the host page still while a modal is open.
+ *
+ * Without this the modal has to chase the scroll: its position arrives over
+ * postMessage, so it is always a frame behind the scrolling it is following,
+ * and it visibly drifts. Freezing the page behind a modal is what a modal is
+ * meant to do anyway, so nothing has to move.
+ */
+export function requestScrollLock(locked: boolean) {
+  post({ source: APP, type: 'scrollLock', locked });
 }
 
 interface Listeners {
@@ -119,7 +134,7 @@ export function connectToHost({ onViewport, onMode }: Listeners): () => void {
       scheduleMeasure();
     }
     if (data.type === 'viewport' && typeof data.top === 'number') {
-      onViewport({ top: data.top, height: data.height });
+      onViewport({ top: data.top, height: data.height, inset: data.inset });
     }
   };
 
