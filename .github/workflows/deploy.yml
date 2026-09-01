@@ -12,7 +12,11 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  # Queue deployments rather than cancelling them. Cancelling a run while it is
+  # inside the deploy step can leave a Pages deployment half-registered, and the
+  # next run then sits in "updating_pages" waiting behind it. This matches the
+  # setting in GitHub's own Pages workflow template.
+  cancel-in-progress: false
 
 jobs:
   build:
