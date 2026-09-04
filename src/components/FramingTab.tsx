@@ -1,217 +1,298 @@
 import { useMemo, useState } from 'react';
 import { useData } from '../context/DataContext';
-import type { Organization, CapitalFlow } from '../types';
+import type { Organization, CapitalFlow, ImpactDimension } from '../types';
 import {
-  FRAMEWORK_FUNCTIONS, FRAMEWORK_SEGMENTS, FRAMEWORK_NODES, getSegment,
-} from '../data/frameworkData';
-import type { FrameworkNode } from '../data/frameworkData';
-import { NodeDetailCard } from './FrameworkTab';
+  V2_SEGMENTS, V2_FUNCTIONS, SUB_EXAMPLES, subExampleFor, segmentKeyFor, impactIdsOf,
+} from '../data/frameworkV2';
+import type { SubExample, FnKey } from '../data/frameworkV2';
+import { FrameworkDiagram } from './framing/FrameworkDiagram';
 import { OrgGrid, FlowList, InstrumentList, useInstrumentsForFlows } from './explore/EcosystemLayers';
 import { formatCurrency } from '../lib/format';
 
-// Framework segment key → ecosystem data segment name. Infrastructure has no
-// org segment — it's contextual, not a set of tracked organizations.
-const SEG_TO_DATA: Record<string, string | null> = {
-  supply: 'Capital Allocator',
-  aggs: 'Capital Aggregator',
-  seek: 'Capital Seeker',
-  enab: 'Capital Enabler',
-  infra: null,
-};
-
-// Stakeholder-type → organization matchers, based on the Airtable orgType
-// field. Many orgs have no orgType yet, so segment-level browsing (clicking a
-// column header) is the guaranteed path to every record.
-const NODE_ORG_MATCH: Record<string, (o: Organization) => boolean> = {
-  inst_owners: (o) => o.segment === 'Capital Allocator' &&
-    ['Publicly Traded Company', 'Healthcare System', 'Higher Education Institution'].includes(o.orgType ?? ''),
-  foundations: (o) =>
-    ['Foundation (Private)', 'Foundation (Corporate)', 'Foundation (Public DAF Sponsor)', 'DAF or Charitable Fund'].includes(o.orgType ?? ''),
-  gov_supply: (o) => o.segment === 'Capital Allocator' && o.orgType === 'Government Agency',
-  hnwi: (o) => o.orgType === 'HNWI or Family Office',
-  banks_supply: (o) => ['Bank (Commercial)', 'Bank (Community)'].includes(o.orgType ?? ''),
-  fund_managers: (o) => o.orgType === 'Loan or Private Investment Fund',
-  cdfi: (o) => o.orgType === 'CDFI or Credit Union',
-  intermediaries: (o) => o.orgType === 'Financial Services Firm',
-  pe_funds: (o) => o.orgType === 'PE or Venture Capital Firm',
-  vc_funds: (o) => o.orgType === 'PE or Venture Capital Firm',
-  social_enterprises: (o) => o.orgType === 'Business or Social Enterprise',
-  real_estate: (o) => o.orgType === 'Real Estate Development Firm',
-  ecosystem_builders: (o) => o.orgType === 'Ecosystem Builder or Think-Tank',
-  prof_services: (o) => o.orgType === 'Professional Service Provider',
-  gov_enab: (o) => o.segment === 'Capital Enabler' && o.orgType === 'Government Agency',
-};
+// Tab 2 — Framing Our Ecosystem (framework v2). The diagram and the cards are
+// one view: filters narrow both, and selecting a segment or a card unfurls
+// the organizations, capital flows and instruments behind it.
 
 type Selection =
-  | { kind: 'node'; node: FrameworkNode }
+  | { kind: 'card'; card: SubExample }
   | { kind: 'segment'; key: string }
+  | { kind: 'untagged'; key: string }
   | { kind: 'uncategorized' }
   | null;
 
-// Tab 2 — Framing Our Ecosystem. The Core Functions framework is the main
-// feature; selecting a stakeholder type (or a whole segment) unfurls the
-// organizations, capital flows, and instruments behind it.
+const IMPACT_GROUPS: ImpactDimension['type'][] = ['Sector Focus', 'SDG Alignment', 'Population Focus', 'Alternative Ownership Component'];
+
 export function FramingTab() {
   const { data } = useData();
-  const [fnFilter, setFnFilter] = useState<string | null>(null);
+  const [segFilter, setSegFilter] = useState<string | null>(null);
+  const [fnFilter, setFnFilter] = useState<FnKey | null>(null);
+  const [impactFilter, setImpactFilter] = useState<string | null>(null);
   const [selection, setSelection] = useState<Selection>(null);
 
-  const nodes = useMemo(
-    () => FRAMEWORK_NODES.filter((n) => !fnFilter || n.fn.includes(fnFilter)),
-    [fnFilter],
+  const allOrgs = data?.organizations ?? [];
+
+  // Organizations that pass the impact filter (segment/function filters act on cards).
+  const orgs = useMemo(
+    () => (impactFilter ? allOrgs.filter((o) => impactIdsOf(o).includes(impactFilter)) : allOrgs),
+    [allOrgs, impactFilter],
   );
 
-  const orgCounts = useMemo(() => {
-    const counts = new Map<string, number>();
-    for (const n of FRAMEWORK_NODES) {
-      const match = NODE_ORG_MATCH[n.id];
-      counts.set(n.id, match ? (data?.organizations ?? []).filter(match).length : 0);
+  // Roll-up: card id -> orgs; segment key -> orgs with no card.
+  const { byCard, untaggedBySeg } = useMemo(() => {
+    const byCard = new Map<string, Organization[]>();
+    const untaggedBySeg = new Map<string, Organization[]>();
+    for (const o of orgs) {
+      const card = subExampleFor(o);
+      if (card) {
+        if (!byCard.has(card.id)) byCard.set(card.id, []);
+        byCard.get(card.id)!.push(o);
+      } else {
+        const seg = segmentKeyFor(o);
+        if (seg) {
+          if (!untaggedBySeg.has(seg)) untaggedBySeg.set(seg, []);
+          untaggedBySeg.get(seg)!.push(o);
+        }
+      }
     }
-    return counts;
-  }, [data]);
+    return { byCard, untaggedBySeg };
+  }, [orgs]);
 
-  const { selOrgs, selFlows, selTitle } = useMemo(() => {
-    const all = data?.organizations ?? [];
-    let orgs: Organization[] = [];
+  const visibleCards = useMemo(
+    () => SUB_EXAMPLES.filter((c) => (!segFilter || c.seg === segFilter) && (!fnFilter || c.fn.includes(fnFilter))),
+    [segFilter, fnFilter],
+  );
+  const liveSegs = useMemo(() => new Set(visibleCards.map((c) => c.seg)), [visibleCards]);
+  const segCounts = useMemo(() => {
+    const out: Record<string, number> = {};
+    for (const s of V2_SEGMENTS) if (s.data) out[s.key] = orgs.filter((o) => o.segment === s.data).length;
+    return out;
+  }, [orgs]);
+
+  const { selOrgs, selFlows, selTitle, selSeg } = useMemo(() => {
+    let list: Organization[] = [];
     let title = '';
-    if (selection?.kind === 'node') {
-      const match = NODE_ORG_MATCH[selection.node.id];
-      orgs = match ? all.filter(match) : [];
-      title = selection.node.title;
+    let segKey: string | null = null;
+    if (selection?.kind === 'card') {
+      list = byCard.get(selection.card.id) ?? [];
+      title = selection.card.title;
+      segKey = selection.card.seg;
     } else if (selection?.kind === 'segment') {
-      const segName = SEG_TO_DATA[selection.key];
-      orgs = segName ? all.filter((o) => o.segment === segName) : [];
-      title = getSegment(selection.key)?.label ?? '';
+      const s = V2_SEGMENTS.find((x) => x.key === selection.key);
+      list = s?.data ? orgs.filter((o) => o.segment === s.data) : [];
+      title = s?.label ?? '';
+      segKey = selection.key;
+    } else if (selection?.kind === 'untagged') {
+      const s = V2_SEGMENTS.find((x) => x.key === selection.key);
+      list = untaggedBySeg.get(selection.key) ?? [];
+      title = `${s?.label ?? ''} · not yet tagged to a sub-example`;
+      segKey = selection.key;
     } else if (selection?.kind === 'uncategorized') {
-      orgs = all.filter((o) => o.segment === 'Uncategorized');
+      list = orgs.filter((o) => o.segment === 'Uncategorized');
       title = 'Uncategorized organizations';
     }
-    const ids = new Set(orgs.map((o) => o.id));
+    const ids = new Set(list.map((o) => o.id));
     const flows = (data?.capitalFlows ?? []).filter(
       (f) => (f.sourceId && ids.has(f.sourceId)) || (f.recipientId && ids.has(f.recipientId)),
     );
-    return { selOrgs: orgs, selFlows: flows, selTitle: title };
-  }, [selection, data]);
+    return { selOrgs: list, selFlows: flows, selTitle: title, selSeg: segKey };
+  }, [selection, byCard, untaggedBySeg, orgs, data]);
 
-  const uncategorizedCount = (data?.organizations ?? []).filter((o) => o.segment === 'Uncategorized').length;
+  const uncategorizedCount = orgs.filter((o) => o.segment === 'Uncategorized').length;
+  const impactDims = data?.impactDimensions ?? [];
+  const activeImpact = impactDims.find((d) => d.id === impactFilter) ?? null;
+
+  const selectSegment = (key: string | null) => {
+    setSegFilter(key);
+    setSelection(key ? { kind: 'segment', key } : null);
+  };
 
   return (
-    <div className="pb-10 pt-6">
-      {/* Function filter */}
-      <div className="flex gap-2 flex-wrap">
-        <button
-          onClick={() => setFnFilter(null)}
-          className={`text-xs font-semibold px-3 py-1.5 rounded-full border transition-colors ${
-            !fnFilter ? 'bg-brand-indigo text-white border-brand-indigo' : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'
-          }`}
-        >
-          All Functions
-        </button>
-        {FRAMEWORK_FUNCTIONS.map((f) => (
+    <div className="pb-10 pt-6 space-y-5">
+      {/* Filter bar */}
+      <div className="bg-white rounded-lg border border-slate-200 shadow-sm px-3 py-2.5 flex flex-wrap items-center gap-2">
+        <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 mr-1">Filter</span>
+
+        <Select
+          label="Segment"
+          value={segFilter ?? ''}
+          onChange={(v) => selectSegment(v || null)}
+          options={V2_SEGMENTS.map((s) => ({ value: s.key, label: s.label }))}
+        />
+        <Select
+          label="Function"
+          value={fnFilter ?? ''}
+          onChange={(v) => setFnFilter((v || null) as FnKey | null)}
+          options={V2_FUNCTIONS.map((f) => ({ value: f.key, label: f.label }))}
+        />
+        <Select
+          label="Impact"
+          value={impactFilter ?? ''}
+          onChange={(v) => setImpactFilter(v || null)}
+          groups={IMPACT_GROUPS.map((g) => ({
+            label: g,
+            options: impactDims.filter((d) => d.type === g).map((d) => ({ value: d.id, label: d.label })),
+          }))}
+        />
+        <span className="text-xs text-slate-400 border border-dashed border-slate-200 rounded-md px-2.5 py-1.5 cursor-not-allowed" title="Capital type and instrument tagging is still being defined">
+          Capital type / instrument <span className="text-[9px] font-semibold uppercase tracking-wider ml-1">soon</span>
+        </span>
+        <span className="text-xs text-slate-400 border border-dashed border-slate-200 rounded-md px-2.5 py-1.5 cursor-not-allowed" title="Service offering tagging has not been built yet">
+          Service offering <span className="text-[9px] font-semibold uppercase tracking-wider ml-1">soon</span>
+        </span>
+
+        {(segFilter || fnFilter || impactFilter) && (
           <button
-            key={f.key}
-            onClick={() => setFnFilter(fnFilter === f.key ? null : f.key)}
-            title={f.desc}
-            className={`text-xs font-semibold px-3 py-1.5 rounded-full border transition-colors ${
-              fnFilter === f.key ? 'bg-brand-indigo text-white border-brand-indigo' : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'
-            }`}
+            onClick={() => { setSegFilter(null); setFnFilter(null); setImpactFilter(null); setSelection(null); }}
+            className="ml-auto text-xs font-semibold text-slate-500 hover:text-slate-800"
           >
-            {f.label}
+            Clear filters
           </button>
-        ))}
+        )}
       </div>
 
-      {/* Framework grid */}
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mt-5">
-        {FRAMEWORK_SEGMENTS.map((seg) => {
-          const segNodes = nodes.filter((n) => n.seg === seg.key);
-          const segSelected = selection?.kind === 'segment' && selection.key === seg.key;
-          const browsable = SEG_TO_DATA[seg.key] != null;
+      {activeImpact && (
+        <p className="text-xs text-slate-500 -mt-2">
+          Showing organizations tagged <span className="font-semibold text-slate-700">{activeImpact.label}</span> ({orgs.length} of {allOrgs.length}). Card counts reflect this filter.
+        </p>
+      )}
+
+      <FrameworkDiagram activeSeg={segFilter} liveSegs={liveSegs} counts={segCounts} onSelect={selectSegment} />
+
+      {/* Cards, grouped by segment */}
+      <div className="space-y-6">
+        {V2_SEGMENTS.filter((s) => !segFilter || s.key === segFilter).map((s) => {
+          const cards = visibleCards.filter((c) => c.seg === s.key);
+          if (cards.length === 0) return null;
+          const segOrgs = s.data ? orgs.filter((o) => o.segment === s.data) : [];
+          const untagged = untaggedBySeg.get(s.key) ?? [];
+          const segSelected = selection?.kind === 'segment' && selection.key === s.key;
           return (
-            <div key={seg.key} className="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
-              <button
-                onClick={() => browsable && setSelection(segSelected ? null : { kind: 'segment', key: seg.key })}
-                disabled={!browsable}
-                className={`w-full text-left px-3 py-2 border-b-2 transition-colors ${browsable ? 'hover:bg-slate-50' : 'cursor-default'}`}
-                style={{ borderBottomColor: seg.color, background: segSelected ? `${seg.color}14` : undefined }}
-              >
-                <h3 className="text-xs font-bold uppercase tracking-wider" style={{ color: seg.color }}>{seg.label}</h3>
-                <p className="text-[10px] text-slate-400">
-                  {segNodes.length} stakeholder type{segNodes.length !== 1 ? 's' : ''}
-                  {browsable && ' · click to browse all'}
-                </p>
-              </button>
-              <div className="p-2 space-y-1.5">
-                {segNodes.map((node) => {
-                  const isSel = selection?.kind === 'node' && selection.node.id === node.id;
-                  const count = orgCounts.get(node.id) ?? 0;
+            <section key={s.key} aria-label={s.label}>
+              <div className="grid grid-cols-[6px_1fr_auto] gap-3 items-start mb-2.5">
+                <div className="w-1.5 self-stretch rounded-full" style={{ background: s.color }} />
+                <div>
+                  <h3 className="text-base font-bold text-slate-800 leading-tight">{s.label}</h3>
+                  <p className="text-xs text-slate-500 mt-0.5 max-w-3xl">{s.desc}</p>
+                </div>
+                {s.data && (
+                  <button
+                    onClick={() => setSelection(segSelected ? null : { kind: 'segment', key: s.key })}
+                    className={`text-xs font-semibold rounded-md px-2.5 py-1.5 border transition-colors ${segSelected ? 'text-white border-transparent' : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'}`}
+                    style={segSelected ? { background: s.color } : undefined}
+                  >
+                    Browse all {segOrgs.length}
+                  </button>
+                )}
+              </div>
+
+              <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {cards.map((card) => {
+                  const list = byCard.get(card.id) ?? [];
+                  const isSel = selection?.kind === 'card' && selection.card.id === card.id;
                   return (
                     <button
-                      key={node.id}
-                      onClick={() => setSelection(isSel ? null : { kind: 'node', node })}
-                      className={`w-full text-left p-2 rounded-md border transition-colors ${
-                        isSel ? 'border-transparent' : 'border-slate-100 hover:border-slate-300 hover:bg-slate-50'
-                      }`}
-                      style={isSel ? { background: `${seg.color}1c` } : undefined}
+                      key={card.id}
+                      onClick={() => setSelection(isSel ? null : { kind: 'card', card })}
+                      aria-pressed={isSel}
+                      className={`text-left bg-white rounded-lg border p-3.5 flex flex-col gap-2 transition-colors ${isSel ? 'border-transparent ring-2' : 'border-slate-200 hover:border-slate-300'}`}
+                      style={{ borderTop: `3px solid ${s.color}`, ...(isSel ? { boxShadow: `0 0 0 2px ${s.color}` } : {}) }}
                     >
-                      <p className="text-xs font-semibold text-slate-800 flex items-center justify-between gap-1">
-                        <span>{node.title}</span>
-                        {count > 0 && (
-                          <span className="text-[9px] font-bold text-white rounded-full px-1.5 py-px shrink-0" style={{ background: seg.color }}>
-                            {count}
-                          </span>
-                        )}
-                      </p>
-                      <p className="text-[10px] text-slate-400 mt-0.5">{node.meta}</p>
+                      <div className="flex items-start justify-between gap-2">
+                        <h4 className="text-sm font-semibold text-slate-800 leading-snug">{card.title}</h4>
+                        <span
+                          className={`shrink-0 text-[10px] font-bold rounded-full px-1.5 py-px ${list.length ? 'text-white' : 'text-slate-400 border border-dashed border-slate-300'}`}
+                          style={list.length ? { background: s.color } : undefined}
+                          title={list.length ? `${list.length} organizations` : 'No organizations tagged yet'}
+                        >
+                          {list.length}
+                        </span>
+                      </div>
+                      <p className="text-xs text-slate-500 leading-relaxed line-clamp-4">{card.desc}</p>
+                      <div className="flex flex-wrap gap-1 mt-auto pt-1">
+                        {card.subcards.map((t) => (
+                          <span key={t} className="text-[10.5px] px-1.5 py-0.5 rounded border border-slate-200 bg-slate-50 text-slate-600 leading-tight">{t}</span>
+                        ))}
+                      </div>
                     </button>
                   );
                 })}
-                {segNodes.length === 0 && <p className="text-[10px] text-slate-300 p-2">No matches</p>}
+
+                {untagged.length > 0 && !fnFilter && (
+                  <button
+                    onClick={() => setSelection(selection?.kind === 'untagged' && selection.key === s.key ? null : { kind: 'untagged', key: s.key })}
+                    className="text-left rounded-lg border border-dashed border-slate-300 p-3.5 flex flex-col gap-1 hover:border-slate-400 transition-colors"
+                  >
+                    <h4 className="text-sm font-semibold text-slate-600">Not yet tagged</h4>
+                    <p className="text-xs text-slate-400 leading-relaxed">
+                      {untagged.length} {s.short} organization{untagged.length === 1 ? '' : 's'} have no Org. Type in Airtable, so they don't roll up to a sub-example yet.
+                    </p>
+                  </button>
+                )}
               </div>
-            </div>
+            </section>
           );
         })}
       </div>
 
-      {/* Selection detail: description card (40%) beside the records (60%) */}
       {selection && (
-        <div className={`mt-6 grid gap-5 items-start grid-cols-1 ${selection.kind === 'node' ? 'lg:grid-cols-[2fr_3fr]' : ''}`}>
-          {selection.kind === 'node' && (
-            <NodeDetailCard
-              node={selection.node}
-              onNavigate={(n) => setSelection({ kind: 'node', node: n })}
-            />
-          )}
-          <RecordsPanel
-            key={selTitle}
-            title={selTitle}
-            orgs={selOrgs}
-            flows={selFlows}
-            onClose={() => setSelection(null)}
-          />
-        </div>
+        <RecordsPanel
+          key={selTitle}
+          title={selTitle}
+          color={V2_SEGMENTS.find((s) => s.key === selSeg)?.color ?? '#4750a2'}
+          orgs={selOrgs}
+          flows={selFlows}
+          onClose={() => setSelection(null)}
+        />
       )}
 
-      {/* Uncategorized records stay reachable */}
       {uncategorizedCount > 0 && selection?.kind !== 'uncategorized' && (
         <button
           onClick={() => setSelection({ kind: 'uncategorized' })}
-          className="mt-5 text-xs font-semibold text-slate-400 hover:text-slate-600 hover:underline"
+          className="text-xs font-semibold text-slate-400 hover:text-slate-600 hover:underline"
         >
           + {uncategorizedCount} uncategorized organizations not shown in the framework
         </button>
       )}
-
     </div>
+  );
+}
+
+function Select({ label, value, onChange, options, groups }: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  options?: { value: string; label: string }[];
+  groups?: { label: string; options: { value: string; label: string }[] }[];
+}) {
+  const active = value !== '';
+  return (
+    <label className={`inline-flex items-center gap-1.5 text-xs rounded-md border px-2 py-1 ${active ? 'border-brand-indigo bg-brand-indigo/5 text-slate-800' : 'border-slate-200 bg-slate-50 text-slate-600'}`}>
+      <span className="font-semibold">{label}</span>
+      <select
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="bg-transparent text-xs outline-none max-w-[220px] cursor-pointer"
+        aria-label={`Filter by ${label.toLowerCase()}`}
+      >
+        <option value="">All</option>
+        {options?.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+        {groups?.map((g) => g.options.length > 0 && (
+          <optgroup key={g.label} label={g.label}>
+            {g.options.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+          </optgroup>
+        ))}
+      </select>
+    </label>
   );
 }
 
 type RecordsView = 'orgs' | 'flows' | 'instruments';
 
-// The unfurled records behind a framework selection, switched with the same
-// pill sub-tab style used on the Explore scope tabs and the Glossary tab.
-function RecordsPanel({ title, orgs, flows, onClose }: {
+// The unfurled records behind a selection, switched with the same pill
+// sub-tab style used on the Explore scope tabs and the Glossary tab.
+function RecordsPanel({ title, color, orgs, flows, onClose }: {
   title: string;
+  color: string;
   orgs: Organization[];
   flows: CapitalFlow[];
   onClose: () => void;
@@ -227,7 +308,7 @@ function RecordsPanel({ title, orgs, flows, onClose }: {
   ];
 
   return (
-    <div className="border border-slate-200 rounded-xl p-5 shadow-sm" style={{ borderLeft: '4px solid #4750a2' }}>
+    <div className="border border-slate-200 rounded-xl p-5 shadow-sm bg-white" style={{ borderLeft: `4px solid ${color}` }}>
       <div className="flex items-baseline gap-3 flex-wrap">
         <h3 className="text-xl font-bold text-slate-800">{title}</h3>
         {totalCapital > 0 && (
@@ -238,8 +319,7 @@ function RecordsPanel({ title, orgs, flows, onClose }: {
 
       {orgs.length === 0 ? (
         <p className="text-sm text-slate-400 mt-3">
-          No organizations are tagged with this stakeholder type yet — click the segment header to
-          browse the whole segment instead.
+          No organizations are tagged here yet. Use "Browse all" on the segment to see every record in it.
         </p>
       ) : (
         <>
