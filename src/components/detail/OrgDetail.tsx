@@ -3,6 +3,7 @@ import { useData } from '../../context/DataContext';
 import { useDetail } from '../../context/DetailContext';
 import { SEGMENT_STYLES } from '../../types';
 import { formatCurrencyFull } from '../../lib/format';
+import { OrgFinancials } from './OrgFinancials';
 
 const MAX_VISIBLE = 6;
 
@@ -58,6 +59,8 @@ export function OrgDetail({ id }: { id: string }) {
       )}
 
       {org.description && <p className="text-sm text-slate-600 mt-3">{org.description}</p>}
+
+      {org.irs && <OrgFinancials irs={org.irs} />}
 
       <FlowSection title="Capital Deployed (Outbound)" flows={outbound} counterpartKey="recipientId" />
       <FlowSection title="Capital Received (Inbound)" flows={inbound} counterpartKey="sourceId" />

@@ -11,6 +11,7 @@ import { SavePdfButton } from './components/SavePdfButton';
 import { CapitalTab } from './components/capital/CapitalTab';
 import { FramingTab } from './components/FramingTab';
 import { FrameworkTab } from './components/FrameworkTab';
+import { SearchBar } from './components/SearchBar';
 
 const TABS: { id: Tab; label: string; icon: typeof Map }[] = [
   { id: 'explore', label: 'Explore', icon: Map },
@@ -79,7 +80,8 @@ function Dashboard() {
             <div className="w-6 h-6 rounded-lg shrink-0" style={{ background: 'conic-gradient(from 90deg, #4750a2, #53c3c2, #f1d25b, #279a49)', border: '1px solid #e4e8f2' }} />
             <h1 className="text-sm font-bold text-slate-800 uppercase tracking-wide">Georgia's Impact Investing Ecosystem Map</h1>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-1 justify-end min-w-[240px]">
+            <SearchBar />
             <button
               onClick={() => { setActiveTab('explore'); setSelectedFips(null); scrollToTop(); }}
               className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-md border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 transition-colors"

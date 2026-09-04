@@ -22,6 +22,14 @@ jobs:
       - name: Clone CVI data
         run: git clone --depth 1 https://github.com/gasocialimpact/CVI.git ../CVI
 
+      # Fill in missing EINs and refresh the IRS fields on Organizations, so the
+      # export below can join 990 / BMF data. Uses the committed IRS extracts;
+      # the token needs data.records:write on the base.
+      - name: Sync IRS fields to Airtable
+        env:
+          AIRTABLE_TOKEN: ${{ secrets.AIRTABLE_TOKEN }}
+        run: node scripts/sync-irs-to-airtable.mjs
+
       - name: Export Airtable data
         env:
           AIRTABLE_TOKEN: ${{ secrets.AIRTABLE_TOKEN }}

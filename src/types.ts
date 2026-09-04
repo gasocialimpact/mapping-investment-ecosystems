@@ -27,6 +27,67 @@ export const SEGMENT_STYLES: Record<Segment, SegmentStyle> = {
   'Uncategorized':      { color: '#939699', light: '#939699', soft: '#eeeeee' },
 };
 
+/** Latest Form 990 / 990-EZ filing, Part I summary plus Part X balance sheet (full 990 only). Dollar amounts. */
+export interface IrsFiling {
+  taxYear: number;
+  form: '990' | '990EZ' | string;
+  periodEnd: string | null;
+  revenue: number | null;
+  contributions: number | null;
+  programRevenue: number | null;
+  investmentIncome: number | null;
+  expenses: number | null;
+  grantsPaid: number | null;
+  salaries: number | null;
+  netIncome: number | null;
+  assetsEOY: number | null;
+  liabilitiesEOY: number | null;
+  netAssetsEOY: number | null;
+  employees: number | null;
+  volunteers: number | null;
+  cashAndSavingsEOY: number | null;
+  pledgesReceivableEOY: number | null;
+  notesLoansReceivableEOY: number | null;
+  landBuildingsNetEOY: number | null;
+  investPublicSecuritiesEOY: number | null;
+  investOtherSecuritiesEOY: number | null;
+  investProgramRelatedEOY: number | null;
+  grantsPayableEOY: number | null;
+  taxExemptBondsEOY: number | null;
+  mortgagesNotesPayableEOY: number | null;
+  unsecuredNotesPayableEOY: number | null;
+  netAssetsUnrestrictedEOY: number | null;
+  netAssetsTempRestrictedEOY: number | null;
+  netAssetsPermRestrictedEOY: number | null;
+}
+
+export interface IrsTrendPoint {
+  taxYear: number;
+  revenue: number | null;
+  expenses: number | null;
+  assetsEOY: number | null;
+  netAssetsEOY: number | null;
+}
+
+/** IRS profile joined by EIN: Business Master File codes plus 990 financials where the org e-files a 990/990-EZ. */
+export interface OrgIrs {
+  ein: string;
+  /** false when the EIN is set in Airtable but not present in either IRS extract. */
+  found: boolean;
+  legalName?: string | null;
+  subsection?: string | null;
+  ntee?: string | null;
+  nteeMajor?: string | null;
+  foundation?: string | null;
+  rulingYear?: number | null;
+  yearFormation?: number | null;
+  mission?: string | null;
+  /** Business Master File amounts: the most recent the IRS has on file, also covers 990-PF filers. */
+  bmf?: { assets: number | null; income: number | null; revenue: number | null; taxPeriod: string | null } | null;
+  latest?: IrsFiling | null;
+  trend?: IrsTrendPoint[];
+}
+
 export interface Organization {
   id: string;
   name: string;
@@ -38,6 +99,9 @@ export interface Organization {
   lng: number | null;
   website: string | null;
   description: string | null;
+  ein: string | null;
+  einMatch: string | null;
+  irs: OrgIrs | null;
   locationId: string | null;
   capitalFlowIds: string[];
   capitalAllocationIds: string[];

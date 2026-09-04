@@ -10,7 +10,9 @@
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "export-data": "node scripts/export-airtable.mjs",
-    "fetch-place-data": "node scripts/fetch-place-data.mjs"
+    "fetch-place-data": "node scripts/fetch-place-data.mjs",
+    "fetch-990-data": "node scripts/fetch-990-data.mjs",
+    "sync-irs": "node scripts/sync-irs-to-airtable.mjs"
   },
   "dependencies": {
     "html-to-image": "^1.11.13",

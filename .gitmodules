@@ -1,0 +1,16 @@
+[submodule "external/nodc/ef2"]
+	path = external/nodc/ef2
+	url = https://github.com/Nonprofit-Open-Data-Collective/ef2.git
+	shallow = true
+[submodule "external/nodc/irs-efile-master-concordance-file"]
+	path = external/nodc/irs-efile-master-concordance-file
+	url = https://github.com/Nonprofit-Open-Data-Collective/irs-efile-master-concordance-file.git
+	shallow = true
+[submodule "external/nodc/efile-download"]
+	path = external/nodc/efile-download
+	url = https://github.com/Nonprofit-Open-Data-Collective/efile-download.git
+	shallow = true
+[submodule "external/nodc/irs-exempt-org-business-master-file"]
+	path = external/nodc/irs-exempt-org-business-master-file
+	url = https://github.com/Nonprofit-Open-Data-Collective/irs-exempt-org-business-master-file.git
+	shallow = true

@@ -90,6 +90,48 @@ npm run fetch-place-data                          # Data Explorer → place-*.js
 
 The two datasets join on 5-digit county FIPS codes.
 
+### IRS 990 data (Nonprofit Open Data Collective)
+
+Two IRS extracts feed the **Organizational Financials** layer and fill in basic
+organizational details (EIN, legal name, IRS codes) automatically:
+
+| File | Source | Contents |
+|---|---|---|
+| `irs990-georgia.json` | NCCS-published tables from the NODC `ef2` pipeline | Every Georgia Form 990 / 990-EZ e-filer, latest three tax years: Part I financials (revenue, expenses, assets, grants paid, staff, volunteers), Part X balance sheet (securities, program-related investments, cash, loans, debt, net-asset classes), mission text |
+| `irs-bmf-georgia.json` | IRS Exempt Organizations Business Master File | Every currently exempt Georgia organization (~62k): subsection, NTEE code, foundation status, ruling year, address, latest assets / income / revenue. Also covers 990-PF and 990-N filers, which the e-file tables do not |
+
+Both are built by `scripts/fetch-990-data.mjs`. The
+[Nonprofit Open Data Collective](https://github.com/Nonprofit-Open-Data-Collective)
+repositories are vendored as **read-only git submodules** under
+[`external/nodc/`](external/nodc/README.md); this project never modifies them. Their
+tools are R packages, so rather than running them we stream their published output
+(nationwide CSVs, ~250 MB per year plus ~350 MB of BMF) and keep only Georgia rows.
+Nothing raw is stored.
+
+**How the join works.** Airtable holds the `EIN` on each Organization and is the
+source of truth. `scripts/sync-irs-to-airtable.mjs` fills in missing EINs by matching
+organization name and city against both extracts (recording how in `EIN Match`; set it
+to *Verified* to lock an EIN), and refreshes the read-only IRS fields (`IRS Legal
+Name`, `IRS Subsection`, `NTEE Code`, `IRS Foundation Status`, `IRS Ruling Year`, `IRS
+Address`, `IRS Last Synced`). It also fills a blank `Street Address` (from the BMF, skipping
+PO boxes) or `Website` (from the latest 990) but never overwrites a value you entered.
+The Airtable export then attaches an `irs` block to each
+organization in `ecosystem.json`, which the organization record modal renders as the
+IRS Profile, Financials, Balance Sheet Detail and Trend sections.
+
+```bash
+git submodule update --init --depth 1               # optional: field labels come from the concordance submodule
+npm run fetch-990-data                              # NCCS + BMF → irs990-georgia.json, irs-bmf-georgia.json
+IRS990_YEARS=2019-2022 npm run fetch-990-data       # pick tax years
+AIRTABLE_TOKEN=<token> npm run sync-irs -- --dry-run   # preview EIN assignments
+AIRTABLE_TOKEN=<token> npm run sync-irs             # write EINs + IRS fields to Airtable
+AIRTABLE_TOKEN=<token> npm run export-data          # rebuild ecosystem.json with the irs block
+```
+
+The extracts are refreshed quarterly and on demand by `.github/workflows/sync-irs990.yml`;
+the nightly `sync-airtable.yml` runs the EIN sync before the export so new organizations
+pick up their IRS data the next morning.
+
 ## Security & privacy notes
 
 - **No secrets are committed.** The Airtable token lives only in the `AIRTABLE_TOKEN`
@@ -103,6 +145,9 @@ The two datasets join on 5-digit county FIPS codes.
 public/data/                     # the static snapshots the app reads
 scripts/export-airtable.mjs      # Airtable → ecosystem.json
 scripts/fetch-place-data.mjs     # Community Data Explorer → place-*.json
+scripts/fetch-990-data.mjs       # NCCS / NODC 990 tables + IRS BMF → irs990-georgia.json, irs-bmf-georgia.json
+scripts/sync-irs-to-airtable.mjs # EIN matching + IRS fields → Airtable Organizations
+external/nodc/                   # read-only NODC submodules (ef2, concordance, …)
 src/
   types.ts, types/place.ts       # data models
   context/                       # Data / Place / Detail providers

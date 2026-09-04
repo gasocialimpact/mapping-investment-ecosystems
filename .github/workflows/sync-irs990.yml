@@ -1,0 +1,51 @@
+name: Sync IRS 990 Data
+
+# The NCCS tables are refreshed roughly once a year, so this runs on demand and
+# on a quarterly schedule rather than nightly. It streams ~170 MB per tax year
+# from S3 and writes only public/data/irs990-georgia.json.
+
+on:
+  schedule:
+    - cron: '0 7 1 1,4,7,10 *'  # 1st of Jan/Apr/Jul/Oct, 7am UTC
+  workflow_dispatch:
+    inputs:
+      years:
+        description: 'Tax years, e.g. 2020-2022 or 2019,2021 (blank = latest 3 available)'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Only the concordance submodule is needed (field labels). The script
+          # falls back to fetching concordance.csv from GitHub if it is absent.
+          submodules: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Build Georgia 990 extract
+        env:
+          IRS990_YEARS: ${{ github.event.inputs.years }}
+        run: node scripts/fetch-990-data.mjs
+
+      - name: Check for changes
+        id: changes
+        run: |
+          git diff --quiet public/data/irs990-georgia.json && echo "changed=false" >> $GITHUB_OUTPUT || echo "changed=true" >> $GITHUB_OUTPUT
+
+      - name: Commit and push
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/data/irs990-georgia.json
+          git commit -m "chore: sync IRS 990 data $(date -u +%Y-%m-%d)"
+          git push
