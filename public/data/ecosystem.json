@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-04T11:08:49.378Z",
+  "generatedAt": "2026-09-04T11:37:59.521Z",
   "source": "Airtable",
   "organizations": [
     {
@@ -18492,29 +18492,6 @@
       "ownershipIds": []
     },
     {
-      "id": "org_community_foundation_of_greater_atlanta",
-      "name": "Community Foundation of Greater Atlanta",
-      "segment": "Capital Allocator",
-      "orgType": "Foundation (Public DAF Sponsor)",
-      "city": "Atlanta",
-      "state": "GA",
-      "lat": 33.7628,
-      "lng": -84.422,
-      "website": "http://cfgreateratlanta.org/",
-      "description": "The Community Foundation for Greater Atlanta is dedicated to enhancing prosperity and equity in the Atlanta region. By partnering with donors, nonprofits, and community leaders, the foundation works to strengthen neighborhoods and improve the quality of life for all residents. Their initiatives focus on arts, culture, housing, income, and leadership, aiming to create a brighter future for the community.",
-      "ein": null,
-      "einMatch": "No match found",
-      "irs": null,
-      "locationId": "loc_atlanta_ga",
-      "contactIds": [],
-      "capitalFlowIds": [],
-      "capitalAllocationIds": [],
-      "sdgIds": [],
-      "sectorIds": [],
-      "populationIds": [],
-      "ownershipIds": []
-    },
-    {
       "id": "org_calvert_impact",
       "name": "Calvert Impact",
       "segment": "Capital Aggregator",
@@ -25310,10 +25287,10 @@
       "state": "GA",
       "lat": 33.7628,
       "lng": -84.422,
-      "website": "https://www.atlantawealthbuilding.org",
+      "website": null,
       "description": "Kindred Futures is an organization focused on building Black wealth and creating a just and inclusive economy. They redefine wealth beyond financial assets, encompassing freedom and the ability to determine one's reality. Their work involves investing in Black Wealth Solution Providers, conducting research, and advocating for policies that address systemic barriers to wealth creation.",
       "ein": "462239585",
-      "einMatch": "Auto: name + city",
+      "einMatch": "Verified",
       "irs": {
         "ein": "462239585",
         "found": true,
@@ -45819,7 +45796,6 @@
         "org_chastain_park_conservancy",
         "org_chestnut_family_foundation",
         "org_civic_accelerator_at_points_of_light",
-        "org_community_foundation_of_greater_atlanta",
         "org_cox_foundations",
         "org_createatl",
         "org_emory_university_emory_impact_investing_group",
