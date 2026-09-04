@@ -39,13 +39,19 @@ jobs:
       - name: Check for changes
         id: changes
         run: |
-          git diff --quiet public/data/irs990-georgia.json && echo "changed=false" >> $GITHUB_OUTPUT || echo "changed=true" >> $GITHUB_OUTPUT
+          git diff --quiet public/data/irs990-georgia.json public/data/irs-bmf-georgia.json && echo "changed=false" >> $GITHUB_OUTPUT || echo "changed=true" >> $GITHUB_OUTPUT
 
       - name: Commit and push
         if: steps.changes.outputs.changed == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add public/data/irs990-georgia.json
+          git add public/data/irs990-georgia.json public/data/irs-bmf-georgia.json
           git commit -m "chore: sync IRS 990 data $(date -u +%Y-%m-%d)"
-          git push
+          # Another push (a person, or the other sync workflow) can land on main
+          # while this job runs. Rebase our single data commit onto it and retry
+          # rather than failing on a non-fast-forward push.
+          for attempt in 1 2 3; do
+            git pull --rebase origin main && git push && break
+            echo "push attempt $attempt failed, retrying"; sleep 10
+          done
