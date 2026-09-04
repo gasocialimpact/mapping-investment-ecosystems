@@ -100,6 +100,10 @@ organizational details (EIN, legal name, IRS codes) automatically:
 | `irs990-georgia.json` | NCCS-published tables from the NODC `ef2` pipeline | Every Georgia Form 990 / 990-EZ e-filer, latest three tax years: Part I financials (revenue, expenses, assets, grants paid, staff, volunteers), Part X balance sheet (securities, program-related investments, cash, loans, debt, net-asset classes), mission text |
 | `irs-bmf-georgia.json` | IRS Exempt Organizations Business Master File | Every currently exempt Georgia organization (~62k): subsection, NTEE code, foundation status, ruling year, address, latest assets / income / revenue. Also covers 990-PF and 990-N filers, which the e-file tables do not |
 
+Both extracts are Georgia-first but not Georgia-only: any EIN already recorded in Airtable (and
+therefore present in `ecosystem.json`) is kept from the national files whatever its state, so
+out-of-state funders such as Kresge or Casey get IRS data at their actual location.
+
 Both are built by `scripts/fetch-990-data.mjs`. The
 [Nonprofit Open Data Collective](https://github.com/Nonprofit-Open-Data-Collective)
 repositories are vendored as **read-only git submodules** under

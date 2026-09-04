@@ -32,6 +32,27 @@ const concordanceRemote =
 
 const BASE_URL = process.env.IRS990_BASE_URL || 'https://nccs-efile.s3.us-east-1.amazonaws.com/parsed';
 const STATE = (process.env.IRS990_STATE || 'GA').toUpperCase();
+
+// Organizations in the ecosystem can sit outside the state (national funders,
+// out-of-state CDFIs). Any EIN already recorded in Airtable, and therefore in
+// the exported ecosystem.json, is kept from the national files regardless of
+// state, so those records get IRS data at their actual location.
+// IRS990_EXTRA_EINS=123456789,987654321 adds EINs not yet in the export.
+function loadTrackedEins() {
+  const set = new Set();
+  try {
+    const eco = JSON.parse(readFileSync(ecosystemPath, 'utf8'));
+    for (const o of eco.organizations || []) if (/^\d{9}$/.test(o.ein || '')) set.add(o.ein);
+  } catch {
+    /* no export yet */
+  }
+  for (const e of (process.env.IRS990_EXTRA_EINS || '').split(',')) {
+    const d = e.replace(/\D/g, '');
+    if (d.length === 9) set.add(d);
+  }
+  return set;
+}
+const TRACKED_EINS = loadTrackedEins();
 const SKIP_MISSION = process.env.IRS990_SKIP_MISSION === '1';
 
 const TABLES = {
@@ -391,9 +412,10 @@ async function loadBmf() {
         });
       },
       (r) => {
-        if ((clean(r[pick.state]) || '').toUpperCase() !== STATE) return;
         const ein = padEin(r[pick.ein]);
         if (!ein) return;
+        const rowState = (clean(r[pick.state]) || '').toUpperCase();
+        if (rowState !== STATE && !TRACKED_EINS.has(ein)) return;
         kept++;
         const ruling = clean(r[pick.ruling]);
         const ntee = clean(r[pick.ntee]);
@@ -403,6 +425,7 @@ async function loadBmf() {
           name: clean(r[pick.name]),
           street: clean(r[pick.street]),
           city: clean(r[pick.city]),
+          state: rowState || null,
           zip: (clean(r[pick.zip]) || '').slice(0, 5) || null,
           subsection: subsectionLabel(r[pick.subsection]),
           subsectionCode: clean(r[pick.subsection]),
@@ -445,6 +468,7 @@ async function main() {
   const latest = await latestAvailableYear();
   const years = parseYears(process.env.IRS990_YEARS, latest);
   console.log(`Latest tax year on host: ${latest}. Building ${STATE} extract for ${years.join(', ')}.`);
+  console.log(`Tracking ${TRACKED_EINS.size} EINs from ecosystem.json in any state.`);
 
   // filings: objectId -> filing record; orgs: ein -> org record
   const filingsByObject = new Map();
@@ -473,9 +497,10 @@ async function main() {
         });
       },
       (r) => {
-        if ((clean(r[pick.state]) || '').toUpperCase() !== STATE) return;
         const ein = padEin(r[pick.ein]);
         if (!ein) return;
+        const rowState = (clean(r[pick.state]) || '').toUpperCase();
+        if (rowState !== STATE && !TRACKED_EINS.has(ein)) return;
         const form = clean(r[pick.form]);
         if (form !== '990' && form !== '990EZ') return; // ef2 tables cover 990 and 990-EZ only
         kept++;
@@ -490,6 +515,7 @@ async function main() {
           periodEnd: clean(r[pick.periodEnd]),
           returnTimestamp: clean(r[pick.returnTimestamp]),
           city: clean(r[pick.city]),
+          state: rowState || null,
           zip: (clean(r[pick.zip]) || '').slice(0, 5) || null,
           website: clean(r[pick.website]),
           yearFormation: num(r[pick.yearFormation]),
@@ -584,7 +610,7 @@ async function main() {
   for (const f of byEinYear.values()) {
     let o = orgs.get(f.ein);
     if (!o) {
-      o = { ein: f.ein, name: null, city: null, zip: null, website: null, yearFormation: null, is501c3: false, mission: null, latestTaxYear: -1, filings: [] };
+      o = { ein: f.ein, name: null, city: null, state: null, zip: null, website: null, yearFormation: null, is501c3: false, mission: null, latestTaxYear: -1, filings: [] };
       orgs.set(f.ein, o);
     }
     o.filings.push({
@@ -598,6 +624,7 @@ async function main() {
       o.latestTaxYear = f.taxYear;
       o.name = f.name;
       o.city = f.city;
+      o.state = f.state;
       o.zip = f.zip;
       o.website = f.website;
       o.yearFormation = f.yearFormation;
@@ -670,7 +697,7 @@ async function main() {
         concordance: submoduleCommit('external/nodc/irs-efile-master-concordance-file'),
       },
       notes: [
-        'Filers are selected by the organization address state on the return header.',
+        'Filers are selected by the organization address state on the return header, plus any EIN already recorded in ecosystem.json regardless of state.',
         'Private foundations (990-PF) and 990-N postcard filers are not included in these tables.',
         'One filing per EIN per tax year; amended returns replace the original when the return timestamp is later.',
         'Mission text is from the latest filing and is truncated to ' + MISSION_MAX_CHARS + ' characters.',
@@ -694,6 +721,9 @@ async function main() {
       ecosystemAmbiguous: matches.filter((m) => !m.ein).length,
       bmfOrganizations: bmf.size,
       organizationsWithIrsCodes: organizations.filter((o) => o.irs).length,
+      trackedEins: TRACKED_EINS.size,
+      outOfStateOrganizations: organizations.filter((o) => o.state && o.state !== STATE).length,
+      outOfStateBmf: [...bmf.values()].filter((b) => b.state && b.state !== STATE).length,
     },
     ecosystemMatches: matches,
     organizations,

@@ -133,8 +133,8 @@ function irsFieldsFor(ein, bmf, f990) {
   const n = f990.get(ein);
   if (!b && !n) return null;
   const address = b
-    ? [b.street, b.city, [STATE, b.zip].filter(Boolean).join(' ')].filter(Boolean).join(', ')
-    : [n.city, [STATE, n.zip].filter(Boolean).join(' ')].filter(Boolean).join(', ');
+    ? [b.street, b.city, [b.state || STATE, b.zip].filter(Boolean).join(' ')].filter(Boolean).join(', ')
+    : [n.city, [n.state || STATE, n.zip].filter(Boolean).join(' ')].filter(Boolean).join(', ');
   return {
     [F.legalName]: b?.name ?? n?.name ?? null,
     [F.subsection]: b?.subsection ?? (n?.is501c3 ? '501(c)(3)' : null),
