@@ -15,8 +15,8 @@ import { SearchBar } from './components/SearchBar';
 
 const TABS: { id: Tab; label: string; icon: typeof Map }[] = [
   { id: 'explore', label: 'Exploring Local Context', icon: Map },
-  { id: 'capital', label: 'Tracking Capital Changes Over Time', icon: TrendingUp },
   { id: 'framing', label: 'Framing Our Ecosystem', icon: Network },
+  { id: 'capital', label: 'Tracking Capital Changes Over Time', icon: TrendingUp },
   { id: 'glossary', label: 'Glossary & Key Terms', icon: BookOpen },
 ];
 
