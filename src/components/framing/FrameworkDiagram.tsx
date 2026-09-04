@@ -84,7 +84,8 @@ export function FrameworkDiagram({ activeSeg, liveSegs, counts = {}, onSelect }:
       >
         <rect x={x} y={BOX.y} width={BOX.w} height={BOX.h} rx={10} fill={s.tint} stroke={s.color} strokeWidth={active ? 3 : 1.5} />
         <rect className="fw-shade" x={x} y={BOX.y} width={BOX.w} height={BOX.h} rx={10} fill={s.color} fillOpacity={0.08} pointerEvents="none" />
-        <rect x={x} y={BOX.y} width={6} height={BOX.h} rx={3} fill={s.color} />
+        <clipPath id={`fw-clip-${k}`}><rect x={x} y={BOX.y} width={BOX.w} height={BOX.h} rx={10} /></clipPath>
+        <rect x={x} y={BOX.y} width={5} height={BOX.h} fill={s.color} clipPath={`url(#fw-clip-${k})`} />
         <text x={x + 20} y={BOX.y + 30} fontSize={15} fontWeight={700} fill="#1e2331">{s.label}</text>
         {lines.map((l, i) => (
           <text key={l} x={x + 20} y={BOX.y + 56 + i * 17} fontSize={11.5} fill="#475569">{l}</text>
