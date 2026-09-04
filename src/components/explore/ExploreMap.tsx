@@ -315,16 +315,6 @@ export function ExploreMap({ organizations }: Props) {
               </button>
             ))}
           </div>
-          <select
-            value={isCviMetric(metric) ? '' : metric}
-            onChange={(e) => e.target.value && setMetric(e.target.value)}
-            className="text-xs border border-slate-200 rounded-md px-2 py-1 bg-white text-slate-600 focus:outline-none focus:ring-1 focus:ring-brand-green"
-          >
-            <option value="">More indicators…</option>
-            {place.demographics.labels.map((l, i) => (
-              <option key={i} value={`demo:${i}`}>{l}</option>
-            ))}
-          </select>
         </div>
       </div>
 

@@ -6,6 +6,7 @@ import {
 } from '../data/frameworkV2';
 import type { SubExample, FnKey } from '../data/frameworkV2';
 import { FrameworkDiagram } from './framing/FrameworkDiagram';
+import { OrgDirectory } from './framing/OrgDirectory';
 import { OrgGrid, FlowList, InstrumentList, useInstrumentsForFlows } from './explore/EcosystemLayers';
 import { formatCurrency } from '../lib/format';
 
@@ -20,6 +21,9 @@ type Selection =
   | { kind: 'uncategorized' }
   | null;
 
+const TOGGLE_KEY = 'framing.frameworkOn';
+const readToggle = () => { try { return localStorage.getItem(TOGGLE_KEY) !== 'off'; } catch { return true; } };
+
 const IMPACT_GROUPS: ImpactDimension['type'][] = ['Sector Focus', 'SDG Alignment', 'Population Focus', 'Alternative Ownership Component'];
 
 export function FramingTab() {
@@ -28,6 +32,11 @@ export function FramingTab() {
   const [fnFilter, setFnFilter] = useState<FnKey | null>(null);
   const [impactFilter, setImpactFilter] = useState<string | null>(null);
   const [selection, setSelection] = useState<Selection>(null);
+  const [frameworkOn, setFrameworkOn] = useState<boolean>(readToggle);
+  const setToggle = (on: boolean) => {
+    setFrameworkOn(on);
+    try { localStorage.setItem(TOGGLE_KEY, on ? 'on' : 'off'); } catch { /* per-viewer convenience only */ }
+  };
 
   const allOrgs = data?.organizations ?? [];
 
@@ -106,8 +115,29 @@ export function FramingTab() {
     setSelection(key ? { kind: 'segment', key } : null);
   };
 
+  const toggleBar = (
+    <div className="flex items-center gap-3">
+      <span className="text-sm font-semibold text-slate-700">Ecosystem Framework</span>
+      <div role="group" aria-label="Ecosystem framework view" className="inline-flex rounded-md border border-slate-200 bg-slate-50 p-0.5 text-xs font-semibold">
+        <button onClick={() => setToggle(true)} aria-pressed={frameworkOn} className={`px-3 py-1 rounded ${frameworkOn ? 'bg-brand-indigo text-white shadow-sm' : 'text-slate-500 hover:text-slate-800'}`}>On</button>
+        <button onClick={() => setToggle(false)} aria-pressed={!frameworkOn} className={`px-3 py-1 rounded ${!frameworkOn ? 'bg-brand-indigo text-white shadow-sm' : 'text-slate-500 hover:text-slate-800'}`}>Off</button>
+      </div>
+      <span className="text-xs text-slate-400">{frameworkOn ? 'Diagram, filters and framework cards' : 'Type cards with a searchable, sortable list'}</span>
+    </div>
+  );
+
+  if (!frameworkOn) {
+    return (
+      <div className="pb-10 pt-6 space-y-5">
+        {toggleBar}
+        <OrgDirectory orgs={allOrgs} />
+      </div>
+    );
+  }
+
   return (
     <div className="pb-10 pt-6 space-y-5">
+      {toggleBar}
       {/* Filter bar */}
       <div className="bg-white rounded-lg border border-slate-200 shadow-sm px-3 py-2.5 flex flex-wrap items-center gap-2">
         <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 mr-1">Filter</span>
