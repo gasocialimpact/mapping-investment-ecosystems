@@ -134,6 +134,23 @@ AIRTABLE_TOKEN=<token> npm run sync-irs             # write EINs + IRS fields to
 AIRTABLE_TOKEN=<token> npm run export-data          # rebuild ecosystem.json with the irs block
 ```
 
+### Merging the Data Libraries directory
+
+`scripts/merge-data-libraries.mjs` folds the *Comprehensive Organizational Record Directory*
+(Data Libraries base) into an Organizations table by normalized name: new names are created,
+blank fields (description, website, segment, type, street address, EIN, City link) are filled,
+and disagreements are reported as conflicts but never applied. It is a dry run by default and
+refuses to write to production unless `--allow-production` is passed, so rehearse on a
+duplicate of the base first:
+
+```bash
+AIRTABLE_TOKEN=<token> TARGET_BASE_ID=<sandbox base id> npm run merge-data-libraries            # plan only
+AIRTABLE_TOKEN=<token> TARGET_BASE_ID=<sandbox base id> npm run merge-data-libraries -- --apply
+```
+
+Rows with nothing but a name are listed under `bareNamesNotCreated` in the plan rather than
+created (`--include-bare` overrides).
+
 The extracts are refreshed quarterly and on demand by `.github/workflows/sync-irs990.yml`;
 the nightly `sync-airtable.yml` runs the EIN sync before the export so new organizations
 pick up their IRS data the next morning.

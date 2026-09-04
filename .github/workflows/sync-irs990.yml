@@ -16,6 +16,7 @@ on:
 
 permissions:
   contents: write
+  actions: write   # to start the Pages deploy after committing data
 
 jobs:
   sync:
@@ -55,3 +56,12 @@ jobs:
             git pull --rebase origin main && git push && break
             echo "push attempt $attempt failed, retrying"; sleep 10
           done
+
+      # A push made with GITHUB_TOKEN does not trigger other workflows, so the
+      # Pages deploy must be started explicitly or the site never picks up
+      # the new data.
+      - name: Deploy site
+        if: steps.changes.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy.yml --ref main
