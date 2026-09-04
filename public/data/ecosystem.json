@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-04T11:37:59.521Z",
+  "generatedAt": "2026-09-04T12:37:21.376Z",
   "source": "Airtable",
   "organizations": [
     {
@@ -177,9 +177,74 @@
       "lng": -84.1762,
       "website": "https://www.albanycommunitytogether.com/",
       "description": "In 1994, a massive flood devastated many legacy businesses in South Albany. In response, four local banks and the City of Albany established a revolving loan fund to aid recovery efforts. This initiative grew into Albany Community Together (ACT!), a Black-led CDFI that now provides small business loans primarily to Black-owned businesses across 38 counties in southwestern Georgia. In addition to its CDFI status, ACT! is also a SBA Community Advantage Lender.",
-      "ein": null,
+      "ein": "582497789",
       "einMatch": "No match found",
-      "irs": null,
+      "irs": {
+        "ein": "582497789",
+        "found": true,
+        "legalName": "ACT ALBANY COMMUNITY TOGETHER INC",
+        "subsection": "501(c)(3)",
+        "ntee": "S20",
+        "nteeMajor": "Community Improvement & Capacity Building",
+        "foundation": "Public charity: publicly supported 170(b)(1)(A)(vi)",
+        "rulingYear": 1999,
+        "yearFormation": 2000,
+        "mission": "Economic Development Loans and Business Technical Assistance ACT!'s mission is building wealth and creating economic opportunities in Georgia by providing affordable access to capital and business development services to aspiring entrepreneurs and small business owners.",
+        "bmf": {
+          "assets": 9368210,
+          "income": 1324861,
+          "revenue": 1324861,
+          "taxPeriod": "202412"
+        },
+        "latest": {
+          "taxYear": 2021,
+          "form": "990",
+          "periodEnd": "2021-12-31",
+          "revenue": 1211635,
+          "contributions": 996750,
+          "programRevenue": 213727,
+          "investmentIncome": 0,
+          "expenses": 595224,
+          "grantsPaid": 0,
+          "salaries": 380799,
+          "netIncome": 616411,
+          "assetsEOY": 7876461,
+          "liabilitiesEOY": 1355121,
+          "netAssetsEOY": 6521340,
+          "employees": 7,
+          "volunteers": 0,
+          "cashAndSavingsEOY": 4583791,
+          "pledgesReceivableEOY": null,
+          "notesLoansReceivableEOY": 3287694,
+          "landBuildingsNetEOY": 4976,
+          "investPublicSecuritiesEOY": null,
+          "investOtherSecuritiesEOY": null,
+          "investProgramRelatedEOY": null,
+          "grantsPayableEOY": null,
+          "taxExemptBondsEOY": null,
+          "mortgagesNotesPayableEOY": null,
+          "unsecuredNotesPayableEOY": 1250000,
+          "netAssetsUnrestrictedEOY": null,
+          "netAssetsTempRestrictedEOY": null,
+          "netAssetsPermRestrictedEOY": null
+        },
+        "trend": [
+          {
+            "taxYear": 2020,
+            "revenue": 2719077,
+            "expenses": 400019,
+            "assetsEOY": 6367040,
+            "netAssetsEOY": 5532736
+          },
+          {
+            "taxYear": 2021,
+            "revenue": 1211635,
+            "expenses": 595224,
+            "assetsEOY": 7876461,
+            "netAssetsEOY": 6521340
+          }
+        ]
+      },
       "locationId": "loc_albany_ga",
       "contactIds": [],
       "capitalFlowIds": [],
@@ -1895,7 +1960,9 @@
       "capitalAllocationIds": [],
       "sdgIds": [],
       "sectorIds": [],
-      "populationIds": [],
+      "populationIds": [
+        "dim_health_wellness"
+      ],
       "ownershipIds": []
     },
     {
@@ -2222,7 +2289,10 @@
       "capitalAllocationIds": [],
       "sdgIds": [],
       "sectorIds": [],
-      "populationIds": [],
+      "populationIds": [
+        "dim_returning_citizens",
+        "dim_immigrants_or_refugees"
+      ],
       "ownershipIds": []
     },
     {
@@ -2906,7 +2976,9 @@
       "capitalFlowIds": [],
       "capitalAllocationIds": [],
       "sdgIds": [],
-      "sectorIds": [],
+      "sectorIds": [
+        "dim_food_systems_agriculture"
+      ],
       "populationIds": [],
       "ownershipIds": []
     },
@@ -3180,7 +3252,9 @@
       "capitalFlowIds": [],
       "capitalAllocationIds": [],
       "sdgIds": [],
-      "sectorIds": [],
+      "sectorIds": [
+        "dim_food_systems_agriculture"
+      ],
       "populationIds": [],
       "ownershipIds": []
     },
@@ -5422,7 +5496,9 @@
         "dim_capital_access_fair_financial_products",
         "dim_business_enterprise_support"
       ],
-      "populationIds": [],
+      "populationIds": [
+        "dim_women"
+      ],
       "ownershipIds": []
     },
     {
@@ -6334,7 +6410,9 @@
       "capitalFlowIds": [],
       "capitalAllocationIds": [],
       "sdgIds": [],
-      "sectorIds": [],
+      "sectorIds": [
+        "dim_business_enterprise_support"
+      ],
       "populationIds": [],
       "ownershipIds": []
     },
@@ -6992,7 +7070,9 @@
       ],
       "sdgIds": [],
       "sectorIds": [],
-      "populationIds": [],
+      "populationIds": [
+        "dim_immigrants_or_refugees"
+      ],
       "ownershipIds": []
     },
     {
@@ -8147,9 +8227,28 @@
       "lng": -84.422,
       "website": "https://www.suntrust.com/about-us/community-commitment/philanthropy/suntrust-foundation",
       "description": null,
-      "ein": null,
-      "einMatch": "No match found",
-      "irs": null,
+      "ein": "237336418",
+      "einMatch": "Verified",
+      "irs": {
+        "ein": "237336418",
+        "found": true,
+        "legalName": "TRUIST FOUNDATION INC",
+        "subsection": "501(c)(3)",
+        "ntee": "T20",
+        "nteeMajor": "Philanthropy, Voluntarism & Grantmaking Foundations",
+        "foundation": "Private non-operating foundation",
+        "rulingYear": 1974,
+        "yearFormation": null,
+        "mission": null,
+        "bmf": {
+          "assets": 547852626,
+          "income": 290922927,
+          "revenue": null,
+          "taxPeriod": "202412"
+        },
+        "latest": null,
+        "trend": []
+      },
       "locationId": "loc_atlanta_ga",
       "contactIds": [],
       "capitalFlowIds": [],
@@ -8327,9 +8426,28 @@
       "lng": -84.422,
       "website": null,
       "description": null,
-      "ein": null,
-      "einMatch": "No match found",
-      "irs": null,
+      "ein": "411367441",
+      "einMatch": "Verified",
+      "irs": {
+        "ein": "411367441",
+        "found": true,
+        "legalName": "WELLS FARGO FOUNDATION",
+        "subsection": "501(c)(3)",
+        "ntee": "T21",
+        "nteeMajor": "Philanthropy, Voluntarism & Grantmaking Foundations",
+        "foundation": "Private non-operating foundation",
+        "rulingYear": 1980,
+        "yearFormation": null,
+        "mission": null,
+        "bmf": {
+          "assets": 8589696,
+          "income": 192041601,
+          "revenue": null,
+          "taxPeriod": "202512"
+        },
+        "latest": null,
+        "trend": []
+      },
       "locationId": "loc_atlanta_ga",
       "contactIds": [],
       "capitalFlowIds": [],
@@ -9437,7 +9555,11 @@
       "capitalFlowIds": [],
       "capitalAllocationIds": [],
       "sdgIds": [],
-      "sectorIds": [],
+      "sectorIds": [
+        "dim_employee_stock_ownership_plan_esop",
+        "dim_cooperative",
+        "dim_employee_ownership_trusts_eots"
+      ],
       "populationIds": [],
       "ownershipIds": [
         "dim_employee_stock_ownership_plan_esop",
@@ -11019,9 +11141,67 @@
       "lng": -84.422,
       "website": null,
       "description": null,
-      "ein": null,
-      "einMatch": null,
-      "irs": null,
+      "ein": "580566256",
+      "einMatch": "Verified",
+      "irs": {
+        "ein": "580566256",
+        "found": true,
+        "legalName": "EMORY UNIVERSITY",
+        "subsection": "501(c)(3)",
+        "ntee": "B430",
+        "nteeMajor": "Education",
+        "foundation": "School 170(b)(1)(A)(ii)",
+        "rulingYear": 2011,
+        "yearFormation": 1915,
+        "mission": "Emory University's mission is to create, preserve, teach, and apply knowledge in the service of humanity. (See Schedule O for continuation)",
+        "bmf": {
+          "assets": null,
+          "income": null,
+          "revenue": null,
+          "taxPeriod": "202408"
+        },
+        "latest": {
+          "taxYear": 2020,
+          "form": "990",
+          "periodEnd": "2021-08-31",
+          "revenue": 5533550104,
+          "contributions": 1076895012,
+          "programRevenue": 3972186557,
+          "investmentIncome": 445336147,
+          "expenses": 4984531745,
+          "grantsPaid": 532762734,
+          "salaries": 2392863324,
+          "netIncome": 549018359,
+          "assetsEOY": 20337113893,
+          "liabilitiesEOY": 5749000176,
+          "netAssetsEOY": 14588113717,
+          "employees": 23792,
+          "volunteers": 12208,
+          "cashAndSavingsEOY": 2645606186,
+          "pledgesReceivableEOY": 180994384,
+          "notesLoansReceivableEOY": null,
+          "landBuildingsNetEOY": 3266415920,
+          "investPublicSecuritiesEOY": 916515945,
+          "investOtherSecuritiesEOY": 12060466331,
+          "investProgramRelatedEOY": 18440893,
+          "grantsPayableEOY": null,
+          "taxExemptBondsEOY": 1581596370,
+          "mortgagesNotesPayableEOY": null,
+          "unsecuredNotesPayableEOY": 944541062,
+          "netAssetsUnrestrictedEOY": null,
+          "netAssetsTempRestrictedEOY": null,
+          "netAssetsPermRestrictedEOY": null
+        },
+        "trend": [
+          {
+            "taxYear": 2020,
+            "revenue": 5533550104,
+            "expenses": 4984531745,
+            "assetsEOY": 20337113893,
+            "netAssetsEOY": 14588113717
+          }
+        ]
+      },
       "locationId": "loc_atlanta_ga",
       "contactIds": [],
       "capitalFlowIds": [],
@@ -11226,9 +11406,28 @@
       "lng": -84.422,
       "website": "http://www.aecf.org",
       "description": "The Annie E. Casey Foundation is dedicated to building a brighter future for America's children, youth, and families by focusing on strengthening families, building stronger communities, and ensuring access to opportunity. The foundation advances research and solutions to overcome barriers to success, helps communities demonstrate effective strategies, and influences decision-makers to invest in evidence-based approaches. Their work encompasses areas such as child welfare, community change, economic opportunity, equity and inclusion, juvenile justice, and leadership development.",
-      "ein": null,
-      "einMatch": "No match found",
-      "irs": null,
+      "ein": "521951681",
+      "einMatch": "Verified",
+      "irs": {
+        "ein": "521951681",
+        "found": true,
+        "legalName": "ANNIE E CASEY FOUNDATION",
+        "subsection": "501(c)(3)",
+        "ntee": "T21",
+        "nteeMajor": "Philanthropy, Voluntarism & Grantmaking Foundations",
+        "foundation": "Private non-operating foundation",
+        "rulingYear": 1996,
+        "yearFormation": null,
+        "mission": null,
+        "bmf": {
+          "assets": 2287152244,
+          "income": 335980194,
+          "revenue": null,
+          "taxPeriod": "202412"
+        },
+        "latest": null,
+        "trend": []
+      },
       "locationId": "loc_atlanta_ga",
       "contactIds": [],
       "capitalFlowIds": [],
@@ -13210,7 +13409,9 @@
       ],
       "sdgIds": [],
       "sectorIds": [],
-      "populationIds": [],
+      "populationIds": [
+        "dim_health_wellness"
+      ],
       "ownershipIds": []
     },
     {
@@ -13797,7 +13998,9 @@
       "capitalAllocationIds": [],
       "sdgIds": [],
       "sectorIds": [],
-      "populationIds": [],
+      "populationIds": [
+        "dim_women"
+      ],
       "ownershipIds": []
     },
     {
@@ -15021,7 +15224,9 @@
         "flow_227"
       ],
       "sdgIds": [],
-      "sectorIds": [],
+      "sectorIds": [
+        "dim_business_enterprise_support"
+      ],
       "populationIds": [],
       "ownershipIds": []
     },
@@ -15147,9 +15352,28 @@
       "lng": -81.894707,
       "website": null,
       "description": null,
-      "ein": null,
-      "einMatch": null,
-      "irs": null,
+      "ein": "381359217",
+      "einMatch": "Verified",
+      "irs": {
+        "ein": "381359217",
+        "found": true,
+        "legalName": "KRESGE FOUNDATION",
+        "subsection": "501(c)(3)",
+        "ntee": "T22",
+        "nteeMajor": "Philanthropy, Voluntarism & Grantmaking Foundations",
+        "foundation": "Private non-operating foundation",
+        "rulingYear": 1928,
+        "yearFormation": null,
+        "mission": null,
+        "bmf": {
+          "assets": 3984695361,
+          "income": 9624456,
+          "revenue": null,
+          "taxPeriod": "202412"
+        },
+        "latest": null,
+        "trend": []
+      },
       "locationId": "loc_troy_mi",
       "contactIds": [],
       "capitalFlowIds": [
@@ -16177,7 +16401,9 @@
         "flow_117"
       ],
       "sdgIds": [],
-      "sectorIds": [],
+      "sectorIds": [
+        "dim_food_systems_agriculture"
+      ],
       "populationIds": [],
       "ownershipIds": []
     },
@@ -16780,7 +17006,7 @@
       "website": "https://kendedafund.org/",
       "description": "The Kendeda Fund supports the dignity of individuals and the sustainability of communities through investments in transformative leaders and ideas.",
       "ein": null,
-      "einMatch": "No match found",
+      "einMatch": "Verified",
       "irs": null,
       "locationId": null,
       "contactIds": [],
@@ -18327,9 +18553,28 @@
       "lng": -84.422,
       "website": null,
       "description": null,
-      "ein": null,
-      "einMatch": "No match found",
-      "irs": null,
+      "ein": "136123529",
+      "einMatch": "Verified",
+      "irs": {
+        "ein": "136123529",
+        "found": true,
+        "legalName": "AMERICAN EXPRESS FOUNDATION",
+        "subsection": "501(c)(3)",
+        "ntee": null,
+        "nteeMajor": null,
+        "foundation": "Private non-operating foundation",
+        "rulingYear": 1956,
+        "yearFormation": null,
+        "mission": null,
+        "bmf": {
+          "assets": 48911085,
+          "income": 1393248,
+          "revenue": null,
+          "taxPeriod": "202412"
+        },
+        "latest": null,
+        "trend": []
+      },
       "locationId": "loc_atlanta_ga",
       "contactIds": [],
       "capitalFlowIds": [],
@@ -18392,7 +18637,9 @@
         "flow_147"
       ],
       "sdgIds": [],
-      "sectorIds": [],
+      "sectorIds": [
+        "dim_food_systems_agriculture"
+      ],
       "populationIds": [],
       "ownershipIds": []
     },
@@ -18581,7 +18828,9 @@
         "flow_121"
       ],
       "sdgIds": [],
-      "sectorIds": [],
+      "sectorIds": [
+        "dim_food_systems_agriculture"
+      ],
       "populationIds": [],
       "ownershipIds": []
     },
@@ -19433,7 +19682,9 @@
       "capitalAllocationIds": [],
       "sdgIds": [],
       "sectorIds": [],
-      "populationIds": [],
+      "populationIds": [
+        "dim_health_wellness"
+      ],
       "ownershipIds": []
     },
     {
@@ -19516,7 +19767,9 @@
       "capitalAllocationIds": [],
       "sdgIds": [],
       "sectorIds": [],
-      "populationIds": [],
+      "populationIds": [
+        "dim_health_wellness"
+      ],
       "ownershipIds": []
     },
     {
@@ -19554,7 +19807,7 @@
       "website": "https://kendedafund.org/",
       "description": "The Kendeda Fund supports the dignity of individuals and the sustainability of communities through investments in transformative leaders and ideas.",
       "ein": null,
-      "einMatch": "No match found",
+      "einMatch": "Verified",
       "irs": null,
       "locationId": "loc_atlanta_ga",
       "contactIds": [],
@@ -19660,7 +19913,9 @@
       ],
       "sdgIds": [],
       "sectorIds": [],
-      "populationIds": [],
+      "populationIds": [
+        "dim_health_wellness"
+      ],
       "ownershipIds": []
     },
     {
@@ -20337,7 +20592,9 @@
       "capitalAllocationIds": [],
       "sdgIds": [],
       "sectorIds": [],
-      "populationIds": [],
+      "populationIds": [
+        "dim_health_wellness"
+      ],
       "ownershipIds": []
     },
     {
@@ -21050,7 +21307,9 @@
       "capitalAllocationIds": [],
       "sdgIds": [],
       "sectorIds": [],
-      "populationIds": [],
+      "populationIds": [
+        "dim_health_wellness"
+      ],
       "ownershipIds": []
     },
     {
@@ -22420,16 +22679,62 @@
         "nteeMajor": "Health Care",
         "foundation": "Public charity: program-service supported 509(a)(2)",
         "rulingYear": 1985,
-        "yearFormation": null,
-        "mission": null,
+        "yearFormation": 1985,
+        "mission": "TO PROVIDE HIGH-QUALITY, AFFORDABLE HEALTH CARE SERVICES TO IMPROVE THE HEALTH OF OUR MEMBERS AND THE COMMUNITIES WE SERVE.",
         "bmf": {
           "assets": 976273320,
           "income": 2769523051,
           "revenue": 2600838082,
           "taxPeriod": "202412"
         },
-        "latest": null,
-        "trend": []
+        "latest": {
+          "taxYear": 2021,
+          "form": "990",
+          "periodEnd": "2021-12-31",
+          "revenue": 2090554380,
+          "contributions": 441226,
+          "programRevenue": 2078564420,
+          "investmentIncome": 11105366,
+          "expenses": 2398541115,
+          "grantsPaid": 7281456,
+          "salaries": 302897069,
+          "netIncome": -307986735,
+          "assetsEOY": 929443520,
+          "liabilitiesEOY": 2229631511,
+          "netAssetsEOY": -1300187991,
+          "employees": 3843,
+          "volunteers": 196,
+          "cashAndSavingsEOY": 722386,
+          "pledgesReceivableEOY": 0,
+          "notesLoansReceivableEOY": 0,
+          "landBuildingsNetEOY": 267386573,
+          "investPublicSecuritiesEOY": 453002139,
+          "investOtherSecuritiesEOY": 0,
+          "investProgramRelatedEOY": 0,
+          "grantsPayableEOY": 0,
+          "taxExemptBondsEOY": 0,
+          "mortgagesNotesPayableEOY": 0,
+          "unsecuredNotesPayableEOY": 0,
+          "netAssetsUnrestrictedEOY": null,
+          "netAssetsTempRestrictedEOY": null,
+          "netAssetsPermRestrictedEOY": null
+        },
+        "trend": [
+          {
+            "taxYear": 2020,
+            "revenue": 2030631770,
+            "expenses": 2168287267,
+            "assetsEOY": 929542621,
+            "netAssetsEOY": -1058067071
+          },
+          {
+            "taxYear": 2021,
+            "revenue": 2090554380,
+            "expenses": 2398541115,
+            "assetsEOY": 929443520,
+            "netAssetsEOY": -1300187991
+          }
+        ]
       },
       "locationId": null,
       "contactIds": [],
@@ -22437,7 +22742,9 @@
       "capitalAllocationIds": [],
       "sdgIds": [],
       "sectorIds": [],
-      "populationIds": [],
+      "populationIds": [
+        "dim_health_wellness"
+      ],
       "ownershipIds": []
     },
     {
@@ -23324,9 +23631,74 @@
       "lng": -84.422,
       "website": "https://www.habitat.org/",
       "description": "Habitat for Humanity International is a global, nonprofit organization focused on providing decent and affordable housing for low-income families. They work in partnership with families to build or renovate homes, using volunteer labor, donated materials, and affordable mortgages, according to Habitat for Humanity. Their vision is a world where everyone has a decent place to live. \n\n",
-      "ein": null,
-      "einMatch": null,
-      "irs": null,
+      "ein": "911914868",
+      "einMatch": "Verified",
+      "irs": {
+        "ein": "911914868",
+        "found": true,
+        "legalName": "HABITAT FOR HUMANITY INTERNATIONAL INC",
+        "subsection": "501(c)(3)",
+        "ntee": "Q330",
+        "nteeMajor": "International, Foreign Affairs & National Security",
+        "foundation": "Public charity: publicly supported 170(b)(1)(A)(vi)",
+        "rulingYear": 1987,
+        "yearFormation": 1976,
+        "mission": "SEEKING TO PUT GOD'S LOVE INTO ACTION, HABITAT FOR HUMANITY BRINGS PEOPLE TOGETHER TO BUILD HOMES, COMMUNITIES, AND HOPE.",
+        "bmf": {
+          "assets": 759980018,
+          "income": 403912238,
+          "revenue": 370010910,
+          "taxPeriod": "202506"
+        },
+        "latest": {
+          "taxYear": 2021,
+          "form": "990",
+          "periodEnd": "2022-06-30",
+          "revenue": 439439083,
+          "contributions": 424588995,
+          "programRevenue": 13096703,
+          "investmentIncome": 1266038,
+          "expenses": 290446515,
+          "grantsPaid": 114842086,
+          "salaries": 98476255,
+          "netIncome": 148992568,
+          "assetsEOY": 541988739,
+          "liabilitiesEOY": 110813465,
+          "netAssetsEOY": 431175274,
+          "employees": 1178,
+          "volunteers": 746000,
+          "cashAndSavingsEOY": 344322736,
+          "pledgesReceivableEOY": 93351320,
+          "notesLoansReceivableEOY": 20987220,
+          "landBuildingsNetEOY": 10057706,
+          "investPublicSecuritiesEOY": 35257008,
+          "investOtherSecuritiesEOY": null,
+          "investProgramRelatedEOY": 13585250,
+          "grantsPayableEOY": null,
+          "taxExemptBondsEOY": null,
+          "mortgagesNotesPayableEOY": 25993499,
+          "unsecuredNotesPayableEOY": null,
+          "netAssetsUnrestrictedEOY": null,
+          "netAssetsTempRestrictedEOY": null,
+          "netAssetsPermRestrictedEOY": null
+        },
+        "trend": [
+          {
+            "taxYear": 2020,
+            "revenue": 330089584,
+            "expenses": 282558082,
+            "assetsEOY": 403873182,
+            "netAssetsEOY": 292076748
+          },
+          {
+            "taxYear": 2021,
+            "revenue": 439439083,
+            "expenses": 290446515,
+            "assetsEOY": 541988739,
+            "netAssetsEOY": 431175274
+          }
+        ]
+      },
       "locationId": "loc_atlanta_ga",
       "contactIds": [],
       "capitalFlowIds": [],
@@ -24888,7 +25260,9 @@
       "capitalAllocationIds": [],
       "sdgIds": [],
       "sectorIds": [],
-      "populationIds": [],
+      "populationIds": [
+        "dim_health_wellness"
+      ],
       "ownershipIds": []
     },
     {
@@ -30240,9 +30614,9 @@
       ]
     },
     {
-      "id": "inst_mission_deposits",
-      "name": "Mission Deposits",
-      "capitalFlowType": "Private Impact Investment",
+      "id": "inst_instrument_6",
+      "name": "Unknown",
+      "capitalFlowType": null,
       "investmentStrategy": null,
       "description": null,
       "capitalFlowIds": []
@@ -30427,8 +30801,8 @@
       ]
     },
     {
-      "id": "inst_impact_deposits",
-      "name": "Impact Deposits",
+      "id": "inst_mission_or_impact_deposits",
+      "name": "Mission or Impact Deposits",
       "capitalFlowType": "Private Impact Investment",
       "investmentStrategy": null,
       "description": null,
@@ -30457,14 +30831,6 @@
         "flow_179",
         "flow_39"
       ]
-    },
-    {
-      "id": "inst_shareholder_activism",
-      "name": "Shareholder Activism",
-      "capitalFlowType": null,
-      "investmentStrategy": null,
-      "description": null,
-      "capitalFlowIds": []
     },
     {
       "id": "inst_cdfi_ta",
