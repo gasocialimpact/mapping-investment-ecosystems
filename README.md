@@ -114,7 +114,9 @@ organization name and city against both extracts (recording how in `EIN Match`; 
 to *Verified* to lock an EIN), and refreshes the read-only IRS fields (`IRS Legal
 Name`, `IRS Subsection`, `NTEE Code`, `IRS Foundation Status`, `IRS Ruling Year`, `IRS
 Address`, `IRS Last Synced`). It also fills a blank `Street Address` (from the BMF, skipping
-PO boxes) or `Website` (from the latest 990) but never overwrites a value you entered.
+PO boxes) or `Website` (from the latest 990) but never overwrites a value you entered, and
+skips gap-filling entirely on records whose `EIN Match` is *Verified* (set that to keep a
+field deliberately blank).
 The Airtable export then attaches an `irs` block to each
 organization in `ecosystem.json`, which the organization record modal renders as the
 IRS Profile, Financials, Balance Sheet Detail and Trend sections.

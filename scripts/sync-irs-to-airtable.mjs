@@ -213,8 +213,9 @@ async function main() {
           if ((v ?? null) !== cur) fields[k] = v;
         }
       }
-      // Gap fill: only where the curated column is blank.
-      for (const [k, v] of Object.entries(gapFillFor(ein, bmf, f990))) {
+      // Gap fill: only where the curated column is blank, and never on a
+      // record marked Verified (that is the opt-out for keeping a field empty).
+      for (const [k, v] of Object.entries(verified ? {} : gapFillFor(ein, bmf, f990))) {
         if (!f[k] || !String(f[k]).trim()) {
           fields[k] = v;
           stats.gapsFilled++;
