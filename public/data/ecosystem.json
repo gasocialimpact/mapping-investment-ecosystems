@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-04T14:34:33.505Z",
+  "generatedAt": "2026-09-04T20:26:24.157Z",
   "source": "Airtable",
   "organizations": [
     {
@@ -249,17 +249,17 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_76",
-        "flow_54",
-        "flow_248",
-        "flow_109",
-        "flow_138",
-        "flow_197",
-        "flow_245",
+        "flow_80",
+        "flow_58",
+        "flow_257",
+        "flow_114",
+        "flow_144",
+        "flow_204",
+        "flow_254",
         "flow_12",
         "flow_3",
-        "flow_260",
-        "flow_97"
+        "flow_270",
+        "flow_102"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -303,7 +303,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_172"
+        "flow_179"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -660,7 +660,7 @@
       "locationId": null,
       "contactIds": [],
       "capitalFlowIds": [
-        "flow_233"
+        "flow_241"
       ],
       "capitalAllocationIds": [],
       "sdgIds": [],
@@ -732,7 +732,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_283"
+        "flow_294"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -1099,8 +1099,8 @@
       "locationId": "loc_atlanta_ga",
       "contactIds": [],
       "capitalFlowIds": [
-        "flow_88",
-        "flow_144"
+        "flow_92",
+        "flow_150"
       ],
       "capitalAllocationIds": [],
       "sdgIds": [],
@@ -1496,7 +1496,7 @@
       "locationId": "loc_new_york_city_ny",
       "contactIds": [],
       "capitalFlowIds": [
-        "flow_233"
+        "flow_241"
       ],
       "capitalAllocationIds": [],
       "sdgIds": [],
@@ -1896,16 +1896,13 @@
       "locationId": "loc_atlanta_ga",
       "contactIds": [],
       "capitalFlowIds": [
-        "flow_190",
-        "flow_15",
-        "flow_121",
-        "flow_246",
-        "flow_101",
-        "flow_82",
-        "flow_19",
-        "flow_4",
-        "flow_218",
-        "flow_244"
+        "flow_197",
+        "flow_17",
+        "flow_126",
+        "flow_255",
+        "flow_106",
+        "flow_86",
+        "flow_15"
       ],
       "capitalAllocationIds": [],
       "sdgIds": [],
@@ -2291,8 +2288,8 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_41",
-        "flow_23"
+        "flow_44",
+        "flow_25"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -2491,7 +2488,7 @@
       "locationId": "loc_atlanta_ga",
       "contactIds": [],
       "capitalFlowIds": [
-        "flow_122"
+        "flow_127"
       ],
       "capitalAllocationIds": [],
       "sdgIds": [],
@@ -2782,11 +2779,11 @@
       "capitalFlowIds": [],
       "capitalAllocationIds": [
         "flow_5",
-        "flow_208",
-        "flow_31",
-        "flow_110",
-        "flow_39",
-        "flow_84"
+        "flow_216",
+        "flow_33",
+        "flow_115",
+        "flow_41",
+        "flow_88"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -2860,7 +2857,11 @@
       "sdgIds": [
         "dim_social_stability_and_long_term_returns_are_influenced_by_labor_standards_productivity_and_supply_chain_practices"
       ],
-      "sectorIds": [],
+      "sectorIds": [
+        "dim_business_enterprise_support",
+        "dim_climate_solutions_green_infrastructure",
+        "dim_quality_jobs_resilient_workforce"
+      ],
       "populationIds": [],
       "ownershipIds": []
     },
@@ -3111,8 +3112,8 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_80",
-        "flow_146"
+        "flow_84",
+        "flow_152"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -3270,7 +3271,7 @@
       "locationId": "loc_washington_dc_dc",
       "contactIds": [],
       "capitalFlowIds": [
-        "flow_233"
+        "flow_241"
       ],
       "capitalAllocationIds": [],
       "sdgIds": [],
@@ -3318,7 +3319,7 @@
       "locationId": "loc_atlanta_ga",
       "contactIds": [],
       "capitalFlowIds": [
-        "flow_210"
+        "flow_218"
       ],
       "capitalAllocationIds": [],
       "sdgIds": [],
@@ -3764,7 +3765,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_184"
+        "flow_191"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -4443,7 +4444,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_210"
+        "flow_218"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -4468,8 +4469,8 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_160",
-        "flow_255"
+        "flow_167",
+        "flow_265"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -4585,7 +4586,7 @@
       "locationId": "loc_atlanta_ga",
       "contactIds": [],
       "capitalFlowIds": [
-        "flow_233"
+        "flow_241"
       ],
       "capitalAllocationIds": [],
       "sdgIds": [],
@@ -4901,7 +4902,7 @@
       "locationId": null,
       "contactIds": [],
       "capitalFlowIds": [
-        "flow_184"
+        "flow_191"
       ],
       "capitalAllocationIds": [],
       "sdgIds": [],
@@ -5056,12 +5057,12 @@
       "locationId": "loc_savannah_ga",
       "contactIds": [],
       "capitalFlowIds": [
-        "flow_134",
-        "flow_97",
-        "flow_188",
-        "flow_117",
-        "flow_78",
-        "flow_169"
+        "flow_140",
+        "flow_102",
+        "flow_195",
+        "flow_122",
+        "flow_82",
+        "flow_176"
       ],
       "capitalAllocationIds": [],
       "sdgIds": [],
@@ -5585,9 +5586,9 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_88",
-        "flow_125",
-        "flow_218"
+        "flow_92",
+        "flow_130",
+        "flow_226"
       ],
       "sdgIds": [],
       "sectorIds": [
@@ -5702,7 +5703,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_272"
+        "flow_282"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -5844,7 +5845,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_246"
+        "flow_255"
       ],
       "sdgIds": [
         "dim_resolves_financial_inclusion_credit_access_and_financial_resilience",
@@ -6059,7 +6060,10 @@
       "locationId": "loc_atlanta_ga",
       "contactIds": [],
       "capitalFlowIds": [],
-      "capitalAllocationIds": [],
+      "capitalAllocationIds": [
+        "flow_15",
+        "flow_46"
+      ],
       "sdgIds": [],
       "sectorIds": [],
       "populationIds": [],
@@ -6320,7 +6324,7 @@
       "locationId": "loc_atlanta_ga",
       "contactIds": [],
       "capitalFlowIds": [
-        "flow_122"
+        "flow_127"
       ],
       "capitalAllocationIds": [],
       "sdgIds": [],
@@ -6426,7 +6430,7 @@
       "lat": 33.7628,
       "lng": -84.422,
       "website": "http://www.tullfoundation.org/",
-      "description": "The Tull Charitable Foundation is dedicated to fostering a more just and equitable future by partnering with and investing in organizations that impact Metro Atlanta communities. The foundation primarily supports nonprofits focused on promoting racial equity, enhancing their capacity to work effectively and efficiently.",
+      "description": "The Tull Charitable Foundation is dedicated to fostering a more just and equitable future by partnering with and investing in organizations that impact Metro Atlanta communities. The foundation primarily supports nonprofits that promote racial equity and build their capacity to work effectively and efficiently. Impact investing became part of Tull’s approach in 2021, expanding how we support nonprofit organizations and the communities they serve. By directing a portion of our assets toward mission-aligned investments, we aim to strengthen nonprofit capacity, build community assets and create more opportunity across Atlanta, allowing us to give back in ways that extend beyond traditional grantmaking.",
       "ein": "581687028",
       "einMatch": "Auto: name + city",
       "irs": {
@@ -6451,7 +6455,13 @@
       },
       "locationId": "loc_atlanta_ga",
       "contactIds": [],
-      "capitalFlowIds": [],
+      "capitalFlowIds": [
+        "flow_158",
+        "flow_14",
+        "flow_136",
+        "flow_208",
+        "flow_42"
+      ],
       "capitalAllocationIds": [],
       "sdgIds": [],
       "sectorIds": [],
@@ -6550,7 +6560,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_119"
+        "flow_124"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -6640,7 +6650,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_35"
+        "flow_37"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -6887,14 +6897,14 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_123",
-        "flow_275",
+        "flow_128",
+        "flow_285",
         "flow_7",
-        "flow_236",
-        "flow_211",
-        "flow_224",
-        "flow_61",
-        "flow_45"
+        "flow_244",
+        "flow_219",
+        "flow_232",
+        "flow_65",
+        "flow_49"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -7007,20 +7017,21 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_113",
-        "flow_120",
+        "flow_118",
+        "flow_125",
         "flow_1",
-        "flow_57",
-        "flow_230",
-        "flow_94",
-        "flow_200",
-        "flow_93",
-        "flow_60",
+        "flow_61",
+        "flow_238",
+        "flow_99",
+        "flow_207",
+        "flow_98",
+        "flow_64",
         "flow_6",
-        "flow_149",
+        "flow_155",
         "flow_13",
-        "flow_101",
-        "flow_188"
+        "flow_106",
+        "flow_195",
+        "flow_136"
       ],
       "sdgIds": [
         "dim_resolves_financial_inclusion_credit_access_and_financial_resilience",
@@ -7053,8 +7064,8 @@
       "locationId": "loc_atlanta_ga",
       "contactIds": [],
       "capitalFlowIds": [
-        "flow_283",
-        "flow_165"
+        "flow_294",
+        "flow_172"
       ],
       "capitalAllocationIds": [],
       "sdgIds": [],
@@ -7083,7 +7094,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_19"
+        "flow_21"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -7474,8 +7485,8 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_228",
-        "flow_179"
+        "flow_236",
+        "flow_186"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -7656,15 +7667,15 @@
       "locationId": "loc_atlanta_ga",
       "contactIds": [],
       "capitalFlowIds": [
-        "flow_210",
-        "flow_184",
-        "flow_77",
-        "flow_215",
-        "flow_143",
-        "flow_237",
-        "flow_233",
-        "flow_232",
-        "flow_240"
+        "flow_218",
+        "flow_191",
+        "flow_81",
+        "flow_223",
+        "flow_149",
+        "flow_245",
+        "flow_241",
+        "flow_240",
+        "flow_248"
       ],
       "capitalAllocationIds": [],
       "sdgIds": [],
@@ -7824,25 +7835,25 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_64",
-        "flow_27",
-        "flow_193",
-        "flow_22",
-        "flow_86",
-        "flow_16",
-        "flow_154",
-        "flow_182",
-        "flow_254",
-        "flow_207",
-        "flow_30",
-        "flow_220",
-        "flow_178",
-        "flow_216",
-        "flow_75",
-        "flow_268",
-        "flow_142",
+        "flow_68",
+        "flow_29",
+        "flow_200",
+        "flow_24",
+        "flow_90",
+        "flow_18",
+        "flow_161",
+        "flow_189",
+        "flow_264",
+        "flow_215",
+        "flow_32",
+        "flow_228",
+        "flow_185",
+        "flow_224",
+        "flow_79",
+        "flow_278",
+        "flow_148",
         "flow_8",
-        "flow_190"
+        "flow_197"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -7867,7 +7878,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_78"
+        "flow_82"
       ],
       "sdgIds": [
         "dim_capital_allocation_has_an_impact_on_food_security_and_sustainable_farming_practices_worldwide",
@@ -8052,7 +8063,7 @@
       "locationId": "loc_atlanta_ga",
       "contactIds": [],
       "capitalFlowIds": [
-        "flow_279"
+        "flow_290"
       ],
       "capitalAllocationIds": [],
       "sdgIds": [],
@@ -8527,7 +8538,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_122"
+        "flow_127"
       ],
       "sdgIds": [],
       "sectorIds": [
@@ -8643,7 +8654,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_70"
+        "flow_74"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -8846,7 +8857,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_240"
+        "flow_248"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -8917,7 +8928,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_165"
+        "flow_172"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -9236,7 +9247,8 @@
       "locationId": "loc_atlanta_ga",
       "contactIds": [],
       "capitalFlowIds": [
-        "flow_133"
+        "flow_139",
+        "flow_286"
       ],
       "capitalAllocationIds": [],
       "sdgIds": [],
@@ -9784,6 +9796,29 @@
       "einMatch": "No match found",
       "irs": null,
       "locationId": null,
+      "contactIds": [],
+      "capitalFlowIds": [],
+      "capitalAllocationIds": [],
+      "sdgIds": [],
+      "sectorIds": [],
+      "populationIds": [],
+      "ownershipIds": []
+    },
+    {
+      "id": "org_enterprise_community_loan_fund",
+      "name": "Enterprise Community Loan Fund",
+      "segment": "Capital Aggregator",
+      "orgType": "CDFI or Credit Union",
+      "city": "Columbia",
+      "state": "MD",
+      "lat": 39.212,
+      "lng": -76.866,
+      "website": "https://www.enterprisecommunity.org/financing-and-development/community-loan-fund",
+      "description": "The mission of Enterprise Community Loan Fund is to create opportunity for low- and moderate-income people through affordable housing in diverse, thriving communities. As a proven and powerful national nonprofit, Enterprise brings together nationwide know-how, partners, policy leadership, and investment to multiply the impact of local affordable housing development. We deliver the capital, develop the programs, and advocate for the policies needed to create and preserve well-designed homes that people can afford in inclusive and connected communities.",
+      "ein": null,
+      "einMatch": null,
+      "irs": null,
+      "locationId": "loc_columbia_md",
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [],
@@ -11015,7 +11050,9 @@
       "locationId": "loc_atlanta_ga",
       "contactIds": [],
       "capitalFlowIds": [],
-      "capitalAllocationIds": [],
+      "capitalAllocationIds": [
+        "flow_14"
+      ],
       "sdgIds": [],
       "sectorIds": [],
       "populationIds": [],
@@ -11242,7 +11279,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_96"
+        "flow_101"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -11783,7 +11820,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_232"
+        "flow_240"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -12278,12 +12315,12 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_43",
-        "flow_26",
-        "flow_212",
-        "flow_63",
-        "flow_262",
-        "flow_68"
+        "flow_47",
+        "flow_28",
+        "flow_220",
+        "flow_67",
+        "flow_272",
+        "flow_72"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -12400,7 +12437,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_169"
+        "flow_176"
       ],
       "sdgIds": [
         "dim_resolves_financial_inclusion_credit_access_and_financial_resilience",
@@ -12837,9 +12874,9 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_74",
-        "flow_226",
-        "flow_107"
+        "flow_78",
+        "flow_234",
+        "flow_112"
       ],
       "sdgIds": [],
       "sectorIds": [
@@ -12961,7 +12998,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_199"
+        "flow_206"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -13965,6 +14002,45 @@
       "ownershipIds": []
     },
     {
+      "id": "org_goatl_community_capacity_fund",
+      "name": "GoATL, Community Capacity Fund",
+      "segment": "Capital Aggregator",
+      "orgType": "Loan or Private Investment Fund",
+      "city": "Atlanta",
+      "state": "GA",
+      "lat": 33.7628,
+      "lng": -84.422,
+      "website": "https://cfgreateratlanta.org/goatl-fund/#next",
+      "description": "The Community Foundation for Greater Atlanta created the GoATL Community Capacity Fund, a social impact fund designed to achieve both social (impact) and financial (investment) returns. Celebrating its sixth year of operation in 2024, the GoATL Community\nCapacity Fund continues to invest in the region’s most innovative\nintermediaries to achieve impacts in areas such as Affordable Housing,\nEconomic Inclusion, Education & Youth Development, and Environment\n& Health. The GoATL Capacity Fund is one of two CFGA impact investing funds, each providing concessionary or risk-tolerant capital to CDFIs, loan funds, and other capital innovations.\n\n",
+      "ein": null,
+      "einMatch": "No match found",
+      "irs": null,
+      "locationId": "loc_atlanta_ga",
+      "contactIds": [],
+      "capitalFlowIds": [
+        "flow_21",
+        "flow_4",
+        "flow_226",
+        "flow_253",
+        "flow_197",
+        "flow_17",
+        "flow_126",
+        "flow_255",
+        "flow_106",
+        "flow_86",
+        "flow_258",
+        "flow_46"
+      ],
+      "capitalAllocationIds": [
+        "flow_208",
+        "flow_94"
+      ],
+      "sdgIds": [],
+      "sectorIds": [],
+      "populationIds": [],
+      "ownershipIds": []
+    },
+    {
       "id": "org_maycomb_capital",
       "name": "Maycomb Capital",
       "segment": "Capital Aggregator",
@@ -14211,7 +14287,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_235"
+        "flow_243"
       ],
       "sdgIds": [],
       "sectorIds": [
@@ -15215,21 +15291,26 @@
       "name": "Accion Opportunity Fund",
       "segment": "Capital Aggregator",
       "orgType": "CDFI or Credit Union",
-      "city": "Atlanta",
-      "state": "GA",
-      "lat": 33.7628,
-      "lng": -84.422,
-      "website": null,
-      "description": null,
+      "city": "San Jose",
+      "state": "CA",
+      "lat": 37.33736,
+      "lng": -121.89406,
+      "website": "aofund.org",
+      "description": "Accion Opportunity Fund (AOF) is the nation’s leading nonprofit small business lender, offering small business owners’ access to affordable loans, education, business advising resources, and support networks. With a client-centric culture, AOF integrates technology and personal service to support small business owners nationally. AOF is driven by a mission to advance economic mobility for underinvested communities. The organization aims to build stronger communities while breaking down barriers to success, working both locally to create opportunities and nationally to advocate for small businesses. Please note that businesses seeking funding from AOF are required to have a minimum of 1 (one) year in business to be eligible for funding. AOF does not offer real estate construction loans.",
       "ein": null,
       "einMatch": "No match found",
       "irs": null,
-      "locationId": "loc_atlanta_ga",
+      "locationId": "loc_san_jose_ca",
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [],
       "sdgIds": [],
-      "sectorIds": [],
+      "sectorIds": [
+        "dim_capital_access_fair_financial_products",
+        "dim_health_wellness",
+        "dim_education_childcare",
+        "dim_business_enterprise_support"
+      ],
       "populationIds": [],
       "ownershipIds": []
     },
@@ -15495,236 +15576,236 @@
       "locationId": "loc_washington_dc_dc",
       "contactIds": [],
       "capitalFlowIds": [
-        "flow_76",
-        "flow_274",
-        "flow_113",
-        "flow_105",
-        "flow_59",
-        "flow_214",
-        "flow_28",
-        "flow_34",
-        "flow_217",
-        "flow_56",
-        "flow_249",
-        "flow_238",
-        "flow_141",
-        "flow_177",
-        "flow_54",
-        "flow_252",
-        "flow_120",
-        "flow_282",
-        "flow_92",
-        "flow_87",
-        "flow_156",
-        "flow_163",
-        "flow_174",
-        "flow_51",
-        "flow_129",
-        "flow_10",
-        "flow_152",
-        "flow_9",
-        "flow_38",
-        "flow_248",
-        "flow_109",
-        "flow_138",
-        "flow_172",
-        "flow_173",
-        "flow_167",
-        "flow_124",
-        "flow_25",
-        "flow_181",
-        "flow_259",
-        "flow_231",
-        "flow_69",
-        "flow_114",
-        "flow_151",
-        "flow_103",
-        "flow_112",
-        "flow_126",
-        "flow_116",
-        "flow_1",
-        "flow_72",
-        "flow_164",
-        "flow_71",
-        "flow_168",
-        "flow_132",
-        "flow_57",
-        "flow_229",
-        "flow_91",
-        "flow_139",
-        "flow_52",
-        "flow_230",
-        "flow_62",
-        "flow_135",
-        "flow_192",
-        "flow_94",
-        "flow_24",
-        "flow_130",
-        "flow_11",
-        "flow_20",
-        "flow_37",
-        "flow_200",
-        "flow_99",
-        "flow_202",
-        "flow_93",
-        "flow_243",
-        "flow_257",
-        "flow_197",
-        "flow_170",
+        "flow_80",
+        "flow_284",
+        "flow_118",
+        "flow_110",
+        "flow_63",
+        "flow_222",
+        "flow_30",
+        "flow_36",
+        "flow_225",
         "flow_60",
-        "flow_81",
-        "flow_128",
-        "flow_256",
-        "flow_241",
-        "flow_245",
-        "flow_149",
-        "flow_213",
+        "flow_259",
+        "flow_246",
+        "flow_147",
+        "flow_184",
+        "flow_58",
+        "flow_262",
+        "flow_125",
+        "flow_293",
+        "flow_97",
+        "flow_91",
+        "flow_163",
+        "flow_170",
+        "flow_181",
+        "flow_55",
+        "flow_134",
+        "flow_10",
+        "flow_159",
+        "flow_9",
+        "flow_40",
+        "flow_257",
+        "flow_114",
+        "flow_144",
+        "flow_179",
         "flow_180",
+        "flow_174",
+        "flow_129",
+        "flow_27",
+        "flow_188",
+        "flow_269",
+        "flow_239",
+        "flow_73",
+        "flow_119",
+        "flow_157",
+        "flow_108",
+        "flow_117",
+        "flow_131",
+        "flow_121",
+        "flow_1",
+        "flow_76",
+        "flow_171",
+        "flow_75",
+        "flow_175",
+        "flow_138",
+        "flow_61",
+        "flow_237",
+        "flow_96",
+        "flow_145",
+        "flow_56",
+        "flow_238",
+        "flow_66",
+        "flow_141",
+        "flow_199",
+        "flow_99",
+        "flow_26",
+        "flow_135",
+        "flow_11",
+        "flow_22",
+        "flow_39",
+        "flow_207",
+        "flow_104",
+        "flow_210",
+        "flow_98",
+        "flow_252",
+        "flow_267",
+        "flow_204",
+        "flow_177",
+        "flow_64",
+        "flow_85",
+        "flow_133",
+        "flow_266",
+        "flow_249",
+        "flow_254",
+        "flow_155",
+        "flow_221",
+        "flow_187",
         "flow_12",
         "flow_6",
-        "flow_286",
-        "flow_195",
-        "flow_198",
-        "flow_145",
-        "flow_284",
-        "flow_273",
-        "flow_199",
-        "flow_258",
-        "flow_255",
-        "flow_171",
-        "flow_228",
-        "flow_83",
-        "flow_50",
-        "flow_136",
-        "flow_43",
-        "flow_66",
-        "flow_160",
-        "flow_26",
-        "flow_222",
-        "flow_14",
-        "flow_225",
-        "flow_189",
-        "flow_96",
-        "flow_64",
-        "flow_196",
-        "flow_48",
-        "flow_270",
+        "flow_297",
+        "flow_202",
         "flow_205",
-        "flow_47",
+        "flow_151",
+        "flow_295",
+        "flow_283",
         "flow_206",
-        "flow_209",
-        "flow_219",
-        "flow_191",
-        "flow_17",
-        "flow_260",
-        "flow_3",
-        "flow_58",
-        "flow_79",
-        "flow_140",
-        "flow_127",
-        "flow_147",
-        "flow_21",
-        "flow_250",
-        "flow_185",
-        "flow_27",
-        "flow_193",
-        "flow_22",
-        "flow_86",
-        "flow_67",
-        "flow_44",
-        "flow_2",
-        "flow_166",
-        "flow_265",
-        "flow_100",
-        "flow_203",
-        "flow_85",
-        "flow_73",
-        "flow_277",
-        "flow_176",
-        "flow_201",
-        "flow_288",
-        "flow_131",
-        "flow_251",
-        "flow_207",
-        "flow_216",
-        "flow_178",
-        "flow_220",
-        "flow_8",
-        "flow_142",
-        "flow_75",
         "flow_268",
-        "flow_16",
-        "flow_154",
-        "flow_182",
-        "flow_254",
-        "flow_30",
-        "flow_13",
-        "flow_281",
-        "flow_32",
-        "flow_55",
-        "flow_104",
-        "flow_234",
-        "flow_42",
-        "flow_223",
-        "flow_276",
-        "flow_271",
-        "flow_95",
-        "flow_239",
-        "flow_98",
-        "flow_33",
-        "flow_155",
-        "flow_148",
-        "flow_242",
-        "flow_269",
-        "flow_137",
-        "flow_179",
-        "flow_5",
-        "flow_208",
-        "flow_31",
-        "flow_110",
-        "flow_39",
-        "flow_84",
-        "flow_247",
-        "flow_162",
-        "flow_65",
-        "flow_261",
-        "flow_119",
-        "flow_70",
-        "flow_108",
-        "flow_183",
-        "flow_158",
-        "flow_102",
-        "flow_115",
-        "flow_89",
-        "flow_221",
-        "flow_157",
-        "flow_280",
-        "flow_262",
-        "flow_212",
-        "flow_63",
-        "flow_118",
-        "flow_153",
-        "flow_68",
-        "flow_123",
-        "flow_275",
-        "flow_7",
+        "flow_265",
+        "flow_178",
         "flow_236",
-        "flow_211",
-        "flow_224",
-        "flow_61",
-        "flow_45",
-        "flow_159",
-        "flow_204",
-        "flow_80",
-        "flow_278",
-        "flow_146",
-        "flow_186",
-        "flow_53",
-        "flow_263",
-        "flow_46",
+        "flow_87",
+        "flow_54",
+        "flow_142",
+        "flow_47",
+        "flow_70",
+        "flow_167",
+        "flow_28",
+        "flow_230",
+        "flow_16",
+        "flow_233",
+        "flow_196",
+        "flow_101",
+        "flow_68",
+        "flow_203",
+        "flow_52",
+        "flow_280",
+        "flow_213",
+        "flow_51",
+        "flow_214",
+        "flow_217",
         "flow_227",
+        "flow_198",
+        "flow_19",
+        "flow_270",
+        "flow_3",
+        "flow_62",
+        "flow_83",
+        "flow_146",
+        "flow_132",
+        "flow_153",
+        "flow_23",
+        "flow_260",
+        "flow_192",
+        "flow_29",
+        "flow_200",
+        "flow_24",
+        "flow_90",
+        "flow_71",
+        "flow_48",
+        "flow_2",
+        "flow_173",
+        "flow_275",
+        "flow_105",
+        "flow_211",
+        "flow_89",
+        "flow_77",
+        "flow_288",
+        "flow_183",
+        "flow_209",
+        "flow_299",
+        "flow_137",
+        "flow_261",
+        "flow_215",
+        "flow_224",
+        "flow_185",
+        "flow_228",
+        "flow_8",
+        "flow_148",
+        "flow_79",
+        "flow_278",
+        "flow_18",
+        "flow_161",
+        "flow_189",
+        "flow_264",
+        "flow_32",
+        "flow_13",
+        "flow_292",
+        "flow_34",
+        "flow_59",
+        "flow_109",
+        "flow_242",
+        "flow_45",
+        "flow_231",
         "flow_287",
-        "flow_29"
+        "flow_281",
+        "flow_100",
+        "flow_247",
+        "flow_103",
+        "flow_35",
+        "flow_162",
+        "flow_154",
+        "flow_251",
+        "flow_279",
+        "flow_143",
+        "flow_186",
+        "flow_5",
+        "flow_216",
+        "flow_33",
+        "flow_115",
+        "flow_41",
+        "flow_88",
+        "flow_256",
+        "flow_169",
+        "flow_69",
+        "flow_271",
+        "flow_124",
+        "flow_74",
+        "flow_113",
+        "flow_190",
+        "flow_165",
+        "flow_107",
+        "flow_120",
+        "flow_93",
+        "flow_229",
+        "flow_164",
+        "flow_291",
+        "flow_272",
+        "flow_220",
+        "flow_67",
+        "flow_123",
+        "flow_160",
+        "flow_72",
+        "flow_128",
+        "flow_285",
+        "flow_7",
+        "flow_244",
+        "flow_219",
+        "flow_232",
+        "flow_65",
+        "flow_49",
+        "flow_166",
+        "flow_212",
+        "flow_84",
+        "flow_289",
+        "flow_152",
+        "flow_193",
+        "flow_57",
+        "flow_273",
+        "flow_50",
+        "flow_235",
+        "flow_298",
+        "flow_31"
       ],
       "capitalAllocationIds": [],
       "sdgIds": [],
@@ -16143,7 +16224,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_159"
+        "flow_166"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -16681,7 +16762,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_233"
+        "flow_241"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -17031,6 +17112,33 @@
       "ownershipIds": []
     },
     {
+      "id": "org_goatl_community_guarantee_pool",
+      "name": "GoATL, Community Guarantee Pool",
+      "segment": "Capital Aggregator",
+      "orgType": "Loan or Private Investment Fund",
+      "city": "Atlanta",
+      "state": "GA",
+      "lat": 33.7628,
+      "lng": -84.422,
+      "website": "https://cfgreateratlanta.org/2021/06/08/community-guarantee-pool-announced/",
+      "description": "At a time of heightened need across the region, the GoATL Fund (GoATL), an initiative of the Community Foundation for Greater Atlanta, has launched an innovative program to help nonprofits access federal stimulus and other public contract funding more quickly. In collaboration with local Community Development Financial Institutions (CDFIs) and private and family foundations, the Community Guarantee Pool (CGP) provides credit enhancements that free up capital for nonprofits, thus infusing dollars for critical services including rapid rehousing, rental assistance, and mental health counseling. GoATL’s CGP is a pooled fund that supports multiple guarantees, allowing nonprofits to receive federal funding more quickly and improving their ability to provide critical community services. Participating CDFIs include Access to Capital for Entrepreneurs (ACE), Atlanta Neighborhood Development Partnership (ANDP), Enterprise Community Partners, LISC Atlanta, and Reinvestment Fund. ",
+      "ein": null,
+      "einMatch": "No match found",
+      "irs": null,
+      "locationId": "loc_atlanta_ga",
+      "contactIds": [],
+      "capitalFlowIds": [],
+      "capitalAllocationIds": [
+        "flow_42",
+        "flow_286",
+        "flow_250"
+      ],
+      "sdgIds": [],
+      "sectorIds": [],
+      "populationIds": [],
+      "ownershipIds": []
+    },
+    {
       "id": "org_leapbound_capital_inc",
       "name": "Leapbound Capital Inc.",
       "segment": "Capital Aggregator",
@@ -17048,7 +17156,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_14"
+        "flow_16"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -17248,7 +17356,7 @@
       "locationId": "loc_atlanta_ga",
       "contactIds": [],
       "capitalFlowIds": [
-        "flow_184"
+        "flow_191"
       ],
       "capitalAllocationIds": [],
       "sdgIds": [],
@@ -17320,12 +17428,12 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_274",
-        "flow_249",
-        "flow_252",
-        "flow_167",
-        "flow_67",
-        "flow_44"
+        "flow_284",
+        "flow_259",
+        "flow_262",
+        "flow_174",
+        "flow_71",
+        "flow_48"
       ],
       "sdgIds": [
         "dim_systemic_social_risk_is_mitigated_by_financial_inclusion_equal_access_to_services_and_equal_economic_participation",
@@ -17607,8 +17715,8 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_186",
-        "flow_53"
+        "flow_193",
+        "flow_57"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -17656,7 +17764,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_187"
+        "flow_194"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -18123,7 +18231,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_15"
+        "flow_17"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -18346,11 +18454,11 @@
       "locationId": "loc_new_york_city_ny",
       "contactIds": [],
       "capitalFlowIds": [
-        "flow_125"
+        "flow_130"
       ],
       "capitalAllocationIds": [
-        "flow_111",
-        "flow_40"
+        "flow_116",
+        "flow_43"
       ],
       "sdgIds": [],
       "sectorIds": [
@@ -18915,21 +19023,21 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_17",
-        "flow_191",
-        "flow_219",
+        "flow_19",
+        "flow_198",
+        "flow_227",
+        "flow_217",
+        "flow_214",
+        "flow_51",
+        "flow_213",
+        "flow_280",
         "flow_209",
-        "flow_206",
-        "flow_47",
-        "flow_205",
-        "flow_270",
-        "flow_201",
-        "flow_176",
+        "flow_183",
+        "flow_299",
+        "flow_77",
         "flow_288",
-        "flow_73",
-        "flow_277",
-        "flow_251",
-        "flow_131"
+        "flow_261",
+        "flow_137"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -20138,8 +20246,8 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_285",
-        "flow_134"
+        "flow_296",
+        "flow_140"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -20300,13 +20408,13 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_51",
-        "flow_129",
-        "flow_69",
-        "flow_202",
-        "flow_241",
-        "flow_145",
-        "flow_227"
+        "flow_55",
+        "flow_134",
+        "flow_73",
+        "flow_210",
+        "flow_249",
+        "flow_151",
+        "flow_235"
       ],
       "sdgIds": [],
       "sectorIds": [
@@ -20631,9 +20739,9 @@
       "locationId": "loc_troy_mi",
       "contactIds": [],
       "capitalFlowIds": [
-        "flow_150",
-        "flow_194",
-        "flow_267"
+        "flow_156",
+        "flow_201",
+        "flow_277"
       ],
       "capitalAllocationIds": [],
       "sdgIds": [],
@@ -20727,7 +20835,7 @@
       "locationId": null,
       "contactIds": [],
       "capitalFlowIds": [
-        "flow_233"
+        "flow_241"
       ],
       "capitalAllocationIds": [],
       "sdgIds": [],
@@ -20910,10 +21018,10 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_126",
-        "flow_116",
-        "flow_168",
-        "flow_139"
+        "flow_131",
+        "flow_121",
+        "flow_175",
+        "flow_145"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -21835,7 +21943,8 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_117"
+        "flow_122",
+        "flow_258"
       ],
       "sdgIds": [],
       "sectorIds": [
@@ -21996,8 +22105,13 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [],
-      "sdgIds": [],
-      "sectorIds": [],
+      "sdgIds": [
+        "dim_the_key_points_in_climate_risk_management_mitigation_adaptation_and_transition_finance"
+      ],
+      "sectorIds": [
+        "dim_climate_solutions_green_infrastructure",
+        "dim_capital_access_fair_financial_products"
+      ],
       "populationIds": [],
       "ownershipIds": []
     },
@@ -22042,6 +22156,31 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [],
+      "sdgIds": [],
+      "sectorIds": [],
+      "populationIds": [],
+      "ownershipIds": []
+    },
+    {
+      "id": "org_goatl_affordable_housing_fund",
+      "name": "GoATL, Affordable Housing Fund",
+      "segment": "Capital Aggregator",
+      "orgType": "Loan or Private Investment Fund",
+      "city": "Atlanta",
+      "state": "GA",
+      "lat": 33.7628,
+      "lng": -84.422,
+      "website": "https://cfgreateratlanta.org/goatl-fund/#next",
+      "description": "The Community Foundation for Greater Atlanta created the GoATL investment strategy Affordable Housing Fund, a social impact fund designed to achieve both social (impact) and financial (investment) returns. Through cost-effective loans to nonprofit and for-profit partners, GoATL gives mission-minded investors an opportunity to advance safe and healthy housing, new schools in underserved communities and more equitable access to living-wage careers across metro Atlanta. The GoATL Affordable Housing Fund is one of two CFGA impact investing funds, each providing concessionary or risk-tolerant capital to nonprofit and\nfor-profit developers and projects.",
+      "ein": null,
+      "einMatch": "No match found",
+      "irs": null,
+      "locationId": "loc_atlanta_ga",
+      "contactIds": [],
+      "capitalFlowIds": [],
+      "capitalAllocationIds": [
+        "flow_158"
+      ],
       "sdgIds": [],
       "sectorIds": [],
       "populationIds": [],
@@ -22176,7 +22315,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_278"
+        "flow_289"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -22423,9 +22562,9 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_175",
-        "flow_266",
-        "flow_106"
+        "flow_182",
+        "flow_276",
+        "flow_111"
       ],
       "sdgIds": [
         "dim_the_key_points_in_climate_risk_management_mitigation_adaptation_and_transition_finance",
@@ -23400,7 +23539,7 @@
       "locationId": null,
       "contactIds": [],
       "capitalFlowIds": [
-        "flow_233"
+        "flow_241"
       ],
       "capitalAllocationIds": [],
       "sdgIds": [],
@@ -24011,8 +24150,8 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_264",
-        "flow_49"
+        "flow_274",
+        "flow_53"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -24328,7 +24467,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_222"
+        "flow_230"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -24418,7 +24557,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_267"
+        "flow_277"
       ],
       "sdgIds": [
         "dim_infrastructure_affordable_housing_and_transportation_are_the_key_areas_of_investment",
@@ -24474,7 +24613,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_173"
+        "flow_180"
       ],
       "sdgIds": [],
       "sectorIds": [
@@ -25075,16 +25214,16 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_50",
-        "flow_258",
-        "flow_171",
-        "flow_287",
-        "flow_21",
-        "flow_79",
-        "flow_140",
-        "flow_58",
-        "flow_127",
-        "flow_147"
+        "flow_54",
+        "flow_268",
+        "flow_178",
+        "flow_298",
+        "flow_23",
+        "flow_83",
+        "flow_146",
+        "flow_62",
+        "flow_132",
+        "flow_153"
       ],
       "sdgIds": [],
       "sectorIds": [
@@ -25157,8 +25296,8 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_18",
-        "flow_150"
+        "flow_20",
+        "flow_156"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -25298,7 +25437,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_121"
+        "flow_126"
       ],
       "sdgIds": [],
       "sectorIds": [
@@ -25485,7 +25624,7 @@
       "locationId": "loc_atlanta_ga",
       "contactIds": [],
       "capitalFlowIds": [
-        "flow_36"
+        "flow_38"
       ],
       "capitalAllocationIds": [],
       "sdgIds": [],
@@ -25783,8 +25922,8 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_250",
-        "flow_185"
+        "flow_260",
+        "flow_192"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -25874,8 +26013,8 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_87",
-        "flow_269"
+        "flow_91",
+        "flow_279"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -25900,16 +26039,16 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_56",
-        "flow_177",
-        "flow_152",
+        "flow_60",
+        "flow_184",
+        "flow_159",
         "flow_9",
-        "flow_38",
-        "flow_151",
-        "flow_103",
-        "flow_180",
-        "flow_273",
-        "flow_46"
+        "flow_40",
+        "flow_157",
+        "flow_108",
+        "flow_187",
+        "flow_283",
+        "flow_50"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -25934,7 +26073,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_253"
+        "flow_263"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -26024,21 +26163,21 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_148",
-        "flow_155",
-        "flow_33",
-        "flow_98",
-        "flow_271",
-        "flow_95",
-        "flow_276",
-        "flow_239",
-        "flow_223",
-        "flow_42",
+        "flow_154",
+        "flow_162",
+        "flow_35",
+        "flow_103",
         "flow_281",
-        "flow_32",
-        "flow_104",
-        "flow_55",
-        "flow_234"
+        "flow_100",
+        "flow_287",
+        "flow_247",
+        "flow_231",
+        "flow_45",
+        "flow_292",
+        "flow_34",
+        "flow_109",
+        "flow_59",
+        "flow_242"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -26238,7 +26377,7 @@
       "locationId": "loc_atlanta_ga",
       "contactIds": [],
       "capitalFlowIds": [
-        "flow_187"
+        "flow_194"
       ],
       "capitalAllocationIds": [],
       "sdgIds": [],
@@ -26288,12 +26427,12 @@
       "locationId": "loc_carrollton_ga",
       "contactIds": [],
       "capitalFlowIds": [
-        "flow_253",
-        "flow_125",
-        "flow_74",
-        "flow_111",
-        "flow_266",
-        "flow_106"
+        "flow_263",
+        "flow_130",
+        "flow_78",
+        "flow_116",
+        "flow_276",
+        "flow_111"
       ],
       "capitalAllocationIds": [],
       "sdgIds": [
@@ -26376,10 +26515,10 @@
       "locationId": "loc_atlanta_ga",
       "contactIds": [],
       "capitalFlowIds": [
-        "flow_133",
-        "flow_272",
-        "flow_35",
-        "flow_18"
+        "flow_139",
+        "flow_282",
+        "flow_37",
+        "flow_20"
       ],
       "capitalAllocationIds": [],
       "sdgIds": [],
@@ -26561,7 +26700,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_170"
+        "flow_177"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -26914,7 +27053,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_194"
+        "flow_201"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -26962,7 +27101,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_244"
+        "flow_253"
       ],
       "sdgIds": [
         "dim_social_stability_and_long_term_returns_are_influenced_by_labor_standards_productivity_and_supply_chain_practices",
@@ -27051,9 +27190,9 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_174",
-        "flow_231",
-        "flow_85"
+        "flow_181",
+        "flow_239",
+        "flow_89"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -27119,8 +27258,8 @@
       "locationId": "loc_columbus_ga",
       "contactIds": [],
       "capitalFlowIds": [
-        "flow_235",
-        "flow_285"
+        "flow_243",
+        "flow_296"
       ],
       "capitalAllocationIds": [],
       "sdgIds": [],
@@ -27382,7 +27521,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_189"
+        "flow_196"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -27524,7 +27663,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_144"
+        "flow_150"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -27659,7 +27798,7 @@
       "locationId": "loc_atlanta_ga",
       "contactIds": [],
       "capitalFlowIds": [
-        "flow_133"
+        "flow_139"
       ],
       "capitalAllocationIds": [],
       "sdgIds": [],
@@ -28041,10 +28180,101 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_92",
-        "flow_286",
-        "flow_225",
-        "flow_261"
+        "flow_97",
+        "flow_297",
+        "flow_233",
+        "flow_271"
+      ],
+      "sdgIds": [],
+      "sectorIds": [],
+      "populationIds": [],
+      "ownershipIds": []
+    },
+    {
+      "id": "org_georgia_head_start_association_inc",
+      "name": "Georgia Head Start Association Inc",
+      "segment": "Capital Seeker",
+      "orgType": "Nonprofit (Community Dev. or Social Services)",
+      "city": "Clarkston",
+      "state": "GA",
+      "lat": 33.8117,
+      "lng": -84.2403,
+      "website": "https://georgiaheadstart.org/",
+      "description": "Georgia Head Start Directors is located in Clarkston, GA. The organization was established in 1998. According to its NTEE Classification (S41) the organization is classified as: Chambers of Commerce & Business Leagues, under the broad grouping of Community Improvement & Capacity Building and related organizations. This organization is an independent organization and not affiliated with a larger national or regional group of organizations. Georgia Head Start Directors is a 501(c)(3) and as such, is described as a \"Charitable or Religous organization or a private foundation\" by the IRS.",
+      "ein": "582109990",
+      "einMatch": "Auto: name only",
+      "irs": {
+        "ein": "582109990",
+        "found": true,
+        "legalName": "GEORGIA HEAD START DIRECTORS",
+        "subsection": "501(c)(3)",
+        "ntee": "S41Z",
+        "nteeMajor": "Community Improvement & Capacity Building",
+        "foundation": "Public charity: program-service supported 509(a)(2)",
+        "rulingYear": 1998,
+        "yearFormation": 1994,
+        "mission": "THE MISSION OF THE GEORGIA HEAD START ASSOCIATION IS TO PROVIDE EDUCATION, LEADERSHIP AND ADVOCACY THAT SUPPORT HEAD START PROGRAMS' EFFORTS IN DELIVERING HIGH QUALITY COMPREHENSIVE SERVICES TO GEORGIA'S CHILDREN, FAMILIES AND COMMUNITIES.",
+        "bmf": {
+          "assets": 440451,
+          "income": 191732,
+          "revenue": 191732,
+          "taxPeriod": "202509"
+        },
+        "latest": {
+          "taxYear": 2021,
+          "form": "990",
+          "periodEnd": "2022-09-30",
+          "revenue": 236442,
+          "contributions": 77274,
+          "programRevenue": 155734,
+          "investmentIncome": 3434,
+          "expenses": 207432,
+          "grantsPaid": 0,
+          "salaries": 74521,
+          "netIncome": 29010,
+          "assetsEOY": 399340,
+          "liabilitiesEOY": 16621,
+          "netAssetsEOY": 382719,
+          "employees": 2,
+          "volunteers": 0,
+          "cashAndSavingsEOY": 340452,
+          "pledgesReceivableEOY": null,
+          "notesLoansReceivableEOY": null,
+          "landBuildingsNetEOY": 5209,
+          "investPublicSecuritiesEOY": null,
+          "investOtherSecuritiesEOY": 44868,
+          "investProgramRelatedEOY": null,
+          "grantsPayableEOY": null,
+          "taxExemptBondsEOY": null,
+          "mortgagesNotesPayableEOY": null,
+          "unsecuredNotesPayableEOY": null,
+          "netAssetsUnrestrictedEOY": null,
+          "netAssetsTempRestrictedEOY": null,
+          "netAssetsPermRestrictedEOY": null
+        },
+        "trend": [
+          {
+            "taxYear": 2020,
+            "revenue": 99176,
+            "expenses": 118074,
+            "assetsEOY": 390743,
+            "netAssetsEOY": 367130
+          },
+          {
+            "taxYear": 2021,
+            "revenue": 236442,
+            "expenses": 207432,
+            "assetsEOY": 399340,
+            "netAssetsEOY": 382719
+          }
+        ]
+      },
+      "locationId": "loc_clarkston_ga",
+      "contactIds": [],
+      "capitalFlowIds": [],
+      "capitalAllocationIds": [
+        "flow_46",
+        "flow_15"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -28115,8 +28345,8 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_153",
-        "flow_118"
+        "flow_160",
+        "flow_123"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -28186,7 +28416,7 @@
       "locationId": null,
       "contactIds": [],
       "capitalFlowIds": [
-        "flow_233"
+        "flow_241"
       ],
       "capitalAllocationIds": [],
       "sdgIds": [],
@@ -28300,7 +28530,9 @@
       },
       "locationId": "loc_atlanta_ga",
       "contactIds": [],
-      "capitalFlowIds": [],
+      "capitalFlowIds": [
+        "flow_94"
+      ],
       "capitalAllocationIds": [],
       "sdgIds": [],
       "sectorIds": [],
@@ -28559,7 +28791,9 @@
       },
       "locationId": "loc_atlanta_ga",
       "contactIds": [],
-      "capitalFlowIds": [],
+      "capitalFlowIds": [
+        "flow_250"
+      ],
       "capitalAllocationIds": [],
       "sdgIds": [],
       "sectorIds": [],
@@ -28801,7 +29035,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_77"
+        "flow_81"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -29067,7 +29301,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_36"
+        "flow_38"
       ],
       "sdgIds": [
         "dim_the_key_points_in_climate_risk_management_mitigation_adaptation_and_transition_finance"
@@ -29119,7 +29353,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_232"
+        "flow_240"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -29209,8 +29443,8 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_196",
-        "flow_137"
+        "flow_203",
+        "flow_143"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -29235,23 +29469,23 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_214",
-        "flow_141",
-        "flow_112",
-        "flow_72",
-        "flow_71",
-        "flow_132",
-        "flow_91",
-        "flow_62",
-        "flow_192",
-        "flow_130",
-        "flow_37",
-        "flow_99",
-        "flow_256",
-        "flow_198",
-        "flow_265",
-        "flow_100",
-        "flow_203"
+        "flow_222",
+        "flow_147",
+        "flow_117",
+        "flow_76",
+        "flow_75",
+        "flow_138",
+        "flow_96",
+        "flow_66",
+        "flow_199",
+        "flow_135",
+        "flow_39",
+        "flow_104",
+        "flow_266",
+        "flow_205",
+        "flow_275",
+        "flow_105",
+        "flow_211"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -29521,7 +29755,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_65"
+        "flow_69"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -29920,7 +30154,7 @@
       "locationId": null,
       "contactIds": [],
       "capitalFlowIds": [
-        "flow_210"
+        "flow_218"
       ],
       "capitalAllocationIds": [],
       "sdgIds": [],
@@ -30320,10 +30554,10 @@
       "locationId": "loc_carrollton_ga",
       "contactIds": [],
       "capitalFlowIds": [
-        "flow_226",
-        "flow_40",
-        "flow_175",
-        "flow_107"
+        "flow_234",
+        "flow_43",
+        "flow_182",
+        "flow_112"
       ],
       "capitalAllocationIds": [],
       "sdgIds": [
@@ -30379,7 +30613,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_215"
+        "flow_223"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -30427,7 +30661,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_279"
+        "flow_290"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -30542,6 +30776,32 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [],
+      "sdgIds": [],
+      "sectorIds": [],
+      "populationIds": [],
+      "ownershipIds": []
+    },
+    {
+      "id": "org_easterseals_of_north_georgia",
+      "name": "Easterseals of North Georgia",
+      "segment": "Uncategorized",
+      "orgType": null,
+      "city": null,
+      "state": null,
+      "lat": null,
+      "lng": null,
+      "website": null,
+      "description": null,
+      "ein": null,
+      "einMatch": "No match found",
+      "irs": null,
+      "locationId": null,
+      "contactIds": [],
+      "capitalFlowIds": [],
+      "capitalAllocationIds": [
+        "flow_15",
+        "flow_46"
+      ],
       "sdgIds": [],
       "sectorIds": [],
       "populationIds": [],
@@ -31203,7 +31463,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_143"
+        "flow_149"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -31381,12 +31641,12 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_124",
-        "flow_164",
-        "flow_52",
-        "flow_135",
-        "flow_20",
-        "flow_242"
+        "flow_129",
+        "flow_171",
+        "flow_56",
+        "flow_141",
+        "flow_22",
+        "flow_251"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -31610,8 +31870,8 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_247",
-        "flow_162"
+        "flow_256",
+        "flow_169"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -31835,7 +32095,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_133"
+        "flow_139"
       ],
       "sdgIds": [
         "dim_resolves_financial_inclusion_credit_access_and_financial_resilience",
@@ -32064,24 +32324,24 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_105",
-        "flow_59",
-        "flow_238",
-        "flow_156",
+        "flow_110",
+        "flow_63",
+        "flow_246",
         "flow_163",
-        "flow_181",
-        "flow_259",
-        "flow_24",
+        "flow_170",
+        "flow_188",
+        "flow_269",
+        "flow_26",
         "flow_11",
-        "flow_243",
-        "flow_257",
-        "flow_128",
-        "flow_213",
-        "flow_195",
-        "flow_136",
-        "flow_48",
+        "flow_252",
+        "flow_267",
+        "flow_133",
+        "flow_221",
+        "flow_202",
+        "flow_142",
+        "flow_52",
         "flow_2",
-        "flow_166"
+        "flow_173"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -32356,7 +32616,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_82"
+        "flow_86"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -32713,7 +32973,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_204"
+        "flow_212"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -32900,7 +33160,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_28",
+        "flow_30",
         "flow_10"
       ],
       "sdgIds": [],
@@ -33141,7 +33401,7 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_237"
+        "flow_245"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -33944,8 +34204,8 @@
       "locationId": "loc_colquitt_ga",
       "contactIds": [],
       "capitalFlowIds": [
-        "flow_41",
-        "flow_23"
+        "flow_44",
+        "flow_25"
       ],
       "capitalAllocationIds": [],
       "sdgIds": [],
@@ -34021,11 +34281,11 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_34",
-        "flow_217",
-        "flow_114",
-        "flow_284",
-        "flow_29"
+        "flow_36",
+        "flow_225",
+        "flow_119",
+        "flow_295",
+        "flow_31"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -34297,11 +34557,11 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_282",
-        "flow_25",
-        "flow_229",
-        "flow_81",
-        "flow_263"
+        "flow_293",
+        "flow_27",
+        "flow_237",
+        "flow_85",
+        "flow_273"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -34349,17 +34609,17 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [
-        "flow_83",
-        "flow_66",
-        "flow_108",
-        "flow_183",
-        "flow_158",
-        "flow_102",
-        "flow_115",
-        "flow_89",
-        "flow_221",
-        "flow_280",
-        "flow_157"
+        "flow_87",
+        "flow_70",
+        "flow_113",
+        "flow_190",
+        "flow_165",
+        "flow_107",
+        "flow_120",
+        "flow_93",
+        "flow_229",
+        "flow_291",
+        "flow_164"
       ],
       "sdgIds": [],
       "sectorIds": [],
@@ -34387,6 +34647,97 @@
       "contactIds": [],
       "capitalFlowIds": [],
       "capitalAllocationIds": [],
+      "sdgIds": [],
+      "sectorIds": [],
+      "populationIds": [],
+      "ownershipIds": []
+    },
+    {
+      "id": "org_sheltering_arms",
+      "name": "Sheltering Arms",
+      "segment": "Uncategorized",
+      "orgType": null,
+      "city": null,
+      "state": null,
+      "lat": null,
+      "lng": null,
+      "website": "https://www.shelteringarmsforkids.com",
+      "description": null,
+      "ein": "580566236",
+      "einMatch": "Auto: name only",
+      "irs": {
+        "ein": "580566236",
+        "found": true,
+        "legalName": "THE SHELTERING ARMS",
+        "subsection": "501(c)(3)",
+        "ntee": null,
+        "nteeMajor": null,
+        "foundation": "Public charity: publicly supported 170(b)(1)(A)(vi)",
+        "rulingYear": 1942,
+        "yearFormation": 1888,
+        "mission": "SHELTERING ARMS' MISSION IS TO NURTURE AND EDUCATE CHILDREN, STRENGTHEN FAMILIES, AND BUILD COMMUNITIES BY PROVIDING HIGH QUALITY EARLY CARE AND EDUCATIONS THAT PREPARE YOUNG CHILDREN TO SUCCEED IN SCHOOL AND THAT IS ACCESSIBLE TO ALL, REGARDLESS OF FAMILY INCOME.",
+        "bmf": {
+          "assets": 30430659,
+          "income": 27591132,
+          "revenue": 27443251,
+          "taxPeriod": "202512"
+        },
+        "latest": {
+          "taxYear": 2021,
+          "form": "990",
+          "periodEnd": "2021-12-31",
+          "revenue": 26836460,
+          "contributions": 21037718,
+          "programRevenue": 3645922,
+          "investmentIncome": 1767556,
+          "expenses": 24645383,
+          "grantsPaid": 0,
+          "salaries": 16987037,
+          "netIncome": 2191077,
+          "assetsEOY": 37115971,
+          "liabilitiesEOY": 5898918,
+          "netAssetsEOY": 31217053,
+          "employees": 589,
+          "volunteers": 250,
+          "cashAndSavingsEOY": 3352107,
+          "pledgesReceivableEOY": 1381014,
+          "notesLoansReceivableEOY": 6448530,
+          "landBuildingsNetEOY": 18596854,
+          "investPublicSecuritiesEOY": 7233688,
+          "investOtherSecuritiesEOY": 0,
+          "investProgramRelatedEOY": 0,
+          "grantsPayableEOY": 0,
+          "taxExemptBondsEOY": 0,
+          "mortgagesNotesPayableEOY": 4634736,
+          "unsecuredNotesPayableEOY": 0,
+          "netAssetsUnrestrictedEOY": null,
+          "netAssetsTempRestrictedEOY": null,
+          "netAssetsPermRestrictedEOY": null
+        },
+        "trend": [
+          {
+            "taxYear": 2020,
+            "revenue": 26269592,
+            "expenses": 24024684,
+            "assetsEOY": 36029986,
+            "netAssetsEOY": 29633444
+          },
+          {
+            "taxYear": 2021,
+            "revenue": 26836460,
+            "expenses": 24645383,
+            "assetsEOY": 37115971,
+            "netAssetsEOY": 31217053
+          }
+        ]
+      },
+      "locationId": null,
+      "contactIds": [],
+      "capitalFlowIds": [],
+      "capitalAllocationIds": [
+        "flow_15",
+        "flow_46"
+      ],
       "sdgIds": [],
       "sectorIds": [],
       "populationIds": [],
@@ -34539,10 +34890,10 @@
       "locationId": "loc_atlanta_ga",
       "contactIds": [],
       "capitalFlowIds": [
-        "flow_264",
-        "flow_49",
-        "flow_161",
-        "flow_90"
+        "flow_274",
+        "flow_53",
+        "flow_168",
+        "flow_95"
       ],
       "capitalAllocationIds": [],
       "sdgIds": [],
@@ -35080,7 +35431,7 @@
       "locationId": "loc_atlanta_ga",
       "contactIds": [],
       "capitalFlowIds": [
-        "flow_210"
+        "flow_218"
       ],
       "capitalAllocationIds": [],
       "sdgIds": [],
@@ -35210,8 +35561,8 @@
     {
       "id": "flow_4",
       "label": "Flow #4",
-      "sourceId": "org_community_foundation_for_greater_atlanta",
-      "sourceName": "Community Foundation for Greater Atlanta",
+      "sourceId": "org_goatl_community_capacity_fund",
+      "sourceName": "GoATL, Community Capacity Fund",
       "recipientId": "org_lisc_atlanta",
       "recipientName": "LISC Atlanta",
       "amount": 1500000,
@@ -35370,6 +35721,38 @@
     {
       "id": "flow_14",
       "label": "Flow #14",
+      "sourceId": "org_tull_charitable_foundation",
+      "sourceName": "Tull Charitable Foundation",
+      "recipientId": "org_funding_u",
+      "recipientName": "Funding U",
+      "amount": null,
+      "year": null,
+      "type": "Equity",
+      "description": null,
+      "capitalInstrumentIds": [
+        "inst_equity"
+      ],
+      "impactDimensionIds": []
+    },
+    {
+      "id": "flow_15",
+      "label": "Flow #15",
+      "sourceId": "org_community_foundation_for_greater_atlanta",
+      "sourceName": "Community Foundation for Greater Atlanta",
+      "recipientId": "org_ymca_of_metropolitan_atlanta_inc",
+      "recipientName": "YMCA of Metropolitan Atlanta, Inc.",
+      "amount": 8000000,
+      "year": 2025,
+      "type": "Debt",
+      "description": "When a federal shutdown in 2025 threatened to derail funding for Head Start recipients, the [Community Foundation for Greater Atlanta](https://cfgreateratlanta.org/) (CFGA) and its partners took action. CFGA provided an $8 million bridge loan backed by $7.4 million in unfunded guarantees from 16 philanthropic funders. This funding supported the YMCA of Metro Atlanta, Sheltering Arms, and Easterseals of North Georgia with continuing their operations of Head Start and Early Head Start — the hallmark anti poverty childcare program which plays a pivotal role in providing low-income families with stable childcare and wrap around services and support.\n",
+      "capitalInstrumentIds": [
+        "inst_debt"
+      ],
+      "impactDimensionIds": []
+    },
+    {
+      "id": "flow_16",
+      "label": "Flow #16",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_leapbound_capital_inc",
@@ -35384,8 +35767,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_15",
-      "label": "Flow #15",
+      "id": "flow_17",
+      "label": "Flow #17",
       "sourceId": "org_community_foundation_for_greater_atlanta",
       "sourceName": "Community Foundation for Greater Atlanta",
       "recipientId": "org_low_income_investment_fund",
@@ -35400,8 +35783,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_16",
-      "label": "Flow #16",
+      "id": "flow_18",
+      "label": "Flow #18",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_atlanta_neighborhood_development_partners",
@@ -35416,8 +35799,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_17",
-      "label": "Flow #17",
+      "id": "flow_19",
+      "label": "Flow #19",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_citizens_trust_bank",
@@ -35432,8 +35815,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_18",
-      "label": "Flow #18",
+      "id": "flow_20",
+      "label": "Flow #20",
       "sourceId": "org_the_kendeda_fund",
       "sourceName": "The Kendeda Fund",
       "recipientId": "org_the_guild",
@@ -35448,10 +35831,10 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_19",
-      "label": "Flow #19",
-      "sourceId": "org_community_foundation_for_greater_atlanta",
-      "sourceName": "Community Foundation for Greater Atlanta",
+      "id": "flow_21",
+      "label": "Flow #21",
+      "sourceId": "org_goatl_community_capacity_fund",
+      "sourceName": "GoATL, Community Capacity Fund",
       "recipientId": "org_liftfund",
       "recipientName": "LiftFund",
       "amount": 250000,
@@ -35464,8 +35847,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_20",
-      "label": "Flow #20",
+      "id": "flow_22",
+      "label": "Flow #22",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_columbus_housing_initiative",
@@ -35480,8 +35863,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_21",
-      "label": "Flow #21",
+      "id": "flow_23",
+      "label": "Flow #23",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_atlanta_emerging_markets_inc",
@@ -35496,8 +35879,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_22",
-      "label": "Flow #22",
+      "id": "flow_24",
+      "label": "Flow #24",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_atlanta_neighborhood_development_partners",
@@ -35512,8 +35895,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_23",
-      "label": "Flow #23",
+      "id": "flow_25",
+      "label": "Flow #25",
       "sourceId": "org_ruth_t_jinks_foundation",
       "sourceName": "Ruth T. Jinks Foundation",
       "recipientId": "org_city_of_colquitt",
@@ -35528,8 +35911,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_24",
-      "label": "Flow #24",
+      "id": "flow_26",
+      "label": "Flow #26",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_carver_financial_corporation",
@@ -35544,8 +35927,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_25",
-      "label": "Flow #25",
+      "id": "flow_27",
+      "label": "Flow #27",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_southwest_georgia_united",
@@ -35560,8 +35943,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_26",
-      "label": "Flow #26",
+      "id": "flow_28",
+      "label": "Flow #28",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_habitat_for_humanity_nmtc_llc",
@@ -35576,8 +35959,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_27",
-      "label": "Flow #27",
+      "id": "flow_29",
+      "label": "Flow #29",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_atlanta_neighborhood_development_partners",
@@ -35592,8 +35975,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_28",
-      "label": "Flow #28",
+      "id": "flow_30",
+      "label": "Flow #30",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_summerville_trion_bancshares",
@@ -35608,8 +35991,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_29",
-      "label": "Flow #29",
+      "id": "flow_31",
+      "label": "Flow #31",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_southeast_first_national_bank",
@@ -35624,8 +36007,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_30",
-      "label": "Flow #30",
+      "id": "flow_32",
+      "label": "Flow #32",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_atlanta_neighborhood_development_partners",
@@ -35640,8 +36023,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_31",
-      "label": "Flow #31",
+      "id": "flow_33",
+      "label": "Flow #33",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_habitat_capital",
@@ -35656,8 +36039,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_32",
-      "label": "Flow #32",
+      "id": "flow_34",
+      "label": "Flow #34",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_community_housing_capital",
@@ -35672,8 +36055,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_33",
-      "label": "Flow #33",
+      "id": "flow_35",
+      "label": "Flow #35",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_community_housing_capital",
@@ -35688,8 +36071,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_34",
-      "label": "Flow #34",
+      "id": "flow_36",
+      "label": "Flow #36",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_southeast_first_national_bank",
@@ -35704,8 +36087,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_35",
-      "label": "Flow #35",
+      "id": "flow_37",
+      "label": "Flow #37",
       "sourceId": "org_the_kendeda_fund",
       "sourceName": "The Kendeda Fund",
       "recipientId": "org_lifecycle_building_center",
@@ -35720,8 +36103,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_36",
-      "label": "Flow #36",
+      "id": "flow_38",
+      "label": "Flow #38",
       "sourceId": "org_arthur_m_blank_foundation",
       "sourceName": "Arthur M. Blank Foundation",
       "recipientId": "org_metro_atlanta_revolving_fund",
@@ -35736,8 +36119,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_37",
-      "label": "Flow #37",
+      "id": "flow_39",
+      "label": "Flow #39",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_carver_state_bank",
@@ -35752,8 +36135,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_38",
-      "label": "Flow #38",
+      "id": "flow_40",
+      "label": "Flow #40",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_south_georgia_banking_company",
@@ -35768,8 +36151,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_39",
-      "label": "Flow #39",
+      "id": "flow_41",
+      "label": "Flow #41",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_habitat_capital",
@@ -35784,8 +36167,24 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_40",
-      "label": "Flow #40",
+      "id": "flow_42",
+      "label": "Flow #42",
+      "sourceId": "org_tull_charitable_foundation",
+      "sourceName": "Tull Charitable Foundation",
+      "recipientId": "org_goatl_community_guarantee_pool",
+      "recipientName": "GoATL, Community Guarantee Pool",
+      "amount": null,
+      "year": 2025,
+      "type": "Guarantee",
+      "description": null,
+      "capitalInstrumentIds": [
+        "inst_guarantee"
+      ],
+      "impactDimensionIds": []
+    },
+    {
+      "id": "flow_43",
+      "label": "Flow #43",
       "sourceId": "org_green_south_foundation",
       "sourceName": "Green South Foundation",
       "recipientId": "org_open_space_institute",
@@ -35800,8 +36199,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_41",
-      "label": "Flow #41",
+      "id": "flow_44",
+      "label": "Flow #44",
       "sourceId": "org_ruth_t_jinks_foundation",
       "sourceName": "Ruth T. Jinks Foundation",
       "recipientId": "org_city_of_colquitt",
@@ -35816,8 +36215,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_42",
-      "label": "Flow #42",
+      "id": "flow_45",
+      "label": "Flow #45",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_community_housing_capital",
@@ -35832,8 +36231,24 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_43",
-      "label": "Flow #43",
+      "id": "flow_46",
+      "label": "Flow #46",
+      "sourceId": "org_goatl_community_capacity_fund",
+      "sourceName": "GoATL, Community Capacity Fund",
+      "recipientId": "org_ymca_of_metropolitan_atlanta_inc",
+      "recipientName": "YMCA of Metropolitan Atlanta, Inc.",
+      "amount": 7400000,
+      "year": 2025,
+      "type": "Unfunded Guarantee",
+      "description": "When a federal shutdown in 2025 threatened to derail funding for Head Start recipients, the [Community Foundation for Greater Atlanta](https://cfgreateratlanta.org/) (CFGA) and its partners took action. CFGA provided an $8 million bridge loan backed by $7.4 million in unfunded guarantees from 16 philanthropic funders. This funding supported the YMCA of Metro Atlanta, Sheltering Arms, and Easterseals of North Georgia with continuing their operations of Head Start and Early Head Start — the hallmark anti poverty childcare program which plays a pivotal role in providing low-income families with stable childcare and wrap around services and support.\n",
+      "capitalInstrumentIds": [
+        "inst_unfunded_guarantee"
+      ],
+      "impactDimensionIds": []
+    },
+    {
+      "id": "flow_47",
+      "label": "Flow #47",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_habitat_for_humanity_nmtc_llc",
@@ -35848,8 +36263,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_44",
-      "label": "Flow #44",
+      "id": "flow_48",
+      "label": "Flow #48",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_bank_of_camilla",
@@ -35864,8 +36279,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_45",
-      "label": "Flow #45",
+      "id": "flow_49",
+      "label": "Flow #49",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_truist_bank",
@@ -35880,8 +36295,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_46",
-      "label": "Flow #46",
+      "id": "flow_50",
+      "label": "Flow #50",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_south_georgia_banking_company",
@@ -35896,8 +36311,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_47",
-      "label": "Flow #47",
+      "id": "flow_51",
+      "label": "Flow #51",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_citizens_trust_bank",
@@ -35912,8 +36327,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_48",
-      "label": "Flow #48",
+      "id": "flow_52",
+      "label": "Flow #52",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_carver_financial_corporation",
@@ -35928,8 +36343,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_49",
-      "label": "Flow #49",
+      "id": "flow_53",
+      "label": "Flow #53",
       "sourceId": "org_gray_matters_charitable_foundation",
       "sourceName": "Gray Matters Charitable Foundation",
       "recipientId": "org_gray_ghost_ventures_education_holdings",
@@ -35944,8 +36359,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_50",
-      "label": "Flow #50",
+      "id": "flow_54",
+      "label": "Flow #54",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_atlanta_emerging_markets_inc",
@@ -35960,8 +36375,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_51",
-      "label": "Flow #51",
+      "id": "flow_55",
+      "label": "Flow #55",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_small_business_assistance_corporation",
@@ -35976,8 +36391,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_52",
-      "label": "Flow #52",
+      "id": "flow_56",
+      "label": "Flow #56",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_columbus_housing_initiative",
@@ -35992,8 +36407,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_53",
-      "label": "Flow #53",
+      "id": "flow_57",
+      "label": "Flow #57",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_enterprise_funding_corporation",
@@ -36008,8 +36423,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_54",
-      "label": "Flow #54",
+      "id": "flow_58",
+      "label": "Flow #58",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_albany_community_together",
@@ -36024,8 +36439,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_55",
-      "label": "Flow #55",
+      "id": "flow_59",
+      "label": "Flow #59",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_community_housing_capital",
@@ -36040,8 +36455,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_56",
-      "label": "Flow #56",
+      "id": "flow_60",
+      "label": "Flow #60",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_south_georgia_banking_company",
@@ -36056,8 +36471,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_57",
-      "label": "Flow #57",
+      "id": "flow_61",
+      "label": "Flow #61",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_access_to_capital_for_entrepreneurs",
@@ -36072,8 +36487,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_58",
-      "label": "Flow #58",
+      "id": "flow_62",
+      "label": "Flow #62",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_atlanta_emerging_markets_inc",
@@ -36088,8 +36503,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_59",
-      "label": "Flow #59",
+      "id": "flow_63",
+      "label": "Flow #63",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_carver_financial_corporation",
@@ -36104,8 +36519,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_60",
-      "label": "Flow #60",
+      "id": "flow_64",
+      "label": "Flow #64",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_access_to_capital_for_entrepreneurs",
@@ -36120,8 +36535,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_61",
-      "label": "Flow #61",
+      "id": "flow_65",
+      "label": "Flow #65",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_truist_bank",
@@ -36136,8 +36551,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_62",
-      "label": "Flow #62",
+      "id": "flow_66",
+      "label": "Flow #66",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_carver_state_bank",
@@ -36152,8 +36567,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_63",
-      "label": "Flow #63",
+      "id": "flow_67",
+      "label": "Flow #67",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_habitat_for_humanity_nmtc_llc",
@@ -36168,8 +36583,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_64",
-      "label": "Flow #64",
+      "id": "flow_68",
+      "label": "Flow #68",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_atlanta_neighborhood_development_partners",
@@ -36184,8 +36599,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_65",
-      "label": "Flow #65",
+      "id": "flow_69",
+      "label": "Flow #69",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_habitat_for_humanity_georgia",
@@ -36200,8 +36615,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_66",
-      "label": "Flow #66",
+      "id": "flow_70",
+      "label": "Flow #70",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_truist_community_development_enterprises_llc",
@@ -36216,8 +36631,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_67",
-      "label": "Flow #67",
+      "id": "flow_71",
+      "label": "Flow #71",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_bank_of_camilla",
@@ -36232,8 +36647,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_68",
-      "label": "Flow #68",
+      "id": "flow_72",
+      "label": "Flow #72",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_habitat_for_humanity_nmtc_llc",
@@ -36248,8 +36663,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_69",
-      "label": "Flow #69",
+      "id": "flow_73",
+      "label": "Flow #73",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_small_business_assistance_corporation",
@@ -36264,8 +36679,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_70",
-      "label": "Flow #70",
+      "id": "flow_74",
+      "label": "Flow #74",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_thrive_community_lending",
@@ -36280,8 +36695,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_71",
-      "label": "Flow #71",
+      "id": "flow_75",
+      "label": "Flow #75",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_carver_state_bank",
@@ -36296,8 +36711,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_72",
-      "label": "Flow #72",
+      "id": "flow_76",
+      "label": "Flow #76",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_carver_state_bank",
@@ -36312,8 +36727,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_73",
-      "label": "Flow #73",
+      "id": "flow_77",
+      "label": "Flow #77",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_citizens_trust_bank",
@@ -36328,8 +36743,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_74",
-      "label": "Flow #74",
+      "id": "flow_78",
+      "label": "Flow #78",
       "sourceId": "org_terrah_conservation_capital_llc",
       "sourceName": "Terrah Conservation Capital LLC",
       "recipientId": "org_southern_appalachian_highland_conservancy",
@@ -36344,8 +36759,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_75",
-      "label": "Flow #75",
+      "id": "flow_79",
+      "label": "Flow #79",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_atlanta_neighborhood_development_partners",
@@ -36360,8 +36775,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_76",
-      "label": "Flow #76",
+      "id": "flow_80",
+      "label": "Flow #80",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_albany_community_together",
@@ -36376,22 +36791,24 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_77",
-      "label": "Flow #77",
+      "id": "flow_81",
+      "label": "Flow #81",
       "sourceId": "org_invest_georgia",
       "sourceName": "Invest Georgia",
       "recipientId": "org_ghost_gaming",
       "recipientName": "Ghost Gaming",
       "amount": null,
       "year": 2023,
-      "type": null,
+      "type": "Equity",
       "description": null,
-      "capitalInstrumentIds": [],
+      "capitalInstrumentIds": [
+        "inst_equity"
+      ],
       "impactDimensionIds": []
     },
     {
-      "id": "flow_78",
-      "label": "Flow #78",
+      "id": "flow_82",
+      "label": "Flow #82",
       "sourceId": "org_the_sapelo_foundation",
       "sourceName": "The Sapelo Foundation",
       "recipientId": "org_georgia_micro_enterprise_network_gmen",
@@ -36406,8 +36823,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_79",
-      "label": "Flow #79",
+      "id": "flow_83",
+      "label": "Flow #83",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_atlanta_emerging_markets_inc",
@@ -36422,8 +36839,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_80",
-      "label": "Flow #80",
+      "id": "flow_84",
+      "label": "Flow #84",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_mutual_federal_savings_bank",
@@ -36438,8 +36855,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_81",
-      "label": "Flow #81",
+      "id": "flow_85",
+      "label": "Flow #85",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_southwest_georgia_united",
@@ -36454,8 +36871,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_82",
-      "label": "Flow #82",
+      "id": "flow_86",
+      "label": "Flow #86",
       "sourceId": "org_community_foundation_for_greater_atlanta",
       "sourceName": "Community Foundation for Greater Atlanta",
       "recipientId": "org_focused_community_strategies_fcs",
@@ -36470,8 +36887,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_83",
-      "label": "Flow #83",
+      "id": "flow_87",
+      "label": "Flow #87",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_truist_community_development_enterprises_llc",
@@ -36486,8 +36903,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_84",
-      "label": "Flow #84",
+      "id": "flow_88",
+      "label": "Flow #88",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_habitat_capital",
@@ -36502,8 +36919,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_85",
-      "label": "Flow #85",
+      "id": "flow_89",
+      "label": "Flow #89",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_catalyst_development_corporation",
@@ -36518,8 +36935,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_86",
-      "label": "Flow #86",
+      "id": "flow_90",
+      "label": "Flow #90",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_atlanta_neighborhood_development_partners",
@@ -36534,8 +36951,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_87",
-      "label": "Flow #87",
+      "id": "flow_91",
+      "label": "Flow #91",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_community_housing_services_agency_inc",
@@ -36550,8 +36967,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_88",
-      "label": "Flow #88",
+      "id": "flow_92",
+      "label": "Flow #92",
       "sourceId": "org_r_howard_dobbs_jr_foundation",
       "sourceName": "R. Howard Dobbs Jr. Foundation",
       "recipientId": "org_the_conservation_fund",
@@ -36566,8 +36983,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_89",
-      "label": "Flow #89",
+      "id": "flow_93",
+      "label": "Flow #93",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_truist_community_development_enterprises_llc",
@@ -36582,8 +36999,24 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_90",
-      "label": "Flow #90",
+      "id": "flow_94",
+      "label": "Flow #94",
+      "sourceId": "org_jesse_parker_williams_foundation",
+      "sourceName": "Jesse Parker Williams Foundation",
+      "recipientId": "org_goatl_community_capacity_fund",
+      "recipientName": "GoATL, Community Capacity Fund",
+      "amount": null,
+      "year": 2023,
+      "type": "Pooled Fund Opt-In",
+      "description": "In 2023, the Jesse Parker Williams Foundation invested in the GoATL Community Capacity Fund because we recognized our impact could grow exponentially by complementing our grantmaking with impact investing. With a lean team and Board, partnering with the Community Foundation for Greater Atlanta allowed us to move forward confidently, leveraging their expertise while minimizing risk. This step into action has deepened our understanding of how to align capital and grantmaking strategy. The Capacity Fund proved to be the ideal entry point in our learning journey to maximize community impact in our ongoing efforts to support healthcare access and the well-being of women and children.\n",
+      "capitalInstrumentIds": [
+        "inst_pooled_fund_opt_in"
+      ],
+      "impactDimensionIds": []
+    },
+    {
+      "id": "flow_95",
+      "label": "Flow #95",
       "sourceId": "org_gray_matters_charitable_foundation",
       "sourceName": "Gray Matters Charitable Foundation",
       "recipientId": null,
@@ -36598,8 +37031,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_91",
-      "label": "Flow #91",
+      "id": "flow_96",
+      "label": "Flow #96",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_carver_state_bank",
@@ -36614,8 +37047,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_92",
-      "label": "Flow #92",
+      "id": "flow_97",
+      "label": "Flow #97",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_newtown_macon",
@@ -36630,8 +37063,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_93",
-      "label": "Flow #93",
+      "id": "flow_98",
+      "label": "Flow #98",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_access_to_capital_for_entrepreneurs",
@@ -36646,8 +37079,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_94",
-      "label": "Flow #94",
+      "id": "flow_99",
+      "label": "Flow #99",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_access_to_capital_for_entrepreneurs",
@@ -36662,8 +37095,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_95",
-      "label": "Flow #95",
+      "id": "flow_100",
+      "label": "Flow #100",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_community_housing_capital",
@@ -36678,8 +37111,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_96",
-      "label": "Flow #96",
+      "id": "flow_101",
+      "label": "Flow #101",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_resource_housing_group_inc",
@@ -36694,8 +37127,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_97",
-      "label": "Flow #97",
+      "id": "flow_102",
+      "label": "Flow #102",
       "sourceId": "org_the_sapelo_foundation",
       "sourceName": "The Sapelo Foundation",
       "recipientId": "org_albany_community_together",
@@ -36710,8 +37143,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_98",
-      "label": "Flow #98",
+      "id": "flow_103",
+      "label": "Flow #103",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_community_housing_capital",
@@ -36726,8 +37159,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_99",
-      "label": "Flow #99",
+      "id": "flow_104",
+      "label": "Flow #104",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_carver_state_bank",
@@ -36742,8 +37175,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_100",
-      "label": "Flow #100",
+      "id": "flow_105",
+      "label": "Flow #105",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_carver_state_bank",
@@ -36758,8 +37191,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_101",
-      "label": "Flow #101",
+      "id": "flow_106",
+      "label": "Flow #106",
       "sourceId": "org_community_foundation_for_greater_atlanta",
       "sourceName": "Community Foundation for Greater Atlanta",
       "recipientId": "org_access_to_capital_for_entrepreneurs",
@@ -36774,8 +37207,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_102",
-      "label": "Flow #102",
+      "id": "flow_107",
+      "label": "Flow #107",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_truist_community_development_enterprises_llc",
@@ -36790,8 +37223,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_103",
-      "label": "Flow #103",
+      "id": "flow_108",
+      "label": "Flow #108",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_south_georgia_banking_company",
@@ -36806,8 +37239,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_104",
-      "label": "Flow #104",
+      "id": "flow_109",
+      "label": "Flow #109",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_community_housing_capital",
@@ -36822,8 +37255,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_105",
-      "label": "Flow #105",
+      "id": "flow_110",
+      "label": "Flow #110",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_carver_financial_corporation",
@@ -36838,8 +37271,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_106",
-      "label": "Flow #106",
+      "id": "flow_111",
+      "label": "Flow #111",
       "sourceId": "org_terrah_conservation_capital_llc",
       "sourceName": "Terrah Conservation Capital LLC",
       "recipientId": "org_the_nature_conservancy",
@@ -36854,8 +37287,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_107",
-      "label": "Flow #107",
+      "id": "flow_112",
+      "label": "Flow #112",
       "sourceId": "org_green_south_foundation",
       "sourceName": "Green South Foundation",
       "recipientId": "org_southern_appalachian_highland_conservancy",
@@ -36870,8 +37303,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_108",
-      "label": "Flow #108",
+      "id": "flow_113",
+      "label": "Flow #113",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_truist_community_development_enterprises_llc",
@@ -36886,8 +37319,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_109",
-      "label": "Flow #109",
+      "id": "flow_114",
+      "label": "Flow #114",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_albany_community_together",
@@ -36902,8 +37335,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_110",
-      "label": "Flow #110",
+      "id": "flow_115",
+      "label": "Flow #115",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_habitat_capital",
@@ -36918,8 +37351,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_111",
-      "label": "Flow #111",
+      "id": "flow_116",
+      "label": "Flow #116",
       "sourceId": "org_terrah_conservation_capital_llc",
       "sourceName": "Terrah Conservation Capital LLC",
       "recipientId": "org_open_space_institute",
@@ -36934,8 +37367,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_112",
-      "label": "Flow #112",
+      "id": "flow_117",
+      "label": "Flow #117",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_carver_state_bank",
@@ -36950,8 +37383,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_113",
-      "label": "Flow #113",
+      "id": "flow_118",
+      "label": "Flow #118",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_access_to_capital_for_entrepreneurs",
@@ -36966,8 +37399,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_114",
-      "label": "Flow #114",
+      "id": "flow_119",
+      "label": "Flow #119",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_southeast_first_national_bank",
@@ -36982,8 +37415,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_115",
-      "label": "Flow #115",
+      "id": "flow_120",
+      "label": "Flow #120",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_truist_community_development_enterprises_llc",
@@ -36998,8 +37431,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_116",
-      "label": "Flow #116",
+      "id": "flow_121",
+      "label": "Flow #121",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_bank_of_dade",
@@ -37014,8 +37447,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_117",
-      "label": "Flow #117",
+      "id": "flow_122",
+      "label": "Flow #122",
       "sourceId": "org_the_sapelo_foundation",
       "sourceName": "The Sapelo Foundation",
       "recipientId": "org_the_working_farms_fund",
@@ -37030,8 +37463,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_118",
-      "label": "Flow #118",
+      "id": "flow_123",
+      "label": "Flow #123",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_integral_urban_new_markets_cde",
@@ -37046,8 +37479,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_119",
-      "label": "Flow #119",
+      "id": "flow_124",
+      "label": "Flow #124",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_synergies_seed_fund",
@@ -37062,8 +37495,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_120",
-      "label": "Flow #120",
+      "id": "flow_125",
+      "label": "Flow #125",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_access_to_capital_for_entrepreneurs",
@@ -37078,8 +37511,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_121",
-      "label": "Flow #121",
+      "id": "flow_126",
+      "label": "Flow #126",
       "sourceId": "org_community_foundation_for_greater_atlanta",
       "sourceName": "Community Foundation for Greater Atlanta",
       "recipientId": "org_reinvestment_fund",
@@ -37094,22 +37527,24 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_122",
-      "label": "Flow #122",
+      "id": "flow_127",
+      "label": "Flow #127",
       "sourceId": "org_east_lake_foundation",
       "sourceName": "East Lake Foundation",
       "recipientId": "org_villages_of_east_lake",
       "recipientName": "Villages of East Lake",
       "amount": null,
       "year": null,
-      "type": null,
+      "type": "Catalytic Grant",
       "description": "Columbia Residential lead an $82 million investment in the Villages of East Lake, one of the largest preservations of affordable housing in the city’s history…East Lake Foundation and the Atlanta Housing Authority are partners in the project. The transaction was pivotal. In the past two the Cousins Foundation and other stakeholders have sought approval for the refinancing from the Atlanta Housing Authority. SunTrust  Banks Inc. was the primary financial institution behind the deal. Invest Atlanta, Georgia Department of Community Affairs and Atlanta Housing Authority also provided financing. \n",
-      "capitalInstrumentIds": [],
+      "capitalInstrumentIds": [
+        "inst_catalytic_grant"
+      ],
       "impactDimensionIds": []
     },
     {
-      "id": "flow_123",
-      "label": "Flow #123",
+      "id": "flow_128",
+      "label": "Flow #128",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_truist_bank",
@@ -37124,8 +37559,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_124",
-      "label": "Flow #124",
+      "id": "flow_129",
+      "label": "Flow #129",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_columbus_housing_initiative",
@@ -37140,8 +37575,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_125",
-      "label": "Flow #125",
+      "id": "flow_130",
+      "label": "Flow #130",
       "sourceId": "org_terrah_conservation_capital_llc",
       "sourceName": "Terrah Conservation Capital LLC",
       "recipientId": "org_the_conservation_fund",
@@ -37156,8 +37591,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_126",
-      "label": "Flow #126",
+      "id": "flow_131",
+      "label": "Flow #131",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_bank_of_dade",
@@ -37172,8 +37607,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_127",
-      "label": "Flow #127",
+      "id": "flow_132",
+      "label": "Flow #132",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_atlanta_emerging_markets_inc",
@@ -37188,8 +37623,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_128",
-      "label": "Flow #128",
+      "id": "flow_133",
+      "label": "Flow #133",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_carver_financial_corporation",
@@ -37204,8 +37639,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_129",
-      "label": "Flow #129",
+      "id": "flow_134",
+      "label": "Flow #134",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_small_business_assistance_corporation",
@@ -37220,8 +37655,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_130",
-      "label": "Flow #130",
+      "id": "flow_135",
+      "label": "Flow #135",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_carver_state_bank",
@@ -37236,8 +37671,24 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_131",
-      "label": "Flow #131",
+      "id": "flow_136",
+      "label": "Flow #136",
+      "sourceId": "org_tull_charitable_foundation",
+      "sourceName": "Tull Charitable Foundation",
+      "recipientId": "org_access_to_capital_for_entrepreneurs",
+      "recipientName": "Access to Capital for Entrepreneurs ",
+      "amount": null,
+      "year": 2026,
+      "type": "Debt",
+      "description": null,
+      "capitalInstrumentIds": [
+        "inst_debt"
+      ],
+      "impactDimensionIds": []
+    },
+    {
+      "id": "flow_137",
+      "label": "Flow #137",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_citizens_trust_bank",
@@ -37252,8 +37703,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_132",
-      "label": "Flow #132",
+      "id": "flow_138",
+      "label": "Flow #138",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_carver_state_bank",
@@ -37268,22 +37719,24 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_133",
-      "label": "Flow #133",
+      "id": "flow_139",
+      "label": "Flow #139",
       "sourceId": "org_the_wilbur_hilda_glenn_family_foundation",
       "sourceName": "The Wilbur & Hilda Glenn Family Foundation",
       "recipientId": "org_first_step_staffing",
       "recipientName": "First Step Staffing",
       "amount": null,
       "year": null,
-      "type": null,
+      "type": "Catalytic Grant",
       "description": "First Step, a nonprofit bringing in roughly $1 million per year, raised acquisition capital to purchase a larger for-profit staffing company, LGS Staffing, with annual revenues of almost $18 million. First Step was able to raise $7.5 million through a unique financing structure comprised of commercial financing, government investments, and philanthropic investments, growing First Step by a factor of ten almost overnight.\n",
-      "capitalInstrumentIds": [],
+      "capitalInstrumentIds": [
+        "inst_catalytic_grant"
+      ],
       "impactDimensionIds": []
     },
     {
-      "id": "flow_134",
-      "label": "Flow #134",
+      "id": "flow_140",
+      "label": "Flow #140",
       "sourceId": "org_the_sapelo_foundation",
       "sourceName": "The Sapelo Foundation",
       "recipientId": "org_neighborworks_columbus",
@@ -37298,8 +37751,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_135",
-      "label": "Flow #135",
+      "id": "flow_141",
+      "label": "Flow #141",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_columbus_housing_initiative",
@@ -37314,8 +37767,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_136",
-      "label": "Flow #136",
+      "id": "flow_142",
+      "label": "Flow #142",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_carver_financial_corporation",
@@ -37330,8 +37783,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_137",
-      "label": "Flow #137",
+      "id": "flow_143",
+      "label": "Flow #143",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_foundation_for_affordable_rental_housing_holdings_inc",
@@ -37346,8 +37799,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_138",
-      "label": "Flow #138",
+      "id": "flow_144",
+      "label": "Flow #144",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_albany_community_together",
@@ -37362,8 +37815,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_139",
-      "label": "Flow #139",
+      "id": "flow_145",
+      "label": "Flow #145",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_bank_of_dade",
@@ -37378,8 +37831,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_140",
-      "label": "Flow #140",
+      "id": "flow_146",
+      "label": "Flow #146",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_atlanta_emerging_markets_inc",
@@ -37394,8 +37847,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_141",
-      "label": "Flow #141",
+      "id": "flow_147",
+      "label": "Flow #147",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_carver_state_bank",
@@ -37410,8 +37863,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_142",
-      "label": "Flow #142",
+      "id": "flow_148",
+      "label": "Flow #148",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_atlanta_neighborhood_development_partners",
@@ -37426,22 +37879,24 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_143",
-      "label": "Flow #143",
+      "id": "flow_149",
+      "label": "Flow #149",
       "sourceId": "org_invest_georgia",
       "sourceName": "Invest Georgia",
       "recipientId": "org_aetos_imaging",
       "recipientName": "Aetos Imaging",
       "amount": null,
       "year": 2023,
-      "type": null,
+      "type": "Equity",
       "description": null,
-      "capitalInstrumentIds": [],
+      "capitalInstrumentIds": [
+        "inst_equity"
+      ],
       "impactDimensionIds": []
     },
     {
-      "id": "flow_144",
-      "label": "Flow #144",
+      "id": "flow_150",
+      "label": "Flow #150",
       "sourceId": "org_r_howard_dobbs_jr_foundation",
       "sourceName": "R. Howard Dobbs Jr. Foundation",
       "recipientId": "org_emory_eye_center",
@@ -37456,8 +37911,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_145",
-      "label": "Flow #145",
+      "id": "flow_151",
+      "label": "Flow #151",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_small_business_assistance_corporation",
@@ -37472,8 +37927,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_146",
-      "label": "Flow #146",
+      "id": "flow_152",
+      "label": "Flow #152",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_mutual_federal_savings_bank",
@@ -37488,8 +37943,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_147",
-      "label": "Flow #147",
+      "id": "flow_153",
+      "label": "Flow #153",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_atlanta_emerging_markets_inc",
@@ -37504,8 +37959,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_148",
-      "label": "Flow #148",
+      "id": "flow_154",
+      "label": "Flow #154",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_community_housing_capital",
@@ -37520,8 +37975,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_149",
-      "label": "Flow #149",
+      "id": "flow_155",
+      "label": "Flow #155",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_access_to_capital_for_entrepreneurs",
@@ -37536,8 +37991,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_150",
-      "label": "Flow #150",
+      "id": "flow_156",
+      "label": "Flow #156",
       "sourceId": "org_kresge_foundation",
       "sourceName": "Kresge Foundation",
       "recipientId": "org_the_guild",
@@ -37552,8 +38007,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_151",
-      "label": "Flow #151",
+      "id": "flow_157",
+      "label": "Flow #157",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_south_georgia_banking_company",
@@ -37568,8 +38023,24 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_152",
-      "label": "Flow #152",
+      "id": "flow_158",
+      "label": "Flow #158",
+      "sourceId": "org_tull_charitable_foundation",
+      "sourceName": "Tull Charitable Foundation",
+      "recipientId": "org_goatl_affordable_housing_fund",
+      "recipientName": "GoATL, Affordable Housing Fund",
+      "amount": null,
+      "year": null,
+      "type": "Pooled Fund Opt-In",
+      "description": "Financing affordable housing across Atlanta, with more than 800 units supported.\n",
+      "capitalInstrumentIds": [
+        "inst_pooled_fund_opt_in"
+      ],
+      "impactDimensionIds": []
+    },
+    {
+      "id": "flow_159",
+      "label": "Flow #159",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_south_georgia_banking_company",
@@ -37584,8 +38055,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_153",
-      "label": "Flow #153",
+      "id": "flow_160",
+      "label": "Flow #160",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_integral_urban_new_markets_cde",
@@ -37600,8 +38071,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_154",
-      "label": "Flow #154",
+      "id": "flow_161",
+      "label": "Flow #161",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_atlanta_neighborhood_development_partners",
@@ -37616,8 +38087,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_155",
-      "label": "Flow #155",
+      "id": "flow_162",
+      "label": "Flow #162",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_community_housing_capital",
@@ -37632,8 +38103,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_156",
-      "label": "Flow #156",
+      "id": "flow_163",
+      "label": "Flow #163",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_carver_financial_corporation",
@@ -37648,8 +38119,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_157",
-      "label": "Flow #157",
+      "id": "flow_164",
+      "label": "Flow #164",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_truist_community_development_enterprises_llc",
@@ -37664,8 +38135,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_158",
-      "label": "Flow #158",
+      "id": "flow_165",
+      "label": "Flow #165",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_truist_community_development_enterprises_llc",
@@ -37680,8 +38151,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_159",
-      "label": "Flow #159",
+      "id": "flow_166",
+      "label": "Flow #166",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_resources_for_residents_and_communities",
@@ -37696,8 +38167,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_160",
-      "label": "Flow #160",
+      "id": "flow_167",
+      "label": "Flow #167",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_affordable_equity_fund_llc",
@@ -37712,8 +38183,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_161",
-      "label": "Flow #161",
+      "id": "flow_168",
+      "label": "Flow #168",
       "sourceId": "org_gray_matters_charitable_foundation",
       "sourceName": "Gray Matters Charitable Foundation",
       "recipientId": null,
@@ -37728,8 +38199,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_162",
-      "label": "Flow #162",
+      "id": "flow_169",
+      "label": "Flow #169",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_habitat_for_humanity_international",
@@ -37744,8 +38215,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_163",
-      "label": "Flow #163",
+      "id": "flow_170",
+      "label": "Flow #170",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_carver_financial_corporation",
@@ -37760,8 +38231,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_164",
-      "label": "Flow #164",
+      "id": "flow_171",
+      "label": "Flow #171",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_columbus_housing_initiative",
@@ -37776,8 +38247,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_165",
-      "label": "Flow #165",
+      "id": "flow_172",
+      "label": "Flow #172",
       "sourceId": "org_taintanchi_foundation",
       "sourceName": "Taintanchi Foundation",
       "recipientId": "org_village_capital",
@@ -37792,8 +38263,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_166",
-      "label": "Flow #166",
+      "id": "flow_173",
+      "label": "Flow #173",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_carver_financial_corporation",
@@ -37808,8 +38279,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_167",
-      "label": "Flow #167",
+      "id": "flow_174",
+      "label": "Flow #174",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_bank_of_camilla",
@@ -37824,8 +38295,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_168",
-      "label": "Flow #168",
+      "id": "flow_175",
+      "label": "Flow #175",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_bank_of_dade",
@@ -37840,8 +38311,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_169",
-      "label": "Flow #169",
+      "id": "flow_176",
+      "label": "Flow #176",
       "sourceId": "org_the_sapelo_foundation",
       "sourceName": "The Sapelo Foundation",
       "recipientId": "org_capital_good_fund",
@@ -37856,8 +38327,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_170",
-      "label": "Flow #170",
+      "id": "flow_177",
+      "label": "Flow #177",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_healthie_georgia_corporation",
@@ -37872,8 +38343,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_171",
-      "label": "Flow #171",
+      "id": "flow_178",
+      "label": "Flow #178",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_atlanta_emerging_markets_inc",
@@ -37888,8 +38359,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_172",
-      "label": "Flow #172",
+      "id": "flow_179",
+      "label": "Flow #179",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_georgia_community_reinvestment_fund_inc",
@@ -37904,8 +38375,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_173",
-      "label": "Flow #173",
+      "id": "flow_180",
+      "label": "Flow #180",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_camilla_bancshares_inc",
@@ -37920,8 +38391,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_174",
-      "label": "Flow #174",
+      "id": "flow_181",
+      "label": "Flow #181",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_catalyst_development_corporation",
@@ -37936,8 +38407,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_175",
-      "label": "Flow #175",
+      "id": "flow_182",
+      "label": "Flow #182",
       "sourceId": "org_green_south_foundation",
       "sourceName": "Green South Foundation",
       "recipientId": "org_the_nature_conservancy",
@@ -37952,8 +38423,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_176",
-      "label": "Flow #176",
+      "id": "flow_183",
+      "label": "Flow #183",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_citizens_trust_bank",
@@ -37968,8 +38439,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_177",
-      "label": "Flow #177",
+      "id": "flow_184",
+      "label": "Flow #184",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_south_georgia_banking_company",
@@ -37984,8 +38455,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_178",
-      "label": "Flow #178",
+      "id": "flow_185",
+      "label": "Flow #185",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_atlanta_neighborhood_development_partners",
@@ -38000,8 +38471,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_179",
-      "label": "Flow #179",
+      "id": "flow_186",
+      "label": "Flow #186",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_georgia_cities_foundation_inc",
@@ -38016,8 +38487,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_180",
-      "label": "Flow #180",
+      "id": "flow_187",
+      "label": "Flow #187",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_south_georgia_banking_company",
@@ -38032,8 +38503,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_181",
-      "label": "Flow #181",
+      "id": "flow_188",
+      "label": "Flow #188",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_carver_financial_corporation",
@@ -38048,8 +38519,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_182",
-      "label": "Flow #182",
+      "id": "flow_189",
+      "label": "Flow #189",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_atlanta_neighborhood_development_partners",
@@ -38064,8 +38535,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_183",
-      "label": "Flow #183",
+      "id": "flow_190",
+      "label": "Flow #190",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_truist_community_development_enterprises_llc",
@@ -38080,22 +38551,24 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_184",
-      "label": "Flow #184",
+      "id": "flow_191",
+      "label": "Flow #191",
       "sourceId": "org_invest_georgia",
       "sourceName": "Invest Georgia",
       "recipientId": "org_servescape",
       "recipientName": "ServeScape",
       "amount": null,
       "year": 2024,
-      "type": null,
+      "type": "Equity",
       "description": null,
-      "capitalInstrumentIds": [],
+      "capitalInstrumentIds": [
+        "inst_equity"
+      ],
       "impactDimensionIds": []
     },
     {
-      "id": "flow_185",
-      "label": "Flow #185",
+      "id": "flow_192",
+      "label": "Flow #192",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_atlanta_micro_fund_inc",
@@ -38110,8 +38583,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_186",
-      "label": "Flow #186",
+      "id": "flow_193",
+      "label": "Flow #193",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_enterprise_funding_corporation",
@@ -38126,8 +38599,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_187",
-      "label": "Flow #187",
+      "id": "flow_194",
+      "label": "Flow #194",
       "sourceId": "org_georgia_health_initiative",
       "sourceName": "Georgia Health Initiative",
       "recipientId": "org_community_health_center_capital_fund",
@@ -38142,8 +38615,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_188",
-      "label": "Flow #188",
+      "id": "flow_195",
+      "label": "Flow #195",
       "sourceId": "org_the_sapelo_foundation",
       "sourceName": "The Sapelo Foundation",
       "recipientId": "org_access_to_capital_for_entrepreneurs",
@@ -38158,8 +38631,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_189",
-      "label": "Flow #189",
+      "id": "flow_196",
+      "label": "Flow #196",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_atlanta_postal_credit_union",
@@ -38174,8 +38647,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_190",
-      "label": "Flow #190",
+      "id": "flow_197",
+      "label": "Flow #197",
       "sourceId": "org_community_foundation_for_greater_atlanta",
       "sourceName": "Community Foundation for Greater Atlanta",
       "recipientId": "org_atlanta_neighborhood_development_partners",
@@ -38190,8 +38663,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_191",
-      "label": "Flow #191",
+      "id": "flow_198",
+      "label": "Flow #198",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_citizens_trust_bank",
@@ -38206,8 +38679,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_192",
-      "label": "Flow #192",
+      "id": "flow_199",
+      "label": "Flow #199",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_carver_state_bank",
@@ -38222,8 +38695,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_193",
-      "label": "Flow #193",
+      "id": "flow_200",
+      "label": "Flow #200",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_atlanta_neighborhood_development_partners",
@@ -38238,8 +38711,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_194",
-      "label": "Flow #194",
+      "id": "flow_201",
+      "label": "Flow #201",
       "sourceId": "org_kresge_foundation",
       "sourceName": "Kresge Foundation",
       "recipientId": "org_athens_land_trust",
@@ -38254,8 +38727,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_195",
-      "label": "Flow #195",
+      "id": "flow_202",
+      "label": "Flow #202",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_carver_financial_corporation",
@@ -38270,8 +38743,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_196",
-      "label": "Flow #196",
+      "id": "flow_203",
+      "label": "Flow #203",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_foundation_for_affordable_rental_housing_holdings_inc",
@@ -38286,8 +38759,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_197",
-      "label": "Flow #197",
+      "id": "flow_204",
+      "label": "Flow #204",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_albany_community_together",
@@ -38302,8 +38775,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_198",
-      "label": "Flow #198",
+      "id": "flow_205",
+      "label": "Flow #205",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_carver_state_bank",
@@ -38318,8 +38791,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_199",
-      "label": "Flow #199",
+      "id": "flow_206",
+      "label": "Flow #206",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_unified_singers_federal_credit_union",
@@ -38334,8 +38807,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_200",
-      "label": "Flow #200",
+      "id": "flow_207",
+      "label": "Flow #207",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_access_to_capital_for_entrepreneurs",
@@ -38350,8 +38823,24 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_201",
-      "label": "Flow #201",
+      "id": "flow_208",
+      "label": "Flow #208",
+      "sourceId": "org_tull_charitable_foundation",
+      "sourceName": "Tull Charitable Foundation",
+      "recipientId": "org_goatl_community_capacity_fund",
+      "recipientName": "GoATL, Community Capacity Fund",
+      "amount": null,
+      "year": null,
+      "type": "Pooled Fund Opt-In",
+      "description": "The Tull Foundation prioritizes investing in local CDFIs that expand access to capital for communities underserved by traditional banks. Through these social impact investments, we aim to achieve market-rate returns while supporting affordable housing, small business growth, and broader economic inclusion. GoATL does precisely that by channeling impact investments into CDFIs, which in turn strengthen nonprofit partners working in areas like education, affordable housing, and health. Further, GoATL is locally rooted, invests directly in Metro-Atlanta community development and prioritizes capacity-building investments in BIPOC-led organizations and communities with limited resources—making them natural partners in advancing shared goals and aligning closely with Tull’s core values.\n",
+      "capitalInstrumentIds": [
+        "inst_pooled_fund_opt_in"
+      ],
+      "impactDimensionIds": []
+    },
+    {
+      "id": "flow_209",
+      "label": "Flow #209",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_citizens_trust_bank",
@@ -38366,8 +38855,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_202",
-      "label": "Flow #202",
+      "id": "flow_210",
+      "label": "Flow #210",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_small_business_assistance_corporation",
@@ -38382,8 +38871,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_203",
-      "label": "Flow #203",
+      "id": "flow_211",
+      "label": "Flow #211",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_carver_state_bank",
@@ -38398,8 +38887,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_204",
-      "label": "Flow #204",
+      "id": "flow_212",
+      "label": "Flow #212",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_marshland_credit_union",
@@ -38414,8 +38903,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_205",
-      "label": "Flow #205",
+      "id": "flow_213",
+      "label": "Flow #213",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_citizens_trust_bank",
@@ -38430,8 +38919,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_206",
-      "label": "Flow #206",
+      "id": "flow_214",
+      "label": "Flow #214",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_citizens_trust_bank",
@@ -38446,8 +38935,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_207",
-      "label": "Flow #207",
+      "id": "flow_215",
+      "label": "Flow #215",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_atlanta_neighborhood_development_partners",
@@ -38462,8 +38951,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_208",
-      "label": "Flow #208",
+      "id": "flow_216",
+      "label": "Flow #216",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_habitat_capital",
@@ -38478,8 +38967,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_209",
-      "label": "Flow #209",
+      "id": "flow_217",
+      "label": "Flow #217",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_citizens_trust_bank",
@@ -38494,22 +38983,24 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_210",
-      "label": "Flow #210",
+      "id": "flow_218",
+      "label": "Flow #218",
       "sourceId": "org_invest_georgia",
       "sourceName": "Invest Georgia",
       "recipientId": "org_overline_seed_fund_ii",
       "recipientName": "Overline Seed Fund II",
       "amount": null,
       "year": 2024,
-      "type": null,
+      "type": "Equity",
       "description": null,
-      "capitalInstrumentIds": [],
+      "capitalInstrumentIds": [
+        "inst_equity"
+      ],
       "impactDimensionIds": []
     },
     {
-      "id": "flow_211",
-      "label": "Flow #211",
+      "id": "flow_219",
+      "label": "Flow #219",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_truist_bank",
@@ -38524,8 +39015,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_212",
-      "label": "Flow #212",
+      "id": "flow_220",
+      "label": "Flow #220",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_habitat_for_humanity_nmtc_llc",
@@ -38540,8 +39031,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_213",
-      "label": "Flow #213",
+      "id": "flow_221",
+      "label": "Flow #221",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_carver_financial_corporation",
@@ -38556,8 +39047,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_214",
-      "label": "Flow #214",
+      "id": "flow_222",
+      "label": "Flow #222",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_carver_state_bank",
@@ -38572,22 +39063,24 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_215",
-      "label": "Flow #215",
+      "id": "flow_223",
+      "label": "Flow #223",
       "sourceId": "org_invest_georgia",
       "sourceName": "Invest Georgia",
       "recipientId": "org_nthdegree",
       "recipientName": "NthDegree",
       "amount": null,
       "year": 2023,
-      "type": null,
+      "type": "Equity",
       "description": null,
-      "capitalInstrumentIds": [],
+      "capitalInstrumentIds": [
+        "inst_equity"
+      ],
       "impactDimensionIds": []
     },
     {
-      "id": "flow_216",
-      "label": "Flow #216",
+      "id": "flow_224",
+      "label": "Flow #224",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_atlanta_neighborhood_development_partners",
@@ -38602,8 +39095,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_217",
-      "label": "Flow #217",
+      "id": "flow_225",
+      "label": "Flow #225",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_southeast_first_national_bank",
@@ -38618,10 +39111,10 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_218",
-      "label": "Flow #218",
-      "sourceId": "org_community_foundation_for_greater_atlanta",
-      "sourceName": "Community Foundation for Greater Atlanta",
+      "id": "flow_226",
+      "label": "Flow #226",
+      "sourceId": "org_goatl_community_capacity_fund",
+      "sourceName": "GoATL, Community Capacity Fund",
       "recipientId": "org_the_conservation_fund",
       "recipientName": "The Conservation Fund",
       "amount": 1000000,
@@ -38634,8 +39127,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_219",
-      "label": "Flow #219",
+      "id": "flow_227",
+      "label": "Flow #227",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_citizens_trust_bank",
@@ -38650,8 +39143,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_220",
-      "label": "Flow #220",
+      "id": "flow_228",
+      "label": "Flow #228",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_atlanta_neighborhood_development_partners",
@@ -38666,8 +39159,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_221",
-      "label": "Flow #221",
+      "id": "flow_229",
+      "label": "Flow #229",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_truist_community_development_enterprises_llc",
@@ -38682,8 +39175,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_222",
-      "label": "Flow #222",
+      "id": "flow_230",
+      "label": "Flow #230",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_american_pride_bank",
@@ -38698,8 +39191,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_223",
-      "label": "Flow #223",
+      "id": "flow_231",
+      "label": "Flow #231",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_community_housing_capital",
@@ -38714,8 +39207,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_224",
-      "label": "Flow #224",
+      "id": "flow_232",
+      "label": "Flow #232",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_truist_bank",
@@ -38730,8 +39223,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_225",
-      "label": "Flow #225",
+      "id": "flow_233",
+      "label": "Flow #233",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_newtown_macon",
@@ -38746,8 +39239,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_226",
-      "label": "Flow #226",
+      "id": "flow_234",
+      "label": "Flow #234",
       "sourceId": "org_green_south_foundation",
       "sourceName": "Green South Foundation",
       "recipientId": "org_southern_appalachian_highland_conservancy",
@@ -38762,8 +39255,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_227",
-      "label": "Flow #227",
+      "id": "flow_235",
+      "label": "Flow #235",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_small_business_assistance_corporation",
@@ -38778,8 +39271,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_228",
-      "label": "Flow #228",
+      "id": "flow_236",
+      "label": "Flow #236",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_georgia_cities_foundation_inc",
@@ -38794,8 +39287,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_229",
-      "label": "Flow #229",
+      "id": "flow_237",
+      "label": "Flow #237",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_southwest_georgia_united",
@@ -38810,8 +39303,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_230",
-      "label": "Flow #230",
+      "id": "flow_238",
+      "label": "Flow #238",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_access_to_capital_for_entrepreneurs",
@@ -38826,8 +39319,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_231",
-      "label": "Flow #231",
+      "id": "flow_239",
+      "label": "Flow #239",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_catalyst_development_corporation",
@@ -38842,36 +39335,40 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_232",
-      "label": "Flow #232",
+      "id": "flow_240",
+      "label": "Flow #240",
       "sourceId": "org_invest_georgia",
       "sourceName": "Invest Georgia",
       "recipientId": "org_valor_ventures",
       "recipientName": "Valor Ventures",
       "amount": 27000000,
       "year": 2024,
-      "type": null,
+      "type": "Equity",
       "description": null,
-      "capitalInstrumentIds": [],
+      "capitalInstrumentIds": [
+        "inst_equity"
+      ],
       "impactDimensionIds": []
     },
     {
-      "id": "flow_233",
-      "label": "Flow #233",
+      "id": "flow_241",
+      "label": "Flow #241",
       "sourceId": "org_matrix_partners",
       "sourceName": "Matrix Partners",
       "recipientId": "org_rainforest_pay",
       "recipientName": "Rainforest Pay",
       "amount": null,
       "year": 2023,
-      "type": null,
+      "type": "Equity",
       "description": null,
-      "capitalInstrumentIds": [],
+      "capitalInstrumentIds": [
+        "inst_equity"
+      ],
       "impactDimensionIds": []
     },
     {
-      "id": "flow_234",
-      "label": "Flow #234",
+      "id": "flow_242",
+      "label": "Flow #242",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_community_housing_capital",
@@ -38886,8 +39383,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_235",
-      "label": "Flow #235",
+      "id": "flow_243",
+      "label": "Flow #243",
       "sourceId": "org_bradley_turner_foundation",
       "sourceName": "Bradley-Turner Foundation",
       "recipientId": "org_historic_columbus_foundation",
@@ -38902,8 +39399,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_236",
-      "label": "Flow #236",
+      "id": "flow_244",
+      "label": "Flow #244",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_truist_bank",
@@ -38918,22 +39415,24 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_237",
-      "label": "Flow #237",
+      "id": "flow_245",
+      "label": "Flow #245",
       "sourceId": "org_invest_georgia",
       "sourceName": "Invest Georgia",
       "recipientId": "org_danti",
       "recipientName": "Danti",
       "amount": null,
       "year": 2023,
-      "type": null,
+      "type": "Equity",
       "description": null,
-      "capitalInstrumentIds": [],
+      "capitalInstrumentIds": [
+        "inst_equity"
+      ],
       "impactDimensionIds": []
     },
     {
-      "id": "flow_238",
-      "label": "Flow #238",
+      "id": "flow_246",
+      "label": "Flow #246",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_carver_financial_corporation",
@@ -38948,8 +39447,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_239",
-      "label": "Flow #239",
+      "id": "flow_247",
+      "label": "Flow #247",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_community_housing_capital",
@@ -38964,22 +39463,24 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_240",
-      "label": "Flow #240",
+      "id": "flow_248",
+      "label": "Flow #248",
       "sourceId": "org_invest_georgia",
       "sourceName": "Invest Georgia",
       "recipientId": "org_featurespace",
       "recipientName": "Featurespace",
       "amount": null,
       "year": 2023,
-      "type": null,
+      "type": "Equity",
       "description": null,
-      "capitalInstrumentIds": [],
+      "capitalInstrumentIds": [
+        "inst_equity"
+      ],
       "impactDimensionIds": []
     },
     {
-      "id": "flow_241",
-      "label": "Flow #241",
+      "id": "flow_249",
+      "label": "Flow #249",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_small_business_assistance_corporation",
@@ -38994,8 +39495,24 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_242",
-      "label": "Flow #242",
+      "id": "flow_250",
+      "label": "Flow #250",
+      "sourceId": "org_the_j_b_fuqua_foundation",
+      "sourceName": "The J.B. Fuqua Foundation",
+      "recipientId": "org_goatl_community_guarantee_pool",
+      "recipientName": "GoATL, Community Guarantee Pool",
+      "amount": null,
+      "year": 2021,
+      "type": "Guarantee",
+      "description": null,
+      "capitalInstrumentIds": [
+        "inst_guarantee"
+      ],
+      "impactDimensionIds": []
+    },
+    {
+      "id": "flow_251",
+      "label": "Flow #251",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_columbus_housing_initiative",
@@ -39010,8 +39527,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_243",
-      "label": "Flow #243",
+      "id": "flow_252",
+      "label": "Flow #252",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_carver_financial_corporation",
@@ -39026,10 +39543,10 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_244",
-      "label": "Flow #244",
-      "sourceId": "org_community_foundation_for_greater_atlanta",
-      "sourceName": "Community Foundation for Greater Atlanta",
+      "id": "flow_253",
+      "label": "Flow #253",
+      "sourceId": "org_goatl_community_capacity_fund",
+      "sourceName": "GoATL, Community Capacity Fund",
       "recipientId": "org_southern_opportunities_and_resilience_fund",
       "recipientName": "Southern Opportunities and Resilience Fund",
       "amount": 500000,
@@ -39042,8 +39559,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_245",
-      "label": "Flow #245",
+      "id": "flow_254",
+      "label": "Flow #254",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_albany_community_together",
@@ -39058,8 +39575,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_246",
-      "label": "Flow #246",
+      "id": "flow_255",
+      "label": "Flow #255",
       "sourceId": "org_community_foundation_for_greater_atlanta",
       "sourceName": "Community Foundation for Greater Atlanta",
       "recipientId": "org_enterprise_community_partners",
@@ -39074,8 +39591,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_247",
-      "label": "Flow #247",
+      "id": "flow_256",
+      "label": "Flow #256",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_habitat_for_humanity_international",
@@ -39090,8 +39607,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_248",
-      "label": "Flow #248",
+      "id": "flow_257",
+      "label": "Flow #257",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_albany_community_together",
@@ -39106,8 +39623,24 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_249",
-      "label": "Flow #249",
+      "id": "flow_258",
+      "label": "Flow #258",
+      "sourceId": "org_goatl_community_capacity_fund",
+      "sourceName": "GoATL, Community Capacity Fund",
+      "recipientId": "org_the_working_farms_fund",
+      "recipientName": "The Working Farms Fund",
+      "amount": null,
+      "year": 2025,
+      "type": "Debt",
+      "description": null,
+      "capitalInstrumentIds": [
+        "inst_debt"
+      ],
+      "impactDimensionIds": []
+    },
+    {
+      "id": "flow_259",
+      "label": "Flow #259",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_bank_of_camilla",
@@ -39122,8 +39655,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_250",
-      "label": "Flow #250",
+      "id": "flow_260",
+      "label": "Flow #260",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_atlanta_micro_fund_inc",
@@ -39138,8 +39671,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_251",
-      "label": "Flow #251",
+      "id": "flow_261",
+      "label": "Flow #261",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_citizens_trust_bank",
@@ -39154,8 +39687,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_252",
-      "label": "Flow #252",
+      "id": "flow_262",
+      "label": "Flow #262",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_bank_of_camilla",
@@ -39170,8 +39703,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_253",
-      "label": "Flow #253",
+      "id": "flow_263",
+      "label": "Flow #263",
       "sourceId": "org_terrah_conservation_capital_llc",
       "sourceName": "Terrah Conservation Capital LLC",
       "recipientId": "org_low_country_land_trust",
@@ -39186,8 +39719,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_254",
-      "label": "Flow #254",
+      "id": "flow_264",
+      "label": "Flow #264",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_atlanta_neighborhood_development_partners",
@@ -39202,8 +39735,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_255",
-      "label": "Flow #255",
+      "id": "flow_265",
+      "label": "Flow #265",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_affordable_equity_fund_llc",
@@ -39218,8 +39751,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_256",
-      "label": "Flow #256",
+      "id": "flow_266",
+      "label": "Flow #266",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_carver_state_bank",
@@ -39234,8 +39767,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_257",
-      "label": "Flow #257",
+      "id": "flow_267",
+      "label": "Flow #267",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_carver_financial_corporation",
@@ -39250,8 +39783,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_258",
-      "label": "Flow #258",
+      "id": "flow_268",
+      "label": "Flow #268",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_atlanta_emerging_markets_inc",
@@ -39266,8 +39799,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_259",
-      "label": "Flow #259",
+      "id": "flow_269",
+      "label": "Flow #269",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_carver_financial_corporation",
@@ -39282,8 +39815,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_260",
-      "label": "Flow #260",
+      "id": "flow_270",
+      "label": "Flow #270",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_albany_community_together",
@@ -39298,8 +39831,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_261",
-      "label": "Flow #261",
+      "id": "flow_271",
+      "label": "Flow #271",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_newtown_macon",
@@ -39314,8 +39847,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_262",
-      "label": "Flow #262",
+      "id": "flow_272",
+      "label": "Flow #272",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_habitat_for_humanity_nmtc_llc",
@@ -39330,8 +39863,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_263",
-      "label": "Flow #263",
+      "id": "flow_273",
+      "label": "Flow #273",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_southwest_georgia_united",
@@ -39346,8 +39879,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_264",
-      "label": "Flow #264",
+      "id": "flow_274",
+      "label": "Flow #274",
       "sourceId": "org_gray_matters_charitable_foundation",
       "sourceName": "Gray Matters Charitable Foundation",
       "recipientId": "org_gray_ghost_ventures_education_holdings",
@@ -39362,8 +39895,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_265",
-      "label": "Flow #265",
+      "id": "flow_275",
+      "label": "Flow #275",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_carver_state_bank",
@@ -39378,8 +39911,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_266",
-      "label": "Flow #266",
+      "id": "flow_276",
+      "label": "Flow #276",
       "sourceId": "org_terrah_conservation_capital_llc",
       "sourceName": "Terrah Conservation Capital LLC",
       "recipientId": "org_the_nature_conservancy",
@@ -39394,8 +39927,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_267",
-      "label": "Flow #267",
+      "id": "flow_277",
+      "label": "Flow #277",
       "sourceId": "org_kresge_foundation",
       "sourceName": "Kresge Foundation",
       "recipientId": "org_environmental_community_action_inc",
@@ -39410,8 +39943,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_268",
-      "label": "Flow #268",
+      "id": "flow_278",
+      "label": "Flow #278",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_atlanta_neighborhood_development_partners",
@@ -39426,8 +39959,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_269",
-      "label": "Flow #269",
+      "id": "flow_279",
+      "label": "Flow #279",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_community_housing_services_agency_inc",
@@ -39442,8 +39975,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_270",
-      "label": "Flow #270",
+      "id": "flow_280",
+      "label": "Flow #280",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_citizens_trust_bank",
@@ -39458,8 +39991,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_271",
-      "label": "Flow #271",
+      "id": "flow_281",
+      "label": "Flow #281",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_community_housing_capital",
@@ -39474,8 +40007,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_272",
-      "label": "Flow #272",
+      "id": "flow_282",
+      "label": "Flow #282",
       "sourceId": "org_the_kendeda_fund",
       "sourceName": "The Kendeda Fund",
       "recipientId": "org_grady_health_foundation",
@@ -39490,8 +40023,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_273",
-      "label": "Flow #273",
+      "id": "flow_283",
+      "label": "Flow #283",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_south_georgia_banking_company",
@@ -39506,8 +40039,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_274",
-      "label": "Flow #274",
+      "id": "flow_284",
+      "label": "Flow #284",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_bank_of_camilla",
@@ -39522,8 +40055,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_275",
-      "label": "Flow #275",
+      "id": "flow_285",
+      "label": "Flow #285",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_truist_bank",
@@ -39538,8 +40071,24 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_276",
-      "label": "Flow #276",
+      "id": "flow_286",
+      "label": "Flow #286",
+      "sourceId": "org_the_wilbur_hilda_glenn_family_foundation",
+      "sourceName": "The Wilbur & Hilda Glenn Family Foundation",
+      "recipientId": "org_goatl_community_guarantee_pool",
+      "recipientName": "GoATL, Community Guarantee Pool",
+      "amount": null,
+      "year": 2021,
+      "type": "Guarantee",
+      "description": null,
+      "capitalInstrumentIds": [
+        "inst_guarantee"
+      ],
+      "impactDimensionIds": []
+    },
+    {
+      "id": "flow_287",
+      "label": "Flow #287",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_community_housing_capital",
@@ -39554,8 +40103,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_277",
-      "label": "Flow #277",
+      "id": "flow_288",
+      "label": "Flow #288",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_citizens_trust_bank",
@@ -39570,8 +40119,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_278",
-      "label": "Flow #278",
+      "id": "flow_289",
+      "label": "Flow #289",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_nationsbank_south",
@@ -39586,8 +40135,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_279",
-      "label": "Flow #279",
+      "id": "flow_290",
+      "label": "Flow #290",
       "sourceId": "org_william_josef_foundation",
       "sourceName": "William Josef Foundation",
       "recipientId": "org_center_creek_capital_group",
@@ -39602,8 +40151,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_280",
-      "label": "Flow #280",
+      "id": "flow_291",
+      "label": "Flow #291",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_truist_community_development_enterprises_llc",
@@ -39618,8 +40167,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_281",
-      "label": "Flow #281",
+      "id": "flow_292",
+      "label": "Flow #292",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_community_housing_capital",
@@ -39634,8 +40183,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_282",
-      "label": "Flow #282",
+      "id": "flow_293",
+      "label": "Flow #293",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_southwest_georgia_united",
@@ -39650,8 +40199,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_283",
-      "label": "Flow #283",
+      "id": "flow_294",
+      "label": "Flow #294",
       "sourceId": "org_taintanchi_foundation",
       "sourceName": "Taintanchi Foundation",
       "recipientId": "org_community_investment_management",
@@ -39666,8 +40215,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_284",
-      "label": "Flow #284",
+      "id": "flow_295",
+      "label": "Flow #295",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_southeast_first_national_bank",
@@ -39682,8 +40231,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_285",
-      "label": "Flow #285",
+      "id": "flow_296",
+      "label": "Flow #296",
       "sourceId": "org_bradley_turner_foundation",
       "sourceName": "Bradley-Turner Foundation",
       "recipientId": "org_neighborworks_columbus",
@@ -39698,8 +40247,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_286",
-      "label": "Flow #286",
+      "id": "flow_297",
+      "label": "Flow #297",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_newtown_macon",
@@ -39714,8 +40263,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_287",
-      "label": "Flow #287",
+      "id": "flow_298",
+      "label": "Flow #298",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_atlanta_emerging_markets_inc",
@@ -39730,8 +40279,8 @@
       "impactDimensionIds": []
     },
     {
-      "id": "flow_288",
-      "label": "Flow #288",
+      "id": "flow_299",
+      "label": "Flow #299",
       "sourceId": "org_cdfi_fund",
       "sourceName": "CDFI Fund",
       "recipientId": "org_citizens_trust_bank",
@@ -39754,73 +40303,73 @@
       "investmentStrategy": null,
       "description": "CDFI Financial Assistance Award\n",
       "capitalFlowIds": [
-        "flow_76",
-        "flow_105",
-        "flow_28",
-        "flow_248",
-        "flow_109",
-        "flow_173",
-        "flow_181",
-        "flow_103",
-        "flow_92",
-        "flow_87",
-        "flow_51",
-        "flow_152",
+        "flow_80",
+        "flow_110",
+        "flow_30",
+        "flow_257",
+        "flow_114",
+        "flow_180",
+        "flow_188",
+        "flow_108",
+        "flow_97",
+        "flow_91",
+        "flow_55",
+        "flow_159",
         "flow_1",
-        "flow_57",
-        "flow_229",
-        "flow_52",
-        "flow_230",
-        "flow_135",
-        "flow_94",
-        "flow_24",
+        "flow_61",
+        "flow_237",
+        "flow_56",
+        "flow_238",
+        "flow_141",
+        "flow_99",
+        "flow_26",
         "flow_11",
-        "flow_20",
-        "flow_200",
-        "flow_202",
-        "flow_93",
-        "flow_243",
-        "flow_197",
-        "flow_60",
-        "flow_81",
-        "flow_128",
-        "flow_241",
-        "flow_245",
-        "flow_149",
+        "flow_22",
+        "flow_207",
+        "flow_210",
+        "flow_98",
+        "flow_252",
+        "flow_204",
+        "flow_64",
+        "flow_85",
+        "flow_133",
+        "flow_249",
+        "flow_254",
+        "flow_155",
         "flow_12",
         "flow_6",
-        "flow_195",
-        "flow_145",
-        "flow_199",
-        "flow_225",
+        "flow_202",
+        "flow_151",
+        "flow_206",
+        "flow_233",
+        "flow_270",
         "flow_260",
-        "flow_250",
         "flow_2",
-        "flow_242",
-        "flow_148",
-        "flow_155",
-        "flow_33",
-        "flow_42",
-        "flow_95",
-        "flow_271",
-        "flow_281",
-        "flow_178",
-        "flow_254",
-        "flow_30",
-        "flow_16",
-        "flow_75",
-        "flow_268",
+        "flow_251",
         "flow_154",
-        "flow_220",
-        "flow_142",
+        "flow_162",
+        "flow_35",
+        "flow_45",
+        "flow_100",
+        "flow_281",
+        "flow_292",
+        "flow_185",
+        "flow_264",
+        "flow_32",
+        "flow_18",
+        "flow_79",
+        "flow_278",
+        "flow_161",
         "flow_228",
-        "flow_84",
+        "flow_148",
+        "flow_236",
+        "flow_88",
+        "flow_33",
+        "flow_273",
         "flow_31",
-        "flow_263",
-        "flow_29",
-        "flow_227",
-        "flow_80",
-        "flow_146"
+        "flow_235",
+        "flow_84",
+        "flow_152"
       ]
     },
     {
@@ -39830,10 +40379,20 @@
       "investmentStrategy": null,
       "description": null,
       "capitalFlowIds": [
-        "flow_161",
-        "flow_90",
-        "flow_144",
-        "flow_279"
+        "flow_168",
+        "flow_95",
+        "flow_150",
+        "flow_290",
+        "flow_14",
+        "flow_240",
+        "flow_218",
+        "flow_191",
+        "flow_81",
+        "flow_223",
+        "flow_149",
+        "flow_245",
+        "flow_241",
+        "flow_248"
       ]
     },
     {
@@ -39843,22 +40402,22 @@
       "investmentStrategy": null,
       "description": "CDFI Capital Magnet Fund Award\n",
       "capitalFlowIds": [
-        "flow_113",
-        "flow_96",
-        "flow_64",
-        "flow_196",
-        "flow_27",
-        "flow_193",
-        "flow_22",
-        "flow_86",
-        "flow_276",
-        "flow_98",
-        "flow_207",
-        "flow_137",
+        "flow_118",
+        "flow_101",
+        "flow_68",
+        "flow_203",
+        "flow_29",
+        "flow_200",
+        "flow_24",
+        "flow_90",
+        "flow_287",
+        "flow_103",
+        "flow_215",
+        "flow_143",
         "flow_5",
-        "flow_110",
-        "flow_247",
-        "flow_162"
+        "flow_115",
+        "flow_256",
+        "flow_169"
       ]
     },
     {
@@ -39868,9 +40427,9 @@
       "investmentStrategy": null,
       "description": "CDFI Small Dollar Loan Program Award\n",
       "capitalFlowIds": [
-        "flow_59",
-        "flow_217",
-        "flow_138",
+        "flow_63",
+        "flow_225",
+        "flow_144",
         "flow_9"
       ]
     },
@@ -39881,68 +40440,72 @@
       "investmentStrategy": null,
       "description": "CDFI Bank Enterprise Award\n",
       "capitalFlowIds": [
-        "flow_274",
-        "flow_214",
-        "flow_34",
-        "flow_56",
-        "flow_249",
-        "flow_141",
-        "flow_177",
-        "flow_112",
-        "flow_126",
-        "flow_116",
-        "flow_72",
-        "flow_71",
-        "flow_168",
-        "flow_132",
-        "flow_91",
-        "flow_139",
-        "flow_62",
-        "flow_192",
-        "flow_130",
-        "flow_37",
-        "flow_99",
-        "flow_256",
-        "flow_180",
-        "flow_198",
-        "flow_273",
-        "flow_270",
-        "flow_205",
-        "flow_47",
-        "flow_206",
-        "flow_209",
-        "flow_219",
-        "flow_191",
-        "flow_17",
-        "flow_67",
-        "flow_44",
-        "flow_265",
-        "flow_100",
-        "flow_203",
-        "flow_288",
-        "flow_73",
-        "flow_277",
-        "flow_251",
+        "flow_284",
+        "flow_222",
+        "flow_36",
+        "flow_60",
+        "flow_259",
+        "flow_147",
+        "flow_184",
+        "flow_117",
         "flow_131",
-        "flow_123",
+        "flow_121",
+        "flow_76",
+        "flow_75",
+        "flow_175",
+        "flow_138",
+        "flow_96",
+        "flow_145",
+        "flow_66",
+        "flow_199",
+        "flow_135",
+        "flow_39",
+        "flow_104",
+        "flow_266",
+        "flow_187",
+        "flow_205",
+        "flow_283",
+        "flow_280",
+        "flow_213",
+        "flow_51",
+        "flow_214",
+        "flow_217",
+        "flow_227",
+        "flow_198",
+        "flow_19",
+        "flow_71",
+        "flow_48",
         "flow_275",
-        "flow_7",
-        "flow_236",
+        "flow_105",
         "flow_211",
-        "flow_224",
-        "flow_61",
-        "flow_45",
-        "flow_46",
-        "flow_278"
+        "flow_299",
+        "flow_77",
+        "flow_288",
+        "flow_261",
+        "flow_137",
+        "flow_128",
+        "flow_285",
+        "flow_7",
+        "flow_244",
+        "flow_219",
+        "flow_232",
+        "flow_65",
+        "flow_49",
+        "flow_50",
+        "flow_289"
       ]
     },
     {
-      "id": "inst_instrument_6",
-      "name": "Unknown",
-      "capitalFlowType": null,
+      "id": "inst_pooled_fund_opt_in",
+      "name": "Pooled Fund Opt-In",
+      "capitalFlowType": "Private Impact Investment",
       "investmentStrategy": null,
       "description": null,
-      "capitalFlowIds": []
+      "capitalFlowIds": [
+        "flow_208",
+        "flow_158",
+        "flow_94"
+      ]
     },
     {
       "id": "inst_hffi",
@@ -39959,7 +40522,7 @@
       "investmentStrategy": null,
       "description": "CDFI Financial Education and Counseling Pilot Program\n",
       "capitalFlowIds": [
-        "flow_159"
+        "flow_166"
       ]
     },
     {
@@ -39969,14 +40532,16 @@
       "investmentStrategy": null,
       "description": null,
       "capitalFlowIds": [
-        "flow_36",
-        "flow_264",
-        "flow_49",
-        "flow_272",
-        "flow_18",
-        "flow_150",
-        "flow_194",
-        "flow_267"
+        "flow_38",
+        "flow_274",
+        "flow_53",
+        "flow_282",
+        "flow_20",
+        "flow_156",
+        "flow_201",
+        "flow_277",
+        "flow_139",
+        "flow_127"
       ]
     },
     {
@@ -39994,48 +40559,48 @@
       "investmentStrategy": null,
       "description": "CDFI New Markets Tax Credit Award\n",
       "capitalFlowIds": [
-        "flow_238",
-        "flow_172",
-        "flow_156",
-        "flow_257",
-        "flow_213",
-        "flow_258",
-        "flow_255",
-        "flow_171",
-        "flow_83",
-        "flow_50",
-        "flow_136",
-        "flow_43",
-        "flow_66",
-        "flow_160",
-        "flow_26",
-        "flow_48",
-        "flow_287",
-        "flow_21",
-        "flow_79",
-        "flow_140",
-        "flow_58",
-        "flow_127",
-        "flow_147",
-        "flow_239",
-        "flow_32",
-        "flow_55",
-        "flow_234",
-        "flow_212",
-        "flow_63",
-        "flow_262",
-        "flow_68",
-        "flow_153",
-        "flow_118",
-        "flow_108",
-        "flow_183",
-        "flow_158",
-        "flow_102",
-        "flow_115",
-        "flow_89",
+        "flow_246",
+        "flow_179",
+        "flow_163",
+        "flow_267",
         "flow_221",
-        "flow_157",
-        "flow_280"
+        "flow_268",
+        "flow_265",
+        "flow_178",
+        "flow_87",
+        "flow_54",
+        "flow_142",
+        "flow_47",
+        "flow_70",
+        "flow_167",
+        "flow_28",
+        "flow_52",
+        "flow_298",
+        "flow_23",
+        "flow_83",
+        "flow_146",
+        "flow_62",
+        "flow_132",
+        "flow_153",
+        "flow_247",
+        "flow_34",
+        "flow_59",
+        "flow_242",
+        "flow_220",
+        "flow_67",
+        "flow_272",
+        "flow_72",
+        "flow_160",
+        "flow_123",
+        "flow_113",
+        "flow_190",
+        "flow_165",
+        "flow_107",
+        "flow_120",
+        "flow_93",
+        "flow_229",
+        "flow_164",
+        "flow_291"
       ]
     },
     {
@@ -40045,9 +40610,12 @@
       "investmentStrategy": null,
       "description": null,
       "capitalFlowIds": [
-        "flow_35",
-        "flow_41",
-        "flow_23"
+        "flow_37",
+        "flow_44",
+        "flow_25",
+        "flow_286",
+        "flow_42",
+        "flow_250"
       ]
     },
     {
@@ -40057,7 +40625,7 @@
       "investmentStrategy": null,
       "description": "Disability Funds Financial Assistance \n",
       "capitalFlowIds": [
-        "flow_166"
+        "flow_173"
       ]
     },
     {
@@ -40067,38 +40635,41 @@
       "investmentStrategy": null,
       "description": null,
       "capitalFlowIds": [
-        "flow_235",
-        "flow_285",
-        "flow_190",
-        "flow_15",
-        "flow_121",
-        "flow_246",
-        "flow_101",
-        "flow_82",
-        "flow_187",
-        "flow_88",
-        "flow_253",
-        "flow_125",
-        "flow_97",
-        "flow_188",
-        "flow_117",
-        "flow_134",
-        "flow_283",
-        "flow_165",
-        "flow_226",
-        "flow_40",
-        "flow_175",
-        "flow_107",
-        "flow_266",
+        "flow_243",
+        "flow_296",
+        "flow_197",
+        "flow_17",
+        "flow_126",
+        "flow_255",
         "flow_106",
-        "flow_74",
+        "flow_86",
+        "flow_194",
+        "flow_92",
+        "flow_263",
+        "flow_130",
+        "flow_102",
+        "flow_195",
+        "flow_122",
+        "flow_140",
+        "flow_294",
+        "flow_172",
+        "flow_234",
+        "flow_43",
+        "flow_182",
+        "flow_112",
+        "flow_276",
         "flow_111",
         "flow_78",
-        "flow_169",
-        "flow_19",
+        "flow_116",
+        "flow_82",
+        "flow_176",
+        "flow_21",
         "flow_4",
-        "flow_218",
-        "flow_244"
+        "flow_226",
+        "flow_253",
+        "flow_136",
+        "flow_258",
+        "flow_15"
       ]
     },
     {
@@ -40108,19 +40679,19 @@
       "investmentStrategy": null,
       "description": "CDFI Equitable Recovery Program Award\n",
       "capitalFlowIds": [
-        "flow_54",
-        "flow_252",
-        "flow_120",
-        "flow_282",
-        "flow_163",
-        "flow_174",
-        "flow_129",
+        "flow_58",
+        "flow_262",
+        "flow_125",
+        "flow_293",
+        "flow_170",
+        "flow_181",
+        "flow_134",
         "flow_10",
-        "flow_38",
-        "flow_176",
-        "flow_104",
-        "flow_216",
-        "flow_208"
+        "flow_40",
+        "flow_183",
+        "flow_109",
+        "flow_224",
+        "flow_216"
       ]
     },
     {
@@ -40138,21 +40709,21 @@
       "investmentStrategy": null,
       "description": "CDFI Rapid Response Program Award\n",
       "capitalFlowIds": [
-        "flow_167",
-        "flow_124",
-        "flow_25",
-        "flow_259",
-        "flow_231",
-        "flow_69",
-        "flow_151",
+        "flow_174",
+        "flow_129",
+        "flow_27",
+        "flow_269",
+        "flow_239",
+        "flow_73",
+        "flow_157",
         "flow_13",
         "flow_3",
-        "flow_201",
-        "flow_223",
-        "flow_269",
+        "flow_209",
+        "flow_231",
+        "flow_279",
         "flow_8",
-        "flow_179",
-        "flow_39"
+        "flow_186",
+        "flow_41"
       ]
     },
     {
@@ -40162,24 +40733,34 @@
       "investmentStrategy": null,
       "description": "CDFI Technical Assistance Award\n",
       "capitalFlowIds": [
-        "flow_114",
-        "flow_164",
-        "flow_170",
-        "flow_286",
-        "flow_284",
-        "flow_222",
-        "flow_189",
-        "flow_14",
-        "flow_185",
-        "flow_85",
-        "flow_182",
-        "flow_65",
-        "flow_261",
-        "flow_70",
         "flow_119",
-        "flow_204",
-        "flow_186",
-        "flow_53"
+        "flow_171",
+        "flow_177",
+        "flow_297",
+        "flow_295",
+        "flow_230",
+        "flow_196",
+        "flow_16",
+        "flow_192",
+        "flow_89",
+        "flow_189",
+        "flow_69",
+        "flow_271",
+        "flow_74",
+        "flow_124",
+        "flow_212",
+        "flow_193",
+        "flow_57"
+      ]
+    },
+    {
+      "id": "inst_unfunded_guarantee",
+      "name": "Unfunded Guarantee",
+      "capitalFlowType": "Private Impact Investment",
+      "investmentStrategy": null,
+      "description": null,
+      "capitalFlowIds": [
+        "flow_46"
       ]
     }
   ],
@@ -41193,7 +41774,8 @@
       "cviNationalPercentile": 53,
       "organizationIds": [
         "org_thrive_community_lending",
-        "org_refuge_coffee_company"
+        "org_refuge_coffee_company",
+        "org_georgia_head_start_association_inc"
       ]
     },
     {
@@ -43951,6 +44533,29 @@
       "cviCCExtremeEvents": 0.322653032,
       "cviNationalPercentile": 81,
       "organizationIds": []
+    },
+    {
+      "id": "loc_columbia_md",
+      "cityName": "Columbia",
+      "stateName": "Maryland",
+      "stateId": "MD",
+      "countyName": "Howard",
+      "countryName": "United States",
+      "lat": 39.212,
+      "lng": -76.866,
+      "fipsCode": "24027601102",
+      "cviToxPi": null,
+      "cviBaselineHealth": null,
+      "cviBaselineSocialEconomic": null,
+      "cviBaselineInfrastructure": null,
+      "cviBaselineEnvironment": null,
+      "cviCCHealth": null,
+      "cviCCSocialEconomic": null,
+      "cviCCExtremeEvents": null,
+      "cviNationalPercentile": null,
+      "organizationIds": [
+        "org_enterprise_community_loan_fund"
+      ]
     },
     {
       "id": "loc_bethlehem_ga",
@@ -49787,6 +50392,29 @@
       "organizationIds": []
     },
     {
+      "id": "loc_san_jose_ca",
+      "cityName": "San Jose",
+      "stateName": "California",
+      "stateId": "CA",
+      "countyName": "Santa Clara",
+      "countryName": "United States",
+      "lat": 37.33736,
+      "lng": -121.89406,
+      "fipsCode": "060855001001",
+      "cviToxPi": null,
+      "cviBaselineHealth": null,
+      "cviBaselineSocialEconomic": null,
+      "cviBaselineInfrastructure": null,
+      "cviBaselineEnvironment": null,
+      "cviCCHealth": null,
+      "cviCCSocialEconomic": null,
+      "cviCCExtremeEvents": null,
+      "cviNationalPercentile": null,
+      "organizationIds": [
+        "org_accion_opportunity_fund"
+      ]
+    },
+    {
       "id": "loc_philadelphia_pa",
       "cityName": "Philadelphia",
       "stateName": "Pennsylvania",
@@ -55340,7 +55968,6 @@
       "cviCCExtremeEvents": 0.211670114,
       "cviNationalPercentile": 41,
       "organizationIds": [
-        "org_accion_opportunity_fund",
         "org_bank_of_america",
         "org_bank_of_america_foundation",
         "org_atlanta_ronald_mcdonald_house_charities",
@@ -55688,7 +56315,10 @@
         "org_legacy_community_housing_corporation",
         "org_georgia_micro_enterprise_network_inc",
         "org_galeo_latino_community_development_fund_inc",
-        "org_world_outreach_fund"
+        "org_world_outreach_fund",
+        "org_goatl_affordable_housing_fund",
+        "org_goatl_community_capacity_fund",
+        "org_goatl_community_guarantee_pool"
       ]
     },
     {
