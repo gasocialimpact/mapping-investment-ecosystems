@@ -43,12 +43,14 @@ const CATEGORIES: {
   {
     id: 'econ', title: 'Economic & Workforce', src: 'ACS 5-year (DP03, S2301, S2303)', icon: Briefcase,
     rows: [
-      { key: 'lfp', label: 'Labor force participation', fmt: 'pct', dir: 'up' },
+      // dir marks unambiguous wellbeing outcomes only; measures that describe a
+      // place (program participation, market prices, age structure) stay neutral.
+      { key: 'lfp', label: 'Labor force participation', fmt: 'pct' },
       { key: 'unemployment', label: 'Unemployment rate', fmt: 'pct', dir: 'down' },
       { key: 'underemployed_proxy', label: 'Working less than full-time, year-round¹', fmt: 'pct', dir: 'down' },
       { key: 'median_earnings', label: 'Median earnings (workers 16+)', fmt: 'usd', dir: 'up' },
       { key: 'ss_households', label: 'Households with Social Security income', fmt: 'pct' },
-      { key: 'ssi_households', label: 'Households with SSI (disability) income', fmt: 'pct', dir: 'down' },
+      { key: 'ssi_households', label: 'Households with SSI (disability) income', fmt: 'pct' },
     ],
   },
   {
@@ -61,8 +63,8 @@ const CATEGORIES: {
       { key: 'mtg_burden_30', label: 'Mortgage-burdened (30%+ of income)', fmt: 'pct', dir: 'down' },
       { key: 'mtg_burden_50', label: 'Severely mortgage-burdened (50%+)', fmt: 'pct', dir: 'down' },
       { key: 'crowded', label: 'Crowded housing (>1 person per room)', fmt: 'pct', dir: 'down' },
-      { key: 'vacancy_rental', label: 'Rental vacancy rate', fmt: 'pct', dir: 'down' },
-      { key: 'vacancy_owner', label: 'Homeowner vacancy rate', fmt: 'pct', dir: 'down' },
+      { key: 'vacancy_rental', label: 'Rental vacancy rate', fmt: 'pct' },
+      { key: 'vacancy_owner', label: 'Homeowner vacancy rate', fmt: 'pct' },
     ],
   },
   {
@@ -72,12 +74,12 @@ const CATEGORIES: {
       { key: 'median_hh_income', label: 'Median household income', fmt: 'usd', dir: 'up' },
       { key: 'poverty', label: 'Poverty rate', fmt: 'pct', dir: 'down' },
       { key: 'median_home_value', label: 'Median home value (owner-occupied)', fmt: 'usd', section: 'Household wealth²' },
-      { key: 'asset_income_households', label: 'Households with interest, dividend or rental income', fmt: 'pct', dir: 'up' },
-      { key: 'retirement_income_households', label: 'Households with retirement income', fmt: 'pct', dir: 'up' },
-      { key: 'snap_households', label: 'Households receiving SNAP', fmt: 'pct', dir: 'down', section: 'Government assistance' },
-      { key: 'cash_assistance_households', label: 'Households with cash public assistance', fmt: 'pct', dir: 'down' },
-      { key: 'hcv_households', label: 'Renter households using housing choice vouchers', fmt: 'pct', dir: 'down', source: 'HUD 2024' },
-      { key: 'hud_assisted_households', label: 'Households in any HUD-subsidized housing', fmt: 'pct', dir: 'down', source: 'HUD 2024' },
+      { key: 'asset_income_households', label: 'Households with interest, dividend or rental income', fmt: 'pct' },
+      { key: 'retirement_income_households', label: 'Households with retirement income', fmt: 'pct' },
+      { key: 'snap_households', label: 'Households receiving SNAP', fmt: 'pct', section: 'Government assistance' },
+      { key: 'cash_assistance_households', label: 'Households with cash public assistance', fmt: 'pct' },
+      { key: 'hcv_households', label: 'Renter households using housing choice vouchers', fmt: 'pct', source: 'HUD 2024' },
+      { key: 'hud_assisted_households', label: 'Households in any HUD-subsidized housing', fmt: 'pct', source: 'HUD 2024' },
     ],
   },
   {
@@ -221,7 +223,7 @@ export function ToplineLocalData({ level, id, label, lifeExpectancy, stateLifeEx
           Rural vs. Urban
         </button>
         <span className="text-[11px] text-slate-400 ml-auto">
-          {lens === 'all' ? `${label} vs. Georgia (tick) — red = worse than Georgia`
+          {lens === 'all' ? `${label} vs. Georgia (tick) — red flags wellbeing measures trailing Georgia`
             : lens === 'ruralurban' ? 'Compared against Georgia’s urban and rural medians'
             : 'All indicators the Census publishes for this breakdown; a dash is not a zero'}
         </span>
