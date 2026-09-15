@@ -6,6 +6,7 @@ import { SEGMENT_STYLES, SEGMENT_ORDER } from '../../types';
 import { useDetail } from '../../context/DetailContext';
 import { usePlace } from '../../context/PlaceContext';
 import { CHORO_RAMP, metricValue, makeBins, colorFor, metricLabel, formatMetricValue, binLabels, isCviMetric } from '../../lib/choropleth';
+import { SnapshotButton } from '../SnapshotButton';
 
 const GEORGIA_CENTER: L.LatLngExpression = [32.7, -83.4];
 
@@ -37,6 +38,7 @@ interface Props {
 // mirroring the Community Data Explorer's tract view.
 export function ExploreMap({ organizations }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<L.Map | null>(null);
   const layerRef = useRef<L.LayerGroup | null>(null);
   const countyLayerRef = useRef<L.GeoJSON | null>(null);
@@ -67,7 +69,9 @@ export function ExploreMap({ organizations }: Props) {
     if (!containerRef.current || mapRef.current) return;
     const map = L.map(containerRef.current, { zoomControl: false }).setView(GEORGIA_CENTER, 7);
     L.control.zoom({ position: 'topright' }).addTo(map);
+    // crossOrigin lets the snapshot capture embed the tiles (OSM sends CORS).
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      crossOrigin: true,
       attribution: '&copy; OpenStreetMap',
       maxZoom: 19,
     }).addTo(map);
@@ -294,7 +298,7 @@ export function ExploreMap({ organizations }: Props) {
   const selectedTract = selectedGeoid ? tracts?.tracts.find((t) => t.geoid === selectedGeoid) : null;
 
   return (
-    <div className="bg-white rounded-lg border border-slate-200 p-5 shadow-sm h-full flex flex-col">
+    <div ref={cardRef} className="bg-white rounded-lg border border-slate-200 p-5 shadow-sm h-full flex flex-col">
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
           <h3 className="text-base font-bold text-slate-800">Climate Vulnerability Map</h3>
@@ -305,8 +309,13 @@ export function ExploreMap({ organizations }: Props) {
           </p>
         </div>
         <div className="flex flex-col items-end gap-2">
-          <button
-            onClick={() => setShowOrgs((v) => !v)}
+          <div className="flex items-center gap-1.5">
+            <SnapshotButton
+              target={cardRef}
+              label={() => (selectedCounty ? `${selectedCounty.county} map` : selectedTract ? `${selectedTract.name} map` : 'Georgia CVI map')}
+            />
+            <button
+              onClick={() => setShowOrgs((v) => !v)}
             className={`inline-flex items-center gap-1.5 text-xs font-semibold rounded-lg border px-3 py-1.5 transition-colors ${
               showOrgs ? 'bg-white text-slate-600 border-slate-200 hover:border-slate-300' : 'bg-slate-100 text-slate-400 border-slate-200 hover:text-slate-600'
             }`}
@@ -314,7 +323,8 @@ export function ExploreMap({ organizations }: Props) {
           >
             {showOrgs ? <Eye size={13} /> : <EyeOff size={13} />}
             {showOrgs ? 'Hide' : 'Show'} organization pins
-          </button>
+            </button>
+          </div>
           <div className="inline-flex border border-slate-200 rounded-lg overflow-hidden">
             {CVI_SEGMENTS.map((s) => (
               <button

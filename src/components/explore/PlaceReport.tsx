@@ -11,6 +11,7 @@ import { pctileDisplay } from '../../lib/choropleth';
 import { EcosystemLayers } from './EcosystemLayers';
 import { CountyInvestmentTrend, TractInvestmentTrend } from '../capital/PlaceInvestmentTrend';
 import { SnapshotCard } from '../SnapshotButton';
+import { SavePdfButton } from '../SavePdfButton';
 
 // Category chip colors, consistent with the CVI meters used elsewhere.
 const DRIVER_CATEGORY_COLORS: Record<string, string> = {
@@ -132,6 +133,7 @@ function CountyReport() {
             {label}
           </button>
         ))}
+        <span className="ml-auto"><SavePdfButton bare /></span>
       </div>
 
       {view === 'topline' && (
@@ -447,6 +449,7 @@ function TractReport() {
             {lbl}
           </button>
         ))}
+        <span className="ml-auto"><SavePdfButton bare /></span>
       </div>
 
       {view === 'topline' && (

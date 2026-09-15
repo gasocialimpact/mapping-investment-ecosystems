@@ -114,7 +114,8 @@ function Dashboard() {
             flow ? '' : 'h-full overflow-y-scroll'
           }`}
         >
-          <SavePdfButton />
+          {/* On Explore the button lives in the place-report header instead. */}
+          {activeTab !== 'explore' && <SavePdfButton />}
           {activeTab === 'explore' && <ExploreTab />}
           {activeTab === 'capital' && <CapitalTab />}
           {activeTab === 'framing' && <FramingTab />}

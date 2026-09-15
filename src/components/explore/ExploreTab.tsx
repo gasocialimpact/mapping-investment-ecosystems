@@ -46,7 +46,7 @@ export function ExploreTab() {
   );
 
   return (
-    <div className="pb-10">
+    <div className="pt-2 pb-10">
       {/* Stat tiles */}
       <div className="grid grid-cols-2 lg:grid-cols-4 pdf:grid-cols-4 gap-4 mt-6">
         <StatTile value="159" label="Counties" bg="bg-brand-green-soft" fg="text-[#17632e]" />
