@@ -116,7 +116,7 @@ export function OrgDirectory({ orgs }: { orgs: Organization[] }) {
   const segColor = (o: Organization) => V2_SEGMENTS.find((s) => s.data === o.segment)?.color ?? '#94a3b8';
 
   return (
-    <div className="grid gap-5 lg:grid-cols-[300px_1fr] items-start">
+    <div className="grid gap-5 lg:grid-cols-[300px_1fr] pdf:grid-cols-[300px_1fr] items-start">
       {/* Left: organization type cards */}
       <aside className="bg-white rounded-lg border border-slate-200 shadow-sm p-3 space-y-4 lg:sticky lg:top-4 lg:max-h-[calc(100vh-2rem)] lg:overflow-y-auto">
         <button

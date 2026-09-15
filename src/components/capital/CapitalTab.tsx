@@ -81,7 +81,7 @@ function Card({ title, sub, children, note, span = 'half' }: {
   children: React.ReactNode;
 }) {
   return (
-    <div className={span === 'full' ? 'xl:col-span-6' : 'xl:col-span-3'}>
+    <div className={span === 'full' ? 'xl:col-span-6 pdf:col-span-6' : 'xl:col-span-3 pdf:col-span-3'}>
       <SnapshotCard title={title} sub={sub && <span className="block max-w-3xl">{sub}</span>} note={note}>
         <div className="mt-3">{children}</div>
       </SnapshotCard>
@@ -129,7 +129,7 @@ function thinYearsNote(rows: { year: number; programs_reporting: number }[]): st
 
 function SectionHeading({ children, hint }: { children: React.ReactNode; hint?: string }) {
   return (
-    <div className="xl:col-span-6 flex items-baseline gap-3 flex-wrap mt-2 first:mt-0">
+    <div className="xl:col-span-6 pdf:col-span-6 flex items-baseline gap-3 flex-wrap mt-2 first:mt-0">
       <h2 className="text-sm font-bold uppercase tracking-widest text-slate-500">{children}</h2>
       {hint && <span className="text-xs text-slate-400">{hint}</span>}
     </div>
@@ -197,7 +197,7 @@ function StatewideView({ tables }: { tables: CapitalTables }) {
   const scopeLabel = scope === 'federal_only' ? 'federal programs only (CRA excluded)' : 'all programs including CRA';
 
   return (
-    <div className="grid grid-cols-1 xl:grid-cols-6 gap-5 mt-5">
+    <div className="grid grid-cols-1 xl:grid-cols-6 pdf:grid-cols-6 gap-5 mt-5">
       <SectionHeading hint={`Totals by program, ${years[0]}\u2013${years[years.length - 1]}`}>How much moved</SectionHeading>
 
       <Card
@@ -444,7 +444,7 @@ function CountyView({ tables, fips, name }: { tables: CapitalTables; fips: strin
         <h2 className="text-xl font-bold text-slate-800">{label} County, {years[0]}–{years[years.length - 1]}</h2>
         <span className="text-sm text-slate-500">{fmtDollars(totalAll)} across all programs</span>
       </div>
-      <div className="grid grid-cols-1 xl:grid-cols-6 gap-5 mt-4">
+      <div className="grid grid-cols-1 xl:grid-cols-6 pdf:grid-cols-6 gap-5 mt-4">
         <Card title="All program dollars by year" sub="Every program including CRA small-business lending. Hover a point for how broadly the dollars spread.">
           <LineChart years={years} series={trendSeries} ticks={niceTicks(maxTrend)} format={fmtDollars} />
           <DataTable

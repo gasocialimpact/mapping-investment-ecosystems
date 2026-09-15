@@ -138,7 +138,7 @@ function CountyReport() {
       ) : (
       <>
       {/* ~65/35 split: people & investment on the left, CVI on the right */}
-      <div className="grid grid-cols-1 lg:grid-cols-[1.85fr_1fr] gap-5 mt-5 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-[1.85fr_1fr] pdf:grid-cols-[1.85fr_1fr] gap-5 mt-5 items-start">
         <div className="space-y-5">
           {/* Populations at risk */}
           <ReportCard title="Populations at Risk" sub={`County · ${demo.benchmarkName} · U.S. comparison.`}>
@@ -347,7 +347,7 @@ function TractReport() {
         )}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-[1.85fr_1fr] gap-5 mt-5 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-[1.85fr_1fr] pdf:grid-cols-[1.85fr_1fr] gap-5 mt-5 items-start">
         {/* Populations at risk (tract) */}
         <ReportCard title="Populations at Risk" sub={`Tract · ${par.stateName} · U.S. comparison.`}>
           <table className="w-full text-[13px] mt-2">

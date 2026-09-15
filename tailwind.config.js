@@ -1,3 +1,5 @@
+import plugin from 'tailwindcss/plugin';
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
@@ -19,5 +21,13 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    // `pdf:` applies while a single-page PDF export is in progress
+    // (body.pdf-fixed). Responsive lg:/xl: classes are viewport media
+    // queries, which don't match during print when the window or embed
+    // iframe is narrow — pdf: variants force the wide layout regardless.
+    plugin(({ addVariant }) => {
+      addVariant('pdf', 'body.pdf-fixed &');
+    }),
+  ],
 };

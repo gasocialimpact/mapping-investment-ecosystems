@@ -219,7 +219,7 @@ export function FramingTab() {
 
       {/* Cards for the shown segment. With a selection open, the type cards
           and the records panel split the screen instead of stacking. */}
-      <div className={selection ? 'grid gap-5 items-start xl:grid-cols-2' : ''}>
+      <div className={selection ? 'grid gap-5 items-start xl:grid-cols-2 pdf:grid-cols-2' : ''}>
       <div className="space-y-6 min-w-0">
         {V2_SEGMENTS.filter((s) => s.key === shownSeg).map((s) => {
           const cards = visibleCards.filter((c) => c.seg === s.key);
@@ -252,7 +252,7 @@ export function FramingTab() {
                 )}
               </div>
 
-              <div className={`grid gap-3 grid-cols-1 sm:grid-cols-2 ${selection ? '' : 'lg:grid-cols-3 xl:grid-cols-4'}`}>
+              <div className={`grid gap-3 grid-cols-1 sm:grid-cols-2 ${selection ? 'pdf:grid-cols-2' : 'lg:grid-cols-3 xl:grid-cols-4 pdf:grid-cols-4'}`}>
                 {cards.map((card) => {
                   const list = byCard.get(card.id) ?? [];
                   const isSel = selection?.kind === 'card' && selection.card.id === card.id;
@@ -302,7 +302,7 @@ export function FramingTab() {
       </div>
 
       {selection && (
-        <div className="min-w-0 xl:sticky xl:top-4 xl:max-h-[calc(100vh-2rem)] xl:overflow-y-auto">
+        <div className="min-w-0 xl:sticky xl:top-4 xl:max-h-[calc(100vh-2rem)] xl:overflow-y-auto print:static print:max-h-none print:overflow-visible">
           <RecordsPanel
             key={selTitle}
             title={selTitle}

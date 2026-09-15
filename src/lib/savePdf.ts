@@ -22,16 +22,21 @@ function printWithPageSize(width: number, height: number, bodyClass: string) {
 }
 
 // Save the current tab as one PDF page at a fixed 1552px layout width.
-export function saveAppAsPdf() {
+export async function saveAppAsPdf() {
   const el = document.querySelector('.app-scroll') as HTMLElement | null;
   if (!el) {
     window.print();
     return;
   }
   // Apply the fixed export width first so the height measurement matches the
-  // printed layout (the pdf-fixed rules also apply on screen while set).
+  // printed layout. The pdf-fixed class also switches the pdf: layout
+  // variants on (grids that are viewport media queries on screen), so the
+  // export keeps its columns even from a narrow window or embed iframe.
   document.body.classList.add('pdf-fixed');
-  void el.offsetHeight; // force reflow at the export width
+  // Let ResizeObserver-driven charts re-render at the export widths before
+  // measuring — two frames for the observers, then a beat for React.
+  await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+  await new Promise((r) => setTimeout(r, 300));
   const height = el.scrollHeight;
   printWithPageSize(APP_PDF_WIDTH, height, 'pdf-fixed');
 }

@@ -48,7 +48,7 @@ export function ExploreTab() {
   return (
     <div className="pb-10">
       {/* Stat tiles */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 pdf:grid-cols-4 gap-4 mt-6">
         <StatTile value="159" label="Counties" bg="bg-brand-green-soft" fg="text-[#17632e]" />
         <StatTile value={stats.medianCvi != null ? stats.medianCvi.toFixed(2) : '—'} label="Median overall CVI" bg="bg-brand-green-soft" fg="text-[#17632e]" />
         <StatTile value={String(stats.orgCount)} label="Organizations mapped" bg="bg-brand-indigo-soft" fg="text-brand-indigo" />
@@ -98,7 +98,7 @@ export function ExploreTab() {
       </div>
 
       {/* Map + sidebar — the map card stretches to match the sidebar height */}
-      <div className="grid grid-cols-1 lg:grid-cols-[1.55fr_1fr] gap-5 mt-5">
+      <div className="grid grid-cols-1 lg:grid-cols-[1.55fr_1fr] pdf:grid-cols-[1.55fr_1fr] gap-5 mt-5">
         <ExploreMap organizations={data?.organizations ?? []} />
         <div className="space-y-5">
           <HighLowCard />

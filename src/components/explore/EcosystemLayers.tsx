@@ -32,7 +32,7 @@ export function OrgGrid({ orgs }: { orgs: Organization[] }) {
   const ids = useMemo(() => orgs.map((o) => o.id), [orgs]);
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 pdf:grid-cols-2 gap-2">
         {visible.map((o) => (
           <button
             key={o.id}
