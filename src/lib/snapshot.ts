@@ -62,13 +62,20 @@ function isHidden(node: Node): boolean {
 }
 
 // scrollHeight covers content clipped by a scroll container but omits the
-// borders, and offsetHeight is the other way round. Take whichever is taller
-// so nothing is cropped either way.
-function fullHeight(node: HTMLElement): number {
+// borders, and offsetHeight is the other way round. Both are ROUNDED integers,
+// so a card whose true border-box is fractional (grid and flex tracks produce
+// e.g. 599.5px all the time) loses its last sliver — which is exactly where
+// the 1px border lives. Measure the true rect too, round everything UP, and
+// keep a pixel of slack; the background fill makes the slack invisible.
+function captureSize(node: HTMLElement): { width: number; height: number } {
   const style = getComputedStyle(node);
   const borders =
     (parseFloat(style.borderTopWidth) || 0) + (parseFloat(style.borderBottomWidth) || 0);
-  return Math.ceil(Math.max(node.scrollHeight + borders, node.offsetHeight));
+  const rect = node.getBoundingClientRect();
+  return {
+    width: Math.ceil(rect.width) + 1,
+    height: Math.ceil(Math.max(node.scrollHeight + borders, node.offsetHeight, rect.height)) + 1,
+  };
 }
 
 // html-to-image finishes its canvas step inside a requestAnimationFrame, which
@@ -103,13 +110,18 @@ function withTimeout<T>(work: Promise<T>, ms: number, message: string): Promise<
 }
 
 async function capture(node: HTMLElement, fontEmbedCSS: string): Promise<Blob | null> {
+  const { width, height } = captureSize(node);
   return toBlob(node, {
     pixelRatio: PIXEL_RATIO,
     backgroundColor: BACKGROUND,
     // Styles land on the clone, not the live node, so nothing flickers on
-    // screen. Un-clipping lets a scrolled panel capture its whole content.
-    style: { maxHeight: 'none', overflow: 'visible' },
-    height: fullHeight(node),
+    // screen. Un-clipping lets a scrolled panel capture its whole content;
+    // zeroing the margin matters because a space-y stack gives cards a real
+    // margin-top, which would shift the clone down inside the frame and push
+    // its bottom border off the canvas.
+    style: { maxHeight: 'none', overflow: 'visible', margin: '0' },
+    width,
+    height,
     filter: (n) => !isHidden(n),
     fontEmbedCSS,
   });
