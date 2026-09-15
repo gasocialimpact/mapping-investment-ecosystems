@@ -16,10 +16,11 @@ type Fmt = 'pct' | 'usd' | 'yrs';
 // Which direction is "better" — figures worse than the GA benchmark show red.
 type Dir = 'up' | 'down';
 
-const LENSES: [Lens, string][] = [
+// Everything but Rural/Urban lives in the filter dropdown; Rural/Urban keeps
+// its own toggle button since it compares places rather than re-cutting them.
+const DROPDOWN_LENSES: [Exclude<Lens, 'ruralurban'>, string][] = [
   ['all', 'All residents'], ['race', 'Race & Ethnicity'], ['income', 'Income Bracket'],
-  ['gender', 'Gender'], ['age', 'Age Group'], ['nativity', 'Nativity & Citizenship'],
-  ['ruralurban', 'Rural / Urban'],
+  ['gender', 'Sex'], ['age', 'Age Group'], ['nativity', 'Nativity & Citizenship'],
 ];
 
 const CAT_COLORS = { econ: '#4750a2', housing: '#279a49', income: '#d4a72c', health: '#53c3c2' };
@@ -91,18 +92,28 @@ const CATEGORIES: {
   },
 ];
 
-// Metrics each grouped lens can re-cut.
+// Metrics each grouped lens can re-cut — the full set the ACS publishes for
+// that breakdown below the state level (which is why the lists differ: e.g.
+// rent burden and home value exist by race nowhere below the state).
 const LENS_METRICS: Record<'race' | 'gender' | 'age' | 'nativity', { key: string; label: string; fmt: Fmt }[]> = {
   race: [
     { key: 'median_hh_income', label: 'Median household income', fmt: 'usd' },
+    { key: 'poverty', label: 'Poverty rate', fmt: 'pct' },
+    { key: 'lfp', label: 'Labor force participation', fmt: 'pct' },
     { key: 'unemployment', label: 'Unemployment rate', fmt: 'pct' },
     { key: 'ownership', label: 'Homeownership rate', fmt: 'pct' },
+    { key: 'snap_households', label: 'Households receiving SNAP', fmt: 'pct' },
+    { key: 'uninsured', label: 'Uninsured', fmt: 'pct' },
+    { key: 'disability', label: 'Living with a disability', fmt: 'pct' },
   ],
   gender: [
     { key: 'median_earnings', label: 'Median earnings', fmt: 'usd' },
     { key: 'lfp', label: 'Labor force participation', fmt: 'pct' },
     { key: 'unemployment', label: 'Unemployment rate', fmt: 'pct' },
     { key: 'underemployed_proxy', label: 'Working less than full-time, year-round¹', fmt: 'pct' },
+    { key: 'poverty', label: 'Poverty rate', fmt: 'pct' },
+    { key: 'uninsured', label: 'Uninsured', fmt: 'pct' },
+    { key: 'disability', label: 'Living with a disability', fmt: 'pct' },
   ],
   age: [
     { key: 'median_hh_income', label: 'Median household income (age of householder)', fmt: 'usd' },
@@ -113,7 +124,9 @@ const LENS_METRICS: Record<'race' | 'gender' | 'age' | 'nativity', { key: string
   nativity: [
     { key: 'median_hh_income', label: 'Median household income', fmt: 'usd' },
     { key: 'poverty', label: 'Poverty rate', fmt: 'pct' },
+    { key: 'unemployment', label: 'Unemployment rate', fmt: 'pct' },
     { key: 'ownership', label: 'Homeownership rate', fmt: 'pct' },
+    { key: 'snap_households', label: 'Households receiving SNAP', fmt: 'pct' },
   ],
 };
 
@@ -179,31 +192,38 @@ export function ToplineLocalData({ level, id, label, lifeExpectancy, stateLifeEx
 
   return (
     <div className="mt-5">
-      {/* Lens row */}
-      <div className="bg-white rounded-lg border border-slate-200 shadow-sm px-3 py-2.5 flex flex-wrap items-center gap-2 print:hidden">
-        <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 mr-1">View by</span>
-        {LENSES.map(([key, name]) => {
-          const disabled = key === 'nativity' && level === 'tract';
-          return (
-            <button
-              key={key}
-              onClick={() => !disabled && setLens(key)}
-              disabled={disabled}
-              title={disabled ? 'Nativity breakdowns are published at the county level only' : undefined}
-              className={`text-xs font-semibold rounded-full px-3.5 py-1.5 border transition-colors ${
-                lens === key ? 'bg-brand-green text-white border-brand-green'
-                : disabled ? 'bg-white text-slate-300 border-slate-100 cursor-not-allowed'
-                : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'
-              }`}
-            >
-              {name}
-            </button>
-          );
-        })}
+      {/* Lens row: filter dropdown + the Rural/Urban comparison toggle */}
+      <div className="bg-white rounded-lg border border-slate-200 shadow-sm px-3 py-2.5 flex flex-wrap items-center gap-2.5 print:hidden">
+        <label className="text-[10px] font-semibold uppercase tracking-wider text-slate-400" htmlFor="topline-lens">Filter by</label>
+        <select
+          id="topline-lens"
+          value={lens === 'ruralurban' ? '' : lens}
+          onChange={(e) => e.target.value && setLens(e.target.value as Lens)}
+          className="text-xs font-semibold border border-slate-200 rounded-md px-2.5 py-1.5 bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-green/40"
+        >
+          {lens === 'ruralurban' && <option value="" hidden>Choose a filter…</option>}
+          {DROPDOWN_LENSES.map(([key, name]) => {
+            const disabled = key === 'nativity' && level === 'tract';
+            return (
+              <option key={key} value={key} disabled={disabled}>
+                {name}{disabled ? ' (county level only)' : ''}
+              </option>
+            );
+          })}
+        </select>
+        <button
+          onClick={() => setLens(lens === 'ruralurban' ? 'all' : 'ruralurban')}
+          className={`text-xs font-semibold rounded-full px-3.5 py-1.5 border transition-colors ${
+            lens === 'ruralurban' ? 'bg-brand-green text-white border-brand-green'
+            : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'
+          }`}
+        >
+          Rural vs. Urban
+        </button>
         <span className="text-[11px] text-slate-400 ml-auto">
           {lens === 'all' ? `${label} vs. Georgia (tick) — red = worse than Georgia`
             : lens === 'ruralurban' ? 'Compared against Georgia’s urban and rural medians'
-            : 'Metrics the Census publishes for this breakdown; a dash is not a zero'}
+            : 'All indicators the Census publishes for this breakdown; a dash is not a zero'}
         </span>
       </div>
 
@@ -260,15 +280,28 @@ export function ToplineLocalData({ level, id, label, lifeExpectancy, stateLifeEx
 
       {lens === 'income' && (
         <div className="mt-4">
-          <SnapshotCard title="Household income distribution" sub={`Share of ${label} households by income bracket (ACS B19001), vs. Georgia (tick).`}>
-            <div className="space-y-3 mt-2 max-w-2xl">
-              {INCOME_GROUPS.map(([key, name]) => (
-                <MeterRow key={key} label={name} value={local.income_dist[key] ?? null} bench={state.income_dist[key] ?? null} fmt="pct" color={CAT_COLORS.income} />
-              ))}
+          <SnapshotCard title={`${label} by income bracket`} sub={`ACS B19001 and B25118 — ${label} vs. Georgia (tick).`}>
+            <div className="grid grid-cols-1 lg:grid-cols-2 pdf:grid-cols-2 gap-x-10 gap-y-5 mt-3">
+              <div>
+                <p className="text-[13px] font-bold text-slate-700 mb-2">Share of households in each bracket</p>
+                <div className="space-y-3">
+                  {INCOME_GROUPS.map(([key, name]) => (
+                    <MeterRow key={key} label={name} value={local.income_dist[key] ?? null} bench={state.income_dist[key] ?? null} fmt="pct" color={CAT_COLORS.income} />
+                  ))}
+                </div>
+              </div>
+              <div>
+                <p className="text-[13px] font-bold text-slate-700 mb-2">Homeownership rate within each bracket</p>
+                <div className="space-y-3">
+                  {INCOME_GROUPS.map(([key, name]) => (
+                    <MeterRow key={key} label={name} value={local.ownership_by_income?.[key] ?? null} bench={state.ownership_by_income?.[key] ?? null} fmt="pct" color={CAT_COLORS.income} />
+                  ))}
+                </div>
+              </div>
             </div>
             <p className="text-[11px] text-slate-400 mt-3 max-w-2xl">
               The ACS publishes most indicators for households overall rather than within each income
-              bracket, so this lens shows how households are distributed across brackets.
+              bracket — homeownership (tenure by income) is the exception it reports at this level.
             </p>
           </SnapshotCard>
         </div>

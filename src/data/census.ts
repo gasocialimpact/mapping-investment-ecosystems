@@ -34,6 +34,7 @@ export interface CensusMetrics {
   renter_households: number | null;
   urban_pct: number | null;
   income_dist: GroupValues;
+  ownership_by_income: GroupValues;
   uninsured: number | null;
   disability: number | null;
   checkup?: number | null;
@@ -77,7 +78,7 @@ export const NATIVITY_GROUPS: [string, string][] = [
 ];
 export const INCOME_GROUPS: [string, string][] = [
   ['under_25k', 'Under $25K'], ['k25_50', '$25K–$50K'], ['k50_100', '$50K–$100K'],
-  ['k100_200', '$100K–$200K'], ['k200_plus', '$200K+'],
+  ['k100_150', '$100K–$150K'], ['k150_plus', '$150K+'],
 ];
 
 let countiesPromise: Promise<CensusCounties> | null = null;

@@ -99,6 +99,15 @@ const DETAIL_B = [
   ...Array.from({ length: 11 }, (_, i) => `B25091_${String(i + 2).padStart(3, '0')}E`),
   ...Array.from({ length: 17 }, (_, i) => `B19001_${String(i + 1).padStart(3, '0')}E`),
 ];
+// SNAP receipt by race of householder + tenure by household income.
+const DETAIL_E = [
+  ...['B', 'D', 'G', 'H', 'I'].flatMap((r) => [`B22005${r}_001E`, `B22005${r}_002E`]),
+  ...Array.from({ length: 25 }, (_, i) => `B25118_${String(i + 1).padStart(3, '0')}E`),
+];
+// B25118 rows (owner 003–013 / renter 015–025) per income bracket.
+const TENURE_INCOME_ROWS = {
+  under_25k: [3, 4, 5, 6, 7], k25_50: [8, 9], k50_100: [10, 11], k100_150: [12], k150_plus: [13],
+};
 const PROFILE = [
   'DP03_0002PE', 'DP03_0009PE', 'DP03_0066PE', 'DP03_0070PE', 'DP03_0072PE', 'DP03_0074PE',
   'DP03_0092E', 'DP03_0099PE',
@@ -113,6 +122,17 @@ const SUBJECT = [
   ...Array.from({ length: 10 }, (_, i) => `S2301_C01_${String(i + 2).padStart(3, '0')}E`),
   ...Array.from({ length: 10 }, (_, i) => `S2301_C02_${String(i + 2).padStart(3, '0')}E`),
   ...Array.from({ length: 10 }, (_, i) => `S2301_C04_${String(i + 2).padStart(3, '0')}E`),
+];
+// Race and sex rows of the poverty / insurance / disability / LFP subject
+// tables (a second call — the API caps a request at 50 variables).
+const SUBJECT_B = [
+  ...Array.from({ length: 9 }, (_, i) => `S2301_C02_${String(i + 12).padStart(3, '0')}E`), // LFP by race
+  'S1701_C03_011E', 'S1701_C03_012E', // poverty by sex
+  'S1701_C03_014E', 'S1701_C03_016E', 'S1701_C03_019E', 'S1701_C03_020E', 'S1701_C03_021E', // poverty by race
+  'S2701_C05_014E', 'S2701_C05_015E', // uninsured by sex
+  'S2701_C05_017E', 'S2701_C05_019E', 'S2701_C05_022E', 'S2701_C05_023E', 'S2701_C05_024E', // uninsured by race
+  'S1810_C03_002E', 'S1810_C03_003E', // disability by sex
+  'S1810_C03_005E', 'S1810_C03_007E', 'S1810_C03_010E', 'S1810_C03_011E', 'S1810_C03_012E', // disability by race
 ];
 // Median household income by householder age + poverty status by age (B17001:
 // male below 004–016, female below 018–030, male above 033–045, female above
@@ -140,7 +160,7 @@ const S2301_RACE = {
 
 // --- Metric assembly --------------------------------------------------------
 
-function buildMetrics(a, b, p, s, c, d) {
+function buildMetrics(a, b, p, s, c, d, e) {
   const rentDenom = num(b.B25070_001E) != null && num(b.B25070_011E) != null ? num(b.B25070_001E) - num(b.B25070_011E) : null;
   const mtgDenom = num(b.B25091_002E) != null && num(b.B25091_012E) != null ? num(b.B25091_002E) - num(b.B25091_012E) : null;
   const inc = (keys) => share(sum(b, keys), num(b.B19001_001E));
@@ -211,13 +231,19 @@ function buildMetrics(a, b, p, s, c, d) {
     renter_households: num(a.B25003_003E),
     // 2020 Decennial urban share merges in after the ACS pass.
     urban_pct: null,
+    // Brackets aligned with B25118 so ownership can be cut the same way.
     income_dist: {
       under_25k: inc(['B19001_002E', 'B19001_003E', 'B19001_004E', 'B19001_005E']),
       k25_50: inc(['B19001_006E', 'B19001_007E', 'B19001_008E', 'B19001_009E', 'B19001_010E']),
       k50_100: inc(['B19001_011E', 'B19001_012E', 'B19001_013E']),
-      k100_200: inc(['B19001_014E', 'B19001_015E', 'B19001_016E']),
-      k200_plus: inc(['B19001_017E']),
+      k100_150: inc(['B19001_014E', 'B19001_015E']),
+      k150_plus: inc(['B19001_016E', 'B19001_017E']),
     },
+    ownership_by_income: Object.fromEntries(Object.entries(TENURE_INCOME_ROWS).map(([key, rows]) => {
+      const own = sum(e, rows.map((r) => `B25118_${String(r).padStart(3, '0')}E`));
+      const rent = sum(e, rows.map((r) => `B25118_${String(r + 12).padStart(3, '0')}E`));
+      return [key, own == null || rent == null ? null : share(own, own + rent)];
+    })),
     // Health & Wellbeing (uninsured/disability here; checkup & mental
     // distress merge in from CDC PLACES; life expectancy renders from the
     // tool's existing place data)
@@ -240,6 +266,29 @@ function buildMetrics(a, b, p, s, c, d) {
         hispanic: share(num(a.B25003I_002E), num(a.B25003I_001E)),
         two_plus: share(num(a.B25003G_002E), num(a.B25003G_001E)),
       },
+      lfp: {
+        white_nh: num(s.S2301_C02_020E), black: num(s.S2301_C02_013E), asian: num(s.S2301_C02_015E),
+        hispanic: num(s.S2301_C02_019E), two_plus: num(s.S2301_C02_018E),
+      },
+      poverty: {
+        white_nh: num(s.S1701_C03_021E), black: num(s.S1701_C03_014E), asian: num(s.S1701_C03_016E),
+        hispanic: num(s.S1701_C03_020E), two_plus: num(s.S1701_C03_019E),
+      },
+      uninsured: {
+        white_nh: num(s.S2701_C05_024E), black: num(s.S2701_C05_017E), asian: num(s.S2701_C05_019E),
+        hispanic: num(s.S2701_C05_023E), two_plus: num(s.S2701_C05_022E),
+      },
+      disability: {
+        white_nh: num(s.S1810_C03_011E), black: num(s.S1810_C03_005E), asian: num(s.S1810_C03_007E),
+        hispanic: num(s.S1810_C03_012E), two_plus: num(s.S1810_C03_010E),
+      },
+      snap_households: {
+        white_nh: share(num(e.B22005H_002E), num(e.B22005H_001E)),
+        black: share(num(e.B22005B_002E), num(e.B22005B_001E)),
+        asian: share(num(e.B22005D_002E), num(e.B22005D_001E)),
+        hispanic: share(num(e.B22005I_002E), num(e.B22005I_001E)),
+        two_plus: share(num(e.B22005G_002E), num(e.B22005G_001E)),
+      },
     },
     by_age: {
       median_hh_income: {
@@ -258,6 +307,9 @@ function buildMetrics(a, b, p, s, c, d) {
         male: num(s.S2303_C04_033E) == null ? null : r1(100 - num(s.S2303_C04_033E)),
         female: num(s.S2303_C06_033E) == null ? null : r1(100 - num(s.S2303_C06_033E)),
       },
+      poverty: { male: num(s.S1701_C03_011E), female: num(s.S1701_C03_012E) },
+      uninsured: { male: num(s.S2701_C05_014E), female: num(s.S2701_C05_015E) },
+      disability: { male: num(s.S1810_C03_002E), female: num(s.S1810_C03_003E) },
     },
   };
 }
@@ -277,6 +329,8 @@ async function nativity(geo) {
     median_hh_income: findRow('median household income'),
     poverty: findRow('below 100 percent'),
     ownership: findRow('owner-occupied housing units'),
+    unemployment: findRow('percent of civilian labor force'),
+    snap_households: findRow('food stamp/snap'),
   };
   const vars = Object.values(rows).flatMap((r) => ['C01', 'C02', 'C04'].map((c) => `S0501_${c}_${r}E`));
   const data = await acs('/subject', ['NAME', ...vars], geo);
@@ -326,18 +380,21 @@ async function places(level) {
 
 async function buildGeo(geo) {
   console.log(`Fetching ACS for ${geo}…`);
-  const [a, b, p, s, c, d] = [
+  const [a, b, p, s1, s2, c, d, e] = [
     await acs('', DETAIL_A, geo),
     await acs('', DETAIL_B, geo),
     await acs('/profile', PROFILE, geo),
     await acs('/subject', SUBJECT, geo),
+    await acs('/subject', SUBJECT_B, geo),
     await acs('', DETAIL_C, geo),
     await acs('', DETAIL_D, geo),
+    await acs('', DETAIL_E, geo),
   ];
   const out = new Map();
   for (const id of a.keys()) {
-    if (!b.has(id) || !p.has(id) || !s.has(id) || !c.has(id) || !d.has(id)) continue;
-    out.set(id, buildMetrics(a.get(id), b.get(id), p.get(id), s.get(id), c.get(id), d.get(id)));
+    if (!b.has(id) || !p.has(id) || !s1.has(id) || !s2.has(id) || !c.has(id) || !d.has(id) || !e.has(id)) continue;
+    const s = { ...s1.get(id), ...s2.get(id) };
+    out.set(id, buildMetrics(a.get(id), b.get(id), p.get(id), s, c.get(id), d.get(id), e.get(id)));
   }
   return out;
 }
