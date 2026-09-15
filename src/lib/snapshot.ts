@@ -135,7 +135,43 @@ async function renderPng(node: HTMLElement): Promise<Blob> {
     blob = await render();
   }
   if (!blob) throw new Error('The image came back empty.');
-  return blob;
+  return withDpi(blob);
+}
+
+// Canvas PNGs carry no physical-resolution metadata, so Word reads the 2×
+// render as a 96 DPI picture twice the intended size, overflows the page, and
+// visually crops it from the top (PowerPoint shrinks pasted images to fit;
+// Word does not). Stamping a pHYs chunk at 96 × PIXEL_RATIO DPI makes every
+// consumer size the image at the card's natural on-screen dimensions.
+async function withDpi(blob: Blob): Promise<Blob> {
+  try {
+    const buf = new Uint8Array(await blob.arrayBuffer());
+    // PNG signature (8 bytes) + IHDR chunk (4 len + 4 type + 13 data + 4 crc).
+    const IHDR_END = 33;
+    const isPng =
+      buf.length > IHDR_END &&
+      buf[0] === 0x89 && buf[1] === 0x50 && buf[2] === 0x4e && buf[3] === 0x47;
+    if (!isPng) return blob;
+
+    const ppm = Math.round((96 * PIXEL_RATIO) / 0.0254); // pixels per metre
+    const chunk = new Uint8Array(21); // 4 length + 4 "pHYs" + 9 data + 4 crc
+    const view = new DataView(chunk.buffer);
+    view.setUint32(0, 9);
+    chunk.set([0x70, 0x48, 0x59, 0x73], 4); // "pHYs"
+    view.setUint32(8, ppm);
+    view.setUint32(12, ppm);
+    chunk[16] = 1; // unit: metre
+    let crc = 0xffffffff;
+    for (let i = 4; i < 17; i++) {
+      crc ^= chunk[i];
+      for (let b = 0; b < 8; b++) crc = (crc >>> 1) ^ (0xedb88320 & -(crc & 1));
+    }
+    view.setUint32(17, (crc ^ 0xffffffff) >>> 0);
+
+    return new Blob([buf.slice(0, IHDR_END), chunk, buf.slice(IHDR_END)], { type: 'image/png' });
+  } catch {
+    return blob; // metadata is a nicety — never fail the capture over it
+  }
 }
 
 function withTimeout<T>(work: Promise<T>, ms: number, message: string): Promise<T> {
