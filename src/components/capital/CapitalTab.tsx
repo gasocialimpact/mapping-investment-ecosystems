@@ -12,6 +12,7 @@ import type { StackSeries, LineSeries } from './charts';
 import { SnapshotCard } from '../SnapshotButton';
 import { DataTable, pct, NO_DATA } from './DataTable';
 import type { TableRow } from './DataTable';
+import { CdfiStatewideSection, CdfiCountySection } from './CdfiLendingSection';
 
 type Scope = 'federal_only' | 'all_programs';
 
@@ -351,6 +352,8 @@ function StatewideView({ tables }: { tables: CapitalTables }) {
       >
         <CountyChangeTable tables={tables} />
       </Card>
+
+      <CdfiStatewideSection />
     </div>
   );
 }
@@ -485,6 +488,8 @@ function CountyView({ tables, fips, name }: { tables: CapitalTables; fips: strin
               </>
             : <p className="text-sm text-slate-400">No federal program dollars recorded in {label} County.</p>}
         </Card>
+
+        <CdfiCountySection fips={fips} name={name} />
       </div>
     </div>
   );
