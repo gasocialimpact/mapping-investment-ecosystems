@@ -1,5 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { ChevronRight } from 'lucide-react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useData } from '../../context/DataContext';
 import { usePlace } from '../../context/PlaceContext';
 import { useEmbed } from '../../context/EmbedContext';
@@ -15,7 +14,9 @@ export function ExploreTab() {
   const { data } = useData();
   const { place, scope, setScope, selectedFips, setSelectedFips, selectedGeoid, ensureTracts } = usePlace();
   const { scrollIntoView } = useEmbed();
-  const prevSelection = useRef<string | null>(null);
+  // Seeded with the initial (default DeKalb) selection so the page doesn't
+  // auto-scroll to the report on first load.
+  const prevSelection = useRef<string | null>(selectedGeoid ?? selectedFips);
 
   // Scroll to the report when a county or tract is newly selected. In flow
   // mode the host page owns the scrollbar, so this is a request rather than a
@@ -109,49 +110,11 @@ export function ExploreTab() {
       {/* Place report */}
       <PlaceReport />
 
-      {/* Context accordions */}
-      <div className="mt-10 bg-white rounded-xl border border-slate-200 p-4 space-y-2.5 shadow-sm">
-        <IntroAccordion summary="What is the Climate Vulnerability Index?">
-          The CVI (Lewis et al. 2023) combines 184 measures of community health, income, housing,
-          infrastructure, environment, and climate-related risk into one score for every U.S. county
-          and census tract. Higher scores mean greater vulnerability; percentiles rank each place
-          against all 3,143 U.S. counties.
-        </IntroAccordion>
-        <IntroAccordion summary="What is the Populations at Risk data?">
-          Demographic and economic-security indicators from the CDC/ATSDR Social Vulnerability Index
-          (ACS 2018–22 five-year estimates), benchmarked against Georgia and the United States, with
-          change since 2010–14 where available.
-        </IntroAccordion>
-        <IntroAccordion summary="Who is in the ecosystem map?">
-          {stats.orgCount} organizations — capital allocators, aggregators, enablers, and seekers —
-          plus {data?.capitalFlows.length ?? 0} tracked capital flows and{' '}
-          {data?.capitalInstruments.length ?? 0} instruments, synced nightly from the ecosystem
-          database and mapped to the places on this page. See Framing Our Ecosystem for how the
-          pieces fit together.
-        </IntroAccordion>
-      </div>
-
-      <p className="text-[11px] text-slate-400 mt-6 max-w-3xl">
+      <p className="text-[11px] text-slate-400 mt-10 max-w-3xl">
         Data: U.S. Climate Vulnerability Index (Lewis et al. 2023) · CDC/ATSDR SVI 2022 (ACS 5-year
         estimates) · Federal Reserve Bank of St. Louis Community Investment Explorer · Ecosystem
         database synced nightly from Airtable.
       </p>
-    </div>
-  );
-}
-
-function IntroAccordion({ summary, children }: { summary: string; children: React.ReactNode }) {
-  const [isOpen, setIsOpen] = useState(false);
-  return (
-    <div className="border border-slate-200 rounded-lg">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center gap-2.5 px-4 py-3 text-left text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors"
-      >
-        <ChevronRight size={14} className={`text-slate-400 transition-transform ${isOpen ? 'rotate-90' : ''}`} />
-        {summary}
-      </button>
-      {isOpen && <p className="px-4 pb-3.5 pl-[42px] text-[13px] text-slate-500 max-w-3xl">{children}</p>}
     </div>
   );
 }

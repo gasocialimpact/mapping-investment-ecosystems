@@ -9,7 +9,13 @@ import {
 } from '../data/frameworkData';
 import type { FrameworkNode, StrategyCategory, Strategy } from '../data/frameworkData';
 
-type SubView = 'glossary' | 'strategies';
+type SubView = 'glossary' | 'strategies' | 'sources';
+
+const SUBVIEW_LABELS: Record<SubView, string> = {
+  glossary: 'Definitions & Key Terms',
+  strategies: 'Investment Strategies',
+  sources: 'Data Sources',
+};
 
 export function FrameworkTab() {
   const [subView, setSubView] = useState<SubView>('glossary');
@@ -18,7 +24,7 @@ export function FrameworkTab() {
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-3 flex-wrap">
-        {(['glossary', 'strategies'] as SubView[]).map((v) => (
+        {(['glossary', 'strategies', 'sources'] as SubView[]).map((v) => (
           <button
             key={v}
             onClick={() => setSubView(v)}
@@ -28,11 +34,11 @@ export function FrameworkTab() {
                 : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'
             }`}
           >
-            {v === 'glossary' ? 'Glossary' : 'Investment Strategies'}
+            {SUBVIEW_LABELS[v]}
           </button>
         ))}
 
-        <div className="relative ml-auto min-w-[200px]">
+        {subView !== 'sources' && <div className="relative ml-auto min-w-[200px]">
           <Search size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400" />
           <input
             type="text"
@@ -46,11 +52,151 @@ export function FrameworkTab() {
               <X size={14} />
             </button>
           )}
-        </div>
+        </div>}
       </div>
 
       {subView === 'glossary' && <GlossaryView search={search} />}
       {subView === 'strategies' && <StrategiesView search={search} />}
+      {subView === 'sources' && <DataSourcesView />}
+    </div>
+  );
+}
+
+// --- Data Sources ------------------------------------------------------------
+
+const SOURCE_EXPLAINERS: { title: string; body: string; source?: { label: string; url?: string } }[] = [
+  {
+    title: 'What is the Population at Risk data?',
+    body: "The Population at Risk table, developed by Headwaters Economics, describes who actually lives in a county: the share of residents who are older or very young, living with a disability, earning low incomes, without health insurance, without a vehicle or home internet, and so on. These are underlying figures, and percentages come from the Census Bureau's American Community Survey and are compiled in the CDC/ATSDR Social Vulnerability Index (2018–2022). The change column shows how each share has moved over roughly the past decade (compared with the 2010–2014 survey window). Life expectancy and food insecurity come from the CVI's own source data.",
+    source: { label: 'Headwaters Economics, Populations at Risk (accessed June 7, 2026)', url: 'https://headwaterseconomics.org/tools/populations-at-risk/' },
+  },
+  {
+    title: 'What is the U.S. Climate Vulnerability Index?',
+    body: "The U.S. Climate Vulnerability Index (CVI) pulls together 184 measures of community health, income, housing, infrastructure, environment, and climate-related risks into one picture of how vulnerable each county is compared with every other county in the country. Scores run from 0 to 1 — a higher score means more of the conditions that make climate impacts harder to prepare for, withstand, and recover from. One number can't explain why a county is vulnerable, so each county report breaks the score into categories and lists the specific measures driving it up. The CVI was developed by researchers at Texas A&M University and the Environmental Defense Fund (Lewis et al., 2023).",
+    source: { label: 'The full neighborhood-level tool at climatevulnerabilityindex.org', url: 'https://www.climatevulnerabilityindex.org' },
+  },
+  {
+    title: 'What is ALICE data?',
+    body: 'ALICE stands for Asset Limited, Income Constrained, Employed — households that earn more than the Federal Poverty Level, but less than what it actually costs to get by where they live. United For ALICE (a United Way research program) prices a bare-bones "survival budget" for each county — housing, childcare, food, transportation, health care, and a basic phone plan — and counts the households below that line.',
+    source: { label: 'United For ALICE, 2026 Georgia data sheet (ACS-based; early years use 3-year ACS estimates)', url: 'https://www.unitedforalice.org/methodology' },
+  },
+  {
+    title: 'What is the Community Investment Explorer data?',
+    body: 'CIE includes a sample of community and economic development capital flows. Data were included in the tool because they met both of the following criteria: 1) the programs have an explicit or implicit objective of promoting community development and/or economic development, and 2) data are available by census tract. Tract-level data are important to understanding capital flows by income level because low- and moderate-income census tracts serve as a basis for the CRA.',
+    source: { label: 'Federal Reserve Bank of St. Louis, Community Investment Explorer (accessed September 3, 2026)', url: 'https://www.stlouisfed.org/community-development/data-tools/community-investment-explorer' },
+  },
+  {
+    title: 'Who is in the ecosystem map?',
+    body: 'The organizations, capital flows, and instruments shown throughout the tool — capital allocators, aggregators, enablers, and seekers — are synced nightly from the ecosystem database maintained by the Georgia Social Impact Collaborative, and mapped to the places on the Exploring Local Context tab. See Framing Our Ecosystem for how the pieces fit together.',
+  },
+];
+
+const SOURCE_DEFINITIONS: { term: string; def: string }[] = [
+  { term: 'Census tract', def: 'Small, relatively permanent statistical subdivisions of a county or equivalent entity, updated by local participants prior to each decennial census (every 10 years). They generally have a population of 1,200 to 8,000 with an optimum size of 4,000 people.' },
+  { term: 'Community Reinvestment Act (CRA)', def: 'A 1977 U.S. federal law that encourages financial institutions to help meet the credit needs of communities in which they operate, including low- and moderate-income neighborhoods.' },
+  { term: 'Core-based statistical area (CBSA)', def: 'Term that refers to metropolitan statistical areas and micropolitan statistical areas collectively.' },
+  { term: 'Low- and moderate-income (LMI)', def: 'Census tracts in which the median family income is below 80% of the area median income.' },
+  { term: 'Metropolitan statistical area (MSA)', def: 'Geographic area defined by the Office of Management and Budget that includes at least one urbanized area of 50,000 or more inhabitants.' },
+  { term: 'Micropolitan statistical area (micro area)', def: 'Geographic area defined by the Office of Management and Budget that includes at least one urban cluster of at least 10,000 but fewer than 50,000 inhabitants.' },
+  { term: 'Statewide rural', def: 'The portions of a state outside core-based statistical areas.' },
+];
+
+const SOURCE_CALCULATIONS: { term: string; def: string }[] = [
+  { term: 'Annual average in all tracts', def: 'Per-year average funding amount in all the census tracts of a given region over the five-year period (2018–22) in which data was collected and analyzed.' },
+  { term: 'Annual average in LMI tracts', def: 'Per-year average funding amount in LMI census tracts of a given region over the five-year period (2018–22) in which data was collected and analyzed.' },
+  { term: 'Funding-to-population ratio in LMI tracts', def: "Percentage of a region's total funding or investment that goes to LMI census tracts compared with the percentage of the region's overall population living in those same LMI census tracts." },
+  { term: 'Per capita annual average in all tracts', def: 'Per-year average funding amount per person for a given region.' },
+  { term: 'Per capita annual average in LMI tracts', def: "Per-year average funding amount per person living in a region's LMI census tracts." },
+  { term: 'Share of funding in LMI tracts', def: "Percentage of funding in a region's LMI census tracts divided by the total amount of funding a region received." },
+];
+
+const SOURCE_NOTES: string[] = [
+  'Amounts are adjusted for inflation (2022 dollars) using the Federal Reserve Bank of Minneapolis inflation calculator.',
+  'Community Reinvestment Act (CRA) small business lending captures the small business lending activity by banks and is technically not a government program; all other funding streams represent federal programs.',
+  'All data are based on individual transactions, with the exception of CRA small business lending data and a portion of the CDFI data, which are aggregated by census tract from the FFIEC.',
+  'Six states (Connecticut, Delaware, Hawaii, Massachusetts, New Jersey and Rhode Island) plus the District of Columbia do not have any census tracts located outside of a core-based statistical area, which is how rural portions of a state are defined in CIE.',
+  'The vast majority of data are based on transactions closed in a calendar year. However, for Historic Tax Credits and a portion of the Community Development Financial Institution (CDFI) dataset, data are only available for fiscal years. This results in an approximation of capital flows per calendar year, but it is not exact.',
+  'Low-Income Housing Tax Credits are based on the tax credit allocation amount.',
+  'CDFI Fund data combine data reported through the Transaction Level Report (TLR) and the Consumer Loan Report (CLR). They represent a sample of all CDFI lending and investing activity, as only CDFIs that receive a grant from the CDFI Fund are required to report their loans and investments on the TLR and CLR.',
+  'SBA 7(a) amounts are based on the guaranteed approval amount.',
+  'SBA 504 amounts are based on the gross approval amount because the guaranteed approval amount is not available.',
+];
+
+function DataSourcesView() {
+  const [expanded, setExpanded] = useState<Set<string>>(new Set(SOURCE_EXPLAINERS.map((e) => e.title)));
+
+  return (
+    <div className="space-y-3">
+      <div className="bg-white rounded-lg border border-slate-200 p-4 shadow-sm">
+        <div className="flex items-center gap-2 mb-2">
+          <BookOpen size={14} className="text-brand-indigo" />
+          <h3 className="text-sm font-semibold text-slate-700">Data Sources</h3>
+        </div>
+        <p className="text-xs text-slate-500">
+          Where the numbers throughout this tool come from, how they were built, and what to keep in
+          mind when reading them.
+        </p>
+      </div>
+
+      {SOURCE_EXPLAINERS.map((e) => (
+        <div key={e.title} className="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
+          <button
+            onClick={() => setExpanded((prev) => {
+              const next = new Set(prev);
+              next.has(e.title) ? next.delete(e.title) : next.add(e.title);
+              return next;
+            })}
+            className="w-full flex items-center justify-between px-4 py-3 hover:bg-slate-50 transition-colors"
+          >
+            <span className="text-sm font-semibold text-slate-700 text-left">{e.title}</span>
+            {expanded.has(e.title) ? <ChevronDown size={14} className="text-slate-400 shrink-0" /> : <ChevronRight size={14} className="text-slate-400 shrink-0" />}
+          </button>
+          {expanded.has(e.title) && (
+            <div className="border-t border-slate-100 px-4 py-3">
+              <p className="text-sm text-slate-600">{e.body}</p>
+              {e.source && (
+                <p className="text-xs text-slate-400 mt-2">
+                  Source:{' '}
+                  {e.source.url
+                    ? <a href={e.source.url} target="_blank" rel="noopener" className="text-blue-500 underline">{e.source.label}</a>
+                    : e.source.label}
+                </p>
+              )}
+            </div>
+          )}
+        </div>
+      ))}
+
+      <div className="bg-white rounded-lg border border-slate-200 shadow-sm p-4">
+        <h3 className="text-sm font-semibold text-slate-700 mb-3">Geography &amp; Program Definitions</h3>
+        <dl className="space-y-2.5">
+          {SOURCE_DEFINITIONS.map((d) => (
+            <div key={d.term}>
+              <dt className="text-sm font-semibold text-slate-800">{d.term}</dt>
+              <dd className="text-sm text-slate-600 mt-0.5">{d.def}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+
+      <div className="bg-white rounded-lg border border-slate-200 shadow-sm p-4">
+        <h3 className="text-sm font-semibold text-slate-700 mb-3">Calculations &amp; Notes</h3>
+        <dl className="space-y-2.5 mb-4">
+          {SOURCE_CALCULATIONS.map((d) => (
+            <div key={d.term}>
+              <dt className="text-sm font-semibold text-slate-800">{d.term}</dt>
+              <dd className="text-sm text-slate-600 mt-0.5">{d.def}</dd>
+            </div>
+          ))}
+        </dl>
+        <ul className="space-y-1.5">
+          {SOURCE_NOTES.map((n, i) => (
+            <li key={i} className="text-[13px] text-slate-500 flex gap-2">
+              <span className="text-slate-300 shrink-0 mt-0.5">•</span> {n}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

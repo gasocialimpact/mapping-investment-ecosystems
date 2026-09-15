@@ -150,7 +150,7 @@ export function EcosystemLayers({ title, orgs, flows, emptyNote }: Props) {
   if (orgs.length === 0 && flows.length === 0) {
     return (
       <div className="mt-6">
-        <h3 className="text-lg font-bold text-slate-800">{title}</h3>
+        {title && <h3 className="text-lg font-bold text-slate-800">{title}</h3>}
         {emptyNote && <p className="text-sm text-slate-400 mt-2">{emptyNote}</p>}
       </div>
     );
@@ -158,7 +158,7 @@ export function EcosystemLayers({ title, orgs, flows, emptyNote }: Props) {
 
   return (
     <div className="mt-6">
-      <h3 className="text-lg font-bold text-slate-800">{title}</h3>
+      {title && <h3 className="text-lg font-bold text-slate-800">{title}</h3>}
 
       {orgs.length > 0 && (
         <Layer accent="#4750a2" label="Organizations" count={`${orgs.length}`} defaultOpen>

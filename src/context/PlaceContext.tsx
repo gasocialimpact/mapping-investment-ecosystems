@@ -7,6 +7,9 @@ import { useData } from './DataContext';
 type TractStatus = 'idle' | 'loading' | 'ready' | 'error';
 export type PlaceScope = 'county' | 'tract';
 
+// DeKalb County — the report shown before any selection is made.
+export const DEFAULT_COUNTY_FIPS = '13089';
+
 interface PlaceContextValue {
   place: PlaceCountyData | null;
   countyByFips: Map<string, PlaceCounty>;
@@ -47,7 +50,8 @@ export function PlaceProvider({ children }: { children: ReactNode }) {
   const [place, setPlace] = useState<PlaceCountyData | null>(null);
   const [metric, setMetric] = useState<PlaceMetric>('cvi');
   const [scope, setScope] = useState<PlaceScope>('county');
-  const [selectedFips, setSelectedFips] = useState<string | null>(null);
+  // DeKalb County loads by default so the page opens with a worked report.
+  const [selectedFips, setSelectedFips] = useState<string | null>(DEFAULT_COUNTY_FIPS);
   const [selectedGeoid, setSelectedGeoid] = useState<string | null>(null);
   const [tracts, setTracts] = useState<PlaceTractData | null>(null);
   const [tractStatus, setTractStatus] = useState<TractStatus>('idle');

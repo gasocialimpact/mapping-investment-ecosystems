@@ -17,7 +17,7 @@ const TABS: { id: Tab; label: string; icon: typeof Map }[] = [
   { id: 'explore', label: 'Exploring Local Context', icon: Map },
   { id: 'framing', label: 'Framing Our Ecosystem', icon: Network },
   { id: 'capital', label: 'Tracking Capital Changes Over Time', icon: TrendingUp },
-  { id: 'glossary', label: 'Glossary & Key Terms', icon: BookOpen },
+  { id: 'glossary', label: 'Definitions, Key Terms & Sources', icon: BookOpen },
 ];
 
 export default function App() {

@@ -1,6 +1,8 @@
+import { useEffect, useState } from 'react';
 import { Building2, TrendingUp } from 'lucide-react';
 import { useData } from '../../context/DataContext';
 import { usePlace } from '../../context/PlaceContext';
+import { AliceTrend } from './AliceTrend';
 import type { Organization, CapitalFlow } from '../../types';
 import { formatCurrency } from '../../lib/format';
 import { pctileDisplay } from '../../lib/choropleth';
@@ -30,9 +32,14 @@ export function PlaceReport() {
   return scope === 'tract' ? <TractReport /> : <CountyReport />;
 }
 
+type CountyReportView = 'data' | 'ecosystem';
+
 function CountyReport() {
   const { data, maps } = useData();
   const { place, countyByFips, selectedFips, orgsByCountyFips } = usePlace();
+  const [view, setView] = useState<CountyReportView>('data');
+  // A fresh county starts back on Important Data.
+  useEffect(() => setView('data'), [selectedFips]);
 
   if (!place) return null;
   const county = selectedFips ? countyByFips.get(selectedFips) : null;
@@ -104,6 +111,32 @@ function CountyReport() {
         )}
       </div>
 
+      {/* Report sub-tabs */}
+      <div className="flex items-center gap-3 flex-wrap mt-4 print:hidden">
+        {([['data', 'Important Data'], ['ecosystem', `The Ecosystem in this Place${orgs.length ? ` (${orgs.length})` : ''}`]] as [CountyReportView, string][]).map(([v, label]) => (
+          <button
+            key={v}
+            onClick={() => setView(v)}
+            className={`text-sm font-medium px-3 py-1.5 rounded-md border transition-colors ${
+              view === v
+                ? 'bg-brand-indigo text-white border-brand-indigo'
+                : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+
+      {view === 'ecosystem' ? (
+        <EcosystemLayers
+          title=""
+          orgs={orgs}
+          flows={flows}
+          emptyNote={`No mapped ecosystem organizations in ${county.county} yet — a gap worth noting in itself.`}
+        />
+      ) : (
+      <>
       {/* ~65/35 split: people & investment on the left, CVI on the right */}
       <div className="grid grid-cols-1 lg:grid-cols-[1.85fr_1fr] gap-5 mt-5 items-start">
         <div className="space-y-5">
@@ -144,6 +177,9 @@ function CountyReport() {
             </table>
             <p className="text-[10px] text-slate-400 mt-2">Change: {demo.changeNote}.</p>
           </ReportCard>
+
+          {/* ALICE households over time */}
+          <AliceTrend fips={county.fips} countyLabel={`${county.county}`} />
 
           {/* Community investment */}
           {cieArea && (
@@ -236,13 +272,8 @@ function CountyReport() {
           </ReportCard>
         </div>
       </div>
-
-      <EcosystemLayers
-        title="The ecosystem in this place"
-        orgs={orgs}
-        flows={flows}
-        emptyNote={`No mapped ecosystem organizations in ${county.county} yet — a gap worth noting in itself.`}
-      />
+      </>
+      )}
     </section>
   );
 }
