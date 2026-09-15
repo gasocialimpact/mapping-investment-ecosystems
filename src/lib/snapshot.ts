@@ -84,6 +84,35 @@ function captureSize(node: HTMLElement): { width: number; height: number } {
 // anyway so the button reports a failure instead of staying disabled forever.
 const RENDER_TIMEOUT_MS = 15_000;
 
+// Safari and other non-Blink WebKit browsers routinely botch the FIRST
+// foreignObject paint — fonts missing, content shifted or cut at the top —
+// and settle only on a repeat draw.
+const WEBKIT =
+  typeof navigator !== 'undefined' &&
+  /AppleWebKit/.test(navigator.userAgent) &&
+  !/Chrome|Chromium|Edg\//.test(navigator.userAgent);
+
+// Every capture target is a bordered card, so a fully white top edge always
+// means a bad paint (shifted or half-drawn), never a real result.
+async function topEdgeBlank(blob: Blob): Promise<boolean> {
+  try {
+    const img = await createImageBitmap(blob);
+    const cv = document.createElement('canvas');
+    cv.width = img.width;
+    cv.height = Math.min(4, img.height);
+    const cx = cv.getContext('2d');
+    if (!cx) return false;
+    cx.drawImage(img, 0, 0);
+    const d = cx.getImageData(0, 0, cv.width, cv.height).data;
+    for (let i = 0; i < d.length; i += 4) {
+      if (d[i] < 250 || d[i + 1] < 250 || d[i + 2] < 250) return false;
+    }
+    return true;
+  } catch {
+    return false; // can't inspect — don't block the capture on it
+  }
+}
+
 async function renderPng(node: HTMLElement): Promise<Blob> {
   // Resolved before the render clock starts, so a slow font fetch does not eat
   // the drawing budget.
@@ -93,11 +122,18 @@ async function renderPng(node: HTMLElement): Promise<Blob> {
   // retryable failure than a broken image pasted into a deck unnoticed.
   if (!fontEmbedCSS) throw new Error('The typeface could not be loaded for the image.');
 
-  const blob = await withTimeout(
-    capture(node, fontEmbedCSS),
-    RENDER_TIMEOUT_MS,
-    'The image took too long to render.',
-  );
+  const render = () =>
+    withTimeout(capture(node, fontEmbedCSS), RENDER_TIMEOUT_MS, 'The image took too long to render.');
+
+  // Discarded warm-up pass so WebKit's first-paint bugs land on a throwaway.
+  if (WEBKIT) await render().catch(() => null);
+
+  let blob = await render();
+  // Re-render when the paint came back visibly wrong; two retries covers the
+  // stragglers without stalling the button on a genuine failure.
+  for (let i = 0; i < 2 && blob && (await topEdgeBlank(blob)); i++) {
+    blob = await render();
+  }
   if (!blob) throw new Error('The image came back empty.');
   return blob;
 }
