@@ -108,7 +108,8 @@ export function FrameworkDiagram({ activeSeg, liveSegs, counts = {}, onSelect }:
       >
         <rect x={40} y={y} width={1040} height={h} rx={10} fill="#f4f6fa" stroke={active ? s.color : '#dfe3ec'} strokeWidth={active ? 3 : 1.5} />
         <rect className="fw-shade" x={40} y={y} width={1040} height={h} rx={10} fill={s.color} fillOpacity={0.08} pointerEvents="none" />
-        <rect x={40} y={k === 'enab' ? y : y + h - 5} width={1040} height={5} fill={s.color} />
+        <clipPath id={`fw-band-clip-${k}`}><rect x={40} y={y} width={1040} height={h} rx={10} /></clipPath>
+        <rect x={40} y={k === 'enab' ? y : y + h - 5} width={1040} height={5} fill={s.color} clipPath={`url(#fw-band-clip-${k})`} />
         <text x={60} y={y + 34} fontSize={15} fontWeight={700} fill="#1e2331">{s.label}</text>
         <text x={60} y={y + 54} fontSize={11.5} fill="#475569">{s.desc}</text>
         <text x={60} y={y + h - 18} fontSize={11.5} fill="#64748b">{linesOf(k).join('  ·  ')}</text>
