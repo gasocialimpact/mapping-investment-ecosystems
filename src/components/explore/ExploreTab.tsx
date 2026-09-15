@@ -7,6 +7,7 @@ import { formatCurrency } from '../../lib/format';
 import { ExploreMap } from './ExploreMap';
 import { HighLowCard, DistributionCard, GapsCard } from './ExploreSidebar';
 import { PlaceReport } from './PlaceReport';
+import { TractPicker } from './TractPicker';
 
 // The Explore tab: the Community Data Explorer's information structure with
 // the Ecosystem Map's branding, and the ecosystem layered into each place.
@@ -69,33 +70,35 @@ export function ExploreTab() {
           </button>
         ))}
       </div>
-      <div className="flex items-center gap-3 flex-wrap mt-4">
-        <button
-          onClick={() => setSelectedFips(null)}
-          className={`text-[13px] font-bold rounded-full px-4 py-2 transition-colors ${
-            !selectedFips ? 'bg-brand-green text-white' : 'bg-white border border-slate-200 text-slate-600 hover:border-slate-300'
-          }`}
-        >
-          All counties
-        </button>
-        <select
-          value={selectedFips ?? ''}
-          onChange={(e) => {
-            const fips = e.target.value || null;
-            setSelectedFips(fips);
-            if (fips) ensureTracts();
-          }}
-          className="text-[13px] font-semibold border border-slate-200 rounded-full px-4 py-2 bg-white text-slate-700 focus:outline-none focus:ring-1 focus:ring-brand-green"
-        >
-          <option value="">Choose a county…</option>
-          {counties.map((c) => (
-            <option key={c.fips} value={c.fips}>{c.county}</option>
-          ))}
-        </select>
-        {scope === 'tract' && (
-          <span className="text-xs text-slate-400">Click any tract on the map to load its report.</span>
-        )}
-      </div>
+      {scope === 'county' ? (
+        <div className="flex items-center gap-3 flex-wrap mt-4">
+          <button
+            onClick={() => setSelectedFips(null)}
+            className={`text-[13px] font-bold rounded-full px-4 py-2 transition-colors ${
+              !selectedFips ? 'bg-brand-green text-white' : 'bg-white border border-slate-200 text-slate-600 hover:border-slate-300'
+            }`}
+          >
+            All counties
+          </button>
+          <select
+            value={selectedFips ?? ''}
+            onChange={(e) => {
+              const fips = e.target.value || null;
+              setSelectedFips(fips);
+              if (fips) ensureTracts();
+            }}
+            className="text-[13px] font-semibold border border-slate-200 rounded-full px-4 py-2 bg-white text-slate-700 focus:outline-none focus:ring-1 focus:ring-brand-green"
+          >
+            <option value="">Choose a county…</option>
+            {counties.map((c) => (
+              <option key={c.fips} value={c.fips}>{c.county}</option>
+            ))}
+          </select>
+        </div>
+      ) : (
+        // Same county→tract picker as the tract report, mirrored above the map.
+        <TractPicker />
+      )}
 
       {/* Map + sidebar — the map card stretches to match the sidebar height */}
       <div className="grid grid-cols-1 lg:grid-cols-[1.55fr_1fr] pdf:grid-cols-[1.55fr_1fr] gap-5 mt-5">

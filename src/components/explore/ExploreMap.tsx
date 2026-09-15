@@ -142,9 +142,11 @@ export function ExploreMap({ organizations }: Props) {
         const county = countyByFips.get(fips);
         const value = county ? metricValue(metric, place, county) : null;
         const isSelected = fips === selectedFips;
+        // With a county selected, the rest of the state drops to gray so the
+        // selection carries all the color.
         return {
-          fillColor: colorFor(value, bins) ?? '#e2e8f0',
-          fillOpacity: isSelected ? 0 : selectedFips ? 0.35 : 0.6,
+          fillColor: !selectedFips || isSelected ? (colorFor(value, bins) ?? '#e2e8f0') : '#94a3b8',
+          fillOpacity: isSelected ? 0 : selectedFips ? 0.3 : 0.6,
           color: isSelected ? '#1e293b' : '#fff',
           weight: isSelected ? 2 : 1,
         };
@@ -172,10 +174,10 @@ export function ExploreMap({ organizations }: Props) {
           if (selectedFipsRef.current === fips) {
             selectFipsRef.current(null);
           } else {
+            // The selection-driven zoom effect handles the fitBounds, so
+            // dropdown picks and map clicks behave identically.
             selectFipsRef.current(fips);
             ensureTractsRef.current();
-            const b = (lyr as L.Polygon).getBounds();
-            mapRef.current?.fitBounds(b.pad(0.1));
           }
         });
       },
@@ -224,9 +226,10 @@ export function ExploreMap({ organizations }: Props) {
           const tract = tractByGeoid.get(geoid);
           const value = tract ? metricValue(metric, place, tract) : null;
           const isSelected = geoid === selectedGeoid;
+          const dimmed = scope === 'tract' && selectedGeoid != null && !isSelected;
           return {
-            fillColor: colorFor(value, bins) ?? '#e2e8f0',
-            fillOpacity: 0.7,
+            fillColor: dimmed ? '#94a3b8' : (colorFor(value, bins) ?? '#e2e8f0'),
+            fillOpacity: dimmed ? 0.35 : 0.7,
             color: isSelected ? '#1e293b' : '#fff',
             weight: isSelected ? 2 : 0.5,
           };
@@ -274,13 +277,42 @@ export function ExploreMap({ organizations }: Props) {
     setTimeout(() => map.invalidateSize(), 0);
   }, [organizations, showOrgs]);
 
-  // Zoom back out to the state when a county selection is cleared.
+  // Zoom to the selected county — whether it was picked on the map or in the
+  // dropdown — and back out to the state when the selection is cleared. The
+  // initial mount is skipped so the page still lands on the statewide view.
+  const prevFipsRef = useRef<string | null | undefined>(undefined);
   useEffect(() => {
     const map = mapRef.current;
-    if (!map || selectedFips) return;
-    const bounds = (countyLayerRef.current ?? outlineLayerRef.current)?.getBounds();
-    if (bounds?.isValid()) map.fitBounds(bounds.pad(0.02));
-  }, [selectedFips]);
+    const prev = prevFipsRef.current;
+    prevFipsRef.current = selectedFips;
+    if (!map) return;
+    if (!selectedFips) {
+      const bounds = (countyLayerRef.current ?? outlineLayerRef.current)?.getBounds();
+      if (bounds?.isValid()) map.fitBounds(bounds.pad(0.02));
+      return;
+    }
+    if (scope !== 'county' || !place || prev === undefined || selectedFips === prev) return;
+    const feat = place.shapes.features.find((f: GeoJSON.Feature) => featFips(f) === selectedFips);
+    const bounds = feat && L.geoJSON(feat).getBounds();
+    if (bounds?.isValid()) map.fitBounds(bounds.pad(0.15));
+  }, [selectedFips, scope, place]);
+
+  // Same for tracts: zoom in on selection (from map click or the tract
+  // picker), back out to the state on clear.
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || scope !== 'tract' || !tracts) return;
+    if (selectedGeoid) {
+      const feat = tracts.tractShapes.features.find((f) => String(f.id) === selectedGeoid);
+      const bounds = feat && L.geoJSON(feat as GeoJSON.Feature).getBounds();
+      // A tract alone is a sliver — pad well out and cap the zoom so the
+      // surrounding area stays legible.
+      if (bounds?.isValid()) map.fitBounds(bounds.pad(1.5), { maxZoom: 13 });
+    } else {
+      const bounds = outlineLayerRef.current?.getBounds();
+      if (bounds?.isValid()) map.fitBounds(bounds.pad(0.02));
+    }
+  }, [selectedGeoid, scope, tracts]);
 
   if (!place) {
     return (
