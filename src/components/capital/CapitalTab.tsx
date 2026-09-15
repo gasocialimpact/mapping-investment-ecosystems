@@ -23,7 +23,6 @@ const CRA = 'CRA Small Business';
 export function CapitalTab() {
   const [tables, setTables] = useState<CapitalTables | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [scope, setScope] = useState<Scope>('federal_only');
   const [countyFips, setCountyFips] = useState<string>(''); // '' = statewide
   const { countyByFips } = usePlace();
 
@@ -50,26 +49,12 @@ export function CapitalTab() {
             <option key={fips} value={fips}>{name} County</option>
           ))}
         </select>
-        <div className="inline-flex border border-slate-200 rounded-lg overflow-hidden ml-auto">
-          {(['federal_only', 'all_programs'] as Scope[]).map((s) => (
-            <button
-              key={s}
-              onClick={() => setScope(s)}
-              className={`text-xs font-semibold px-3 py-1.5 border-r border-slate-200 last:border-r-0 transition-colors ${
-                scope === s ? 'bg-brand-indigo text-white' : 'bg-white text-slate-500 hover:text-slate-700'
-              }`}
-              title={s === 'federal_only' ? 'Federal community development programs, excluding CRA small-business lending' : 'All nine programs including CRA small-business lending'}
-            >
-              {s === 'federal_only' ? 'Federal programs' : 'Including CRA'}
-            </button>
-          ))}
-        </div>
       </div>
 
       {countyFips ? (
         <CountyView tables={tables} fips={countyFips} name={countyByFips.get(countyFips)?.county ?? counties.find(([f]) => f === countyFips)?.[1] ?? ''} />
       ) : (
-        <StatewideView tables={tables} scope={scope} />
+        <StatewideView tables={tables} />
       )}
 
       <p className="text-[11px] text-slate-400 mt-8 max-w-3xl">
@@ -153,7 +138,11 @@ function SectionHeading({ children, hint }: { children: React.ReactNode; hint?: 
 
 // --- Statewide view ----------------------------------------------------------
 
-function StatewideView({ tables, scope }: { tables: CapitalTables; scope: Scope }) {
+function StatewideView({ tables }: { tables: CapitalTables }) {
+  // Fixed to federal-only: the CRA-inclusive scope only altered two charts in
+  // the years CRA reports, and read as a no-op. The tables still carry both
+  // scopes, so this is one line to repoint.
+  const scope: Scope = 'federal_only';
   const years = tables.years;
   // Was [2019..2022]. The stack now spans whatever the source actually holds.
   const stackYears = years;
@@ -311,7 +300,7 @@ function StatewideView({ tables, scope }: { tables: CapitalTables; scope: Scope 
 
       <Card
         title="Where the dollars land, by tract income level"
-        sub={`Share of each year's dollars by tract income level — ${scopeLabel}. Toggle the scope above: with CRA included the mix is nearly flat; federal-only, the low-income share falls by half.`}
+        sub={`Share of each year's dollars by tract income level — ${scopeLabel}. With CRA small-business lending included the mix is nearly flat year over year; among federal programs alone, the low-income share falls by roughly half across 2018–2022.`}
       >
         <ShareBarChart years={years} series={mixSeries} />
         <DataTable

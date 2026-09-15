@@ -153,7 +153,7 @@ export function FrameworkDiagram({ activeSeg, liveSegs, counts = {}, onSelect }:
   return (
     <div className="bg-white rounded-lg border border-slate-200 shadow-sm p-3 overflow-x-auto">
       <style>{CSS}</style>
-      <svg viewBox="0 0 1120 530" className="block w-full min-w-[880px] h-auto" style={{ fontFamily: 'inherit' }} role="img" aria-label="Framework diagram. Capital flows from Supply through Intermediaries to Seekers; Enablers support from above and Infrastructure from below.">
+      <svg viewBox="0 0 1120 530" className="block w-full min-w-[880px] max-w-[1040px] mx-auto h-auto" style={{ fontFamily: 'inherit' }} role="img" aria-label="Framework diagram. Capital flows from Supply through Intermediaries to Seekers; Enablers support from above and Infrastructure from below.">
         <defs>
           <marker id="fw-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
             <path d="M0 0L10 5 0 10z" fill="#94a3b8" />

@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react';
+import { Check } from 'lucide-react';
 import type { Organization } from '../../types';
 import { V2_SEGMENTS, SUB_EXAMPLES, subExampleFor, segmentKeyFor } from '../../data/frameworkV2';
+import { useData } from '../../context/DataContext';
 import { useDetail } from '../../context/DetailContext';
 
 // The framework-off view: organization type cards down the left, and a
@@ -28,7 +30,24 @@ const cmp = (a: string | null | undefined, b: string | null | undefined) => {
 };
 
 export function OrgDirectory({ orgs }: { orgs: Organization[] }) {
+  const { data } = useData();
   const { open } = useDetail();
+
+  // Orgs that touch a tracked capital flow, from the flows' own source and
+  // recipient references (the org-side link field is sparser).
+  const flowOrgIds = useMemo(() => {
+    const ids = new Set<string>();
+    for (const f of data?.capitalFlows ?? []) {
+      if (f.sourceId) ids.add(f.sourceId);
+      if (f.recipientId) ids.add(f.recipientId);
+    }
+    return ids;
+  }, [data]);
+  const hasFlow = (o: Organization) => flowOrgIds.has(o.id) || o.capitalFlowIds.length > 0;
+  // "Identified Offering" = the org's own Capital Allocation links in
+  // Airtable — its tagged capital products. Repoint here when dedicated
+  // service-offering tagging lands.
+  const hasOffering = (o: Organization) => o.capitalAllocationIds.length > 0;
   const [pick, setPick] = useState<Pick>({ kind: 'all' });
   const [query, setQuery] = useState('');
   const [sort, setSort] = useState<SortKey>('name');
@@ -208,6 +227,8 @@ export function OrgDirectory({ orgs }: { orgs: Organization[] }) {
                     </button>
                   </th>
                 ))}
+                <th className="px-3 py-2 font-semibold text-center" title="The organization appears in at least one tracked capital flow">Mapped Capital Flow</th>
+                <th className="px-3 py-2 font-semibold text-center" title="The organization has at least one linked capital allocation (product / service offering)">Identified Offering</th>
               </tr>
             </thead>
             <tbody>
@@ -226,10 +247,16 @@ export function OrgDirectory({ orgs }: { orgs: Organization[] }) {
                   <td className="px-4 py-2 text-slate-600 whitespace-nowrap">{o.city ? `${o.city}${o.state && o.state !== 'GA' && o.state !== '-' ? `, ${o.state}` : ''}` : <span className="text-slate-300">—</span>}</td>
                   <td className="px-4 py-2 text-slate-500 whitespace-nowrap">{o.segment.replace('Capital ', '')}</td>
                   <td className="px-4 py-2 text-slate-500">{o.orgType ?? <span className="text-slate-300">—</span>}</td>
+                  <td className="px-3 py-2 text-center">
+                    {hasFlow(o) && <Check size={15} className="inline text-brand-green" aria-label="Has a mapped capital flow" />}
+                  </td>
+                  <td className="px-3 py-2 text-center">
+                    {hasOffering(o) && <Check size={15} className="inline text-brand-green" aria-label="Has an identified offering" />}
+                  </td>
                 </tr>
               ))}
               {visible.length === 0 && (
-                <tr><td colSpan={4} className="px-4 py-8 text-center text-sm text-slate-400">No organizations match.</td></tr>
+                <tr><td colSpan={6} className="px-4 py-8 text-center text-sm text-slate-400">No organizations match.</td></tr>
               )}
             </tbody>
           </table>

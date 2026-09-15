@@ -115,6 +115,10 @@ export function FramingTab() {
     setSelection(key ? { kind: 'segment', key } : null);
   };
 
+  // The segment whose type cards are on screen — the filter when set,
+  // otherwise the first segment as a sensible default.
+  const shownSeg = segFilter ?? V2_SEGMENTS[0].key;
+
   const toggleBar = (
     <div className="flex items-center gap-3">
       <span className="text-sm font-semibold text-slate-700">Ecosystem Framework</span>
@@ -188,14 +192,45 @@ export function FramingTab() {
 
       <FrameworkDiagram activeSeg={segFilter} liveSegs={liveSegs} counts={segCounts} onSelect={selectSegment} />
 
-      {/* Cards, grouped by segment */}
+      {/* Segment selector: one segment's type cards show at a time, so the
+          types are reachable right under the diagram instead of five stacked
+          sections deep. The diagram and the Segment filter drive the same
+          choice; these pills just switch the view without opening records. */}
+      <div className="flex flex-wrap items-center gap-2" role="tablist" aria-label="Organization types by segment">
+        {V2_SEGMENTS.map((s) => {
+          const active = shownSeg === s.key;
+          const dimmed = !liveSegs.has(s.key);
+          return (
+            <button
+              key={s.key}
+              role="tab"
+              aria-selected={active}
+              onClick={() => setSegFilter(s.key)}
+              className={`text-xs font-semibold rounded-full px-3.5 py-1.5 border transition-colors ${active ? 'text-white border-transparent' : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'} ${dimmed && !active ? 'opacity-40' : ''}`}
+              style={active ? { background: s.color } : undefined}
+            >
+              {s.label}
+              {s.data && <span className="ml-1.5 tabular-nums opacity-80">{segCounts[s.key] ?? 0}</span>}
+            </button>
+          );
+        })}
+        <span className="text-xs text-slate-400 ml-1">Organization types for the selected segment appear below.</span>
+      </div>
+
+      {/* Cards for the shown segment */}
       <div className="space-y-6">
-        {V2_SEGMENTS.filter((s) => !segFilter || s.key === segFilter).map((s) => {
+        {V2_SEGMENTS.filter((s) => s.key === shownSeg).map((s) => {
           const cards = visibleCards.filter((c) => c.seg === s.key);
-          if (cards.length === 0) return null;
           const segOrgs = s.data ? orgs.filter((o) => o.segment === s.data) : [];
           const untagged = untaggedBySeg.get(s.key) ?? [];
           const segSelected = selection?.kind === 'segment' && selection.key === s.key;
+          if (cards.length === 0) {
+            return (
+              <p key={s.key} className="text-sm text-slate-400">
+                No {s.label} types match the current Function filter.
+              </p>
+            );
+          }
           return (
             <section key={s.key} aria-label={s.label}>
               <div className="grid grid-cols-[6px_1fr_auto] gap-3 items-start mb-2.5">
