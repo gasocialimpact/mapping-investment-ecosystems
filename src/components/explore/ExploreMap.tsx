@@ -1,5 +1,6 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
+import { Eye, EyeOff } from 'lucide-react';
 import type { Organization } from '../../types';
 import { SEGMENT_STYLES, SEGMENT_ORDER } from '../../types';
 import { useDetail } from '../../context/DetailContext';
@@ -248,11 +249,13 @@ export function ExploreMap({ organizations }: Props) {
   }, [place, tracts, tractStatus, scope, selectedFips, selectedGeoid, metric, countyByFips]);
 
   // Org markers.
+  const [showOrgs, setShowOrgs] = useState(true);
   useEffect(() => {
     const map = mapRef.current;
     const layer = layerRef.current;
     if (!map || !layer) return;
     layer.clearLayers();
+    if (!showOrgs) return;
 
     // Every mapped org is a sibling, so the record modal pages across the pins.
     const mapped = organizations.filter((o) => o.lat != null && o.lng != null);
@@ -265,7 +268,7 @@ export function ExploreMap({ organizations }: Props) {
       marker.addTo(layer);
     }
     setTimeout(() => map.invalidateSize(), 0);
-  }, [organizations]);
+  }, [organizations, showOrgs]);
 
   // Zoom back out to the state when a county selection is cleared.
   useEffect(() => {
@@ -302,6 +305,16 @@ export function ExploreMap({ organizations }: Props) {
           </p>
         </div>
         <div className="flex flex-col items-end gap-2">
+          <button
+            onClick={() => setShowOrgs((v) => !v)}
+            className={`inline-flex items-center gap-1.5 text-xs font-semibold rounded-lg border px-3 py-1.5 transition-colors ${
+              showOrgs ? 'bg-white text-slate-600 border-slate-200 hover:border-slate-300' : 'bg-slate-100 text-slate-400 border-slate-200 hover:text-slate-600'
+            }`}
+            title={showOrgs ? 'Hide organization pins' : 'Show organization pins'}
+          >
+            {showOrgs ? <Eye size={13} /> : <EyeOff size={13} />}
+            {showOrgs ? 'Hide' : 'Show'} organization pins
+          </button>
           <div className="inline-flex border border-slate-200 rounded-lg overflow-hidden">
             {CVI_SEGMENTS.map((s) => (
               <button

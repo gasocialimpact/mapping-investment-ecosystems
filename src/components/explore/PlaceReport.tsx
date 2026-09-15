@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 import { Building2, TrendingUp } from 'lucide-react';
 import { useData } from '../../context/DataContext';
 import { usePlace } from '../../context/PlaceContext';
+import { loadTractPlaces } from '../../data/census';
 import { AliceTrend } from './AliceTrend';
+import { ToplineLocalData } from './ToplineLocalData';
 import type { Organization, CapitalFlow } from '../../types';
 import { formatCurrency } from '../../lib/format';
 import { pctileDisplay } from '../../lib/choropleth';
@@ -37,9 +39,9 @@ type CountyReportView = 'topline' | 'data' | 'ecosystem';
 function CountyReport() {
   const { data, maps } = useData();
   const { place, countyByFips, selectedFips, orgsByCountyFips } = usePlace();
-  const [view, setView] = useState<CountyReportView>('data');
-  // A fresh county starts back on Important Data.
-  useEffect(() => setView('data'), [selectedFips]);
+  const [view, setView] = useState<CountyReportView>('topline');
+  // A fresh county starts back on the first sub-tab.
+  useEffect(() => setView('topline'), [selectedFips]);
 
   if (!place) return null;
   const county = selectedFips ? countyByFips.get(selectedFips) : null;
@@ -133,14 +135,13 @@ function CountyReport() {
       </div>
 
       {view === 'topline' && (
-        <div className="mt-6 border border-dashed border-slate-300 rounded-lg py-12 px-6 text-center">
-          <h3 className="text-base font-bold text-slate-700">Topline Local Data</h3>
-          <p className="text-sm text-slate-400 mt-1 max-w-xl mx-auto">
-            Key Census indicators for {county.county} — economic &amp; workforce, housing, income &amp;
-            financial wellness, and health &amp; wellbeing — filterable by race, income, gender, and
-            nativity. Coming soon.
-          </p>
-        </div>
+        <ToplineLocalData
+          level="county"
+          id={county.fips}
+          label={`${county.county}`}
+          lifeExpectancy={county.demo[15] ?? null}
+          stateLifeExpectancy={demo.stateBenchmark[15] ?? null}
+        />
       )}
       {view === 'ecosystem' && (
         <EcosystemLayers
@@ -293,6 +294,65 @@ function CountyReport() {
   );
 }
 
+// County → tract dropdowns as an alternative to clicking the right tract on
+// the map. Tracts are labeled with the city/CDP their centroid falls in
+// (tracts have no names of their own; unincorporated tracts show the number
+// alone) — see scripts/build-tract-places.mjs.
+function TractPicker() {
+  const { countyByFips, tracts, tractStatus, selectedGeoid, setSelectedGeoid } = usePlace();
+  const [countyFips, setCountyFips] = useState('');
+  const [placeNames, setPlaceNames] = useState<Record<string, string>>({});
+  useEffect(() => { loadTractPlaces().then(setPlaceNames).catch(() => {}); }, []);
+
+  // Follow along when a tract is picked on the map instead.
+  useEffect(() => {
+    if (!selectedGeoid) return;
+    const t = tracts?.tracts.find((x) => x.geoid === selectedGeoid);
+    if (t) setCountyFips(t.county);
+  }, [selectedGeoid, tracts]);
+
+  const counties = [...countyByFips.values()].sort((a, b) => a.county.localeCompare(b.county));
+  const countyTracts = countyFips
+    ? (tracts?.tracts ?? []).filter((t) => t.county === countyFips)
+        .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }))
+    : [];
+  const tractLabel = (t: { geoid: string; name: string }) => {
+    const place = placeNames[t.geoid]?.replace(/ (city|town|CDP)$/, (m) => (m === ' CDP' ? '' : m));
+    return place ? `${t.name} — ${place}` : t.name;
+  };
+
+  const selectCls = 'text-sm border border-slate-200 rounded-md px-2.5 py-1.5 bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-green/40 max-w-full';
+  return (
+    <div className="flex items-center gap-2.5 flex-wrap mt-4 print:hidden">
+      <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">Find a tract</span>
+      <select
+        value={countyFips}
+        onChange={(e) => setCountyFips(e.target.value)}
+        className={selectCls}
+        aria-label="County"
+      >
+        <option value="">Choose a county…</option>
+        {counties.map((c) => <option key={c.fips} value={c.fips}>{c.county}</option>)}
+      </select>
+      <select
+        value={selectedGeoid && countyTracts.some((t) => t.geoid === selectedGeoid) ? selectedGeoid : ''}
+        onChange={(e) => e.target.value && setSelectedGeoid(e.target.value)}
+        disabled={!countyFips || tractStatus === 'loading'}
+        className={`${selectCls} disabled:bg-slate-50 disabled:text-slate-400`}
+        aria-label="Census tract"
+      >
+        <option value="">
+          {!countyFips ? 'Then choose a tract…'
+            : tractStatus === 'loading' ? 'Loading tracts…'
+            : `Choose from ${countyTracts.length} tracts…`}
+        </option>
+        {countyTracts.map((t) => <option key={t.geoid} value={t.geoid}>{tractLabel(t)}</option>)}
+      </select>
+      <span className="text-[11px] text-slate-400">or click a tract on the map</span>
+    </div>
+  );
+}
+
 // Tract-level report for the Census Tract Data scope, modeled on the
 // Explorer's tract reports: CVI ranks + Populations at Risk vs. benchmarks.
 function TractReport() {
@@ -301,17 +361,22 @@ function TractReport() {
     place, countyByFips, selectedGeoid, tracts, tractStatus,
     setScope, setSelectedFips, orgsByCountyFips,
   } = usePlace();
+  const [view, setView] = useState<CountyReportView>('topline');
+  useEffect(() => setView('topline'), [selectedGeoid]);
+  const [placeNames, setPlaceNames] = useState<Record<string, string>>({});
+  useEffect(() => { loadTractPlaces().then(setPlaceNames).catch(() => {}); }, []);
 
   if (!place) return null;
   const tract = selectedGeoid ? tracts?.tracts.find((t) => t.geoid === selectedGeoid) : null;
 
   if (!tract) {
     return (
-      <div className="mt-6 border border-dashed border-slate-300 rounded-lg py-14 text-center" id="place-report">
+      <div className="mt-6 border border-dashed border-slate-300 rounded-lg py-10 text-center" id="place-report">
         <h3 className="text-base font-bold text-slate-700">Census Tract Report</h3>
         <p className="text-sm text-slate-400 mt-1">
-          {tractStatus === 'loading' ? 'Loading census tracts…' : 'Click a tract on the map to load its report.'}
+          {tractStatus === 'loading' ? 'Loading census tracts…' : 'Pick a county and tract below, or click a tract on the map.'}
         </p>
+        <div className="flex justify-center"><TractPicker /></div>
       </div>
     );
   }
@@ -345,6 +410,7 @@ function TractReport() {
       <div className="flex items-baseline gap-4 flex-wrap">
         <h2 className="text-2xl font-bold text-slate-800">{tract.name}</h2>
         <span className="text-sm text-slate-500">
+          {placeNames[tract.geoid] && <>{placeNames[tract.geoid]} · </>}
           {county?.county}, Georgia · GEOID {tract.geoid}
         </span>
         {tract.pctiles[0] != null && (
@@ -362,6 +428,38 @@ function TractReport() {
         )}
       </div>
 
+      <TractPicker />
+
+      {/* Report sub-tabs (mirrors the county report) */}
+      <div className="flex items-center gap-3 flex-wrap mt-4 print:hidden">
+        {([
+          ['topline', 'Topline Local Data'],
+          ['data', 'Vulnerable Populations & Investment Trends'],
+          ['ecosystem', `The Ecosystem in this Place${orgs.length ? ` (${orgs.length})` : ''}`],
+        ] as [CountyReportView, string][]).map(([v, lbl]) => (
+          <button
+            key={v}
+            onClick={() => setView(v)}
+            className={`text-sm font-medium px-3 py-1.5 rounded-md border transition-colors ${
+              view === v ? 'bg-brand-indigo text-white border-brand-indigo' : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'
+            }`}
+          >
+            {lbl}
+          </button>
+        ))}
+      </div>
+
+      {view === 'topline' && (
+        <ToplineLocalData
+          level="tract"
+          id={tract.geoid}
+          label={tract.name}
+          lifeExpectancy={tract.par[15] ?? null}
+          stateLifeExpectancy={par.stateBenchmark[15] ?? null}
+        />
+      )}
+
+      {view === 'data' && (
       <div className="grid grid-cols-1 lg:grid-cols-[1.85fr_1fr] pdf:grid-cols-[1.85fr_1fr] gap-5 mt-5 items-start">
         {/* Populations at risk (tract) */}
         <ReportCard title="Populations at Risk" sub={`Tract · ${par.stateName} · U.S. comparison.`}>
@@ -423,10 +521,11 @@ function TractReport() {
         <TractInvestmentTrend geoid={tract.geoid} />
         </div>
       </div>
+      )}
 
-      {county && (
+      {view === 'ecosystem' && county && (
         <EcosystemLayers
-          title={`The ecosystem in ${county.county}`}
+          title=""
           orgs={orgs}
           flows={flows}
           emptyNote={`No mapped ecosystem organizations in ${county.county} yet.`}
