@@ -49,10 +49,12 @@ export function ExploreMap({ organizations }: Props) {
   const openRef = useRef(open);
   openRef.current = open;
   const {
-    place, countyByFips, metric, setMetric, scope,
+    place, countyByFips, metric, setMetric, scope, setScope,
     selectedFips, setSelectedFips, selectedGeoid, setSelectedGeoid,
     tracts, tractStatus, ensureTracts, orgsByCountyFips,
   } = usePlace();
+  const setScopeRef = useRef(setScope);
+  setScopeRef.current = setScope;
   const selectFipsRef = useRef(setSelectedFips);
   selectFipsRef.current = setSelectedFips;
   const selectGeoidRef = useRef(setSelectedGeoid);
@@ -119,11 +121,12 @@ export function ExploreMap({ organizations }: Props) {
     if (!place) return;
 
     if (scope === 'tract') {
-      // Orientation outlines only — tracts carry the color below.
+      // Gray county context — the selected tract's county carries the color
+      // in the tract pane above this one.
       outlineLayerRef.current = L.geoJSON(place.shapes, {
         pane: 'outlinePane',
         interactive: false,
-        style: { fill: false, color: '#1e293b', weight: 0.8, opacity: 0.45 },
+        style: { fillColor: '#94a3b8', fillOpacity: 0.25, color: '#1e293b', weight: 0.8, opacity: 0.45 },
       }).addTo(map);
       if (!fittedRef.current && (containerRef.current?.clientHeight ?? 0) > 100) {
         map.invalidateSize();
@@ -207,18 +210,23 @@ export function ExploreMap({ organizations }: Props) {
     const bins = makeBins(metric, place);
     const label = metricLabel(metric, place);
     const tractByGeoid = new Map(tracts.tracts.map((t) => [t.geoid, t]));
-    const features = scope === 'tract'
-      ? tracts.tractShapes.features
-      : tracts.tractShapes.features.filter((f) => String(f.id).startsWith(selectedFips!));
+    // Tract view shows the selected tract's county; county view shows the
+    // drilldown tracts of the selected county (same set — one control row
+    // drives both, so the county context is always known).
+    const contextFips = scope === 'tract' && selectedGeoid ? selectedGeoid.slice(0, 5) : selectedFips;
+    const features = contextFips
+      ? tracts.tractShapes.features.filter((f) => String(f.id).startsWith(contextFips))
+      : tracts.tractShapes.features;
     if (features.length === 0) return;
 
     const layer = L.geoJSON(
       { type: 'FeatureCollection', features } as GeoJSON.FeatureCollection,
       {
         pane: 'tractPane',
-        // Canvas keeps 2,791 statewide polygons responsive. (Valid at runtime;
-        // Leaflet's GeoJSONOptions type just doesn't declare `renderer`.)
-        ...(scope === 'tract' && canvasRendererRef.current
+        // Canvas keeps the statewide 2,791-polygon fallback responsive; a
+        // single county's tracts render as SVG. (Valid at runtime; Leaflet's
+        // GeoJSONOptions type just doesn't declare `renderer`.)
+        ...(scope === 'tract' && !contextFips && canvasRendererRef.current
           ? ({ renderer: canvasRendererRef.current } as object)
           : {}),
         style: (feat) => {
@@ -244,11 +252,18 @@ export function ExploreMap({ organizations }: Props) {
             `<strong>${tract.name}</strong> · ${county?.county ?? ''}<br/>${label}: ${formatMetricValue(metric, place, value)}`,
             { sticky: true, className: 'ecosystem-tooltip' },
           );
-          if (scope === 'tract') {
-            lyr.on('click', () => {
-              selectGeoidRef.current(selectedGeoidRef.current === geoid ? null : geoid);
-            });
-          }
+          // Clicking a drilldown tract enters the tract view; clicking the
+          // selected tract again steps back to its county view.
+          lyr.on('click', () => {
+            if (selectedGeoidRef.current === geoid) {
+              selectGeoidRef.current(null);
+              setScopeRef.current('county');
+            } else {
+              selectFipsRef.current(tract.county);
+              selectGeoidRef.current(geoid);
+              setScopeRef.current('tract');
+            }
+          });
         },
       },
     ).addTo(map);
@@ -281,17 +296,23 @@ export function ExploreMap({ organizations }: Props) {
   // dropdown — and back out to the state when the selection is cleared. The
   // initial mount is skipped so the page still lands on the statewide view.
   const prevFipsRef = useRef<string | null | undefined>(undefined);
+  const prevScopeRef = useRef(scope);
   useEffect(() => {
     const map = mapRef.current;
     const prev = prevFipsRef.current;
     prevFipsRef.current = selectedFips;
+    const prevScope = prevScopeRef.current;
+    prevScopeRef.current = scope;
     if (!map) return;
     if (!selectedFips) {
       const bounds = (countyLayerRef.current ?? outlineLayerRef.current)?.getBounds();
       if (bounds?.isValid()) map.fitBounds(bounds.pad(0.02));
       return;
     }
-    if (scope !== 'county' || !place || prev === undefined || selectedFips === prev) return;
+    // Zoom to the county when it is newly selected, or when stepping back to
+    // the county view from a tract.
+    if (scope !== 'county' || !place || prev === undefined) return;
+    if (selectedFips === prev && prevScope !== 'tract') return;
     const feat = place.shapes.features.find((f: GeoJSON.Feature) => featFips(f) === selectedFips);
     const bounds = feat && L.geoJSON(feat).getBounds();
     if (bounds?.isValid()) map.fitBounds(bounds.pad(0.15));
@@ -336,8 +357,10 @@ export function ExploreMap({ organizations }: Props) {
           <h3 className="text-base font-bold text-slate-800">Climate Vulnerability Map</h3>
           <p className="text-xs text-slate-500 mt-1 max-w-md">
             {scope === 'county'
-              ? 'Counties shaded by how they rank among all 3,143 U.S. counties — darker means more vulnerable. Click a county (or an org) to load its report.'
-              : 'All 2,791 Georgia census tracts, shaded by national rank — darker means more vulnerable. Click a tract to load its report.'}
+              ? selectedFips
+                ? 'Tracts of the selected county, shaded by national rank — darker means more vulnerable. Click a tract for its report, or ✕ to zoom back out.'
+                : 'Counties shaded by how they rank among all 3,143 U.S. counties — darker means more vulnerable. Click a county (or an org) to load its report.'
+              : 'Click another tract to switch reports, or ✕ to step back up to the county.'}
           </p>
         </div>
         <div className="flex flex-col items-end gap-2">
@@ -396,7 +419,7 @@ export function ExploreMap({ organizations }: Props) {
             </span>
             <span className="text-xs text-slate-400">report below ↓</span>
             <button
-              onClick={() => setSelectedGeoid(null)}
+              onClick={() => { setSelectedGeoid(null); setScope('county'); }}
               aria-label="Clear tract selection"
               className="text-xs font-medium px-1.5 py-1 rounded text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
             >

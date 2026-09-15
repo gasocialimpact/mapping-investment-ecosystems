@@ -37,7 +37,7 @@ export default function App() {
 
 function Dashboard() {
   const { data, error } = useData();
-  const { setSelectedFips } = usePlace();
+  const { setSelectedFips, setSelectedGeoid, setScope } = usePlace();
   const [activeTab, setActiveTab] = useState<Tab>('explore');
   const { mode, scrollToTop } = useEmbed();
   const flow = mode === 'flow';
@@ -83,7 +83,7 @@ function Dashboard() {
           <div className="flex items-center gap-2 flex-1 justify-end min-w-[240px]">
             <SearchBar />
             <button
-              onClick={() => { setActiveTab('explore'); setSelectedFips(null); scrollToTop(); }}
+              onClick={() => { setActiveTab('explore'); setScope('county'); setSelectedGeoid(null); setSelectedFips(null); scrollToTop(); }}
               className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-md border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 transition-colors"
             >
               <RotateCcw size={12} /> Reset View

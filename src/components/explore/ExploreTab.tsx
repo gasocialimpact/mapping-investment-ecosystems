@@ -1,19 +1,18 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useData } from '../../context/DataContext';
 import { usePlace } from '../../context/PlaceContext';
 import { useEmbed } from '../../context/EmbedContext';
-import type { PlaceScope } from '../../context/PlaceContext';
 import { formatCurrency } from '../../lib/format';
+import { loadTractPlaces } from '../../data/census';
 import { ExploreMap } from './ExploreMap';
 import { HighLowCard, DistributionCard, GapsCard } from './ExploreSidebar';
 import { PlaceReport } from './PlaceReport';
-import { TractPicker } from './TractPicker';
 
 // The Explore tab: the Community Data Explorer's information structure with
 // the Ecosystem Map's branding, and the ecosystem layered into each place.
 export function ExploreTab() {
   const { data } = useData();
-  const { place, scope, setScope, selectedFips, setSelectedFips, selectedGeoid, ensureTracts } = usePlace();
+  const { place, selectedFips, selectedGeoid } = usePlace();
   const { scrollIntoView } = useEmbed();
   // Seeded with the initial (default DeKalb) selection so the page doesn't
   // auto-scroll to the report on first load.
@@ -56,49 +55,9 @@ export function ExploreTab() {
         <StatTile value={formatCurrency(stats.totalCapital)} label="Tracked capital" bg="bg-[#fbf3d3]" fg="text-[#8a6d00]" />
       </div>
 
-      {/* Scope tabs + picker */}
-      <div className="flex gap-7 border-b border-slate-200 mt-8">
-        {(['county', 'tract'] as PlaceScope[]).map((s) => (
-          <button
-            key={s}
-            onClick={() => { setScope(s); if (s === 'tract') ensureTracts(); }}
-            className={`text-[15px] font-bold pb-2 border-b-[3px] transition-colors ${
-              scope === s ? 'border-brand-green text-slate-800' : 'border-transparent text-slate-400 hover:text-slate-600'
-            }`}
-          >
-            {s === 'county' ? 'County Data' : 'Census Tract Data'}
-          </button>
-        ))}
-      </div>
-      {scope === 'county' ? (
-        <div className="flex items-center gap-3 flex-wrap mt-4">
-          <button
-            onClick={() => setSelectedFips(null)}
-            className={`text-[13px] font-bold rounded-full px-4 py-2 transition-colors ${
-              !selectedFips ? 'bg-brand-green text-white' : 'bg-white border border-slate-200 text-slate-600 hover:border-slate-300'
-            }`}
-          >
-            All counties
-          </button>
-          <select
-            value={selectedFips ?? ''}
-            onChange={(e) => {
-              const fips = e.target.value || null;
-              setSelectedFips(fips);
-              if (fips) ensureTracts();
-            }}
-            className="text-[13px] font-semibold border border-slate-200 rounded-full px-4 py-2 bg-white text-slate-700 focus:outline-none focus:ring-1 focus:ring-brand-green"
-          >
-            <option value="">Choose a county…</option>
-            {counties.map((c) => (
-              <option key={c.fips} value={c.fips}>{c.county}</option>
-            ))}
-          </select>
-        </div>
-      ) : (
-        // Same county→tract picker as the tract report, mirrored above the map.
-        <TractPicker />
-      )}
+      {/* One control row drives scope, map and report: a county alone loads
+          the county view; adding a tract switches everything to that tract. */}
+      <PlacePicker counties={counties} />
 
       {/* Map + sidebar — the map card stretches to match the sidebar height */}
       <div className="grid grid-cols-1 lg:grid-cols-[1.55fr_1fr] pdf:grid-cols-[1.55fr_1fr] gap-5 mt-5">
@@ -118,6 +77,87 @@ export function ExploreTab() {
         estimates) · Federal Reserve Bank of St. Louis Community Investment Explorer · Ecosystem
         database synced nightly from Airtable.
       </p>
+    </div>
+  );
+}
+
+// County + tract dropdowns that set the shared selection (and with it the
+// scope): county only → county view; county + tract → tract view. Tracts are
+// labeled with the city/CDP their centroid falls in.
+function PlacePicker({ counties }: { counties: { fips: string; county: string }[] }) {
+  const {
+    scope, setScope, selectedFips, setSelectedFips,
+    selectedGeoid, setSelectedGeoid, tracts, tractStatus, ensureTracts,
+  } = usePlace();
+  const [placeNames, setPlaceNames] = useState<Record<string, string>>({});
+  useEffect(() => { loadTractPlaces().then(setPlaceNames).catch(() => {}); }, []);
+
+  // The county in play: the tract's county in tract view, else the selection.
+  const countyFips = scope === 'tract' && selectedGeoid ? selectedGeoid.slice(0, 5) : selectedFips;
+  useEffect(() => { if (countyFips) ensureTracts(); }, [countyFips, ensureTracts]);
+
+  const countyTracts = countyFips
+    ? (tracts?.tracts ?? []).filter((t) => t.county === countyFips)
+        .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }))
+    : [];
+  const tractLabel = (t: { geoid: string; name: string }) => {
+    const place = placeNames[t.geoid]?.replace(/ CDP$/, '');
+    return place ? `${t.name} — ${place}` : t.name;
+  };
+
+  const selectCls = 'text-[13px] font-semibold border border-slate-200 rounded-full px-4 py-2 bg-white text-slate-700 focus:outline-none focus:ring-1 focus:ring-brand-green max-w-full';
+  return (
+    <div className="flex items-center gap-3 flex-wrap mt-6">
+      <button
+        onClick={() => { setScope('county'); setSelectedGeoid(null); setSelectedFips(null); }}
+        className={`text-[13px] font-bold rounded-full px-4 py-2 transition-colors ${
+          !countyFips ? 'bg-brand-green text-white' : 'bg-white border border-slate-200 text-slate-600 hover:border-slate-300'
+        }`}
+      >
+        All counties
+      </button>
+      <select
+        value={countyFips ?? ''}
+        onChange={(e) => {
+          const fips = e.target.value || null;
+          setScope('county');
+          setSelectedGeoid(null);
+          setSelectedFips(fips);
+          if (fips) ensureTracts();
+        }}
+        className={selectCls}
+        aria-label="County"
+      >
+        <option value="">Choose a county…</option>
+        {counties.map((c) => (
+          <option key={c.fips} value={c.fips}>{c.county}</option>
+        ))}
+      </select>
+      <select
+        value={selectedGeoid ?? ''}
+        onChange={(e) => {
+          const geoid = e.target.value;
+          if (geoid) {
+            setSelectedFips(geoid.slice(0, 5));
+            setSelectedGeoid(geoid);
+            setScope('tract');
+          } else {
+            setSelectedGeoid(null);
+            setScope('county');
+          }
+        }}
+        disabled={!countyFips || tractStatus === 'loading'}
+        className={`${selectCls} disabled:bg-slate-50 disabled:text-slate-400`}
+        aria-label="Census tract"
+      >
+        <option value="">
+          {!countyFips ? 'Census tract (pick a county first)…'
+            : tractStatus === 'loading' ? 'Loading tracts…'
+            : 'County overview — or pick a tract…'}
+        </option>
+        {countyTracts.map((t) => <option key={t.geoid} value={t.geoid}>{tractLabel(t)}</option>)}
+      </select>
+      <span className="text-xs text-slate-400">or click the map</span>
     </div>
   );
 }
