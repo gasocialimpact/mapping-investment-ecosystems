@@ -65,7 +65,7 @@ export function ExploreTab() {
               scope === s ? 'border-brand-green text-slate-800' : 'border-transparent text-slate-400 hover:text-slate-600'
             }`}
           >
-            {s === 'county' ? 'Topline County Data' : 'Census Tract Data'}
+            {s === 'county' ? 'County Data' : 'Census Tract Data'}
           </button>
         ))}
       </div>

@@ -32,7 +32,7 @@ export function PlaceReport() {
   return scope === 'tract' ? <TractReport /> : <CountyReport />;
 }
 
-type CountyReportView = 'data' | 'ecosystem';
+type CountyReportView = 'topline' | 'data' | 'ecosystem';
 
 function CountyReport() {
   const { data, maps } = useData();
@@ -113,7 +113,11 @@ function CountyReport() {
 
       {/* Report sub-tabs */}
       <div className="flex items-center gap-3 flex-wrap mt-4 print:hidden">
-        {([['data', 'Important Data'], ['ecosystem', `The Ecosystem in this Place${orgs.length ? ` (${orgs.length})` : ''}`]] as [CountyReportView, string][]).map(([v, label]) => (
+        {([
+          ['topline', 'Topline Local Data'],
+          ['data', 'Vulnerable Populations & Investment Trends'],
+          ['ecosystem', `The Ecosystem in this Place${orgs.length ? ` (${orgs.length})` : ''}`],
+        ] as [CountyReportView, string][]).map(([v, label]) => (
           <button
             key={v}
             onClick={() => setView(v)}
@@ -128,14 +132,25 @@ function CountyReport() {
         ))}
       </div>
 
-      {view === 'ecosystem' ? (
+      {view === 'topline' && (
+        <div className="mt-6 border border-dashed border-slate-300 rounded-lg py-12 px-6 text-center">
+          <h3 className="text-base font-bold text-slate-700">Topline Local Data</h3>
+          <p className="text-sm text-slate-400 mt-1 max-w-xl mx-auto">
+            Key Census indicators for {county.county} — economic &amp; workforce, housing, income &amp;
+            financial wellness, and health &amp; wellbeing — filterable by race, income, gender, and
+            nativity. Coming soon.
+          </p>
+        </div>
+      )}
+      {view === 'ecosystem' && (
         <EcosystemLayers
           title=""
           orgs={orgs}
           flows={flows}
           emptyNote={`No mapped ecosystem organizations in ${county.county} yet — a gap worth noting in itself.`}
         />
-      ) : (
+      )}
+      {view === 'data' && (
       <>
       {/* ~65/35 split: people & investment on the left, CVI on the right */}
       <div className="grid grid-cols-1 lg:grid-cols-[1.85fr_1fr] pdf:grid-cols-[1.85fr_1fr] gap-5 mt-5 items-start">
