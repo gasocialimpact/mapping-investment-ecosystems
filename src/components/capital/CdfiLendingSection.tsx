@@ -212,37 +212,6 @@ export function CdfiStatewideSection() {
         </p>
       </Card>
 
-      <Card
-        span="full"
-        title="Same dollars, two views — reconciling with the Fed CIE 'CDFI' line"
-        sub="The Community Investment Explorer figures charted above aggregate the same family of CDFI Fund reporting into tract-years, but the CIE line runs consistently higher — about $1.4B higher across 2018–2022, most of it in 2021–22. Part is year basis (the CIE dates dollars to the activity year; the Fund's FY22 transaction file is dated by submission year and the consumer file by fiscal year), and part is coverage: the CIE's CDFI category carries records this Georgia-filtered workbook does not."
-      >
-        <DataTable
-          rowHeader="Year"
-          columns={['Fed CIE "CDFI" dollars', 'CDFI Fund reported (TLR + CLR)', 'of which TLR', 'of which CLR', 'Difference']}
-          rows={[
-            ...data.reconciliation.map((r): TableRow => ({
-              label: String(r.year),
-              cells: [
-                fmtDollars(r.cie_cdfi),
-                fmtDollars(r.fund_reported),
-                fmtDollars(r.fund_tlr),
-                fmtDollars(r.fund_clr),
-                <span className="text-slate-500">{fmtDollars(r.cie_cdfi - r.fund_reported)}</span>,
-              ],
-            })),
-            { label: '2018–2022', strong: true,
-              cells: [
-                fmtDollars(sum(data.reconciliation.map((r) => r.cie_cdfi))),
-                fmtDollars(sum(data.reconciliation.map((r) => r.fund_reported))),
-                fmtDollars(sum(data.reconciliation.map((r) => r.fund_tlr))),
-                fmtDollars(sum(data.reconciliation.map((r) => r.fund_clr))),
-                <span className="text-slate-500">{fmtDollars(sum(data.reconciliation.map((r) => r.cie_cdfi - r.fund_reported)))}</span>,
-              ] },
-          ]}
-          note="Beyond the year-basis mismatch, the CIE's CDFI category also carries records this Georgia-filtered workbook does not (and vice versa where the workbook's rows report no usable location), so the two will not tie out to the dollar. The value of the loan-level file is the detail — product, rate, term, borrower — that the CIE rollup cannot show."
-        />
-      </Card>
     </>
   );
 }
@@ -371,4 +340,3 @@ function fixedShareOverall(amort: Record<string, number>, txns: number): number 
   return (amort.FULLAMORT ?? 0) / (txns || 1);
 }
 
-const sum = (xs: number[]) => xs.reduce((t, x) => t + x, 0);
