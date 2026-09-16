@@ -9,6 +9,28 @@ import { SnapshotCard } from '../SnapshotButton';
 
 const fmtCount = (v: number) => (v >= 1e6 ? `${(v / 1e6).toFixed(2)}M` : v >= 1e3 ? `${Math.round(v / 1e3)}K` : String(v));
 
+// Statewide series: county counts summed per year (they are whole households,
+// so the sum is exact; the ACS window mix varies by county and the caption
+// carries every window present).
+function sumByYear(rows: AliceRow[]): AliceRow[] {
+  const byYear = new Map<number, AliceRow>();
+  for (const r of rows) {
+    const acc = byYear.get(r.year) ?? {
+      ...r, county_fips: 'state', county_name: 'Georgia',
+      households: 0, poverty_households: 0, alice_households: 0,
+      above_alice_households: 0, record_count: 0,
+      source_window: 'mixed 1-, 3- and 5-Year',
+    };
+    acc.households += r.households;
+    acc.poverty_households += r.poverty_households;
+    acc.alice_households += r.alice_households;
+    acc.above_alice_households += r.above_alice_households;
+    acc.record_count += r.record_count;
+    byYear.set(r.year, acc);
+  }
+  return [...byYear.values()].sort((a, b) => a.year - b.year);
+}
+
 // County report card: ALICE household bands over time — how many households
 // sit below the Federal Poverty Level, between poverty and the county's
 // survival budget (ALICE), and above the threshold.
@@ -16,7 +38,7 @@ export function AliceTrend({ fips, countyLabel }: { fips: string; countyLabel: s
   const [rows, setRows] = useState<AliceRow[] | null>(null);
   useEffect(() => {
     loadAliceData()
-      .then((d) => setRows(d.rows.filter((r) => r.county_fips === fips)))
+      .then((d) => setRows(fips === 'state' ? sumByYear(d.rows) : d.rows.filter((r) => r.county_fips === fips)))
       .catch(() => setRows([]));
   }, [fips]);
   if (rows == null || rows.length === 0) return null;

@@ -74,6 +74,27 @@ export function CapitalTab() {
   );
 }
 
+// Self-loading wrappers so the Explore tab's statewide and county reports can
+// embed the capital views without owning the data fetch. Each renders the
+// same 6-column grid the Capital tab uses.
+export function CapitalStatewideSection() {
+  const [tables, setTables] = useState<CapitalTables | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  useEffect(() => { loadCapitalTables().then(setTables).catch((e) => setError(e.message)); }, []);
+  if (error) return <p className="text-sm text-red-500 mt-5">{error}</p>;
+  if (!tables) return <p className="text-sm text-slate-400 mt-5">Loading capital data…</p>;
+  return <StatewideView tables={tables} />;
+}
+
+export function CapitalCountySection({ fips, name }: { fips: string; name: string }) {
+  const [tables, setTables] = useState<CapitalTables | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  useEffect(() => { loadCapitalTables().then(setTables).catch((e) => setError(e.message)); }, []);
+  if (error) return <p className="text-sm text-red-500 mt-5">{error}</p>;
+  if (!tables) return <p className="text-sm text-slate-400 mt-5">Loading capital data…</p>;
+  return <CountyView tables={tables} fips={fips} name={name} />;
+}
+
 // A chart card. `span` is how many of the 6 grid columns it takes on wide
 // screens: charts with many series or many rows need the full width, compact
 // ones read fine at half.

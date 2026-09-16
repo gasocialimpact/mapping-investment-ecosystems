@@ -152,7 +152,7 @@ const fmtVal = (v: number | null | undefined, fmt: Fmt) =>
   v == null ? '—' : fmt === 'usd' ? `$${Math.round(v).toLocaleString()}` : fmt === 'yrs' ? `${v}` : `${v}%`;
 
 interface Props {
-  level: 'county' | 'tract';
+  level: 'county' | 'tract' | 'state';
   id: string;
   label: string;
   lifeExpectancy: number | null;
@@ -173,8 +173,10 @@ export function ToplineLocalData({ level, id, label, lifeExpectancy, stateLifeEx
       level === 'tract' ? loadCensusTracts() : Promise.resolve(null),
     ]).then(([counties, tractFile]) => {
       setState(counties.state);
-      setLocal(level === 'county' ? counties.counties[id] ?? null : tractFile?.tracts[id] ?? null);
-      setRu(level === 'county' ? counties.rural_urban : tractFile?.rural_urban ?? null);
+      setLocal(level === 'county' ? counties.counties[id] ?? null
+        : level === 'state' ? counties.state
+        : tractFile?.tracts[id] ?? null);
+      setRu(level === 'tract' ? tractFile?.rural_urban ?? null : counties.rural_urban);
     }).catch((e) => setError(e.message));
   }, [level, id]);
 
@@ -189,8 +191,11 @@ export function ToplineLocalData({ level, id, label, lifeExpectancy, stateLifeEx
   const life = { local: lifeExpectancy, state: stateLifeExpectancy };
   const value = (key: Row['key']): number | null =>
     key === 'life_expectancy' ? life.local : ((local[key as keyof CensusMetrics] as number | null) ?? null);
+  // The statewide report IS the benchmark, so it carries no ticks or red flags.
   const benchmark = (key: Row['key']): number | null =>
-    key === 'life_expectancy' ? life.state : ((state[key as keyof CensusMetrics] as number | null) ?? null);
+    level === 'state' ? null
+      : key === 'life_expectancy' ? life.state
+      : ((state[key as keyof CensusMetrics] as number | null) ?? null);
 
   return (
     <div className="mt-5">
@@ -223,7 +228,10 @@ export function ToplineLocalData({ level, id, label, lifeExpectancy, stateLifeEx
           Rural vs. Urban
         </button>
         <span className="text-[11px] text-slate-400 ml-auto">
-          {lens === 'all' ? `${label} vs. Georgia (tick) — red flags wellbeing measures trailing Georgia`
+          {lens === 'all'
+            ? level === 'state'
+              ? 'Georgia statewide — the same sources every county and tract report draws on'
+              : `${label} vs. Georgia (tick) — red flags wellbeing measures trailing Georgia`
             : lens === 'ruralurban' ? 'Compared against Georgia’s urban and rural medians'
             : 'All indicators the Census publishes for this breakdown; a dash is not a zero'}
         </span>
@@ -243,7 +251,7 @@ export function ToplineLocalData({ level, id, label, lifeExpectancy, stateLifeEx
                     {cat.title}
                   </span>
                 }
-                sub={`${cat.src} — ${label} vs. Georgia (tick).`}
+                sub={level === 'state' ? `${cat.src} — Georgia statewide.` : `${cat.src} — ${label} vs. Georgia (tick).`}
               >
                 <div className="space-y-3 mt-2">
                   {cat.rows.map((row) => (
@@ -282,13 +290,13 @@ export function ToplineLocalData({ level, id, label, lifeExpectancy, stateLifeEx
 
       {lens === 'income' && (
         <div className="mt-4">
-          <SnapshotCard title={`${label} by income bracket`} sub={`ACS B19001 and B25118 — ${label} vs. Georgia (tick).`}>
+          <SnapshotCard title={`${label} by income bracket`} sub={`ACS B19001 and B25118 — ${level === 'state' ? 'Georgia statewide' : `${label} vs. Georgia (tick)`}.`}>
             <div className="grid grid-cols-1 lg:grid-cols-2 pdf:grid-cols-2 gap-x-10 gap-y-5 mt-3">
               <div>
                 <p className="text-[13px] font-bold text-slate-700 mb-2">Share of households in each bracket</p>
                 <div className="space-y-3">
                   {INCOME_GROUPS.map(([key, name]) => (
-                    <MeterRow key={key} label={name} value={local.income_dist[key] ?? null} bench={state.income_dist[key] ?? null} fmt="pct" color={CAT_COLORS.income} />
+                    <MeterRow key={key} label={name} value={local.income_dist[key] ?? null} bench={level === 'state' ? null : state.income_dist[key] ?? null} fmt="pct" color={CAT_COLORS.income} />
                   ))}
                 </div>
               </div>
@@ -296,7 +304,7 @@ export function ToplineLocalData({ level, id, label, lifeExpectancy, stateLifeEx
                 <p className="text-[13px] font-bold text-slate-700 mb-2">Homeownership rate within each bracket</p>
                 <div className="space-y-3">
                   {INCOME_GROUPS.map(([key, name]) => (
-                    <MeterRow key={key} label={name} value={local.ownership_by_income?.[key] ?? null} bench={state.ownership_by_income?.[key] ?? null} fmt="pct" color={CAT_COLORS.income} />
+                    <MeterRow key={key} label={name} value={local.ownership_by_income?.[key] ?? null} bench={level === 'state' ? null : state.ownership_by_income?.[key] ?? null} fmt="pct" color={CAT_COLORS.income} />
                   ))}
                 </div>
               </div>
@@ -352,7 +360,7 @@ function MeterRow({ label, value, bench, fmt, dir, color, source }: {
         </span>
         <b className="tabular-nums shrink-0" style={worse ? { color: WORSE } : undefined}>
           {fmtVal(value, fmt)}
-          <span className="text-slate-400 font-normal text-xs"> · GA {fmtVal(bench, fmt)}</span>
+          {bench != null && <span className="text-slate-400 font-normal text-xs"> · GA {fmtVal(bench, fmt)}</span>}
         </b>
       </div>
       <div className="h-2 rounded-full bg-slate-100 overflow-hidden relative">
@@ -415,24 +423,27 @@ function GroupedLens({ lens, label, groups, data }: {
 
 function RuralUrbanLens({ label, level, local, ru }: {
   label: string;
-  level: 'county' | 'tract';
+  level: 'county' | 'tract' | 'state';
   local: CensusMetrics;
   ru: RuralUrbanBenchmarks | null;
 }) {
   if (!ru) return <p className="text-sm text-slate-400 mt-5">Rural/urban benchmarks are unavailable.</p>;
-  const geoWord = level === 'county' ? 'counties' : 'tracts';
-  const cls = local.urban_pct == null ? null : local.urban_pct >= 50 ? 'urban' : 'rural';
+  const geoWord = level === 'tract' ? 'tracts' : 'counties';
+  const geoOne = level === 'tract' ? 'tract' : 'county';
+  // A statewide row is neither urban nor rural — the classification sentence
+  // only applies to a single place.
+  const cls = level === 'state' || local.urban_pct == null ? null : local.urban_pct >= 50 ? 'urban' : 'rural';
   const rows: [string, string][] = [['here', label], ['urban', `Urban Georgia ${geoWord} (median)`], ['rural', `Rural Georgia ${geoWord} (median)`]];
   return (
     <div className="mt-4">
       <SnapshotCard
         title={`${label} vs. urban and rural Georgia`}
-        sub={`The 2020 Census classifies population as urban or rural block by block; a majority-urban ${level} counts as urban here. Medians span ${ru.urban.geo_count ?? '—'} urban and ${ru.rural.geo_count ?? '—'} rural Georgia ${geoWord}.`}
+        sub={`The 2020 Census classifies population as urban or rural block by block; a majority-urban ${geoOne} counts as urban here. Medians span ${ru.urban.geo_count ?? '—'} urban and ${ru.rural.geo_count ?? '—'} rural Georgia ${geoWord}.`}
       >
         {local.urban_pct != null && (
           <p className="text-sm text-slate-600 mt-2">
             <b>{label}</b> is <b>{local.urban_pct}% urban</b> by population
-            {cls && <> — {cls === 'urban' ? 'an urban' : 'a rural'} {level} on this classification</>}.
+            {cls && <> — {cls === 'urban' ? 'an urban' : 'a rural'} {geoOne} on this classification</>}.
           </p>
         )}
         <div className="grid grid-cols-1 lg:grid-cols-2 pdf:grid-cols-2 gap-x-10 gap-y-5 mt-3">

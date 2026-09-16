@@ -13,10 +13,13 @@ import { FramingTab } from './components/FramingTab';
 import { FrameworkTab } from './components/FrameworkTab';
 import { SearchBar } from './components/SearchBar';
 
-const TABS: { id: Tab; label: string; icon: typeof Map }[] = [
+const TABS: { id: Tab; label: string; icon: typeof Map; hidden?: boolean }[] = [
   { id: 'explore', label: 'Exploring Local Context', icon: Map },
   { id: 'framing', label: 'Framing Our Ecosystem', icon: Network },
-  { id: 'capital', label: 'Tracking Capital Changes Over Time', icon: TrendingUp },
+  // Hidden, not removed: its statewide and county views now render inside the
+  // Explore tab's reports. Flip `hidden` off to bring the tab back while its
+  // future contents are decided.
+  { id: 'capital', label: 'Tracking Capital Changes Over Time', icon: TrendingUp, hidden: true },
   { id: 'glossary', label: 'Definitions, Key Terms & Sources', icon: BookOpen },
 ];
 
@@ -48,6 +51,20 @@ function Dashboard() {
   useEffect(() => {
     document.documentElement.classList.toggle('embed-flow', flow);
   }, [flow]);
+
+  // Deep components (the statewide report's ecosystem note) can ask for a tab
+  // switch without threading the setter through the tree.
+  useEffect(() => {
+    const onSetTab = (e: Event) => {
+      const tab = (e as CustomEvent<Tab>).detail;
+      if (TABS.some((t) => t.id === tab)) {
+        setActiveTab(tab);
+        scrollToTop();
+      }
+    };
+    window.addEventListener('gsic:set-tab', onSetTab);
+    return () => window.removeEventListener('gsic:set-tab', onSetTab);
+  }, [scrollToTop]);
 
   if (error) {
     return (
@@ -91,7 +108,7 @@ function Dashboard() {
           </div>
         </div>
         <nav className="max-w-[1600px] mx-auto px-4 sm:px-6 flex gap-1 overflow-x-auto">
-          {TABS.map((t) => (
+          {TABS.filter((t) => !t.hidden).map((t) => (
             <button
               key={t.id}
               onClick={() => setActiveTab(t.id)}

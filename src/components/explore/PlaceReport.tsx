@@ -13,6 +13,7 @@ import { CountyInvestmentTrend, TractInvestmentTrend } from '../capital/PlaceInv
 import { SnapshotCard } from '../SnapshotButton';
 import { SavePdfButton } from '../SavePdfButton';
 import { TractPicker } from './TractPicker';
+import { CapitalStatewideSection, CapitalCountySection } from '../capital/CapitalTab';
 
 // Category chip colors, consistent with the CVI meters used elsewhere.
 const DRIVER_CATEGORY_COLORS: Record<string, string> = {
@@ -38,6 +39,148 @@ export function PlaceReport() {
 
 type CountyReportView = 'topline' | 'data' | 'ecosystem';
 
+// --- Statewide report --------------------------------------------------------
+
+// The default (All counties) report: Georgia-level figures from the same
+// sources that feed the county and tract reports. The ecosystem itself lives
+// on the Framing Our Ecosystem tab, so this report points there instead of
+// repeating it.
+function StateReport() {
+  const { data } = useData();
+  const { place } = usePlace();
+  const [view, setView] = useState<Exclude<CountyReportView, 'ecosystem'>>('topline');
+
+  if (!place) return null;
+  const demo = place.demographics;
+  const orgCount = data?.organizations.length ?? 0;
+  const totalCapital = (data?.capitalFlows ?? []).reduce((s, f) => s + (f.amount ?? 0), 0);
+  const fmtVal = (v: number | null, unit: string) =>
+    v == null ? '—' : unit === '%' ? `${v}%` : `${v}`;
+
+  const demoGroups: { group: string; indexes: number[] }[] = [];
+  demo.labels.forEach((_, i) => {
+    const group = demo.groups[i];
+    let bucket = demoGroups.find((g) => g.group === group);
+    if (!bucket) {
+      bucket = { group, indexes: [] };
+      demoGroups.push(bucket);
+    }
+    bucket.indexes.push(i);
+  });
+
+  return (
+    <section id="place-report" className="mt-8 border-t-[3px] border-brand-indigo pt-6">
+      <div className="flex items-baseline gap-4 flex-wrap">
+        <h2 className="text-2xl font-bold text-slate-800">Georgia — Statewide</h2>
+        <span className="text-sm text-slate-500">
+          159 counties · 2,796 census tracts · pick a county or tract above for its own report
+        </span>
+      </div>
+
+      <div className="flex gap-5 mt-3">
+        <span className="flex items-center gap-1.5 text-sm">
+          <Building2 size={14} className="text-brand-indigo" />
+          <b>{orgCount}</b>
+          <span className="text-slate-500">ecosystem orgs statewide</span>
+        </span>
+        {totalCapital > 0 && (
+          <span className="flex items-center gap-1.5 text-sm">
+            <TrendingUp size={14} className="text-brand-green" />
+            <b className="text-brand-green">{formatCurrency(totalCapital)}</b>
+            <span className="text-slate-500">in tracked flows</span>
+          </span>
+        )}
+      </div>
+
+      {/* Report sub-tabs — the ecosystem view lives on its own tab */}
+      <div className="flex items-center gap-3 flex-wrap mt-4 print:hidden">
+        {([
+          ['topline', 'Topline Local Data'],
+          ['data', 'Vulnerable Populations & Investment Trends'],
+        ] as [Exclude<CountyReportView, 'ecosystem'>, string][]).map(([v, label]) => (
+          <button
+            key={v}
+            onClick={() => setView(v)}
+            className={`text-sm font-medium px-3 py-1.5 rounded-md border transition-colors ${
+              view === v
+                ? 'bg-brand-indigo text-white border-brand-indigo'
+                : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+        <button
+          onClick={() => window.dispatchEvent(new CustomEvent('gsic:set-tab', { detail: 'framing' }))}
+          className="text-sm font-medium px-3 py-1.5 rounded-md border border-dashed border-slate-300 text-slate-500 hover:text-brand-green hover:border-brand-green transition-colors"
+          title="The statewide ecosystem view lives on the Framing Our Ecosystem tab"
+        >
+          The Ecosystem — see Framing Our Ecosystem →
+        </button>
+        <span className="ml-auto"><SavePdfButton bare /></span>
+      </div>
+
+      {view === 'topline' && (
+        <ToplineLocalData
+          level="state"
+          id="13"
+          label="Georgia"
+          lifeExpectancy={demo.stateBenchmark[15] ?? null}
+          stateLifeExpectancy={demo.stateBenchmark[15] ?? null}
+        />
+      )}
+
+      {view === 'data' && (
+        <>
+          <div className="grid grid-cols-1 lg:grid-cols-2 pdf:grid-cols-2 gap-5 mt-5 items-start">
+            <ReportCard title="Populations at Risk" sub="Georgia vs. the U.S. — the benchmarks every county report is measured against. Red = worse than the national figure.">
+              <table className="w-full text-[13px] mt-2">
+                <thead>
+                  <tr className="text-[10px] text-slate-400 uppercase tracking-wide">
+                    <th className="text-left font-bold py-1">Indicator</th>
+                    <th className="text-right font-bold py-1">Georgia</th>
+                    <th className="text-right font-bold py-1">U.S.</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {demoGroups.map((g) => (
+                    [
+                      <tr key={g.group}>
+                        <td colSpan={3} className="pt-2.5 pb-1 text-[10px] font-bold text-slate-400 uppercase tracking-widest">{g.group}</td>
+                      </tr>,
+                      ...g.indexes.map((i) => {
+                        const ga = demo.stateBenchmark[i];
+                        const us = demo.usBenchmark[i];
+                        const worse = ga != null && us != null &&
+                          (demo.labels[i].includes('Life expectancy') ? ga < us : ga > us);
+                        return (
+                          <tr key={i} className="border-t border-slate-50">
+                            <td className="py-1 pr-2 text-slate-600">{demo.labels[i]}</td>
+                            <td className={`py-1 text-right tabular-nums font-semibold ${worse ? 'text-[#b93c11]' : 'text-slate-800'}`}>{fmtVal(ga, demo.units[i])}</td>
+                            <td className="py-1 text-right tabular-nums text-slate-500">{fmtVal(us, demo.units[i])}</td>
+                          </tr>
+                        );
+                      }),
+                    ]
+                  ))}
+                </tbody>
+              </table>
+            </ReportCard>
+
+            <AliceTrend fips="state" countyLabel="Georgia" />
+          </div>
+
+          <div className="mt-6">
+            <h3 className="text-sm font-bold uppercase tracking-widest text-slate-500">Investment trends statewide</h3>
+            <p className="text-xs text-slate-400 mt-1">Community-investment dollars across programs and years — the statewide picture behind each county's investment cards.</p>
+            <CapitalStatewideSection />
+          </div>
+        </>
+      )}
+    </section>
+  );
+}
+
 function CountyReport() {
   const { data, maps } = useData();
   const { place, countyByFips, selectedFips, orgsByCountyFips } = usePlace();
@@ -48,16 +191,9 @@ function CountyReport() {
   if (!place) return null;
   const county = selectedFips ? countyByFips.get(selectedFips) : null;
 
-  if (!county) {
-    return (
-      <div className="mt-6 border border-dashed border-slate-300 rounded-lg py-14 text-center">
-        <h3 className="text-base font-bold text-slate-700">County Report</h3>
-        <p className="text-sm text-slate-400 mt-1">
-          Select a jurisdiction above (or click the map) to load its report.
-        </p>
-      </div>
-    );
-  }
+  // No county selected — the statewide report, built from the same sources
+  // that feed every county and tract report.
+  if (!county) return <StateReport />;
 
   const orgIds = orgsByCountyFips.get(county.fips) ?? [];
   const orgs = orgIds.map((id) => maps.orgById.get(id)).filter((o): o is Organization => !!o);
@@ -290,6 +426,13 @@ function CountyReport() {
             <p className="text-[10px] text-slate-400 mt-2">Bar color = CVI category · value = national percentile.</p>
           </ReportCard>
         </div>
+      </div>
+
+      {/* Program-level capital trends + CDFI lending detail for this county,
+          migrated in from the Tracking Capital Changes Over Time tab. */}
+      <div className="mt-6">
+        <h3 className="text-sm font-bold uppercase tracking-widest text-slate-500">Capital over time</h3>
+        <CapitalCountySection fips={county.fips} name={county.county} />
       </div>
       </>
       )}

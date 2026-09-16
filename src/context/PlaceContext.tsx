@@ -51,7 +51,8 @@ export function PlaceProvider({ children }: { children: ReactNode }) {
   const [metric, setMetric] = useState<PlaceMetric>('cvi');
   const [scope, setScope] = useState<PlaceScope>('county');
   // DeKalb County loads by default so the page opens with a worked report.
-  const [selectedFips, setSelectedFips] = useState<string | null>(DEFAULT_COUNTY_FIPS);
+  // No default county — the tab opens on the statewide (All counties) report.
+  const [selectedFips, setSelectedFips] = useState<string | null>(null);
   const [selectedGeoid, setSelectedGeoid] = useState<string | null>(null);
   const [tracts, setTracts] = useState<PlaceTractData | null>(null);
   const [tractStatus, setTractStatus] = useState<TractStatus>('idle');
