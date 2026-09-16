@@ -103,7 +103,9 @@ function Card({ title, sub, children, note, span = 'half' }: {
   children: React.ReactNode;
 }) {
   return (
-    <div className={span === 'full' ? 'xl:col-span-6 pdf:col-span-6' : 'xl:col-span-3 pdf:col-span-3'}>
+    // The wrapper is the grid item, so the card inside needs h-full for
+    // side-by-side pairs to mirror heights.
+    <div className={`[&>div]:h-full ${span === 'full' ? 'xl:col-span-6 pdf:col-span-6' : 'xl:col-span-3 pdf:col-span-3'}`}>
       <SnapshotCard title={title} sub={sub && <span className="block max-w-3xl">{sub}</span>} note={note}>
         <div className="mt-3">{children}</div>
       </SnapshotCard>

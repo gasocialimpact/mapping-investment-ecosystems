@@ -97,9 +97,10 @@ export function SnapshotCard({
   const label = snapshotLabel ?? (typeof title === 'string' ? title : 'snapshot');
 
   return (
-    // h-full lets side-by-side cards mirror their row's height (a no-op in
-    // plain block flow, where the parent's height is auto).
-    <div ref={ref} className="relative bg-white rounded-lg border border-slate-200 p-5 shadow-sm h-full">
+    // No h-full here: as a grid/flex item the card stretches to its row on
+    // its own, and h-full balloons cards inside any column whose height the
+    // layout has already resolved (the Explore sidebar, for one).
+    <div ref={ref} className="relative bg-white rounded-lg border border-slate-200 p-5 shadow-sm">
       <div className="absolute top-2.5 right-2.5 print:hidden">
         <SnapshotButton target={ref} label={label} />
       </div>
