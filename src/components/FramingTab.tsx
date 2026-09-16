@@ -14,12 +14,14 @@ import { formatCurrency } from '../lib/format';
 // one view: filters narrow both, and selecting a segment or a card unfurls
 // the organizations, capital flows and instruments behind it.
 
+// The records panel is always open — 'all' (every segment) is the resting
+// state, so "closing" a selection falls back rather than collapsing the split.
 type Selection =
+  | { kind: 'all' }
   | { kind: 'card'; card: SubExample }
   | { kind: 'segment'; key: string }
   | { kind: 'untagged'; key: string }
-  | { kind: 'uncategorized' }
-  | null;
+  | { kind: 'uncategorized' };
 
 const TOGGLE_KEY = 'framing.frameworkOn';
 const readToggle = () => { try { return localStorage.getItem(TOGGLE_KEY) !== 'off'; } catch { return true; } };
@@ -31,7 +33,7 @@ export function FramingTab() {
   const [segFilter, setSegFilter] = useState<string | null>(null);
   const [fnFilter, setFnFilter] = useState<FnKey | null>(null);
   const [impactFilter, setImpactFilter] = useState<string | null>(null);
-  const [selection, setSelection] = useState<Selection>(null);
+  const [selection, setSelection] = useState<Selection>({ kind: 'all' });
   const [frameworkOn, setFrameworkOn] = useState<boolean>(readToggle);
   const setToggle = (on: boolean) => {
     setFrameworkOn(on);
@@ -81,7 +83,10 @@ export function FramingTab() {
     let list: Organization[] = [];
     let title = '';
     let segKey: string | null = null;
-    if (selection?.kind === 'card') {
+    if (selection.kind === 'all') {
+      list = orgs;
+      title = 'All segments — every mapped organization';
+    } else if (selection?.kind === 'card') {
       list = byCard.get(selection.card.id) ?? [];
       title = selection.card.title;
       segKey = selection.card.seg;
@@ -110,9 +115,14 @@ export function FramingTab() {
   const impactDims = data?.impactDimensions ?? [];
   const activeImpact = impactDims.find((d) => d.id === impactFilter) ?? null;
 
+  // Deselecting anything lands back on the browse-all view — the active
+  // segment's records when a segment is filtered, every segment otherwise.
+  const fallback = (): Selection =>
+    segFilter ? { kind: 'segment', key: segFilter } : { kind: 'all' };
+
   const selectSegment = (key: string | null) => {
     setSegFilter(key);
-    setSelection(key ? { kind: 'segment', key } : null);
+    setSelection(key ? { kind: 'segment', key } : { kind: 'all' });
   };
 
   // The segment whose type cards are on screen — the filter when set,
@@ -176,7 +186,7 @@ export function FramingTab() {
 
         {(segFilter || fnFilter || impactFilter) && (
           <button
-            onClick={() => { setSegFilter(null); setFnFilter(null); setImpactFilter(null); setSelection(null); }}
+            onClick={() => { setSegFilter(null); setFnFilter(null); setImpactFilter(null); setSelection({ kind: 'all' }); }}
             className="ml-auto text-xs font-semibold text-slate-500 hover:text-slate-800"
           >
             Clear filters
@@ -194,8 +204,8 @@ export function FramingTab() {
 
       {/* Segment selector: one segment's type cards show at a time, so the
           types are reachable right under the diagram instead of five stacked
-          sections deep. The diagram and the Segment filter drive the same
-          choice; these pills just switch the view without opening records. */}
+          sections deep. The diagram, the Segment filter and these pills drive
+          the same choice, and the records panel follows it. */}
       <div className="flex flex-wrap items-center gap-2" role="tablist" aria-label="Organization types by segment">
         {V2_SEGMENTS.map((s) => {
           const active = shownSeg === s.key;
@@ -205,7 +215,7 @@ export function FramingTab() {
               key={s.key}
               role="tab"
               aria-selected={active}
-              onClick={() => setSegFilter(s.key)}
+              onClick={() => selectSegment(s.key)}
               className={`text-xs font-semibold rounded-full px-3.5 py-1.5 border transition-colors ${active ? 'text-white border-transparent' : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'} ${dimmed && !active ? 'opacity-40' : ''}`}
               style={active ? { background: s.color } : undefined}
             >
@@ -217,9 +227,9 @@ export function FramingTab() {
         <span className="text-xs text-slate-400 ml-1">Organization types for the selected segment appear below.</span>
       </div>
 
-      {/* Cards for the shown segment. With a selection open, the type cards
-          and the records panel split the screen instead of stacking. */}
-      <div className={selection ? 'grid gap-5 items-start xl:grid-cols-2 pdf:grid-cols-2' : ''}>
+      {/* The type cards and the records panel share the screen permanently —
+          the panel rests on the all-segments view rather than closing. */}
+      <div className="grid gap-5 items-start xl:grid-cols-2 pdf:grid-cols-2">
       <div className="space-y-6 min-w-0">
         {V2_SEGMENTS.filter((s) => s.key === shownSeg).map((s) => {
           const cards = visibleCards.filter((c) => c.seg === s.key);
@@ -243,7 +253,7 @@ export function FramingTab() {
                 </div>
                 {s.data && (
                   <button
-                    onClick={() => setSelection(segSelected ? null : { kind: 'segment', key: s.key })}
+                    onClick={() => setSelection(segSelected ? { kind: 'all' } : { kind: 'segment', key: s.key })}
                     className={`text-xs font-semibold rounded-md px-2.5 py-1.5 border transition-colors ${segSelected ? 'text-white border-transparent' : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'}`}
                     style={segSelected ? { background: s.color } : undefined}
                   >
@@ -259,7 +269,7 @@ export function FramingTab() {
                   return (
                     <button
                       key={card.id}
-                      onClick={() => setSelection(isSel ? null : { kind: 'card', card })}
+                      onClick={() => setSelection(isSel ? fallback() : { kind: 'card', card })}
                       aria-pressed={isSel}
                       className={`text-left bg-white rounded-lg border p-3.5 flex flex-col gap-2 transition-colors ${isSel ? 'border-transparent ring-2' : 'border-slate-200 hover:border-slate-300'}`}
                       style={{ borderTop: `3px solid ${s.color}`, ...(isSel ? { boxShadow: `0 0 0 2px ${s.color}` } : {}) }}
@@ -286,7 +296,7 @@ export function FramingTab() {
 
                 {untagged.length > 0 && !fnFilter && (
                   <button
-                    onClick={() => setSelection(selection?.kind === 'untagged' && selection.key === s.key ? null : { kind: 'untagged', key: s.key })}
+                    onClick={() => setSelection(selection?.kind === 'untagged' && selection.key === s.key ? fallback() : { kind: 'untagged', key: s.key })}
                     className="text-left rounded-lg border border-dashed border-slate-300 p-3.5 flex flex-col gap-1 hover:border-slate-400 transition-colors"
                   >
                     <h4 className="text-sm font-semibold text-slate-600">Not yet tagged</h4>
@@ -301,18 +311,16 @@ export function FramingTab() {
         })}
       </div>
 
-      {selection && (
-        <div className="min-w-0 xl:sticky xl:top-4 xl:max-h-[calc(100vh-2rem)] xl:overflow-y-auto print:static print:max-h-none print:overflow-visible">
-          <RecordsPanel
-            key={selTitle}
-            title={selTitle}
-            color={V2_SEGMENTS.find((s) => s.key === selSeg)?.color ?? '#4750a2'}
-            orgs={selOrgs}
-            flows={selFlows}
-            onClose={() => setSelection(null)}
-          />
-        </div>
-      )}
+      <div className="min-w-0 xl:sticky xl:top-4 xl:max-h-[calc(100vh-2rem)] xl:overflow-y-auto print:static print:max-h-none print:overflow-visible">
+        <RecordsPanel
+          key={selTitle}
+          title={selTitle}
+          color={V2_SEGMENTS.find((s) => s.key === selSeg)?.color ?? '#4750a2'}
+          orgs={selOrgs}
+          flows={selFlows}
+          onClose={selection.kind === 'all' ? undefined : () => setSelection({ kind: 'all' })}
+        />
+      </div>
       </div>
 
       {uncategorizedCount > 0 && selection?.kind !== 'uncategorized' && (
@@ -365,7 +373,8 @@ function RecordsPanel({ title, color, orgs, flows, onClose }: {
   color: string;
   orgs: Organization[];
   flows: CapitalFlow[];
-  onClose: () => void;
+  /** Absent on the resting all-segments view — the panel never closes, it falls back. */
+  onClose?: () => void;
 }) {
   const [view, setView] = useState<RecordsView>('orgs');
   const instruments = useInstrumentsForFlows(flows);
@@ -384,7 +393,7 @@ function RecordsPanel({ title, color, orgs, flows, onClose }: {
         {totalCapital > 0 && (
           <span className="text-xs text-slate-500">{formatCurrency(totalCapital)} in tracked flows</span>
         )}
-        <button onClick={onClose} className="ml-auto text-xs text-slate-400 hover:text-slate-600">✕ Close</button>
+        {onClose && <button onClick={onClose} className="ml-auto text-xs text-slate-400 hover:text-slate-600">✕ All segments</button>}
       </div>
 
       {orgs.length === 0 ? (
