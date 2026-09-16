@@ -97,7 +97,9 @@ export function SnapshotCard({
   const label = snapshotLabel ?? (typeof title === 'string' ? title : 'snapshot');
 
   return (
-    <div ref={ref} className="relative bg-white rounded-lg border border-slate-200 p-5 shadow-sm">
+    // h-full lets side-by-side cards mirror their row's height (a no-op in
+    // plain block flow, where the parent's height is auto).
+    <div ref={ref} className="relative bg-white rounded-lg border border-slate-200 p-5 shadow-sm h-full">
       <div className="absolute top-2.5 right-2.5 print:hidden">
         <SnapshotButton target={ref} label={label} />
       </div>

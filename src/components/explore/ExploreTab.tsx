@@ -2,7 +2,6 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useData } from '../../context/DataContext';
 import { usePlace } from '../../context/PlaceContext';
 import { useEmbed } from '../../context/EmbedContext';
-import { formatCurrency } from '../../lib/format';
 import { loadTractPlaces } from '../../data/census';
 import { ExploreMap } from './ExploreMap';
 import { HighLowCard, DistributionCard, GapsCard } from './ExploreSidebar';
@@ -29,17 +28,6 @@ export function ExploreTab() {
     prevSelection.current = current;
   }, [selectedFips, selectedGeoid, scrollIntoView]);
 
-  const stats = useMemo(() => {
-    const orgCount = data?.organizations.length ?? 0;
-    const totalCapital = (data?.capitalFlows ?? []).reduce((s, f) => s + (f.amount ?? 0), 0);
-    let medianCvi: number | null = null;
-    if (place) {
-      const scores = place.counties.map((c) => c.scores[0]).sort((a, b) => a - b);
-      medianCvi = scores[Math.floor(scores.length / 2)];
-    }
-    return { orgCount, totalCapital, medianCvi };
-  }, [data, place]);
-
   const counties = useMemo(
     () => [...(place?.counties ?? [])].sort((a, b) => a.county.localeCompare(b.county)),
     [place],
@@ -47,14 +35,6 @@ export function ExploreTab() {
 
   return (
     <div className="pt-2 pb-10">
-      {/* Stat tiles */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 pdf:grid-cols-4 gap-4 mt-6">
-        <StatTile value="159" label="Counties" bg="bg-brand-green-soft" fg="text-[#17632e]" />
-        <StatTile value={stats.medianCvi != null ? stats.medianCvi.toFixed(2) : '—'} label="Median overall CVI" bg="bg-brand-green-soft" fg="text-[#17632e]" />
-        <StatTile value={String(stats.orgCount)} label="Organizations mapped" bg="bg-brand-indigo-soft" fg="text-brand-indigo" />
-        <StatTile value={formatCurrency(stats.totalCapital)} label="Tracked capital" bg="bg-[#fbf3d3]" fg="text-[#8a6d00]" />
-      </div>
-
       {/* One control row drives scope, map and report: a county alone loads
           the county view; adding a tract switches everything to that tract. */}
       <PlacePicker counties={counties} />
@@ -162,11 +142,3 @@ function PlacePicker({ counties }: { counties: { fips: string; county: string }[
   );
 }
 
-function StatTile({ value, label, bg, fg }: { value: string; label: string; bg: string; fg: string }) {
-  return (
-    <div className={`rounded-xl px-5 py-5 ${bg}`}>
-      <div className={`text-[26px] font-bold tabular-nums ${fg}`}>{value}</div>
-      <div className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mt-0.5">{label}</div>
-    </div>
-  );
-}

@@ -54,6 +54,16 @@ const CATEGORIES: {
     ],
   },
   {
+    id: 'health', title: 'Health & Wellbeing', src: 'ACS 5-year (DP03, S1810) · CDC PLACES · USALEEP', icon: HeartPulse,
+    rows: [
+      { key: 'uninsured', label: 'Uninsured', fmt: 'pct', dir: 'down' },
+      { key: 'disability', label: 'Living with a disability', fmt: 'pct' },
+      { key: 'life_expectancy', label: 'Life expectancy (years)', fmt: 'yrs', dir: 'up', source: 'CVI source data' },
+      { key: 'checkup', label: 'Routine checkup in the past year (adults)', fmt: 'pct', dir: 'up', source: 'CDC PLACES' },
+      { key: 'mental_distress', label: 'Frequent mental distress (adults)', fmt: 'pct', dir: 'down', source: 'CDC PLACES' },
+    ],
+  },
+  {
     id: 'housing', title: 'Housing', src: 'ACS 5-year (DP04, B25070, B25091)', icon: Home,
     rows: [
       { key: 'ownership', label: 'Homeownership rate', fmt: 'pct', dir: 'up' },
@@ -80,16 +90,6 @@ const CATEGORIES: {
       { key: 'cash_assistance_households', label: 'Households with cash public assistance', fmt: 'pct' },
       { key: 'hcv_households', label: 'Renter households using housing choice vouchers', fmt: 'pct', source: 'HUD 2024' },
       { key: 'hud_assisted_households', label: 'Households in any HUD-subsidized housing', fmt: 'pct', source: 'HUD 2024' },
-    ],
-  },
-  {
-    id: 'health', title: 'Health & Wellbeing', src: 'ACS 5-year (DP03, S1810) · CDC PLACES · USALEEP', icon: HeartPulse,
-    rows: [
-      { key: 'uninsured', label: 'Uninsured', fmt: 'pct', dir: 'down' },
-      { key: 'disability', label: 'Living with a disability', fmt: 'pct' },
-      { key: 'life_expectancy', label: 'Life expectancy (years)', fmt: 'yrs', dir: 'up', source: 'CVI source data' },
-      { key: 'checkup', label: 'Routine checkup in the past year (adults)', fmt: 'pct', dir: 'up', source: 'CDC PLACES' },
-      { key: 'mental_distress', label: 'Frequent mental distress (adults)', fmt: 'pct', dir: 'down', source: 'CDC PLACES' },
     ],
   },
 ];
@@ -238,7 +238,7 @@ export function ToplineLocalData({ level, id, label, lifeExpectancy, stateLifeEx
       </div>
 
       {lens === 'all' && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 pdf:grid-cols-2 gap-5 mt-4 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 pdf:grid-cols-2 gap-5 mt-4">
           {CATEGORIES.map((cat) => {
             const Icon = cat.icon;
             return (

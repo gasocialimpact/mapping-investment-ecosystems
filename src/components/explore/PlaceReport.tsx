@@ -132,7 +132,7 @@ function StateReport() {
 
       {view === 'data' && (
         <>
-          <div className="grid grid-cols-1 lg:grid-cols-2 pdf:grid-cols-2 gap-5 mt-5 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 pdf:grid-cols-2 gap-5 mt-5">
             <ReportCard title="Populations at Risk" sub="Georgia vs. the U.S. — the benchmarks every county report is measured against. Red = worse than the national figure.">
               <table className="w-full text-[13px] mt-2">
                 <thead>
@@ -292,9 +292,11 @@ function CountyReport() {
       )}
       {view === 'data' && (
       <>
-      {/* ~65/35 split: people & investment on the left, CVI on the right */}
-      <div className="grid grid-cols-1 lg:grid-cols-[1.85fr_1fr] pdf:grid-cols-[1.85fr_1fr] gap-5 mt-5 items-start">
-        <div className="space-y-5">
+      {/* ~65/35 split: people & investment on the left, CVI on the right.
+          Columns stretch and their last card absorbs the difference, so both
+          sides end on the same line instead of leaving a white gap. */}
+      <div className="grid grid-cols-1 lg:grid-cols-[1.85fr_1fr] pdf:grid-cols-[1.85fr_1fr] gap-5 mt-5">
+        <div className="flex flex-col gap-5 [&>*:last-child]:flex-1">
           {/* Populations at risk */}
           <ReportCard title="Populations at Risk" sub={`County · ${demo.benchmarkName} · U.S. comparison.`}>
             <table className="w-full text-[13px] mt-2">
@@ -372,7 +374,7 @@ function CountyReport() {
           <CountyInvestmentTrend fips={county.fips} countyLabel={`${county.county}`} />
         </div>
 
-        <div className="space-y-5">
+        <div className="flex flex-col gap-5 [&>*:last-child]:flex-1">
           {/* CVI profile */}
           <ReportCard title="CVI Category Profile" sub="County score vs. the median U.S. county (tick). Higher = more vulnerable.">
             <div className="space-y-3 mt-1">
@@ -548,7 +550,7 @@ function TractReport() {
       )}
 
       {view === 'data' && (
-      <div className="grid grid-cols-1 lg:grid-cols-[1.85fr_1fr] pdf:grid-cols-[1.85fr_1fr] gap-5 mt-5 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-[1.85fr_1fr] pdf:grid-cols-[1.85fr_1fr] gap-5 mt-5">
         {/* Populations at risk (tract) */}
         <ReportCard title="Populations at Risk" sub={`Tract · ${par.stateName} · U.S. comparison.`}>
           <table className="w-full text-[13px] mt-2">
@@ -584,7 +586,7 @@ function TractReport() {
           </table>
         </ReportCard>
 
-        <div className="space-y-5">
+        <div className="flex flex-col gap-5 [&>*:last-child]:flex-1">
         {/* Tract CVI */}
         <ReportCard title="CVI Profile" sub="Tract score vs. the national median (tick). Higher = more vulnerable.">
           <div className="space-y-3 mt-1">
