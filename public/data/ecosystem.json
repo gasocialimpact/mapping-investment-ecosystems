@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-01T06:26:39.609Z",
+  "generatedAt": "2026-10-02T06:25:30.813Z",
   "source": "Airtable",
   "organizations": [
     {
@@ -940,9 +940,28 @@
       "lng": -84.422,
       "website": null,
       "description": "The foundation is an independent legal entity providing grants to non-profit organizations primarily in the state of Georgia.\nCitizens Chapter legacy projects and the Annual Community Impact award are two ways the Georgia Power Foundation also supports volunteerism. Through engaging hands-on projects, we strengthen bonds with non-profits and support diverse communities in meaningful ways. Whether through legacy projects, board membership, or community service projects, Georgia Power staff and retirees continue to make a lasting difference in our communities.",
-      "ein": null,
-      "einMatch": "No match found",
-      "irs": null,
+      "ein": "581709417",
+      "einMatch": "Auto: name + city",
+      "irs": {
+        "ein": "581709417",
+        "found": true,
+        "legalName": "GEORGIA POWER FOUNDATION INC",
+        "subsection": "501(c)(3)",
+        "ntee": null,
+        "nteeMajor": null,
+        "foundation": "Private non-operating foundation",
+        "rulingYear": 1986,
+        "yearFormation": null,
+        "mission": null,
+        "bmf": {
+          "assets": 217001163,
+          "income": 80730628,
+          "revenue": null,
+          "taxPeriod": "202412"
+        },
+        "latest": null,
+        "trend": []
+      },
       "locationId": "loc_atlanta_ga",
       "contactIds": [],
       "capitalFlowIds": [],
@@ -1261,7 +1280,69 @@
       "einMatch": "No match found",
       "irs": {
         "ein": "133238657",
-        "found": false
+        "found": true,
+        "legalName": "NONPROFIT FINANCE FUND",
+        "subsection": "501(c)(3)",
+        "ntee": "S500",
+        "nteeMajor": "Community Improvement & Capacity Building",
+        "foundation": "Public charity: publicly supported 170(b)(1)(A)(vi)",
+        "rulingYear": 1985,
+        "yearFormation": 1984,
+        "mission": "NONPROFIT FINANCE FUND IS A NONPROFIT LENDER, CONSULTANT, AND ADVOCATE. FOR MORE THAN 40 YEARS, WE'VE WORKED TO STRENGTHEN NONPROFIT ORGANIZATIONS AND IMPROVE THE WAY MONEY FLOWS TO SOCIAL GOOD. WE ARE COMMITTED TO BUILDING A MORE EQUITABLE AND JUST SOCIAL SECTOR, AND HELPING COMMUNITY-CENTERED ORGANIZATIONS LED BY AND SERVING PEOPLE OF COLOR ACCESS THE MONEY AND RESOURCES THEY NEED TO REALIZE THEIR COMMUNITIES' ASPIRATIONS.",
+        "bmf": {
+          "assets": 259586654,
+          "income": 31792086,
+          "revenue": 31792086,
+          "taxPeriod": "202412"
+        },
+        "latest": {
+          "taxYear": 2021,
+          "form": "990",
+          "periodEnd": "2021-12-31",
+          "revenue": 35516704,
+          "contributions": 20939288,
+          "programRevenue": 14327346,
+          "investmentIncome": 17085,
+          "expenses": 24281909,
+          "grantsPaid": 1898426,
+          "salaries": 14744492,
+          "netIncome": 11234795,
+          "assetsEOY": 319614124,
+          "liabilitiesEOY": 229955991,
+          "netAssetsEOY": 89658133,
+          "employees": 127,
+          "volunteers": 14,
+          "cashAndSavingsEOY": 67096250,
+          "pledgesReceivableEOY": 4382356,
+          "notesLoansReceivableEOY": null,
+          "landBuildingsNetEOY": 1600661,
+          "investPublicSecuritiesEOY": null,
+          "investOtherSecuritiesEOY": 16838,
+          "investProgramRelatedEOY": 245730326,
+          "grantsPayableEOY": null,
+          "taxExemptBondsEOY": null,
+          "mortgagesNotesPayableEOY": 112034007,
+          "unsecuredNotesPayableEOY": 111239178,
+          "netAssetsUnrestrictedEOY": null,
+          "netAssetsTempRestrictedEOY": null,
+          "netAssetsPermRestrictedEOY": null
+        },
+        "trend": [
+          {
+            "taxYear": 2020,
+            "revenue": 54019339,
+            "expenses": 20208858,
+            "assetsEOY": 311084073,
+            "netAssetsEOY": 78423338
+          },
+          {
+            "taxYear": 2021,
+            "revenue": 35516704,
+            "expenses": 24281909,
+            "assetsEOY": 319614124,
+            "netAssetsEOY": 89658133
+          }
+        ]
       },
       "locationId": "loc_new_york_city_ny",
       "contactIds": [],
@@ -4252,10 +4333,10 @@
         "yearFormation": null,
         "mission": null,
         "bmf": {
-          "assets": 4063284,
-          "income": 3820606,
-          "revenue": null,
-          "taxPeriod": "202409"
+          "assets": 966544921,
+          "income": 7971950,
+          "revenue": 7971950,
+          "taxPeriod": "202509"
         },
         "latest": null,
         "trend": []
@@ -4647,10 +4728,10 @@
         "yearFormation": 2010,
         "mission": "THE MISSION OF THE ATLANTIC COAST CONSERVANCY IS TO PROVIDE 21ST CENTURY SOLUTIONS AND SOUND SCIENTIFIC APPLICATIONS FOR CONSERVATION OF CRITICAL NATURAL RESOURCES IN THE FACE OF A CHANGING CLIMATE, FOCUSING ON THE SOUTHEASTHERN UNITED STATES WITH SPECIFIC UTILIZATION OF GEOGRAPHIC INFORMATION SYSTEMS APPLICATIONS IN LAND CONSERVATION, ECOSYSTEMS SERVICES, CARBON SEQUESTRATION AND CONSERVANCY BIOLOGY.",
         "bmf": {
-          "assets": 128138019,
-          "income": 2790822,
-          "revenue": 2763485,
-          "taxPeriod": "202412"
+          "assets": 128691163,
+          "income": 1278458,
+          "revenue": 1278458,
+          "taxPeriod": "202512"
         },
         "latest": {
           "taxYear": 2021,
@@ -6191,10 +6272,10 @@
         "yearFormation": 2008,
         "mission": "PROVIDE AFFORDABLE HOUSING FOR THE ELDERLY, HANDICAPPED AND DISABLED.",
         "bmf": {
-          "assets": 4765759,
-          "income": 969032,
-          "revenue": 969032,
-          "taxPeriod": "202409"
+          "assets": 4557383,
+          "income": 834284,
+          "revenue": 834284,
+          "taxPeriod": "202509"
         },
         "latest": {
           "taxYear": 2020,
@@ -7319,7 +7400,7 @@
           "assets": 108196,
           "income": 1500000,
           "revenue": null,
-          "taxPeriod": "202412"
+          "taxPeriod": "202512"
         },
         "latest": null,
         "trend": []
@@ -10535,10 +10616,10 @@
         "yearFormation": 1991,
         "mission": "NO LONGER BOUND IS A FAITH-BASED MINISTRY THAT PROVIDES AN INPATIENT RECOVERY CENTER FOR ADDICTION, SUPPORT PROGRAMS FOR MEN, WOMEN AND FAMILIES SUFFERING FROM ADDICTIONS, AND THE DISTRIBUTION OF FOOD, CLOTHING, AND AUTOMOBILES TO THOSE IN THE COMMUNITY WHO HAVE NEED.",
         "bmf": {
-          "assets": 15124542,
-          "income": 15595256,
-          "revenue": 9861297,
-          "taxPeriod": "202412"
+          "assets": 16254343,
+          "income": 17314992,
+          "revenue": 11721121,
+          "taxPeriod": "202512"
         },
         "latest": {
           "taxYear": 2021,
@@ -12553,10 +12634,10 @@
         "yearFormation": 1970,
         "mission": "PROVIDE AFFORDABLE RENTAL HOUSING FOR LOW TO MODERATE INCOME HANDICAPPED AND ELDERLY FAMILIES AND INDIVIDUALS.",
         "bmf": {
-          "assets": 8424732,
-          "income": 2088966,
-          "revenue": 2088966,
-          "taxPeriod": "202412"
+          "assets": 8369136,
+          "income": 2374013,
+          "revenue": 2374013,
+          "taxPeriod": "202512"
         },
         "latest": {
           "taxYear": 2021,
@@ -14435,10 +14516,10 @@
         "yearFormation": 2015,
         "mission": "VILLAGE MICRO FUND IS A COMMUNITY OF BUSINESSES THAT SIT ON THE WESTSIDE OF ATLANTA AND WE EDUCATE, CONNECT, AND ORGANIZE OUR COMMUNITY OF LOCAL BLACK OWNED BUSINESSES THROUGH OUR ACCELERATOR, COOPERATIVES, AND EVENTS.",
         "bmf": {
-          "assets": 37561,
-          "income": 737871,
-          "revenue": 737871,
-          "taxPeriod": "202312"
+          "assets": 121132,
+          "income": 701309,
+          "revenue": 701309,
+          "taxPeriod": "202512"
         },
         "latest": {
           "taxYear": 2021,
@@ -14546,10 +14627,10 @@
         "yearFormation": 1915,
         "mission": "Emory University's mission is to create, preserve, teach, and apply knowledge in the service of humanity. (See Schedule O for continuation)",
         "bmf": {
-          "assets": null,
-          "income": null,
-          "revenue": null,
-          "taxPeriod": "202408"
+          "assets": 24888450281,
+          "income": 7880176517,
+          "revenue": 7861969527,
+          "taxPeriod": "202508"
         },
         "latest": {
           "taxYear": 2020,
@@ -16491,10 +16572,10 @@
         "yearFormation": null,
         "mission": null,
         "bmf": {
-          "assets": 253608783,
-          "income": 272358903,
+          "assets": 305293730,
+          "income": 87464011,
           "revenue": null,
-          "taxPeriod": "202409"
+          "taxPeriod": "202509"
         },
         "latest": null,
         "trend": []
@@ -17872,10 +17953,10 @@
         "yearFormation": 1991,
         "mission": "RAINBOW VILLAGE TRANSFORMS THE LIVES OF HOMELESS FAMILIES WITH CHILDREN BY PROVIDING A STABLE COMMUNITY AND SERVICES THAT INSTILL INITIATIVE, SELF- DEVELOPMENT AND ACCOUNTABILITY FOR FUTURE GENERATIONS.",
         "bmf": {
-          "assets": 14839800,
-          "income": 7158657,
-          "revenue": 6958416,
-          "taxPeriod": "202412"
+          "assets": 22452162,
+          "income": 6080913,
+          "revenue": 5818082,
+          "taxPeriod": "202512"
         },
         "latest": {
           "taxYear": 2021,
@@ -19286,10 +19367,10 @@
         "yearFormation": 2001,
         "mission": "THE MISSION OF HOMEAID ATLANTA IS TO BUILD NEW LIVES FOR HOMELESS FAMILIES AND INDIVIDUALS THROUGH HOUSING AND COMMUNIT YOU TREACH. ALTHOUGH OUR MISSION GIVES US BROAD LATITUDE TO ENGAGE IN BUILDING PROJECTS ACROSS THE ENTIRE CONTINUUM OF CARE, FROM EMERGENCY SHELTERS TO TRANSITIONAL HOUSING TO PERMANENT SUPPORTIVE HOUSING, EVERY HOMEAID PROJECT SUPPORTS AN AGENCY THAT PROVIDES SERVICES THAT HELP RESIDENTS MOVE TOWARDS SELF SUFFICIENCY, SUCH AS EDUCATION AND JOB SKILLS TRAINING, AND PHYSICAL AND EMOTIONAL SUPPORT.",
         "bmf": {
-          "assets": 1349323,
-          "income": 1735612,
-          "revenue": 1494091,
-          "taxPeriod": "202412"
+          "assets": 2062519,
+          "income": 2331351,
+          "revenue": 2133954,
+          "taxPeriod": "202512"
         },
         "latest": {
           "taxYear": 2021,
@@ -26586,10 +26667,10 @@
         "yearFormation": 2009,
         "mission": "TO ACQUIRE, CONSTRUCT, OWN AND OPERATE A 56 UNIT RENTAL HOUSING FACILITY FOR LOW-INCOME RESIDENTS KNOWN AS ROSEWOOD ESTATES LOCATED IN CORDELE GEORGIA.",
         "bmf": {
-          "assets": 6398496,
-          "income": 584350,
-          "revenue": 584350,
-          "taxPeriod": "202412"
+          "assets": 6076681,
+          "income": 637592,
+          "revenue": 637592,
+          "taxPeriod": "202512"
         },
         "latest": {
           "taxYear": 2021,
@@ -27171,10 +27252,10 @@
         "yearFormation": 2016,
         "mission": "TO IMPROVE THE ECONOMIC HEALTH OF LOW TO MODERATE INCOME RESIDENTS OF CHATHAM COUNTY, GEORGIA AND SIMILAR COMMUNITIES BY PROVIDING AFFORDABLE HOUSING, FINANCIAL SERVICES, AND EDUCATION ON FINANCIAL EMPOWERMENT.",
         "bmf": {
-          "assets": 2650458,
-          "income": 2085664,
-          "revenue": 2085664,
-          "taxPeriod": "202412"
+          "assets": 2594870,
+          "income": 623933,
+          "revenue": 604168,
+          "taxPeriod": "202512"
         },
         "latest": {
           "taxYear": 2020,
@@ -28959,15 +29040,20 @@
       "irs": {
         "ein": "271761971",
         "found": true,
-        "legalName": "LEGACY COMMUNITY HOUSING CORPORATION",
+        "legalName": "LEGACY COMMUNITY ENGAGEMENT CORPORATION",
         "subsection": "501(c)(3)",
-        "ntee": null,
-        "nteeMajor": null,
-        "foundation": null,
-        "rulingYear": null,
+        "ntee": "L21",
+        "nteeMajor": "Housing & Shelter",
+        "foundation": "Public charity: program-service supported 509(a)(2)",
+        "rulingYear": 2016,
         "yearFormation": 2009,
         "mission": "WE SERVE DISADVANTAGED COMMUNITIES WORLDWIDE BY PROVIDING CHARITY, FINANCIAL SUPPORT AND INVESTMENT IN AREAS SUCH AS REAL ESTATE, COMMUNITY DEVELOPMENT, MINISTRIES, MEDICAL OUTREACH, EDUCATION, CHILDREN'S WELLNESS AND MENTAL HEALTH. WE SUPPORT PEOPLE AND ORGANIZATIONS THAT TRANSFORM LIVES AND COMMUNITIES. OUR INITIATIVES ELEVATE ALL MANKIND.",
-        "bmf": null,
+        "bmf": {
+          "assets": 6278360,
+          "income": 4204654,
+          "revenue": 1507816,
+          "taxPeriod": "202312"
+        },
         "latest": {
           "taxYear": 2021,
           "form": "990",
@@ -29930,10 +30016,10 @@
         "yearFormation": 2010,
         "mission": "TO PROVIDE LOW AND MODERATE INCOME EARNING CITIZENS OF HALL COUNTY WITH AFFORDABLE HOUSING ALTERNATIVES AND TO FURTHER THESE OBJECTIVES BY SOLICITING FINANCIAL SUPPORT FROM INTERESTED INDIVIDUALS, BUSINESSES AND PUBLIC & PRIVATE ORGANIZATIONS.",
         "bmf": {
-          "assets": 6565669,
-          "income": 1226321,
-          "revenue": 1226321,
-          "taxPeriod": "202409"
+          "assets": 5941146,
+          "income": 212028,
+          "revenue": 212028,
+          "taxPeriod": "202509"
         },
         "latest": {
           "taxYear": 2020,
@@ -30057,10 +30143,10 @@
         "yearFormation": 2010,
         "mission": "TO ACQUIRE, CONSTRUCT, OWN AND OPERATE AN 88 UNIT RENTAL HOUSING FACILITY FOR LOW-INCOME ELDERLY RESIDENTS KNOWN AS GALLERIA MANOR LOCATED IN SMYRNA, GEORGIA.",
         "bmf": {
-          "assets": 10623942,
-          "income": 1042816,
-          "revenue": 1042816,
-          "taxPeriod": "202412"
+          "assets": 10614842,
+          "income": 1216387,
+          "revenue": 1216387,
+          "taxPeriod": "202512"
         },
         "latest": {
           "taxYear": 2021,
@@ -33037,10 +33123,10 @@
         "yearFormation": 2009,
         "mission": "TO ACQUIRE, CONSTRUCT, OWN AND OPERATE A 56 UNIT RENTAL HOUSING FACILITY FOR LOW-INCOME RESIDENTS KNOWN AS WATERFORD ESTATES LOCATED IN DUBLIN, GEORGIA.",
         "bmf": {
-          "assets": 7128942,
-          "income": 637500,
-          "revenue": 637500,
-          "taxPeriod": "202412"
+          "assets": 7001158,
+          "income": 800549,
+          "revenue": 800549,
+          "taxPeriod": "202512"
         },
         "latest": {
           "taxYear": 2021,
@@ -33664,10 +33750,10 @@
         "yearFormation": 1982,
         "mission": "GOLDEN HARVEST FOOD BANK, INC.'S MISSION IS \"FEEDING LIVES TOGETHER.\"",
         "bmf": {
-          "assets": 21295117,
-          "income": 37577286,
-          "revenue": 36618314,
-          "taxPeriod": "202409"
+          "assets": 24185306,
+          "income": 45865783,
+          "revenue": 45836611,
+          "taxPeriod": "202509"
         },
         "latest": {
           "taxYear": 2020,
@@ -34225,10 +34311,10 @@
         "yearFormation": null,
         "mission": null,
         "bmf": {
-          "assets": 9567640,
-          "income": 894179,
+          "assets": 9869328,
+          "income": 856317,
           "revenue": null,
-          "taxPeriod": "202411"
+          "taxPeriod": "202511"
         },
         "latest": null,
         "trend": []
@@ -34650,7 +34736,23 @@
       "einMatch": "Verified",
       "irs": {
         "ein": "200721133",
-        "found": false
+        "found": true,
+        "legalName": "BANK OF AMERICA CHARITABLE FOUNDATION INC",
+        "subsection": "501(c)(3)",
+        "ntee": "T20",
+        "nteeMajor": "Philanthropy, Voluntarism & Grantmaking Foundations",
+        "foundation": "Private non-operating foundation",
+        "rulingYear": 2004,
+        "yearFormation": null,
+        "mission": null,
+        "bmf": {
+          "assets": 10062101,
+          "income": 218843611,
+          "revenue": null,
+          "taxPeriod": "202412"
+        },
+        "latest": null,
+        "trend": []
       },
       "locationId": null,
       "contactIds": [],
