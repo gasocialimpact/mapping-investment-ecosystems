@@ -92,6 +92,11 @@ body.print-record .record-panel,
   .print\:hidden {
     display: none !important;
   }
+  /* Chrome prints the soft shadow on the round map pins as a solid dark
+     square. The pins' white ring keeps them readable without it. */
+  .ecosystem-marker > div {
+    box-shadow: none !important;
+  }
   /* Record-modal PDF: print only the open record, as a plain document. */
   body.print-record #root > *:not(.record-modal),
   :host(.print-record) #root > *:not(.record-modal) {
