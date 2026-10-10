@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useData } from '../../context/DataContext';
 import { usePlace } from '../../context/PlaceContext';
 import { useEmbed } from '../../context/EmbedContext';
+import { appRoot } from '../../lib/inline';
 import { loadTractPlaces } from '../../data/census';
 import { ExploreMap } from './ExploreMap';
 import { HighLowCard, DistributionCard, GapsCard } from './ExploreSidebar';
@@ -23,7 +24,7 @@ export function ExploreTab() {
   useEffect(() => {
     const current = selectedGeoid ?? selectedFips;
     if (current && current !== prevSelection.current) {
-      setTimeout(() => scrollIntoView(document.getElementById('place-report')), 100);
+      setTimeout(() => scrollIntoView(appRoot().getElementById('place-report')), 100);
     }
     prevSelection.current = current;
   }, [selectedFips, selectedGeoid, scrollIntoView]);

@@ -6,7 +6,7 @@
   "description": "Layered ecosystem dashboard for the Georgia impact-investing capital ecosystem, backed by an Airtable snapshot.",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && vite build --config vite.embed.config.ts",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "export-data": "node scripts/export-airtable.mjs",

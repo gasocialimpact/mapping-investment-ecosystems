@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useMemo, useRef, useState } from 
 import type { ReactNode } from 'react';
 import { connectToHost, isEmbedded, requestHostScroll, requestScrollLock } from '../lib/embed';
 import type { EmbedMode, HostViewport } from '../lib/embed';
+import { appRoot, inlineState, isInline } from '../lib/inline';
 
 export interface VisibleBand {
   /** Top of the on-screen slice, in this document's client coordinates. */
@@ -38,7 +39,9 @@ const PROBES = 24;
 const THRESHOLDS = Array.from({ length: 101 }, (_, i) => i / 100);
 
 export function EmbedProvider({ children }: { children: ReactNode }) {
-  const [mode, setMode] = useState<EmbedMode>(() => (isEmbedded() ? 'framed' : 'standalone'));
+  const [mode, setMode] = useState<EmbedMode>(() =>
+    isInline() ? 'inline' : isEmbedded() ? 'framed' : 'standalone',
+  );
   const [band, setBand] = useState<VisibleBand>(() => ({ top: 0, height: window.innerHeight }));
   // Written by the observer/host and read by scrollIntoView without making it
   // a new function on every scroll.
@@ -72,8 +75,11 @@ export function EmbedProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (mode === 'flow') return;
 
-    if (mode === 'standalone' || typeof IntersectionObserver === 'undefined') {
-      const onResize = () => applyBand({ top: 0, height: window.innerHeight });
+    if (mode === 'standalone' || mode === 'inline' || typeof IntersectionObserver === 'undefined') {
+      // Inline, the window is the viewport too; only the host's own pinned
+      // chrome (if any) is taken off the top.
+      const inset = mode === 'inline' ? inlineState()?.topOffset ?? 0 : 0;
+      const onResize = () => applyBand({ top: inset, height: window.innerHeight - inset });
       onResize();
       window.addEventListener('resize', onResize);
       return () => window.removeEventListener('resize', onResize);
@@ -132,7 +138,11 @@ export function EmbedProvider({ children }: { children: ReactNode }) {
       band,
       scrollIntoView: (el) => {
         if (!el) return;
-        if (mode === 'flow') {
+        if (mode === 'inline') {
+          // Clear any pinned host chrome rather than scrolling under it.
+          const inset = inlineState()?.topOffset ?? 0;
+          window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - inset, behavior: 'smooth' });
+        } else if (mode === 'flow') {
           // The host owns the scrollbar, and a cross-origin frame may not move
           // it directly — ask instead.
           requestHostScroll(el.getBoundingClientRect().top + window.scrollY);
@@ -141,13 +151,19 @@ export function EmbedProvider({ children }: { children: ReactNode }) {
         }
       },
       scrollToTop: () => {
-        if (mode === 'flow') requestHostScroll(0);
-        else document.querySelector('.app-scroll')?.scrollTo({ top: 0, behavior: 'smooth' });
+        const inline = inlineState();
+        if (inline) {
+          const top = inline.host.getBoundingClientRect().top + window.scrollY - inline.topOffset;
+          // Only scroll up: if the top of the tool is already on screen, stay put.
+          if (top < window.scrollY) window.scrollTo({ top, behavior: 'smooth' });
+        } else if (mode === 'flow') requestHostScroll(0);
+        else appRoot().querySelector('.app-scroll')?.scrollTo({ top: 0, behavior: 'smooth' });
       },
       // Only the host can hold its own scrollbar still. Standalone and the
       // framed fallback already clip the document, so there is nothing to lock.
       setScrollLock: (locked: boolean) => {
         if (mode === 'flow') requestScrollLock(locked);
+        if (mode === 'inline') lockPageScroll(locked);
       },
     }),
     [mode, band],
@@ -163,4 +179,18 @@ export function useEmbed() {
 /** The slice of this document that is on screen. */
 export function useVisibleBand(): VisibleBand {
   return useEmbed().band;
+}
+
+// Inline: hold the host page still behind an open modal, restoring whatever
+// overflow it had before.
+let savedOverflow: string | null = null;
+function lockPageScroll(locked: boolean) {
+  const html = document.documentElement;
+  if (locked && savedOverflow === null) {
+    savedOverflow = html.style.overflow;
+    html.style.overflow = 'hidden';
+  } else if (!locked && savedOverflow !== null) {
+    html.style.overflow = savedOverflow;
+    savedOverflow = null;
+  }
 }

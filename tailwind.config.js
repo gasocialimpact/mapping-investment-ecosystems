@@ -27,7 +27,8 @@ export default {
     // queries, which don't match during print when the window or embed
     // iframe is narrow — pdf: variants force the wide layout regardless.
     plugin(({ addVariant }) => {
-      addVariant('pdf', 'body.pdf-fixed &');
+      // Inline (in a shadow root) the class is on the host element instead.
+      addVariant('pdf', ['body.pdf-fixed &', ':host(.pdf-fixed) &']);
     }),
   ],
 };

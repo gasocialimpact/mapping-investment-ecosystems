@@ -1,7 +1,9 @@
 import { useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { X, ArrowLeft, FileDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useDetail } from '../../context/DetailContext';
 import { useEmbed } from '../../context/EmbedContext';
+import { inlineState } from '../../lib/inline';
 import { saveRecordAsPdf } from '../../lib/savePdf';
 import { SnapshotButton } from '../SnapshotButton';
 import { OrgDetail } from './OrgDetail';
@@ -74,7 +76,7 @@ export function DetailDrawer() {
   const atStart = !!position && position.index === 1;
   const atEnd = !!position && position.index === position.total;
 
-  return (
+  const modal = (
     <div className="record-modal fixed inset-0 z-30" onClick={close}>
       <div className="record-overlay absolute inset-0 bg-black/30" />
       {/* The stage is the slice of the frame that is on screen and clear of any
@@ -143,4 +145,9 @@ export function DetailDrawer() {
       </div>
     </div>
   );
+
+  // Inline, the modal renders into its own shadow root on <body>, so a
+  // transformed ancestor in the host page can't trap its fixed positioning.
+  const inline = inlineState();
+  return inline ? createPortal(modal, inline.modalContainer) : modal;
 }

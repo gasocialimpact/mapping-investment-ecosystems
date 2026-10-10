@@ -101,8 +101,10 @@ export function SearchBar() {
   // Close on outside click.
   useEffect(() => {
     if (!focused) return;
+    // composedPath, not target: when the app is mounted in a shadow root the
+    // document sees every click inside it retargeted to the host element.
     const onDown = (e: MouseEvent) => {
-      if (rootRef.current && !rootRef.current.contains(e.target as Node)) setFocused(false);
+      if (rootRef.current && !e.composedPath().includes(rootRef.current)) setFocused(false);
     };
     document.addEventListener('mousedown', onDown);
     return () => document.removeEventListener('mousedown', onDown);

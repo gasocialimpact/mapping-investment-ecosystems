@@ -10,6 +10,8 @@
 // out in one continuous flow. Hosts that do not add the snippet still work;
 // they just get the self-contained scrolling version.
 
+import { isInline } from './inline';
+
 const APP = 'ga-ecosystem-map';
 const HOST = 'ga-ecosystem-map-host';
 
@@ -36,7 +38,9 @@ export type EmbedMode =
   /** In a frame with no host snippet — fill the frame and scroll internally. */
   | 'framed'
   /** Host is resizing the frame to our content — lay out in one flow. */
-  | 'flow';
+  | 'flow'
+  /** Mounted directly in the host page (no frame); the page owns scrolling. */
+  | 'inline';
 
 export function isEmbedded(): boolean {
   try {
@@ -93,6 +97,10 @@ const HEIGHT_EPSILON = 2;
  * frame follows tab switches, accordions and county selections without polling.
  */
 export function connectToHost({ onViewport, onMode }: Listeners): () => void {
+  if (isInline()) {
+    onMode('inline');
+    return () => {};
+  }
   if (!isEmbedded()) {
     onMode('standalone');
     return () => {};

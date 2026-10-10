@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inline embed test page</title>
+    <!-- Development only: a stand-in "host page" for <gsic-ecosystem-map>.
+         Its deliberately clashing styles check that neither side's CSS leaks
+         into the other. Not part of the published site. -->
+    <style>
+      html { font-size: 16px; }
+      body { margin: 0; font-family: Georgia, serif; color: #6b21a8; line-height: 2.2; text-align: center; }
+      h1, h2, p, button, div { letter-spacing: 0.08em; }
+      .site-nav { background: #149a49; color: #fff; padding: 18px 24px; }
+      .content { max-width: 1240px; margin: 0 auto; padding: 24px; }
+      /* Page builders often leave transforms on wrappers; the record modal
+         must still cover the window, not this box. */
+      .animated-wrapper { transform: translateZ(0); }
+      footer { background: #eee; padding: 60px 24px; }
+    </style>
+    <script type="module" src="/src/embed.tsx"></script>
+  </head>
+  <body>
+    <div class="site-nav">GSIC website header (host page)</div>
+    <div class="content">
+      <h1>Georgia's Impact Investing Ecosystem</h1>
+      <p>Intro paragraph from the host page, in the host page's own styles.</p>
+      <div class="animated-wrapper">
+        <gsic-ecosystem-map></gsic-ecosystem-map>
+      </div>
+      <p>Content after the map.</p>
+    </div>
+    <footer>Host page footer</footer>
+  </body>
+</html>

@@ -43,14 +43,19 @@ function Dashboard() {
   const { setSelectedFips, setSelectedGeoid, setScope } = usePlace();
   const [activeTab, setActiveTab] = useState<Tab>('explore');
   const { mode, scrollToTop } = useEmbed();
-  const flow = mode === 'flow';
+  // Inline (mounted in a host page) lays out like flow mode: the page owns
+  // the scrollbar and the app grows to its content.
+  const flow = mode === 'flow' || mode === 'inline';
 
   // In flow mode the host page grows the frame to fit and owns the scrollbar,
   // so the document itself must be allowed to grow rather than clipping to a
   // fixed height with a scroller inside it.
+  // (Inline, the host page's <html> isn't ours to change, and the app's
+  // stylesheet can't see it anyway.)
   useEffect(() => {
+    if (mode === 'inline') return;
     document.documentElement.classList.toggle('embed-flow', flow);
-  }, [flow]);
+  }, [flow, mode]);
 
   // Deep components (the statewide report's ecosystem note) can ask for a tab
   // switch without threading the setter through the tree.

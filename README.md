@@ -32,7 +32,38 @@ npm run build    # type-check + production build to dist/
 npm run preview  # serve the production build
 ```
 
+`npm run build` also builds the inline embed (below) into `dist/embed/`. To try it
+locally, open `http://localhost:5173/embed-demo.html` while `npm run dev` is running: a
+stand-in host page with deliberately clashing styles.
+
 ## Embedding
+
+### Inline, in the page (recommended)
+
+The map can sit directly in a host page, with no iframe. In WordPress, add a **Custom HTML**
+block with:
+
+```html
+<script type="module" src="https://ecosystem-map.gasocialimpact.com/embed/ecosystem-map.js"></script>
+<gsic-ecosystem-map></gsic-ecosystem-map>
+```
+
+If the host page pins a header to the top of the window, add its height so record
+pop-ups and "scroll to report" clear it: `<gsic-ecosystem-map top-offset="80">`.
+
+How it works (`src/embed.tsx`, `src/lib/inline.ts`, built by `vite.embed.config.ts`):
+
+- The tool renders into a shadow root, so the host theme's CSS and the tool's Tailwind CSS
+  can't restyle each other. Only the font's `@font-face` goes in the host `<head>`.
+- The host page owns the scrollbar and the tool grows to its content (mode `inline`).
+- Record pop-ups render into a second shadow root on `<body>`, so a transformed wrapper in
+  the host page (common with page-builder animations) can't trap them.
+- Data, fonts and code chunks load from the map's own site (absolute base), so the host
+  only needs the two tags. GitHub Pages serves them with CORS.
+- Save as PDF prints only the tool, not the host page; snapshots work as on the site.
+- One map per page.
+
+### Iframe
 
 Paste both tags. The script is what makes the embed behave — without it the frame is a
 fixed box that the content either overflows or rattles around inside.
@@ -61,6 +92,7 @@ Three layout modes, picked automatically:
 | `standalone` | not in a frame | fills the viewport, scrolls internally |
 | `framed` | in a frame, no snippet | fills the frame, scrolls internally |
 | `flow` | host snippet answered | grows to content; the page owns the scrollbar |
+| `inline` | mounted as `<gsic-ecosystem-map>` | grows to content in the host page (no frame) |
 
 Notes on the two attributes that are easy to drop:
 
