@@ -10,13 +10,13 @@
  * Usage — no build step, works on any CMS that allows a script tag:
  *
  *   <iframe
- *     src="https://gasocialimpact.github.io/mapping-investment-ecosystems/"
+ *     src="https://ecosystem-map.gasocialimpact.com/"
  *     data-ecosystem-map
  *     width="100%" height="1200"
  *     title="Georgia's Impact Investing Ecosystem Map"
  *     allow="clipboard-write"
  *     style="border:none;border-radius:8px;display:block;width:100%"></iframe>
- *   <script src="https://gasocialimpact.github.io/mapping-investment-ecosystems/embed.js"></script>
+ *   <script src="https://ecosystem-map.gasocialimpact.com/embed.js"></script>
  *
  * The height attribute is only the height before the tool reports its own.
  */
