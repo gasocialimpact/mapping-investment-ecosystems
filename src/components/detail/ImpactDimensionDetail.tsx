@@ -1,6 +1,7 @@
 import { useData } from '../../context/DataContext';
 import { useDetail } from '../../context/DetailContext';
 import { SEGMENT_STYLES } from '../../types';
+import { assetUrl } from '../../lib/assetUrl';
 
 const MAX_VISIBLE = 8;
 
@@ -22,7 +23,7 @@ export function ImpactDimensionDetail({ id }: { id: string }) {
     <div>
       <div className="flex items-start gap-3">
         {dim.iconUrl && (
-          <img src={dim.iconUrl} alt="" className="w-12 h-12 rounded-lg shrink-0 border border-slate-100" />
+          <img src={assetUrl(dim.iconUrl)} alt="" className="w-12 h-12 rounded-lg shrink-0 border border-slate-100" />
         )}
         <div>
           <span className="inline-block text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-brand-teal-soft text-brand-teal-light">

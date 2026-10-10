@@ -4,6 +4,7 @@ import { useDetail } from '../../context/DetailContext';
 import { SEGMENT_STYLES } from '../../types';
 import { formatCurrencyFull } from '../../lib/format';
 import { OrgFinancials } from './OrgFinancials';
+import { assetUrl } from '../../lib/assetUrl';
 
 const MAX_VISIBLE = 6;
 
@@ -81,7 +82,7 @@ export function OrgDetail({ id }: { id: string }) {
                     onClick={() => open('impactDimension', d.id, items.map((x) => x!.id))}
                     className="flex items-center gap-1.5 text-[11px] px-2 py-1 rounded-lg bg-brand-teal-soft text-brand-teal-light hover:opacity-80 border border-brand-teal-soft"
                   >
-                    {d.iconUrl && <img src={d.iconUrl} alt="" className="w-5 h-5 rounded-sm shrink-0" />}
+                    {d.iconUrl && <img src={assetUrl(d.iconUrl)} alt="" className="w-5 h-5 rounded-sm shrink-0" />}
                     <span className="truncate">{d.label}</span>
                   </button>
                 ))}
