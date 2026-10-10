@@ -48,8 +48,9 @@ block with:
 <gsic-ecosystem-map></gsic-ecosystem-map>
 ```
 
-If the host page pins a header to the top of the window, add its height so record
-pop-ups and "scroll to report" clear it: `<gsic-ecosystem-map top-offset="80">`.
+A header the host page pins to the top of the window (like the GSIC site's) is detected,
+so record pop-ups and "scroll to report" clear it. If detection ever gets it wrong, set it
+by hand: `<gsic-ecosystem-map top-offset="90">`.
 
 How it works (`src/embed.tsx`, `src/lib/inline.ts`, built by `vite.embed.config.ts`):
 

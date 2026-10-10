@@ -5,9 +5,9 @@
 //   <script type="module" src="https://ecosystem-map.gasocialimpact.com/embed/ecosystem-map.js"></script>
 //   <gsic-ecosystem-map></gsic-ecosystem-map>
 //
-// Optional attribute: top-offset="80" — the height in px of any header the
-// host page pins to the top of the window, so record pop-ups and "scroll to"
-// clear it.
+// Optional attribute: top-offset="80" — the height in px of a header the host
+// page pins to the top of the window, so record pop-ups and "scroll to" clear
+// it. Normally not needed: a pinned header is detected automatically.
 //
 // The app renders into a shadow root so the host page's theme CSS and the
 // app's Tailwind CSS can't restyle each other. Fonts are the exception:
@@ -91,7 +91,8 @@ class GsicEcosystemMap extends HTMLElement {
       root,
       modalHost,
       modalContainer,
-      topOffset: Number(this.getAttribute('top-offset')) || 0,
+      // Normally detected (lib/inline.ts topInset); the attribute overrides.
+      topOffset: this.hasAttribute('top-offset') ? Number(this.getAttribute('top-offset')) || 0 : null,
     });
 
     ReactDOM.createRoot(container).render(

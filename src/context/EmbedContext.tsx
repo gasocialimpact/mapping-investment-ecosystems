@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useMemo, useRef, useState } from 
 import type { ReactNode } from 'react';
 import { connectToHost, isEmbedded, requestHostScroll, requestScrollLock } from '../lib/embed';
 import type { EmbedMode, HostViewport } from '../lib/embed';
-import { appRoot, inlineState, isInline } from '../lib/inline';
+import { appRoot, inlineState, isInline, topInset } from '../lib/inline';
 
 export interface VisibleBand {
   /** Top of the on-screen slice, in this document's client coordinates. */
@@ -77,12 +77,19 @@ export function EmbedProvider({ children }: { children: ReactNode }) {
 
     if (mode === 'standalone' || mode === 'inline' || typeof IntersectionObserver === 'undefined') {
       // Inline, the window is the viewport too; only the host's own pinned
-      // chrome (if any) is taken off the top.
-      const inset = mode === 'inline' ? inlineState()?.topOffset ?? 0 : 0;
-      const onResize = () => applyBand({ top: inset, height: window.innerHeight - inset });
+      // chrome (if any) is taken off the top. A theme can pin or shrink its
+      // header as the page scrolls, so that is re-checked on scroll too.
+      const onResize = () => {
+        const inset = mode === 'inline' ? topInset() : 0;
+        applyBand({ top: inset, height: window.innerHeight - inset });
+      };
       onResize();
       window.addEventListener('resize', onResize);
-      return () => window.removeEventListener('resize', onResize);
+      if (mode === 'inline') window.addEventListener('scroll', onResize, { passive: true });
+      return () => {
+        window.removeEventListener('resize', onResize);
+        window.removeEventListener('scroll', onResize);
+      };
     }
 
     const slice = 100 / PROBES;
@@ -140,8 +147,7 @@ export function EmbedProvider({ children }: { children: ReactNode }) {
         if (!el) return;
         if (mode === 'inline') {
           // Clear any pinned host chrome rather than scrolling under it.
-          const inset = inlineState()?.topOffset ?? 0;
-          window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - inset, behavior: 'smooth' });
+          window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - topInset() - 12, behavior: 'smooth' });
         } else if (mode === 'flow') {
           // The host owns the scrollbar, and a cross-origin frame may not move
           // it directly — ask instead.
@@ -153,7 +159,7 @@ export function EmbedProvider({ children }: { children: ReactNode }) {
       scrollToTop: () => {
         const inline = inlineState();
         if (inline) {
-          const top = inline.host.getBoundingClientRect().top + window.scrollY - inline.topOffset;
+          const top = inline.host.getBoundingClientRect().top + window.scrollY - topInset() - 12;
           // Only scroll up: if the top of the tool is already on screen, stay put.
           if (top < window.scrollY) window.scrollTo({ top, behavior: 'smooth' });
         } else if (mode === 'flow') requestHostScroll(0);
